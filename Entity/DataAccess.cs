@@ -44,10 +44,18 @@ namespace WebApi_SY.Entity
         public DbSet<sli_bd_planOption> Sli_bd_planOption { get; set; }
         public DbSet<sli_bd_tech_option> Sli_bd_tech_option { get; set; }   //技术选项
 
+        public DbSet<sli_bd_material_view> Sli_bd_material_view { get; set; }
+
+
+        public DbSet<sli_document_tech_sale> Sli_document_tech_sale { get; set; }//产品技术档案表头
+        public DbSet<sli_document_tech_saleBill> Sli_document_tech_saleBill { get; set; }//产品技术档案表体1
+        public DbSet<sli_document_tech_saleBillEntry> Sli_document_tech_saleBillEntry { get; set; }//产品技术档案表体2
+        public DbSet<sli_document_tech_saleAttachment> Sli_document_tech_saleAttachment { get; set; }//产品技术档案附件
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //ConnectionStrings
-            optionsBuilder.UseSqlServer("Data Source=61.174.243.28,45047;Initial Catalog=AIS20230325162634;User ID=sa;Password=pct258258!;TrustServerCertificate=True;");
+            optionsBuilder.UseSqlServer("Data Source=61.174.243.28,45047;Initial Catalog=AIS20241011165800;User ID=sa;Password=pct258258!;TrustServerCertificate=True;");
             //optionsBuilder.UseSqlServer("ConnectionStrings");
             //1111111
 
@@ -79,6 +87,21 @@ namespace WebApi_SY.Entity
                .HasOne(h => h.sli_sale_taxture)
                .WithMany(d => d.sli_sale_taxturebillEntry)
                .HasForeignKey(d => d.FBillId);
+
+            modelBuilder.Entity<sli_document_tech_saleBill>()
+               .HasOne(h => h.sli_document_tech_sale)
+               .WithMany(d => d.sli_document_tech_saleBill)
+               .HasForeignKey(d => d.fmainID);
+
+            modelBuilder.Entity<sli_document_tech_saleBillEntry>()
+               .HasOne(h => h.sli_document_tech_sale)
+               .WithMany(d => d.sli_document_tech_saleBillEntry)
+               .HasForeignKey(d => d.fbillID);
+
+            modelBuilder.Entity<sli_document_tech_saleAttachment>()
+               .HasOne(h => h.sli_document_tech_sale)
+               .WithMany(d => d.sli_document_tech_saleAttachment)
+               .HasForeignKey(d => d.fmainID);
         }
 
     }

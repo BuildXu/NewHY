@@ -10,7 +10,7 @@ using System.Web.Http;
 using WebApi_SY.Entity;
 using WebApi_SY.Models;
 
-namespace WebApi.Controllers
+namespace WebApi_SY.Controllers
 {
     public class sli_prd_pruductionPlanBController : ApiController
     {

@@ -35,5 +35,36 @@ namespace WebApi_SY.Models
                 }
             }
         }
+
+        public async Task InsertData_document_tech_sale(YourDbContext context, sli_document_tech_sale tech_sale, List<sli_document_tech_saleBill> tech_saleBill, List<sli_document_tech_saleBillEntry> tech_saleBillEntry, List<sli_document_tech_saleAttachment> tech_saleAttachment)
+        {
+            using (var transaction = context.Database.BeginTransaction())
+            {
+                try
+                {
+                    context.Sli_document_tech_sale.Add(tech_sale);
+                    await context.SaveChangesAsync();
+
+                    tech_saleBill.ForEach(entity => entity.fmainID = tech_sale.Id);
+                    context.Sli_document_tech_saleBill.AddRange(tech_saleBill);
+                    await context.SaveChangesAsync();
+
+                    tech_saleBillEntry.ForEach(entity => entity.fbillID = tech_sale.Id);
+                    context.Sli_document_tech_saleBillEntry.AddRange(tech_saleBillEntry);
+                    await context.SaveChangesAsync();
+
+                    tech_saleAttachment.ForEach(entity => entity.fmainID = tech_sale.Id);
+                    context.Sli_document_tech_saleAttachment.AddRange(tech_saleAttachment);
+                    await context.SaveChangesAsync();
+
+                    transaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    throw ex;
+                }
+            }
+        }
     }
 }

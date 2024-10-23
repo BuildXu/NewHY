@@ -275,6 +275,49 @@ namespace WebApi_SY.Controllers
         }
 
 
+        public IHttpActionResult GetTableBybd_material_view(int page = 1, int pageSize = 10, string FMaterialNumber = null, string FMaterialName = null)
+        {
+            try
+            {
+                IQueryable<sli_bd_material_view> query = _context.Sli_bd_material_view;
+
+                if (!string.IsNullOrEmpty(FMaterialNumber))
+                {
+                    query = query.Where(q => q.FMaterialNumber.Contains(FMaterialNumber));
+                }
+
+                if (!string.IsNullOrEmpty(FMaterialName))
+                {
+                    query = query.Where(q => q.FMaterialName.Contains(FMaterialName));
+                }
+                var totalCount = query.Count(); //记录数
+                var totalPages = (int)Math.Ceiling((double)totalCount / pageSize); // 页数
+                var paginatedQuery = query.Skip((page - 1) * pageSize).Take(pageSize); //  某页记录
+                                                                                       //var datas = query.ToList();
+                var response = new    // 定义 前端返回数据  总记录，总页，当前页 ，size,返回记录
+                {
+                    code = 200,
+                    msg = "OK",
+                    data = new
+                    {
+                        totalCounts = totalCount,
+                        totalPagess = totalPages,
+                        currentPages = page,
+                        pageSizes = pageSize,
+                        data = paginatedQuery
+                    }
+
+
+                };
+
+                return Json(response);
+            }
+            catch (Exception ex)
+            {
+                return Json(ex.ToString());
+            }
+        }
+
         [Microsoft.AspNetCore.Mvc.HttpGet]
         public IHttpActionResult GetTableByplanOption(int? id = null)
         {
