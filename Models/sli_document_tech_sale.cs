@@ -25,12 +25,7 @@ namespace WebApi_SY.Models
         public string fdefind03 { get; set; }
         public string fdefind04 { get; set; }
         public string fdefind05 { get; set; }
-        [JsonIgnore]
-        public virtual ICollection<sli_document_tech_saleBill> sli_document_tech_saleBill { get; set; }
-        [JsonIgnore]
-        public virtual ICollection<sli_document_tech_saleBillEntry> sli_document_tech_saleBillEntry { get; set; }
-        [JsonIgnore]
-        public virtual ICollection<sli_document_tech_saleAttachment> sli_document_tech_saleAttachment { get; set; }
+     
     }
 
     public class sli_document_tech_saleBill
@@ -39,8 +34,8 @@ namespace WebApi_SY.Models
         public int fmainID { get; set; }
         public int ftechOptionID { get; set; }
         public string fnote { get; set; }
-        [JsonIgnore]
-        public virtual sli_document_tech_sale sli_document_tech_sale { get; set; }
+    
+   
     }
 
     public class sli_document_tech_saleBillEntry
@@ -54,15 +49,14 @@ namespace WebApi_SY.Models
         public string fnote { get; set; }
         public string fnoties { get; set; }
         public string fexplanation { get; set; }
-        [JsonIgnore]
-        public virtual sli_document_tech_sale sli_document_tech_sale { get; set; }
+
     }
     public class sli_document_tech_saleAttachment
     {
         public int id { get; set; }
         public int fmainID { get; set; }
         public string fattachment { get; set; }
-        [JsonIgnore]
-        public virtual sli_document_tech_sale sli_document_tech_sale { get; set; }
+        public byte[] fileData { get; set; }
+ 
     }
 }
