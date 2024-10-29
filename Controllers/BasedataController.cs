@@ -6,6 +6,7 @@ using System;
 using System.Data.Entity;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.Razor.Tokenizer.Symbols;
 
 namespace WebApi_SY.Controllers
 {
@@ -274,7 +275,22 @@ namespace WebApi_SY.Controllers
             return Json(response);
         }
 
+        [System.Web.Http.HttpGet]
+        public IHttpActionResult GetTableBybd_material(string FSumNumber = null)
+        {
+            var similarEntities = _context.Sli_bd_material_view
+            .Where(entity => entity.FSumNumber.Contains(FSumNumber) )
+            .ToList();
 
+            if (similarEntities.Count == 0)
+            {
+                return NotFound();
+            }
+
+            return Ok(similarEntities);
+        }
+
+        [System.Web.Http.HttpGet]
         public IHttpActionResult GetTableBybd_material_view(int page = 1, int pageSize = 10, string FMaterialNumber = null, string FMaterialName = null)
         {
             try

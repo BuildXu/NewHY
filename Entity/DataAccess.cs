@@ -88,20 +88,20 @@ namespace WebApi_SY.Entity
                .WithMany(d => d.sli_sale_taxturebillEntry)
                .HasForeignKey(d => d.FBillId);
 
-            //modelBuilder.Entity<sli_document_tech_saleBill>()
-            //   .HasOne(h => h.sli_document_tech_sale)
-            //   .WithMany(d => d.sli_document_tech_saleBill)
-            //   .HasForeignKey(d => d.fmainID);
+            modelBuilder.Entity<sli_document_tech_saleBill>()
+               .HasOne(h => h.sli_document_tech_sale)
+               .WithMany(d => d.sli_document_tech_saleBill)
+               .HasForeignKey(d => d.fmainID);
 
-            //modelBuilder.Entity<sli_document_tech_saleBillEntry>()
-            //   .HasOne(h => h.sli_document_tech_sale)
-            //   .WithMany(d => d.sli_document_tech_saleBillEntry)
-            //   .HasForeignKey(d => d.fbillID);
+            modelBuilder.Entity<sli_document_tech_saleBillEntry>()
+               .HasOne(h => h.sli_document_tech_sale)
+               .WithMany(d => d.sli_document_tech_saleBillEntry)
+               .HasForeignKey(d => d.fbillID);
 
-            //modelBuilder.Entity<sli_document_tech_saleAttachment>()
-            //   .HasOne(h => h.sli_document_tech_sale)
-            //   .WithMany(d => d.sli_document_tech_saleAttachment)
-            //   .HasForeignKey(d => d.fmainID);
+            modelBuilder.Entity<sli_document_tech_saleAttachment>()
+               .HasOne(h => h.sli_document_tech_sale)
+               .WithMany(d => d.sli_document_tech_saleAttachment)
+               .HasForeignKey(d => d.fmainID);
 
 
         }

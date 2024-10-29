@@ -12,6 +12,7 @@ namespace WebApi_SY.Models
         public int FMATERIALID { get; set; }
         public string FMaterialNumber { get; set; }
         public string FMaterialName { get; set; }
+        public string FSumNumber { get; set; }
         public string FDESCRIPTION { get; set; }
         public string FSPECIFICATION { get; set; }
         public string F_SLI_CUSTWORKORDER { get; set; }
