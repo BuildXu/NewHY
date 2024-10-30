@@ -420,6 +420,7 @@
     <Compile Include="Models\sli_bd_tech_option.cs" />
     <Compile Include="Models\sli_dept_info.cs" />
     <Compile Include="Models\sli_document_tech_sale.cs" />
+    <Compile Include="Models\sli_document_tech_sale_view.cs" />
     <Compile Include="Models\sli_plan_bill.cs" />
     <Compile Include="Models\sli_plan_model.cs" />
     <Compile Include="Models\sli_prd_processReport.cs" />

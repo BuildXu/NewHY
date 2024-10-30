@@ -11,8 +11,8 @@ namespace WebApi_SY.Models
 
             DataTable dataTable = new DataTable();  //实例化
             DataTable result;
-            try
-            {
+            //try
+            //{
 
                 string json = @"[
     { 'Id': 1, 'Name': 'John', 'Age': 30 },
@@ -53,13 +53,13 @@ namespace WebApi_SY.Models
                     Console.WriteLine();
                 }
 
-            }
-            catch(Exception ex)
-            {
-               // MessageBox.Show(ex.ToString());
-                //result = ex.ToString();
+           // }
+            //catch(Exception ex)
+            //{
+            //    //MessageBox.Show(ex.ToString());
+            //    //result = ex.ToString();
 
-            }
+            //}
             result = dataTable;
             return result;
         }

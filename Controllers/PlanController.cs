@@ -16,7 +16,7 @@ namespace WebApi_SY.Controllers
     public class PlanController : ApiController
     {
 
-        private readonly YourDbContext _context;
+        //private  YourDbContext _context;
         //var _context;
 
         // 无参数公共构造函数
@@ -61,8 +61,8 @@ namespace WebApi_SY.Controllers
 
 
 
-                _context.Sli_plan_model.Add(header);
-                await _context.SaveChangesAsync();
+                context.Sli_plan_model.Add(header);
+                await context.SaveChangesAsync();
                 var dataNull = new
                 {
                     msg = "Success",
@@ -105,14 +105,14 @@ namespace WebApi_SY.Controllers
                         splittype = WList.splittype
                     };
 
-                    _context.Sli_workOrderList.Add(insert);
+                    context.Sli_workOrderList.Add(insert);
 
                    
 
 
                     
 
-                    var entityToUpdate = _context.T_sal_orderEntry.FirstOrDefault(p => p.FENTRYID == Convert.ToInt32( WList.forderEntryid));
+                    var entityToUpdate = context.T_sal_orderEntry.FirstOrDefault(p => p.FENTRYID == Convert.ToInt32( WList.forderEntryid));
                     if (WList.splittype != "样品")
                     {
                         if (entityToUpdate != null)
@@ -124,7 +124,7 @@ namespace WebApi_SY.Controllers
                             //_context.SaveChanges();
                         }
                     }
-                    await _context.SaveChangesAsync();
+                    await context.SaveChangesAsync();
                 }
 
                 var dataSucc = new
@@ -191,8 +191,8 @@ namespace WebApi_SY.Controllers
                     }).ToList()
                 };
 
-                _context.Sli_plan_bill.Add(header);
-                await _context.SaveChangesAsync();
+                context.Sli_plan_bill.Add(header);
+                await context.SaveChangesAsync();
                 var dataNull = new
                 {
                     msg = "Success",
@@ -214,8 +214,8 @@ namespace WebApi_SY.Controllers
         {
             try
             {
-
-                var entity = await _context.Sli_workOrderList.FindAsync(id);
+                var context = new YourDbContext();
+                var entity = await context.Sli_workOrderList.FindAsync(id);
                 if (entity == null)
                 {
                     var dataNull = new
@@ -229,10 +229,10 @@ namespace WebApi_SY.Controllers
                     return dataNull;
                 }
                 
-                _context.Sli_workOrderList.Remove(entity);
-                await _context.SaveChangesAsync();
+                context.Sli_workOrderList.Remove(entity);
+                await context.SaveChangesAsync();
 
-                var entityToUpdate = _context.T_sal_orderEntry.FirstOrDefault(p => p.FENTRYID == Convert.ToInt32(entity.forderEntryid));
+                var entityToUpdate = context.T_sal_orderEntry.FirstOrDefault(p => p.FENTRYID == Convert.ToInt32(entity.forderEntryid));
                 if (entity.splittype != "样品")
                 {
                     if (entityToUpdate != null)
@@ -271,13 +271,13 @@ namespace WebApi_SY.Controllers
          [System.Web.Http.HttpPost]
         public async Task<IActionResult> UpdateOrder(sli_plan_model model)
         {
-
-                if (_context.Entry(model).State == Microsoft.EntityFrameworkCore.EntityState.Detached)
-                {
-                    _context.Attach(model);
-                }
-                _context.Entry(model).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-                await _context.SaveChangesAsync();
+            var context = new YourDbContext();
+            if (context.Entry(model).State == Microsoft.EntityFrameworkCore.EntityState.Detached)
+            {
+                context.Attach(model);
+            }
+            context.Entry(model).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                await context.SaveChangesAsync();
              return new NoContentResult();
 
         }
@@ -287,8 +287,8 @@ namespace WebApi_SY.Controllers
         {
             try
             {
-
-                var entity = await _context.Sli_plan_model.FindAsync(id);
+                var context = new YourDbContext();
+                var entity = await context.Sli_plan_model.FindAsync(id);
                 if (entity == null)
                 {
                     var dataNull = new
@@ -301,10 +301,10 @@ namespace WebApi_SY.Controllers
                     //string json = JsonConvert.SerializeObject(data);
                     return dataNull;
                 }
-                var Sli_plan_modelEntrys = _context.Sli_plan_modelEntry.Where(b => b.fmodelID == id);
-                _context.Sli_plan_modelEntry.RemoveRange(Sli_plan_modelEntrys);
-                _context.Sli_plan_model.Remove(entity);
-                await _context.SaveChangesAsync();
+                var Sli_plan_modelEntrys = context.Sli_plan_modelEntry.Where(b => b.fmodelID == id);
+                context.Sli_plan_modelEntry.RemoveRange(Sli_plan_modelEntrys);
+                context.Sli_plan_model.Remove(entity);
+                await context.SaveChangesAsync();
                 // var data = new { Status = "Success", Message = "Data retrieved successfully", Data = new { /* actual data here */ } };
                 var data = new
                 {
@@ -335,7 +335,8 @@ namespace WebApi_SY.Controllers
         //[Microsoft.AspNetCore.Mvc.Route("api/user/GetTableByUsername/{username}")]
         public IHttpActionResult GetTableByUsername(string username)
         {
-            var user = _context.Sli_user.FirstOrDefault(u => u.username == username);
+            var context = new YourDbContext();
+            var user = context.Sli_user.FirstOrDefault(u => u.username == username);
             if (user != null)
             {
                 // 这里假设你想要返回包含该用户的整个表，可以根据实际需求调整
@@ -351,8 +352,9 @@ namespace WebApi_SY.Controllers
         //定义 get 入参
         public IHttpActionResult GetTableSli_plan_model(int page = 1, int pageSize = 10, string fmodelNumber = null, string fmodelName = null, int? fdays = null)
         {
-            var query = from p in _context.Sli_plan_model
-                        join c in _context.Sli_plan_modelEntry on p.Id equals c.fmodelID
+            var context = new YourDbContext();
+            var query = from p in context.Sli_plan_model
+                        join c in context.Sli_plan_modelEntry on p.Id equals c.fmodelID
                         select new
                         {
                             Sli_plan_model = p,

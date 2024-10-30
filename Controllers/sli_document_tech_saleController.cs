@@ -80,13 +80,13 @@ namespace WebApi_SY.Controllers
                                 sale.Fnumber = sale1.Fnumber;
                                 sale.Fname = sale1.Fname;
                                 sale.Fdate = sale1.Fdate;
-                                if (sale1.FmaterialID == "")
+                                if (sale1.FmaterialID is null)
                                 {
                                     sale.FmaterialID = 0;
                                 }
                                 else
                                 {
-                                    sale.FmaterialID = int.Parse(sale1.FmaterialID);
+                                    sale.FmaterialID = sale1.FmaterialID;
                                 }
 
                                 sale.FcustomerID = sale1.FcustomerID;
@@ -122,13 +122,13 @@ namespace WebApi_SY.Controllers
                                 {
                                     var ftechOptionID1 = 0;
 
-                                    if (billItem.ftechOptionID == "")
+                                    if (billItem.ftechOptionID =="")
                                     {
                                         ftechOptionID1 = 0;
                                     }
                                     else
                                     {
-                                        ftechOptionID1 = int.Parse(billItem.ftechOptionID);
+                                        ftechOptionID1 = billItem.ftechOptionID;
                                     }
                                     billList.Add(new sli_document_tech_saleBill
                                     {
@@ -157,13 +157,13 @@ namespace WebApi_SY.Controllers
                                 {
                                     var ftechObjectID1 = 0;
 
-                                    if (entryItem.ftechObjectID == "")
+                                    if (entryItem.ftechObjectID =="")
                                     {
                                         ftechObjectID1 = 0;
                                     }
                                     else
                                     {
-                                        ftechObjectID1 = int.Parse(entryItem.ftechObjectID);
+                                        ftechObjectID1 = entryItem.ftechObjectID;
                                     }
                                     entryList.Add(new sli_document_tech_saleBillEntry
                                     {
@@ -312,6 +312,7 @@ namespace WebApi_SY.Controllers
             var entry = new sli_document_tech_saleBillEntry();
             var attachment = new sli_document_tech_saleAttachment();
 
+
             using (var dbContext = new YourDbContext())
             {
                 var existingbill = dbContext.Sli_document_tech_saleBill.Where(b => b.fmainID == id);
@@ -324,7 +325,7 @@ namespace WebApi_SY.Controllers
 
                 var provider = new MultipartMemoryStreamProvider();
                 var task = Request.Content.ReadAsMultipartAsync(provider);
-                task.Wait();
+                //task.Wait();
                 //await task;
                 foreach (var content in provider.Contents)
                 {
@@ -362,7 +363,7 @@ namespace WebApi_SY.Controllers
                             //dbContext.Sli_document_tech_sale.Add(existing);
                             dbContext.SaveChanges();
                             //var id = sale1.id;
-                            var temp = sale1.sli_document_tech_saleAttachment;
+                            var temp = sale1.sli_document_tech_saleAttachment_view;
                             if (temp.Count > 0)
                             {
                                 foreach (var tempitem in temp)
@@ -621,7 +622,7 @@ namespace WebApi_SY.Controllers
             try
             {
                 var context = new YourDbContext();
-                IQueryable<sli_document_tech_sale> query = context.Sli_document_tech_sale;
+                IQueryable<sli_document_tech_sale_view> query = context.Sli_document_tech_sale_view;
 
                 if (!string.IsNullOrEmpty(fnumber))
                 {
@@ -674,11 +675,17 @@ namespace WebApi_SY.Controllers
 
                 //var mainTables = query.ToList();
 
-                var techSale = context.Sli_document_tech_sale.Find(id);
+                var techSale = context.Sli_document_tech_sale_view.Find(id);
 
-                techSale.sli_document_tech_saleBill = context.Sli_document_tech_saleBill.Where(st1 => st1.fmainID == id).ToList() ?? new List<sli_document_tech_saleBill>();
-                techSale.sli_document_tech_saleBillEntry = context.Sli_document_tech_saleBillEntry.Where(st2 => st2.fbillID == id).ToList() ?? new List<sli_document_tech_saleBillEntry>();
-                techSale.sli_document_tech_saleAttachment = context.Sli_document_tech_saleAttachment.Where(st3 => st3.fmainID == id).ToList() ?? new List<sli_document_tech_saleAttachment>();
+                techSale.sli_document_tech_saleBill_view = context.Sli_document_tech_saleBill_view.Where(st1 => st1.fmainID == id).ToList() ?? new List<sli_document_tech_saleBill_view>();
+                techSale.sli_document_tech_saleBillEntry_view = context.Sli_document_tech_saleBillEntry_view.Where(st2 => st2.fbillID == id).ToList() ?? new List<sli_document_tech_saleBillEntry_view>();
+                techSale.sli_document_tech_saleAttachment_view = context.Sli_document_tech_saleAttachment_view.Where(st3 => st3.fmainID == id).ToList() ?? new List<sli_document_tech_saleAttachment_view>();
+                //var subTable1List = context.Sli_document_tech_saleBill.Where(st1 => st1.fmainID == id).ToList() ?? new List<sli_document_tech_saleBill>();
+                //var subTable2List = context.Sli_document_tech_saleBillEntry.Where(st1 => st1.fbillID == id).ToList() ?? new List<sli_document_tech_saleBillEntry>();
+                //var subTable3List = context.Sli_document_tech_saleAttachment.Where(st3 => st3.fmainID == id).ToList() ?? new List<sli_document_tech_saleAttachment>();
+                //    var subTable2List = context.Sli_document_tech_saleBillEntry.Where(st2 => st2.fbillID == mainTable.Id).ToList();
+                //    var subTable3List = context.Sli_document_tech_saleAttachment.Where(st3 => st3.fmainID == mainTable.Id).ToList();
+
                 var result = new List<object>();
 
                 //foreach (var mainTable in mainTables)

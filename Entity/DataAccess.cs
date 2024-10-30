@@ -46,6 +46,11 @@ namespace WebApi_SY.Entity
 
         public DbSet<sli_bd_material_view> Sli_bd_material_view { get; set; }
 
+        
+        public DbSet<sli_document_tech_sale_view> Sli_document_tech_sale_view { get; set; }//产品技术档案表头视图
+        public DbSet<sli_document_tech_saleBill_view> Sli_document_tech_saleBill_view { get; set; }//产品技术档案表头视图
+        public DbSet<sli_document_tech_saleBillEntry_view> Sli_document_tech_saleBillEntry_view { get; set; }//产品技术档案表体2
+        public DbSet<sli_document_tech_saleAttachment_view> Sli_document_tech_saleAttachment_view { get; set; }//产品技术档案附件
 
         public DbSet<sli_document_tech_sale> Sli_document_tech_sale { get; set; }//产品技术档案表头
         public DbSet<sli_document_tech_saleBill> Sli_document_tech_saleBill { get; set; }//产品技术档案表体1
@@ -105,6 +110,21 @@ namespace WebApi_SY.Entity
                .WithMany(d => d.sli_document_tech_saleAttachment)
                .HasForeignKey(d => d.fmainID);
 
+            //视图查询
+            modelBuilder.Entity<sli_document_tech_saleBill_view>()
+               .HasOne(h => h.sli_document_tech_sale_view)
+               .WithMany(d => d.sli_document_tech_saleBill_view)
+               .HasForeignKey(d => d.fmainID);
+
+            modelBuilder.Entity<sli_document_tech_saleBillEntry_view>()
+               .HasOne(h => h.sli_document_tech_sale_view)
+               .WithMany(d => d.sli_document_tech_saleBillEntry_view)
+               .HasForeignKey(d => d.fbillID);
+
+            modelBuilder.Entity<sli_document_tech_saleAttachment_view>()
+               .HasOne(h => h.sli_document_tech_sale_view)
+               .WithMany(d => d.sli_document_tech_saleAttachment_view)
+               .HasForeignKey(d => d.fmainID);
 
         }
 
