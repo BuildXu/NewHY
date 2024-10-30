@@ -413,6 +413,7 @@
     <Compile Include="Models\JsonToDataTable.cs" />
     <Compile Include="Models\maxfproductNumber.cs" />
     <Compile Include="Models\Product.cs" />
+    <Compile Include="Models\sli_bd_customer_view.cs" />
     <Compile Include="Models\sli_bd_employ.cs" />
     <Compile Include="Models\sli_bd_material_view.cs" />
     <Compile Include="Models\sli_bd_planOption.cs" />

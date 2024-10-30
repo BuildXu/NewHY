@@ -7,6 +7,7 @@ using System.Data.Entity;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Razor.Tokenizer.Symbols;
+using System.Drawing.Printing;
 
 namespace WebApi_SY.Controllers
 {
@@ -287,7 +288,43 @@ namespace WebApi_SY.Controllers
                 return NotFound();
             }
 
-            return Ok(similarEntities);
+            var response = new    // 定义 前端返回数据  总记录，总页，当前页 ，size,返回记录
+            {
+                code = 200,
+                msg = "OK",
+                data= similarEntities
+
+
+            };
+
+            //return Json(response);
+            return Ok(response);
+        }
+
+
+        [System.Web.Http.HttpGet]
+        public IHttpActionResult GetTableBybd_customer(string FSumNumber = null)
+        {
+            var similarEntities = _context.Sli_bd_customer_view
+            .Where(entity => entity.FSumNUMBER.Contains(FSumNumber))
+            .ToList();
+
+            if (similarEntities.Count == 0)
+            {
+                return NotFound();
+            }
+
+            var response = new    // 定义 前端返回数据  总记录，总页，当前页 ，size,返回记录
+            {
+                code = 200,
+                msg = "OK",
+                data = similarEntities
+
+
+            };
+
+            //return Json(response);
+            return Ok(response);
         }
 
         [System.Web.Http.HttpGet]

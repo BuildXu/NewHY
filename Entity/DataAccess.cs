@@ -52,6 +52,8 @@ namespace WebApi_SY.Entity
         public DbSet<sli_document_tech_saleBillEntry> Sli_document_tech_saleBillEntry { get; set; }//产品技术档案表体2
         public DbSet<sli_document_tech_saleAttachment> Sli_document_tech_saleAttachment { get; set; }//产品技术档案附件
 
+        public DbSet<sli_bd_customer_view> Sli_bd_customer_view { get; set; }//客户模糊查询表
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //ConnectionStrings
