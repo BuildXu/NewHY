@@ -49,20 +49,33 @@ namespace WebApi_SY.Entity
         
         public DbSet<sli_document_tech_sale_view> Sli_document_tech_sale_view { get; set; }//产品技术档案表头视图
         public DbSet<sli_document_tech_saleBill_view> Sli_document_tech_saleBill_view { get; set; }//产品技术档案表头视图
-        public DbSet<sli_document_tech_saleBillEntry_view> Sli_document_tech_saleBillEntry_view { get; set; }//产品技术档案表体2
-        public DbSet<sli_document_tech_saleAttachment_view> Sli_document_tech_saleAttachment_view { get; set; }//产品技术档案附件
+        public DbSet<sli_document_tech_saleBillEntry_view> Sli_document_tech_saleBillEntry_view { get; set; }//产品技术档案表体2视图
+        public DbSet<sli_document_tech_saleAttachment_view> Sli_document_tech_saleAttachment_view { get; set; }//产品技术档案附件视图
 
         public DbSet<sli_document_tech_sale> Sli_document_tech_sale { get; set; }//产品技术档案表头
         public DbSet<sli_document_tech_saleBill> Sli_document_tech_saleBill { get; set; }//产品技术档案表体1
         public DbSet<sli_document_tech_saleBillEntry> Sli_document_tech_saleBillEntry { get; set; }//产品技术档案表体2
         public DbSet<sli_document_tech_saleAttachment> Sli_document_tech_saleAttachment { get; set; }//产品技术档案附件
 
+
+        public DbSet<sli_document_quality_standard> Sli_document_quality_standard { get; set; }//质量标准表头
+        public DbSet<sli_document_quality_standardBill> Sli_document_quality_standardBill { get; set; }//质量标准表体1
+        public DbSet<sli_document_quality_standardBillEntry> Sli_document_quality_standardBillEntry { get; set; }//质量标准表体2
+        public DbSet<sli_document_quality_standardAttachment> Sli_document_quality_standardAttachment { get; set; }//质量标准附件
+
+
+        public DbSet<sli_document_quality_standard_view> Sli_document_quality_standard_view { get; set; }//质量标准表头视图
+        public DbSet<sli_document_quality_standardBill_view> Sli_document_quality_standardBill_view { get; set; }//质量标准表体1视图
+        public DbSet<sli_document_quality_standardBillEntry_view> Sli_document_quality_standardBillEntry_view { get; set; }//质量标准表体2视图
+        public DbSet<sli_document_quality_standardAttachment_view> Sli_document_quality_standardAttachment_view { get; set; }//质量标准附件视图
+
         public DbSet<sli_bd_customer_view> Sli_bd_customer_view { get; set; }//客户模糊查询表
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //ConnectionStrings
-            optionsBuilder.UseSqlServer("Data Source=61.174.243.28,45047;Initial Catalog=AIS20241011165800;User ID=sa;Password=pct258258!;TrustServerCertificate=True;");
+            //ConnectionStrings 19vs7gv47690.vicp.fun,46716
+            //optionsBuilder.UseSqlServer("Data Source=61.174.243.28,45047;Initial Catalog=AIS20241011165800;User ID=sa;Password=pct258258!;TrustServerCertificate=True;");
+            optionsBuilder.UseSqlServer("Data Source=19vs7gv47690.vicp.fun,16819;Initial Catalog=AIS20241011165800;User ID=sa;Password=kingdee123*;TrustServerCertificate=True;");
             //optionsBuilder.UseSqlServer("ConnectionStrings");
             //1111111
 
@@ -95,6 +108,8 @@ namespace WebApi_SY.Entity
                .WithMany(d => d.sli_sale_taxturebillEntry)
                .HasForeignKey(d => d.FBillId);
 
+
+            //技术档案外键关联
             modelBuilder.Entity<sli_document_tech_saleBill>()
                .HasOne(h => h.sli_document_tech_sale)
                .WithMany(d => d.sli_document_tech_saleBill)
@@ -110,7 +125,8 @@ namespace WebApi_SY.Entity
                .WithMany(d => d.sli_document_tech_saleAttachment)
                .HasForeignKey(d => d.fmainID);
 
-            //视图查询
+
+            //技术档案视图查询
             modelBuilder.Entity<sli_document_tech_saleBill_view>()
                .HasOne(h => h.sli_document_tech_sale_view)
                .WithMany(d => d.sli_document_tech_saleBill_view)
@@ -124,6 +140,39 @@ namespace WebApi_SY.Entity
             modelBuilder.Entity<sli_document_tech_saleAttachment_view>()
                .HasOne(h => h.sli_document_tech_sale_view)
                .WithMany(d => d.sli_document_tech_saleAttachment_view)
+               .HasForeignKey(d => d.fmainID);
+
+
+            //质量标准管理外键关联
+            modelBuilder.Entity<sli_document_quality_standardBill>()
+               .HasOne(h => h.sli_document_quality_standard)
+               .WithMany(d => d.sli_document_quality_standardBill)
+               .HasForeignKey(d => d.fmainID);
+
+            modelBuilder.Entity<sli_document_quality_standardBillEntry>()
+               .HasOne(h => h.sli_document_quality_standard)
+               .WithMany(d => d.sli_document_quality_standardBillEntry)
+               .HasForeignKey(d => d.fbillID);
+
+            modelBuilder.Entity<sli_document_quality_standardAttachment>()
+               .HasOne(h => h.sli_document_quality_standard)
+               .WithMany(d => d.sli_document_quality_standardAttachment)
+               .HasForeignKey(d => d.fmainID);
+
+            //质量标准管理视图外键关联
+            modelBuilder.Entity<sli_document_quality_standardBill_view>()
+               .HasOne(h => h.sli_document_quality_standard_view)
+               .WithMany(d => d.sli_document_quality_standardBill_view)
+               .HasForeignKey(d => d.fmainID);
+
+            modelBuilder.Entity<sli_document_quality_standardBillEntry_view>()
+               .HasOne(h => h.sli_document_quality_standard_view)
+               .WithMany(d => d.sli_document_quality_standardBillEntry_view)
+               .HasForeignKey(d => d.fbillID);
+
+            modelBuilder.Entity<sli_document_quality_standardAttachment_view>()
+               .HasOne(h => h.sli_document_quality_standard_view)
+               .WithMany(d => d.sli_document_quality_standardAttachment_view)
                .HasForeignKey(d => d.fmainID);
 
         }

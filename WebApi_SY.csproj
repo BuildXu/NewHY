@@ -394,6 +394,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MyController.cs" />
     <Compile Include="Controllers\PlanController.cs" />
+    <Compile Include="Controllers\sli_document_quality_standardController.cs" />
     <Compile Include="Controllers\sli_document_tech_saleController.cs" />
     <Compile Include="Controllers\sli_plan_billController.cs" />
     <Compile Include="Controllers\sli_plan_modelController.cs" />
@@ -419,6 +420,8 @@
     <Compile Include="Models\sli_bd_planOption.cs" />
     <Compile Include="Models\sli_bd_tech_option.cs" />
     <Compile Include="Models\sli_dept_info.cs" />
+    <Compile Include="Models\sli_document_quality_standard.cs" />
+    <Compile Include="Models\sli_document_quality_standard_view.cs" />
     <Compile Include="Models\sli_document_tech_sale.cs" />
     <Compile Include="Models\sli_document_tech_sale_view.cs" />
     <Compile Include="Models\sli_plan_bill.cs" />

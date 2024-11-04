@@ -1,46 +1,22 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Drawing.Printing;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Net.Mail;
-using System.Text.Json;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Http;
-using System.Xml.Linq;
 using WebApi_SY.Entity;
 using WebApi_SY.Models;
-using static Azure.Core.HttpHeader;
 
 namespace WebApi_SY.Controllers
 {
-    public class sli_document_tech_saleController : ApiController
+    public class sli_document_quality_standardController : ApiController
     {
-        public sli_document_tech_saleController()
-        {
-            // _context = context;
-
-        }
-        //public class InsertRequestDto_tech_sale
-        //{
-        //    public sli_document_tech_sale Tech_sale { get; set; }
-        //    public sli_document_tech_saleBill Tech_saleBill { get; set; }
-        //    public sli_document_tech_saleBillEntry Tech_saleBillEntry { get; set; }
-        //    public sli_document_tech_saleAttachment Tech_saleAttachment { get; set; }
-        //    public  HttpPostedFile Files { get; set; }
-        //}
         [HttpPost]
-         //public async Task<object> InsertData()
-
-        public IHttpActionResult   InsertData()
+        public IHttpActionResult InsertData()
         {
             try
             {
@@ -50,13 +26,12 @@ namespace WebApi_SY.Controllers
                     return BadRequest("Expected multipart/form-data request.");
                 }
 
-                var sale = new sli_document_tech_sale();
-                var bill = new sli_document_tech_saleBill();
-                List<sli_document_tech_saleBillEntry> entryList = new List<sli_document_tech_saleBillEntry>();
-                List<sli_document_tech_saleBill> billList = new List<sli_document_tech_saleBill>();
-                List<sli_document_tech_saleAttachment> attachmentList = new List<sli_document_tech_saleAttachment>();
-                var entry = new sli_document_tech_saleBillEntry();
-                var attachment = new sli_document_tech_saleAttachment();
+                var standard = new sli_document_quality_standard();
+                List<sli_document_quality_standardBillEntry> entryList = new List<sli_document_quality_standardBillEntry>();
+                List<sli_document_quality_standardBill> billList = new List<sli_document_quality_standardBill>();
+                List<sli_document_quality_standardAttachment> attachmentList = new List<sli_document_quality_standardAttachment>();
+                //var entry = new sli_document_tech_saleBillEntry();
+                //var attachment = new sli_document_tech_saleAttachment();
                 using (var dbContext = new YourDbContext())
                 {
                     var provider = new MultipartMemoryStreamProvider();
@@ -77,33 +52,21 @@ namespace WebApi_SY.Controllers
 
                                 dynamic sale1 = JsonConvert.DeserializeObject(propertyValue);
 
-                                sale.Fnumber = sale1.Fnumber;
-                                sale.Fname = sale1.Fname;
-                                sale.Fdate = sale1.Fdate;
+                                standard.Fnumber = sale1.Fnumber;
+                                standard.Fname = sale1.Fname;
+                                standard.Fdate = sale1.Fdate;
                                 if (sale1.FmaterialID is null)
                                 {
-                                    sale.FmaterialID = 0;
+                                    standard.FmaterialID = 0;
                                 }
                                 else
                                 {
-                                    sale.FmaterialID = sale1.FmaterialID;
+                                    standard.FmaterialID = sale1.FmaterialID;
                                 }
 
-                                sale.FcustomerID = sale1.FcustomerID;
-                                //sale.Fstatus = sale1.Fstatus;
-                                //if (sale1.ForderNo == "")
-                                //{
-                                //    sale.ForderNo = 0;
-                                //}
-                                //else
-                                //{
-                                //    sale.ForderNo = int.Parse(sale1.ForderNo);
-                                //}
-
-                                //sale.FstandardNo = sale1.FstandardNo;
-
-                                //sale.Ftaxtrue = sale1.Ftaxtrue;
-                                dbContext.Sli_document_tech_sale.Add(sale);
+                                standard.FcustomerID = sale1.FcustomerID;
+                                
+                                dbContext.Sli_document_quality_standard.Add(standard);
                                 dbContext.SaveChanges();
                             }
                         }
@@ -122,18 +85,18 @@ namespace WebApi_SY.Controllers
                                 {
                                     var ftechOptionID1 = 0;
 
-                                    if (billItem.ftechOptionID =="")
+                                    if (billItem.fqualityOptionID == "")
                                     {
                                         ftechOptionID1 = 0;
                                     }
                                     else
                                     {
-                                        ftechOptionID1 = billItem.ftechOptionID;
+                                        ftechOptionID1 = billItem.fqualityOptionID;
                                     }
-                                    billList.Add(new sli_document_tech_saleBill
+                                    billList.Add(new sli_document_quality_standardBill
                                     {
-                                        fmainID = sale.Id,
-                                        ftechOptionID = ftechOptionID1,
+                                        fmainID = standard.Id,
+                                        fqualityOptionID = ftechOptionID1,
                                         fnote = billItem.fnote
                                     });
                                 }
@@ -157,18 +120,18 @@ namespace WebApi_SY.Controllers
                                 {
                                     var ftechObjectID1 = 0;
 
-                                    if (entryItem.ftechObjectID =="")
+                                    if (entryItem.fqualityObjectID == "")
                                     {
                                         ftechObjectID1 = 0;
                                     }
                                     else
                                     {
-                                        ftechObjectID1 = entryItem.ftechObjectID;
+                                        ftechObjectID1 = entryItem.fqualityObjectID;
                                     }
-                                    entryList.Add(new sli_document_tech_saleBillEntry
+                                    entryList.Add(new sli_document_quality_standardBillEntry
                                     {
-                                        fbillID = sale.Id,
-                                        ftechObjectID = ftechObjectID1,
+                                        fbillID = standard.Id,
+                                        fqualityObjectID = ftechObjectID1,
                                         fnote = entryItem.fnote,
                                         ftarget = entryItem.ftarget,
                                         fmin = entryItem.fmin,
@@ -184,24 +147,24 @@ namespace WebApi_SY.Controllers
                             {
                                 var fileName = Path.GetFileName(content.Headers.ContentDisposition.FileName.Trim('\"'));
                                 var fileData = content.ReadAsByteArrayAsync().Result;
-                                attachmentList.Add(new sli_document_tech_saleAttachment
+                                attachmentList.Add(new sli_document_quality_standardAttachment
                                 {
                                     fattachment = fileName,
                                     fileData = fileData,
-                                    fmainID = sale.Id
+                                    fmainID = standard.Id
                                 });
-                                
+
                             }
-                            
+
                         }
                         //return contentDisposition.Name;
                     }
 
                     // 添加子表
-                    dbContext.Sli_document_tech_saleBill.AddRange(billList);
-                    dbContext.Sli_document_tech_saleBillEntry.AddRange(entryList);
-                    dbContext.Sli_document_tech_saleAttachment.AddRange(attachmentList);
-                   // dbContext.SaveChanges();
+                    dbContext.Sli_document_quality_standardBill.AddRange(billList);
+                    dbContext.Sli_document_quality_standardBillEntry.AddRange(entryList);
+                    dbContext.Sli_document_quality_standardAttachment.AddRange(attachmentList);
+                    // dbContext.SaveChanges();
 
                     dbContext.SaveChanges();
 
@@ -210,92 +173,24 @@ namespace WebApi_SY.Controllers
                 }
 
 
-                #region
-                /*
-                // 将 DTO 转换为实体对象
-                var tableHeader = new sli_document_tech_sale
-                {
-                    // 根据 DTO 的属性设置实体对象的属性
-                    Fnumber = requestDto.Tech_sale.Fnumber,
-                    Fname = requestDto.Tech_sale.Fname,
-                    Fdate = requestDto.Tech_sale.Fdate,
-                    FbillerID = requestDto.Tech_sale.FbillerID,
-                    Fstatus = requestDto.Tech_sale.Fstatus,
-                    FcustomerID = requestDto.Tech_sale.FcustomerID,
-                    FmaterialID = requestDto.Tech_sale.FmaterialID,
-                    ForderNo = requestDto.Tech_sale.ForderNo,
-                    ForderEntryID = requestDto.Tech_sale.ForderEntryID,
-                    FstandardNo = requestDto.Tech_sale.FstandardNo,
-                    Ftaxtrue = requestDto.Tech_sale.Ftaxtrue,
-                    fdefind01 = requestDto.Tech_sale.fdefind01,
-                    fdefind02 = requestDto.Tech_sale.fdefind02,
-                    fdefind03 = requestDto.Tech_sale.fdefind03,
-                    fdefind04 = requestDto.Tech_sale.fdefind04,
-                    fdefind05 = requestDto.Tech_sale.fdefind05,
-
-                };
-
-                var tableBody1Entities = requestDto.Tech_saleBill.Select(dto => new sli_document_tech_saleBill
-                {
-                    //fmainID = dto.fmainID,
-                    ftechOptionID = dto.ftechOptionID,
-                    fnote = dto.fnote,
-                    fmainID = tableHeader.Id
-
-                }).ToList();
-
-                var tableBody2Entities = requestDto.Tech_saleBillEntry.Select(dto => new sli_document_tech_saleBillEntry
-                {
-                    ftechObjectID = dto.ftechObjectID,
-                    fmax = dto.fmax,
-                    fmin = dto.fmin,
-                    ftarget = dto.ftarget,
-                    fnote = dto.fnote,
-                    fnoties = dto.fnoties,
-                    fexplanation = dto.fexplanation,
-                    fbillID = tableHeader.Id
-                }).ToList();
-                var tech_saleAttachment3 = new sli_document_tech_saleAttachment();
-
-
-                if (requestDto.Files != null && requestDto.Files.ContentLength > 0)
-                {
-                    tech_saleAttachment3.fattachment = Path.GetFileName(requestDto.Files.FileName);
-                    using (var binaryReader = new BinaryReader(requestDto.Files.InputStream))
-                    {
-                        tech_saleAttachment3.fileData = binaryReader.ReadBytes(requestDto.Files.ContentLength);
-                    }
-                    tech_saleAttachment3.fmainID = tableHeader.Id;
-                }
                 
-                var tableBodyAttachment = requestDto.Tech_saleAttachment.Select(dto => new sli_document_tech_saleAttachment
-                {
-
-                    //fmainID = dto.fmainID,
-                    fattachment = dto.fattachment,
-                    fmainID = tableHeader.Id
-
-                }).ToList();
-                InsertDataToTables insert = new InsertDataToTables();
-                // 调用数据访问层方法插入数据
-                await insert.InsertData_document_tech_sale(context, tableHeader, tableBody1Entities, tableBody2Entities, tech_saleAttachment3);
-                */
-                #endregion
                 var data = new
                 {
                     code = 200,
                     msg = "ok",
-                    Id = sale.Id,
-                    date = sale.Id + "保存成功"
+                    Id = standard.Id,
+                    date = standard.Id + "保存成功"
 
                 };
-                return Ok( data);
+                return Ok(data);
             }
             catch (Exception ex)
             {
                 return Ok(ex.ToString());
             }
         }
+
+
         [HttpPost]
         public IHttpActionResult UpdateData(int id)
         {
@@ -304,23 +199,20 @@ namespace WebApi_SY.Controllers
                 return BadRequest("Expected multipart/form-data request.");
             }
 
-            var sale = new sli_document_tech_sale();
-            var bill = new sli_document_tech_saleBill();
-            List<sli_document_tech_saleBillEntry> entryList = new List<sli_document_tech_saleBillEntry>();
-            List<sli_document_tech_saleBill> billList = new List<sli_document_tech_saleBill>();
-            List<sli_document_tech_saleAttachment> attachmentList = new List<sli_document_tech_saleAttachment>();
-            var entry = new sli_document_tech_saleBillEntry();
-            var attachment = new sli_document_tech_saleAttachment();
+            var standard = new sli_document_quality_standard();
+            List<sli_document_quality_standardBillEntry> entryList = new List<sli_document_quality_standardBillEntry>();
+            List<sli_document_quality_standardBill> billList = new List<sli_document_quality_standardBill>();
+            List<sli_document_quality_standardAttachment> attachmentList = new List<sli_document_quality_standardAttachment>();
 
 
             using (var dbContext = new YourDbContext())
             {
-                var existingbill = dbContext.Sli_document_tech_saleBill.Where(b => b.fmainID == id);
-                dbContext.Sli_document_tech_saleBill.RemoveRange(existingbill);
-                var existingEntry = dbContext.Sli_document_tech_saleBillEntry.Where(b => b.fbillID == id);
-                dbContext.Sli_document_tech_saleBillEntry.RemoveRange(existingEntry);
-                var existingachment = dbContext.Sli_document_tech_saleAttachment.Where(b => b.fmainID == id);
-                dbContext.Sli_document_tech_saleAttachment.RemoveRange(existingachment);
+                var existingbill = dbContext.Sli_document_quality_standardBill.Where(b => b.fmainID == id);
+                dbContext.Sli_document_quality_standardBill.RemoveRange(existingbill);
+                var existingEntry = dbContext.Sli_document_quality_standardBillEntry.Where(b => b.fbillID == id);
+                dbContext.Sli_document_quality_standardBillEntry.RemoveRange(existingEntry);
+                var existingachment = dbContext.Sli_document_quality_standardAttachment.Where(b => b.fmainID == id);
+                dbContext.Sli_document_quality_standardAttachment.RemoveRange(existingachment);
                 dbContext.SaveChanges();
 
                 var provider = new MultipartMemoryStreamProvider();
@@ -340,12 +232,12 @@ namespace WebApi_SY.Controllers
                             var propertyValue = content.ReadAsStringAsync().Result;
 
                             dynamic sale1 = JsonConvert.DeserializeObject(propertyValue);
-                            var existing = dbContext.Sli_document_tech_sale.Find(id);
+                            var existing = dbContext.Sli_document_quality_standard.Find(id);
                             existing.Fnumber = sale1.Fnumber;
                             existing.Fname = sale1.Fname;
                             existing.FmaterialID = Convert.ToInt32(sale1.FmaterialID);
                             existing.FcustomerID = sale1.FcustomerID;
-                            
+
 
                             //sale.Fstatus = sale1.Fstatus;
                             //if (sale1.ForderNo == "")
@@ -363,19 +255,19 @@ namespace WebApi_SY.Controllers
                             //dbContext.Sli_document_tech_sale.Add(existing);
                             dbContext.SaveChanges();
                             //var id = sale1.id;
-                            var temp = sale1.sli_document_tech_saleAttachment_view;
+                            var temp = sale1.sli_document_quality_standardAttachment_view;
                             if (temp.Count > 0)
                             {
                                 foreach (var tempitem in temp)
                                 {
-                                    attachmentList.Add(new sli_document_tech_saleAttachment
+                                    attachmentList.Add(new sli_document_quality_standardAttachment
                                     {
                                         fattachment = tempitem.fattachment,
                                         fileData = tempitem.fileData,
                                         fmainID = id
                                     });
-                                    dbContext.Sli_document_tech_saleAttachment.AddRange(attachmentList);
-                                    
+                                    dbContext.Sli_document_quality_standardAttachment.AddRange(attachmentList);
+
                                 }
                             }
                             //dbContext.SaveChanges();
@@ -396,19 +288,19 @@ namespace WebApi_SY.Controllers
                             foreach (var billItem in Bill1)
                             {
                                 var ftechOptionID1 = 0;
-                                if (billItem.ftechOptionID is null)
+                                if (billItem.fqualityOptionID is null)
                                 {
                                     ftechOptionID1 = 0;
                                 }
                                 else
                                 {
-                                    ftechOptionID1 = Convert.ToInt32(billItem.ftechOptionID);
+                                    ftechOptionID1 = Convert.ToInt32(billItem.fqualityOptionID);
                                 }
-                                
-                                billList.Add(new sli_document_tech_saleBill
+
+                                billList.Add(new sli_document_quality_standardBill
                                 {
                                     fmainID = id,
-                                    ftechOptionID = ftechOptionID1,
+                                    fqualityOptionID = ftechOptionID1,
                                     fnote = billItem.fnote
                                 });
                             }
@@ -431,18 +323,18 @@ namespace WebApi_SY.Controllers
                             foreach (var entryItem in Entry1)
                             {
                                 var ftechObjectID1 = 0;
-                                if (entryItem.ftechObjectID is null)
+                                if (entryItem.fqualityObjectID is null)
                                 {
                                     ftechObjectID1 = 0;
                                 }
                                 else
                                 {
-                                    ftechObjectID1 = Convert.ToInt32(entryItem.ftechObjectID);
+                                    ftechObjectID1 = Convert.ToInt32(entryItem.fqualityObjectID);
                                 }
-                                entryList.Add(new sli_document_tech_saleBillEntry
+                                entryList.Add(new sli_document_quality_standardBillEntry
                                 {
                                     fbillID = id,
-                                    ftechObjectID = ftechObjectID1,
+                                    fqualityObjectID = ftechObjectID1,
                                     fnote = entryItem.fnote,
                                     ftarget = entryItem.ftarget,
                                     fmin = entryItem.fmin,
@@ -458,7 +350,7 @@ namespace WebApi_SY.Controllers
                         {
                             var fileName = Path.GetFileName(content.Headers.ContentDisposition.FileName.Trim('\"'));
                             var fileData = content.ReadAsByteArrayAsync().Result;
-                            attachmentList.Add(new sli_document_tech_saleAttachment
+                            attachmentList.Add(new sli_document_quality_standardAttachment
                             {
                                 fattachment = fileName,
                                 fileData = fileData,
@@ -472,27 +364,28 @@ namespace WebApi_SY.Controllers
                 }
 
                 // 添加子表
-                dbContext.Sli_document_tech_saleBill.AddRange(billList);
-                dbContext.Sli_document_tech_saleBillEntry.AddRange(entryList);
-                dbContext.Sli_document_tech_saleAttachment.AddRange(attachmentList);
+                dbContext.Sli_document_quality_standardBill.AddRange(billList);
+                dbContext.Sli_document_quality_standardBillEntry.AddRange(entryList);
+                dbContext.Sli_document_quality_standardAttachment.AddRange(attachmentList);
                 // dbContext.SaveChanges();
 
                 dbContext.SaveChanges();
 
-                
+
 
             }
             var data = new
             {
                 code = 200,
                 msg = "ok",
-                Id = sale.Id,
-                date = sale.Id + "保存成功"
+                Id = id,
+                date = id + "修改成功"
 
             };
             return Ok(data);
 
         }
+
 
         [System.Web.Http.HttpPost]
         public async Task<object> Delete(List<int> id)
@@ -502,7 +395,7 @@ namespace WebApi_SY.Controllers
                 foreach (var deleteid in id)
                 {
                     var context = new YourDbContext();
-                    var entity = await context.Sli_document_tech_sale.FindAsync(deleteid);
+                    var entity = await context.Sli_document_quality_standard.FindAsync(deleteid);
                     if (entity == null)
                     {
                         var dataNull = new
@@ -516,24 +409,24 @@ namespace WebApi_SY.Controllers
                         return dataNull;
                     }
 
-                    var existingbill = context.Sli_document_tech_saleBill.Where(b => b.fmainID == deleteid);
-                    context.Sli_document_tech_saleBill.RemoveRange(existingbill);
-                    var existingEntry = context.Sli_document_tech_saleBillEntry.Where(b => b.fbillID == deleteid);
-                    context.Sli_document_tech_saleBillEntry.RemoveRange(existingEntry);
-                    var existingachment = context.Sli_document_tech_saleAttachment.Where(b => b.fmainID == deleteid);
-                    context.Sli_document_tech_saleAttachment.RemoveRange(existingachment);
-                    context.Sli_document_tech_sale.RemoveRange(entity);
+                    var existingbill = context.Sli_document_quality_standardBill.Where(b => b.fmainID == deleteid);
+                    context.Sli_document_quality_standardBill.RemoveRange(existingbill);
+                    var existingEntry = context.Sli_document_quality_standardBillEntry.Where(b => b.fbillID == deleteid);
+                    context.Sli_document_quality_standardBillEntry.RemoveRange(existingEntry);
+                    var existingachment = context.Sli_document_quality_standardAttachment.Where(b => b.fmainID == deleteid);
+                    context.Sli_document_quality_standardAttachment.RemoveRange(existingachment);
+                    context.Sli_document_quality_standard.RemoveRange(entity);
                     await context.SaveChangesAsync();
 
                 }
-                
+
                 // var data = new { Status = "Success", Message = "Data retrieved successfully", Data = new { /* actual data here */ } };
                 var data = new
                 {
                     code = 200,
                     msg = "Success",
                     //orderId = id.ToString(),
-                    date =  "删除成功"
+                    date = "删除成功"
                 };
                 return data;
             }
@@ -552,7 +445,6 @@ namespace WebApi_SY.Controllers
 
         }
 
-
         [HttpGet]
         public IHttpActionResult GetTableBydocument_tech_saleAttachment(int? id = null)
         {
@@ -560,7 +452,7 @@ namespace WebApi_SY.Controllers
             {
                 var context = new YourDbContext();
 
-                var attachment = context.Sli_document_tech_saleAttachment.FirstOrDefault(a => a.id == id);
+                var attachment = context.Sli_document_quality_standardAttachment.FirstOrDefault(a => a.id == id);
                 if (attachment == null)
                 {
                     return NotFound();
@@ -593,6 +485,7 @@ namespace WebApi_SY.Controllers
 
 
         }
+
         private string GetContentType(string fileName)
         {
             var extension = System.IO.Path.GetExtension(fileName);
@@ -615,14 +508,13 @@ namespace WebApi_SY.Controllers
             }
         }
 
-
         [HttpGet]
-        public IHttpActionResult GetTableBydocument_tech_sale(int page = 1, int pageSize = 10, string fnumber = null, string fname = null)
+        public IHttpActionResult GetTableBydocument_quality_standard(int page = 1, int pageSize = 10, string fnumber = null, string fname = null)
         {
             try
-            {
+           {
                 var context = new YourDbContext();
-                IQueryable<sli_document_tech_sale_view> query = context.Sli_document_tech_sale_view;
+                IQueryable<sli_document_quality_standard_view> query = context.Sli_document_quality_standard_view;
 
                 if (!string.IsNullOrEmpty(fnumber))
                 {
@@ -655,110 +547,54 @@ namespace WebApi_SY.Controllers
 
                 return Json(response);
             }
-           catch (Exception ex)
+            catch (Exception ex)
             {
                 return InternalServerError(ex);
             }
         }
+
         [HttpGet]
-        public IHttpActionResult GetTableBydocument_tech_saleall(int? id = null)
+        public IHttpActionResult GetTableBydocument_quality_standardall(int? id = null)
         {
             try
             {
                 var context = new YourDbContext();
-                //IQueryable<sli_document_tech_sale> query = context.Sli_document_tech_sale;
 
-                //if (id.HasValue)
-                //{
-                //    query = query.Where(t => t.Id == id.Value);
-                //}
+                var techSale = context.Sli_document_quality_standard_view.Find(id);
 
-                //var mainTables = query.ToList();
+                techSale.sli_document_quality_standardBill_view = context.Sli_document_quality_standardBill_view.Where(st1 => st1.fmainID == id).ToList() ?? new List<sli_document_quality_standardBill_view>();
+                techSale.sli_document_quality_standardBillEntry_view = context.Sli_document_quality_standardBillEntry_view.Where(st2 => st2.fbillID == id).ToList() ?? new List<sli_document_quality_standardBillEntry_view>();
+                techSale.sli_document_quality_standardAttachment_view = context.Sli_document_quality_standardAttachment_view.Where(st3 => st3.fmainID == id).ToList() ?? new List<sli_document_quality_standardAttachment_view>();
 
-                var techSale = context.Sli_document_tech_sale_view.Find(id);
-
-                techSale.sli_document_tech_saleBill_view = context.Sli_document_tech_saleBill_view.Where(st1 => st1.fmainID == id).ToList() ?? new List<sli_document_tech_saleBill_view>();
-                techSale.sli_document_tech_saleBillEntry_view = context.Sli_document_tech_saleBillEntry_view.Where(st2 => st2.fbillID == id).ToList() ?? new List<sli_document_tech_saleBillEntry_view>();
-                techSale.sli_document_tech_saleAttachment_view = context.Sli_document_tech_saleAttachment_view.Where(st3 => st3.fmainID == id).ToList() ?? new List<sli_document_tech_saleAttachment_view>();
-                //var subTable1List = context.Sli_document_tech_saleBill.Where(st1 => st1.fmainID == id).ToList() ?? new List<sli_document_tech_saleBill>();
-                //var subTable2List = context.Sli_document_tech_saleBillEntry.Where(st1 => st1.fbillID == id).ToList() ?? new List<sli_document_tech_saleBillEntry>();
-                //var subTable3List = context.Sli_document_tech_saleAttachment.Where(st3 => st3.fmainID == id).ToList() ?? new List<sli_document_tech_saleAttachment>();
-                //    var subTable2List = context.Sli_document_tech_saleBillEntry.Where(st2 => st2.fbillID == mainTable.Id).ToList();
-                //    var subTable3List = context.Sli_document_tech_saleAttachment.Where(st3 => st3.fmainID == mainTable.Id).ToList();
 
                 var result = new List<object>();
 
-                //foreach (var mainTable in mainTables)
-                //{
-                //    var subTable1List = context.Sli_document_tech_saleBill.Where(st1 => st1.fmainID == mainTable.Id).ToList();
-                //    var subTable2List = context.Sli_document_tech_saleBillEntry.Where(st2 => st2.fbillID == mainTable.Id).ToList();
-                //    var subTable3List = context.Sli_document_tech_saleAttachment.Where(st3 => st3.fmainID == mainTable.Id).ToList();
-
-                    
-
-                    
-                //}
 
                 result.Add(new
                 {
                     Sli_document_tech_sale = techSale,
-                    //Sli_document_tech_saleBill = subTable1List,
-                    //Sli_document_tech_saleBillEntry = subTable2List,
-                    //Sli_document_tech_saleAttachment = subTable3List
+
                 });
-                //var totalCount = result.Count(); //记录数
-                //var totalPages = (int)Math.Ceiling((double)totalCount / pageSize); // 页数
-                //var paginatedQuery = query; //  某页记录
+
                 var response = new    // 定义 前端返回数据  总记录，总页，当前页 ，size,返回记录
                 {
                     code = 200,
                     msg = "OK",
                     data = new
                     {
-                        //totalCounts = totalCount,
-                        //totalPagess = totalPages,
-                        //currentPages = page,
-                        //pageSizes = pageSize,
+                       
                         data = result
                     }
                 };
 
                 return Ok(response);
 
-                
-
-
-                //var mainTableList = query.ToList();
-
-                //var result = new List<object>();
-                //foreach (var mainTable in mainTableList)
-                //{
-                //    var subTable1List = context.Sli_document_tech_saleBill.Where(st1 => st1.fmainID == mainTable.Id).ToList();
-                //    var subTable2List = context.Sli_document_tech_saleBillEntry.Where(st2 => st2.fbillID == mainTable.Id).ToList();
-                //    var subTable3List = context.Sli_document_tech_saleAttachment.Where(st3 => st3.fmainID == mainTable.Id).ToList();
-
-                //    result.Add(new
-                //    {
-                //        Sli_document_tech_sale = mainTable,
-                //        Sli_document_tech_saleBill = subTable1List,
-                //        Sli_document_tech_saleBillEntry = subTable2List,
-                //        Sli_document_tech_saleAttachment = subTable3List
-                //    });
-                //}
-
-                
-                //                                                                                      //var datas = query.ToList();
-                
-
-
-                //};
-
-                //return Json(response);
             }
             catch (Exception ex)
             {
                 return Ok(ex.ToString());
             }
         }
+
     }
 }

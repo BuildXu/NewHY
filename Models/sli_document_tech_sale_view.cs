@@ -15,7 +15,7 @@ namespace WebApi_SY.Models
         public string Fdate { get; set; }
         public int FbillerID { get; set; }
         public string Fstatus { get; set; }
-        public string FcustomerID { get; set; }
+        public int FcustomerID { get; set; }
         public int FmaterialID { get; set; }
         public int ForderNo { get; set; }
         public int ForderEntryID { get; set; }
