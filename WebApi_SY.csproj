@@ -401,7 +401,6 @@
     <Compile Include="Controllers\sli_prd_processTicket.cs" />
     <Compile Include="Controllers\sli_prd_pruductionPlanBController.cs" />
     <Compile Include="Controllers\sli_sale_taxtureController.cs" />
-    <Compile Include="Controllers\sli_testController.cs" />
     <Compile Include="Controllers\sli_workorderController.cs" />
     <Compile Include="Controllers\sli_workOrderListController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
@@ -433,7 +432,6 @@
     <Compile Include="Models\sli_prd_pruductionPlanB.cs" />
     <Compile Include="Models\sli_quality_request.cs" />
     <Compile Include="Models\sli_sale_taxture.cs" />
-    <Compile Include="Models\sli_test.cs" />
     <Compile Include="Models\sli_user.cs" />
     <Compile Include="Models\sli_workorder.cs" />
     <Compile Include="Models\sli_workOrderList.cs" />

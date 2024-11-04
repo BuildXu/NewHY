@@ -9,7 +9,7 @@ namespace WebApi_SY.Entity
 {
     public class YourDbContext:DbContext
     {
-        public DbSet<sli_test> Sli_test { get; set; }
+        //public DbSet<sli_test> Sli_test { get; set; }
 
         public DbSet<sli_plan_model> Sli_plan_model { get; set; }
         public DbSet<sli_plan_modelEntry> Sli_plan_modelEntry { get; set; }
