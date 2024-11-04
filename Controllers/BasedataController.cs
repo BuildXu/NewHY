@@ -93,7 +93,7 @@ namespace WebApi_SY.Controllers
         }
         [System.Web.Http.HttpPost]
         public async Task<object> Tech_option_Insert([Microsoft.AspNetCore.Mvc.FromBody] sli_bd_tech_option option)
-        {
+          {
             //string json = "{\"header\":{\"name\":\"Header Name\",\"details\":[{\"detailContent\":\"Detail 1\"},{\"detailContent\":\"Detail 2\"}]}}";
 
             //var root = JsonConvert.DeserializeObject<RootObject>(json);
@@ -103,12 +103,13 @@ namespace WebApi_SY.Controllers
                 //_context = context;
                 var header = new sli_bd_tech_option
                 {
-                    foptionNumber = option.foptionNumber,
-                    foptionName = option.foptionName,
-                    foptionNote = option.foptionNote,
-                    fexplanation = option.fexplanation,
-                    fnoties = option.fnoties
-                };
+                    fname = option.fname,
+                    fnumber = option.fnumber,
+                    fnote = option.fnote,
+                    fstatus = option.fstatus,
+                    fused = option.fused,
+                    fcreateDate = option.fcreateDate
+            };
                 _context.Sli_bd_tech_option.Add(header);
                 await _context.SaveChangesAsync();
                 var datas = new
@@ -163,13 +164,14 @@ namespace WebApi_SY.Controllers
                     //var Sli_plan_modelEntrys = _context.Sli_plan_modelEntry.Where(p => p.fmodelID == model.Id).ToList();
 
 
-                    Sli_bd_tech_options.foptionName = option.foptionName;
-                    Sli_bd_tech_options.foptionNumber = option.foptionNumber;
-                    Sli_bd_tech_options.foptionNote = option.foptionNote;
-                    Sli_bd_tech_options.fexplanation = option.fexplanation;
-                    Sli_bd_tech_options.fnoties = option.fnoties;
+                    Sli_bd_tech_options.fname = option.fname;
+                    Sli_bd_tech_options.fnumber = option.fnumber;
+                    Sli_bd_tech_options.fnote = option.fnote;
+                    Sli_bd_tech_options.fstatus = option.fstatus;
+                    Sli_bd_tech_options.fused = option.fused;
+                    Sli_bd_tech_options.fcreateDate = option.fcreateDate;
                     //Sli_bd_tech_options.fnote = model.fnote;
-                    
+
                     await _context.SaveChangesAsync();
 
                     var datas = new
@@ -198,25 +200,36 @@ namespace WebApi_SY.Controllers
         {
             try
             {
-                //var context = new YourDbContext();
+                var context = new YourDbContext();
                 //var entity = await context.Sli_plan_model.FindAsync(id);
                 //var headersToDelete = context.Sli_plan_model.Where(h => id.Contains(h.Id)).ToList();
-                var headersToDelete = _context.Sli_bd_tech_option.Where(h => id.Contains(h.id)).ToList();
-                if (headersToDelete == null)
+                foreach (var deleteid in id)
                 {
-                    var dataNull = new
+                   
+                    var entity = await context.Sli_bd_tech_option.FindAsync(deleteid);
+                    if (entity == null)
                     {
-                        code = 200,
-                        msg = "ok",
-                        //orderId = id.ToString(),
-                        date = id.ToString() + "不存在"
-                    };
-                    //string json = JsonConvert.SerializeObject(data);
-                    return dataNull;
+                        var dataNull = new
+                        {
+                            code = 200,
+                            msg = "ok",
+                            Id = id.ToString(),
+                            date = id.ToString() + "不存在"
+                        };
+                        //string json = JsonConvert.SerializeObject(data);
+                        return dataNull;
+                    }
+
+                    //var existingbill = context.Sli_bd_tech_option.Where(b => b.id == deleteid);
+                    context.Sli_bd_tech_option.RemoveRange(entity);
+                    
+
                 }
-                _context.Sli_bd_tech_option.RemoveRange(headersToDelete);
+
+
+                
                
-                await _context.SaveChangesAsync();
+                await context.SaveChangesAsync();
                 // var data = new { Status = "Success", Message = "Data retrieved successfully", Data = new { /* actual data here */ } };
                 var data = new
                 {
@@ -241,18 +254,18 @@ namespace WebApi_SY.Controllers
 
 
         }
-        public IHttpActionResult GetTableBytech_option(int page = 1, int pageSize = 10, string foptionNumber = null, string foptionName = null)
+        public IHttpActionResult GetTableBytech_option(int page = 1, int pageSize = 10, string FNumber = null, string FName = null)
         {
             IQueryable<sli_bd_tech_option> query = _context.Sli_bd_tech_option;
 
-            if (!string.IsNullOrEmpty(foptionNumber))
+            if (!string.IsNullOrEmpty(FNumber))
             {
-                query = query.Where(q => q.foptionNumber.Contains(foptionNumber));
+                query = query.Where(q => q.fnumber.Contains(FNumber));
             }
 
-            if (!string.IsNullOrEmpty(foptionName))
+            if (!string.IsNullOrEmpty(FName))
             {
-                query = query.Where(q => q.foptionName.Contains(foptionName));
+                query = query.Where(q => q.fname.Contains(FName));
             }
             var totalCount = query.Count(); //记录数
             var totalPages = (int)Math.Ceiling((double)totalCount / pageSize); // 页数

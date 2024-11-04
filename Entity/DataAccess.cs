@@ -9,7 +9,8 @@ namespace WebApi_SY.Entity
 {
     public class YourDbContext:DbContext
     {
-       
+        public DbSet<sli_test> Sli_test { get; set; }
+
         public DbSet<sli_plan_model> Sli_plan_model { get; set; }
         public DbSet<sli_plan_modelEntry> Sli_plan_modelEntry { get; set; }
 
@@ -43,6 +44,7 @@ namespace WebApi_SY.Entity
         public DbSet<sli_bd_employ> Sli_bd_employ { get; set; }
         public DbSet<sli_bd_planOption> Sli_bd_planOption { get; set; }
         public DbSet<sli_bd_tech_option> Sli_bd_tech_option { get; set; }   //技术选项
+        public DbSet<sli_bd_tech_option_view> Sli_bd_tech_option_view { get; set; }   //技术选项视图
 
         public DbSet<sli_bd_material_view> Sli_bd_material_view { get; set; }
 

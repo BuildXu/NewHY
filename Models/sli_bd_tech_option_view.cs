@@ -5,16 +5,15 @@ using System.Web;
 
 namespace WebApi_SY.Models
 {
-    //技术选项
-    public class sli_bd_tech_option
+    public class sli_bd_tech_option_view
     {
         public int id { get; set; }
         public string fnumber { get; set; }
         public string fname { get; set; }
+        public string fsumnumber { get; set; }
         public string fnote { get; set; }
         public int fstatus { get; set; }
         public int fused { get; set; }
         public string fcreateDate { get; set; }
-
     }
 }
