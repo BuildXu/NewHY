@@ -394,6 +394,11 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MyController.cs" />
     <Compile Include="Controllers\PlanController.cs" />
+    <Compile Include="Controllers\sli_bd_process_objectController.cs" />
+    <Compile Include="Controllers\sli_bd_process_optionController.cs" />
+    <Compile Include="Controllers\sli_bd_quality_objectController.cs" />
+    <Compile Include="Controllers\sli_bd_quality_optionController.cs" />
+    <Compile Include="Controllers\sli_bd_tech_objectController.cs" />
     <Compile Include="Controllers\sli_document_quality_standardController.cs" />
     <Compile Include="Controllers\sli_document_tech_saleController.cs" />
     <Compile Include="Controllers\sli_plan_billController.cs" />
@@ -418,6 +423,11 @@
     <Compile Include="Models\sli_bd_employ.cs" />
     <Compile Include="Models\sli_bd_materials_view.cs" />
     <Compile Include="Models\sli_bd_planOption.cs" />
+    <Compile Include="Models\sli_bd_process_object.cs" />
+    <Compile Include="Models\sli_bd_process_option.cs" />
+    <Compile Include="Models\sli_bd_quality_object.cs" />
+    <Compile Include="Models\sli_bd_quality_option.cs" />
+    <Compile Include="Models\sli_bd_tech_object.cs" />
     <Compile Include="Models\sli_bd_tech_option.cs" />
     <Compile Include="Models\sli_bd_tech_option_view.cs" />
     <Compile Include="Models\sli_dept_info.cs" />

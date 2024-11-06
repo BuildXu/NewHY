@@ -43,12 +43,15 @@ namespace WebApi_SY.Entity
         public DbSet<sli_dept_info> Sli_dept_info { get; set; }
         public DbSet<sli_bd_employ> Sli_bd_employ { get; set; }
         public DbSet<sli_bd_planOption> Sli_bd_planOption { get; set; }
-        public DbSet<sli_bd_tech_option> Sli_bd_tech_option { get; set; }   //技术选项
+        public DbSet<sli_bd_tech_option> Sli_bd_tech_option { get; set; }   //技术档案选项
         public DbSet<sli_bd_tech_option_view> Sli_bd_tech_option_view { get; set; }   //技术选项视图
+        public DbSet<sli_bd_materials_view> Sli_bd_materials_view { get; set; }   //物料代码视图
+        public DbSet<sli_bd_tech_object> Sli_bd_tech_object { get; set; }   //技术档案参数
+        public DbSet<sli_bd_quality_option> Sli_bd_quality_option { get; set; }   //质量标准选项
+        public DbSet<sli_bd_quality_object> Sli_bd_quality_object { get; set; }   //质量标准参数
+        public DbSet<sli_bd_process_option> Sli_bd_process_option { get; set; }   //工艺流程选项
+        public DbSet<sli_bd_process_object> Sli_bd_process_object { get; set; }   //工艺流程参数
 
-        public DbSet<sli_bd_materials_view> Sli_bd_materials_view { get; set; }
-
-        
         public DbSet<sli_document_tech_sale_view> Sli_document_tech_sale_view { get; set; }//产品技术档案表头视图
         public DbSet<sli_document_tech_saleBill_view> Sli_document_tech_saleBill_view { get; set; }//产品技术档案表头视图
         public DbSet<sli_document_tech_saleBillEntry_view> Sli_document_tech_saleBillEntry_view { get; set; }//产品技术档案表体2视图
