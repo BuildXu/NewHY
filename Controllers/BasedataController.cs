@@ -289,30 +289,30 @@ namespace WebApi_SY.Controllers
             return Json(response);
         }
 
-        [System.Web.Http.HttpGet]
-        public IHttpActionResult GetTableBybd_material(string FSumNumber = null)
-        {
-            var similarEntities = _context.Sli_bd_material_view
-            .Where(entity => entity.FSumNumber.Contains(FSumNumber) )
-            .ToList();
+        //[System.Web.Http.HttpGet]
+        //public IHttpActionResult GetTableBybd_material(string FSumNumber = null)
+        //{
+        //    var similarEntities = _context.Sli_bd_material_view
+        //    .Where(entity => entity.FSumNumber.Contains(FSumNumber) )
+        //    .ToList();
 
-            if (similarEntities.Count == 0)
-            {
-                return NotFound();
-            }
+        //    if (similarEntities.Count == 0)
+        //    {
+        //        return NotFound();
+        //    }
 
-            var response = new    // 定义 前端返回数据  总记录，总页，当前页 ，size,返回记录
-            {
-                code = 200,
-                msg = "OK",
-                data= similarEntities
+        //    var response = new    // 定义 前端返回数据  总记录，总页，当前页 ，size,返回记录
+        //    {
+        //        code = 200,
+        //        msg = "OK",
+        //        data= similarEntities
 
 
-            };
+        //    };
 
-            //return Json(response);
-            return Ok(response);
-        }
+        //    //return Json(response);
+        //    return Ok(response);
+        //}
 
 
         [System.Web.Http.HttpGet]
@@ -341,20 +341,29 @@ namespace WebApi_SY.Controllers
         }
 
         [System.Web.Http.HttpGet]
-        public IHttpActionResult GetTableBybd_material_view(int page = 1, int pageSize = 10, string FMaterialNumber = null, string FMaterialName = null)
+        public IHttpActionResult GetTableBybd_materials_view(int page = 1, int pageSize = 10, string Fdescription = null, string FName = null,string FsliDrawingNo=null, string FsliMetal = null)
         {
             try
             {
-                IQueryable<sli_bd_material_view> query = _context.Sli_bd_material_view;
+                var context = new YourDbContext();
+                IQueryable<sli_bd_materials_view> query = context.Sli_bd_materials_view;
 
-                if (!string.IsNullOrEmpty(FMaterialNumber))
+                if (!string.IsNullOrEmpty(Fdescription))
                 {
-                    query = query.Where(q => q.FMaterialNumber.Contains(FMaterialNumber));
+                    query = query.Where(q => q.Fdescription.Contains(Fdescription));
                 }
 
-                if (!string.IsNullOrEmpty(FMaterialName))
+                if (!string.IsNullOrEmpty(FName))
                 {
-                    query = query.Where(q => q.FMaterialName.Contains(FMaterialName));
+                    query = query.Where(q => q.Fname.Contains(FName));
+                }
+                if (!string.IsNullOrEmpty(FsliDrawingNo))
+                {
+                    query = query.Where(q => q.FsliDrawingNo.Contains(FsliDrawingNo));
+                }
+                if (!string.IsNullOrEmpty(FsliMetal))
+                {
+                    query = query.Where(q => q.FsliMetal.Contains(FsliMetal));
                 }
                 var totalCount = query.Count(); //记录数
                 var totalPages = (int)Math.Ceiling((double)totalCount / pageSize); // 页数
@@ -376,7 +385,7 @@ namespace WebApi_SY.Controllers
 
                 };
 
-                return Json(response);
+                return Json( response);
             }
             catch (Exception ex)
             {

@@ -46,7 +46,7 @@ namespace WebApi_SY.Entity
         public DbSet<sli_bd_tech_option> Sli_bd_tech_option { get; set; }   //技术选项
         public DbSet<sli_bd_tech_option_view> Sli_bd_tech_option_view { get; set; }   //技术选项视图
 
-        public DbSet<sli_bd_material_view> Sli_bd_material_view { get; set; }
+        public DbSet<sli_bd_materials_view> Sli_bd_materials_view { get; set; }
 
         
         public DbSet<sli_document_tech_sale_view> Sli_document_tech_sale_view { get; set; }//产品技术档案表头视图

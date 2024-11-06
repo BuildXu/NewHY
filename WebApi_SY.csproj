@@ -416,7 +416,7 @@
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\sli_bd_customer_view.cs" />
     <Compile Include="Models\sli_bd_employ.cs" />
-    <Compile Include="Models\sli_bd_material_view.cs" />
+    <Compile Include="Models\sli_bd_materials_view.cs" />
     <Compile Include="Models\sli_bd_planOption.cs" />
     <Compile Include="Models\sli_bd_tech_option.cs" />
     <Compile Include="Models\sli_bd_tech_option_view.cs" />
