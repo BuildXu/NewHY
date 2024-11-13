@@ -35,5 +35,6 @@ namespace WebApi_SY.Models
         public string FsliRoller { get; set; }    //轧辊
         public int FsliHeatingTimes { get; set; }    //火次
         public string FsliGrade { get; set; }    //锻件级别
+        public string FSumNumber { get; set; }    //物料名称+描述+图号+材质
     }
 }

@@ -324,7 +324,15 @@ namespace WebApi_SY.Controllers
 
             if (similarEntities.Count == 0)
             {
-                return NotFound();
+                var datanull = new    // 定义 前端返回数据  总记录，总页，当前页 ，size,返回记录
+                {
+                    code = 200,
+                    msg = "OK",
+                    data = "null"
+
+
+                };
+                return Ok(datanull);
             }
 
             var response = new    // 定义 前端返回数据  总记录，总页，当前页 ，size,返回记录
@@ -386,6 +394,47 @@ namespace WebApi_SY.Controllers
                 };
 
                 return Json( response);
+            }
+            catch (Exception ex)
+            {
+                return Json(ex.ToString());
+            }
+        }
+
+        [System.Web.Http.HttpGet]
+        public IHttpActionResult GetTableBybd_materials_view_FSumNumber( string FSumNumber=null)
+        {
+            try
+            {
+                var context = new YourDbContext();
+                IQueryable<sli_bd_materials_view> query = context.Sli_bd_materials_view;
+
+                if (!string.IsNullOrEmpty(FSumNumber))
+                {
+                    query = query.Where(q => q.FSumNumber.Contains(FSumNumber));
+                }
+
+                ///var totalCount = query.Count(); //记录数
+                //var totalPages = (int)Math.Ceiling((double)totalCount / pageSize); // 页数
+                //var paginatedQuery = query.Skip((page - 1) * pageSize).Take(pageSize); //  某页记录
+                                                                                       //var datas = query.ToList();
+                var response = new    // 定义 前端返回数据  总记录，总页，当前页 ，size,返回记录
+                {
+                    code = 200,
+                    msg = "OK",
+                    data = query
+                    //{
+                    //    //totalCounts = totalCount,
+                    //    //totalPagess = totalPages,
+                    //   // currentPages = page,
+                    //    //pageSizes = pageSize,
+                    //    data = query
+                    //}
+
+
+                };
+
+                return Json(response);
             }
             catch (Exception ex)
             {

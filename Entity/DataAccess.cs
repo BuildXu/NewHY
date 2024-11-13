@@ -43,6 +43,7 @@ namespace WebApi_SY.Entity
         public DbSet<sli_dept_info> Sli_dept_info { get; set; }
         public DbSet<sli_bd_employ> Sli_bd_employ { get; set; }
         public DbSet<sli_bd_planOption> Sli_bd_planOption { get; set; }
+        public DbSet<sli_bd_customer_view> Sli_bd_customer_view { get; set; }//客户模糊查询表
         public DbSet<sli_bd_tech_option> Sli_bd_tech_option { get; set; }   //技术档案选项
         public DbSet<sli_bd_tech_option_view> Sli_bd_tech_option_view { get; set; }   //技术选项视图
         public DbSet<sli_bd_materials_view> Sli_bd_materials_view { get; set; }   //物料代码视图
@@ -74,7 +75,9 @@ namespace WebApi_SY.Entity
         public DbSet<sli_document_quality_standardBillEntry_view> Sli_document_quality_standardBillEntry_view { get; set; }//质量标准表体2视图
         public DbSet<sli_document_quality_standardAttachment_view> Sli_document_quality_standardAttachment_view { get; set; }//质量标准附件视图
 
-        public DbSet<sli_bd_customer_view> Sli_bd_customer_view { get; set; }//客户模糊查询表
+        public DbSet<sli_sale_orderImportentry> Sli_sale_orderImportentry { get; set; }//销售订单导入表体
+        public DbSet<sli_sale_orderImport> Sli_sale_orderImport { get; set; }//销售订单导入表头
+        public DbSet<sli_sale_orderImport_view> Sli_sale_orderImport_view { get; set; }//销售订单导入视图
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -129,6 +132,11 @@ namespace WebApi_SY.Entity
                .HasOne(h => h.sli_document_tech_sale)
                .WithMany(d => d.sli_document_tech_saleAttachment)
                .HasForeignKey(d => d.fmainID);
+
+            modelBuilder.Entity<sli_sale_orderImportentry>()
+               .HasOne(h => h.sli_sale_orderImport)
+               .WithMany(d => d.sli_sale_orderImportentry)
+               .HasForeignKey(d => d.fid);
 
 
             //技术档案视图查询
