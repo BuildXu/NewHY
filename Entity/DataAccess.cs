@@ -79,6 +79,9 @@ namespace WebApi_SY.Entity
         public DbSet<sli_sale_orderImport> Sli_sale_orderImport { get; set; }//销售订单导入表头
         public DbSet<sli_sale_orderImport_view> Sli_sale_orderImport_view { get; set; }//销售订单导入视图
 
+        public DbSet<sli_sal_order_buss_view> Sli_sal_order_buss_view { get; set; }//销售订单关联客户视图
+        public DbSet<sli_sal_orderDocument> Sli_sal_orderDocument { get; set; }//销售订单表单合并
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //ConnectionStrings 19vs7gv47690.vicp.fun,46716

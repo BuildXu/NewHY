@@ -6,7 +6,7 @@ using System.Web;
 
 namespace WebApi_SY.Models
 {
-    public class sli_sal_orderimport
+    public class sli_sal_orderimport    //解析导入星空销售订单json
     {
         public List<string> NeedUpDateFields { get; set; }
         public List<string> NeedReturnFields { get; set; }
