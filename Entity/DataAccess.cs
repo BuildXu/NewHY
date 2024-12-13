@@ -83,6 +83,12 @@ namespace WebApi_SY.Entity
         public DbSet<sli_sale_orderImport_view> Sli_sale_orderImport_view { get; set; }//销售订单导入视图
 
         public DbSet<sli_sal_order_buss_view> Sli_sal_order_buss_view { get; set; }//销售订单关联客户视图
+
+
+        public DbSet<sli_sal_order_view> Sli_sal_order_view { get; set; }//销售订单关联客户视图
+
+        public DbSet<sli_sal_orderEntry_view> Sli_sal_orderEntry_view { get; set; }//销售订单关联客户视图
+
         public DbSet<sli_sal_orderDocument> Sli_sal_orderDocument { get; set; }//销售订单表单合并
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -101,6 +107,11 @@ namespace WebApi_SY.Entity
                .HasMany(h => h.sli_plan_modelEntry)
                .WithOne(d => d.sli_plan_model)
                .HasForeignKey(d => d.fmodelID);
+
+            modelBuilder.Entity<sli_sal_order_view>()
+              .HasMany(h => h.sli_sal_orderEntry_view)
+              .WithOne(d => d.sli_sal_order_view)
+              .HasForeignKey(d => d.FID);
 
             modelBuilder.Entity<sli_plan_bill>()
                .HasMany(h => h.sli_plan_billlEntry)
