@@ -103,8 +103,8 @@ namespace WebApi_SY.Controllers
                     };
                     return dataNull;
                 }
-                var Sli_sal_order_entries = context.sli_sal_orderEntry_view.Where(b => b.sli_sal_order_view.FID == id);
-                context.sli_sal_orderEntry_view.RemoveRange(Sli_sal_order_entries);
+                var Sli_sal_order_entries = context.Sli_sal_orderEntry_view.Where(b => b.sli_sal_order_view.FID == id);
+                context.Sli_sal_orderEntry_view.RemoveRange(Sli_sal_order_entries);
                 context.Sli_sal_order_view.Remove(entity);
                 await context.SaveChangesAsync();
                 var data = new
@@ -147,7 +147,7 @@ namespace WebApi_SY.Controllers
         {
             var context = new YourDbContext();
             var query = from p in context.Sli_sal_order_view
-                        join c in context.sli_sal_orderEntry_view on p.FID equals c.sli_sal_order_view.FID
+                        join c in context.Sli_sal_orderEntry_view on p.FID equals c.sli_sal_order_view.FID
                         select new
                         {
                             Sli_sal_order = p,
