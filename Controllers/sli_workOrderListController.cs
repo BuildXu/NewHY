@@ -147,5 +147,54 @@ namespace WebApi_SY.Controllers
                 return data;
             }
         }
+
+
+        [Microsoft.AspNetCore.Mvc.HttpGet]
+        public IHttpActionResult GetTable(int page = 1, int pageSize = 10, string forderEntryid = null, string fproductNumber = null, int? fworkOrderListStatus = null)
+        {
+            var context = new YourDbContext();
+            var query = from p in context.Sli_workOrderList
+                        select p;
+
+            if (!string.IsNullOrEmpty(forderEntryid))
+            {
+                query = query.Where(q => q.forderEntryid.Contains(forderEntryid));
+            }
+            if (!string.IsNullOrEmpty(fproductNumber))
+            {
+                query = query.Where(q => q.fproductNumber.Contains(fproductNumber));
+            }
+            if (fworkOrderListStatus.HasValue)
+            {
+                query = query.Where(q => q.fworkOrderListStatus == fworkOrderListStatus.Value);
+            }
+
+            var totalCount = query.Count();
+            var totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
+            var paginatedQuery = query.Skip((page - 1) * pageSize).Take(pageSize);
+            var result = paginatedQuery.Select(a => new
+            {
+                id = a.id,
+                forderEntryid = a.forderEntryid,
+                fmaterialid = a.fmaterialid,
+                fproductNumber = a.fproductNumber,
+                fworkQty = a.fworkQty,
+                fworkWeight = a.fworkWeight,
+                fnote = a.fnote,
+                fworkOrderListStatus = a.fworkOrderListStatus,
+                splittype = a.splittype
+            }).ToArray();
+
+            var response = new
+            {
+                totalCounts = totalCount,
+                totalPages = totalPages,
+                currentPage = page,
+                pageSize = pageSize,
+                data = result
+            };
+
+            return Ok(response);
+        }
     }
 }
