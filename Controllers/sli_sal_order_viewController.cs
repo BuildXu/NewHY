@@ -143,7 +143,7 @@ namespace WebApi_SY.Controllers
         }
 
         [Microsoft.AspNetCore.Mvc.HttpGet]
-        public IHttpActionResult GetTable(int page = 1, int pageSize = 10, string fbillNo = null, string fcustomer = null, string fcustName = null, string fcustNo = null)
+        public IHttpActionResult GetTable(int page = 1, int pageSize = 10, string fbillNo = null,  string fcustName = null, string fcustNo = null)
         {
             var context = new YourDbContext();
             var query = from p in context.Sli_sal_order_view
@@ -158,10 +158,8 @@ namespace WebApi_SY.Controllers
             {
                 query = query.Where(q => q.Sli_sal_order_view.FBILLNO.Contains(fbillNo));
             }
-            if (!string.IsNullOrEmpty(fcustomer))
-            {
-                query = query.Where(q => q.Sli_sal_order_view.FCUSTID.ToString().Contains(fcustomer));
-            }
+       
+          
             if (!string.IsNullOrEmpty(fcustName))
             {
                 query = query.Where(q => q.Sli_sal_order_view.FNAME.Contains(fcustName));
@@ -178,7 +176,7 @@ namespace WebApi_SY.Controllers
             {
                 id = a.Sli_sal_order_view != null ? a.Sli_sal_order_view.FID : 0,
                 fbillNo = a.Sli_sal_order_view != null ? a.Sli_sal_order_view.FBILLNO : string.Empty,
-                fdate = a.Sli_sal_order_view != null ? a.Sli_sal_order_view.FDATE : string.Empty,
+               // fdate = a.Sli_sal_order_view != null ? a.Sli_sal_order_view.FDATE : string.Empty,
                 fcustomer = a.Sli_sal_order_view != null ? a.Sli_sal_order_view.FCUSTID : 0,
                 fcustName = a.Sli_sal_order_view != null ? a.Sli_sal_order_view.FNAME : string.Empty,
                 fcustNo = a.Sli_sal_order_view != null ? a.Sli_sal_order_view.FNUMBER : string.Empty,
@@ -188,7 +186,7 @@ namespace WebApi_SY.Controllers
                 fseq = a.Sli_sal_orderEntry_view != null ? a.Sli_sal_orderEntry_view.FSEQ : 0,
                 fqty = a.Sli_sal_orderEntry_view != null ? a.Sli_sal_orderEntry_view.FQTY : 0,
                 fnote = a.Sli_sal_orderEntry_view != null ? a.Sli_sal_orderEntry_view.FNOTE : string.Empty,
-                fplanDeliveryDate = a.Sli_sal_orderEntry_view != null ? a.Sli_sal_orderEntry_view.FPLANDELIVERYDATE : string.Empty,
+               /// fplanDeliveryDate = a.Sli_sal_orderEntry_view != null ? a.Sli_sal_orderEntry_view.FPLANDELIVERYDATE : string.Empty,
                 fstockQty = a.Sli_sal_orderEntry_view != null ? a.Sli_sal_orderEntry_view.FSTOCKQTY : 0,
                 fmaterialId = a.Sli_sal_orderEntry_view != null ? a.Sli_sal_orderEntry_view.FmaterialID : 0,
                 fnumber = a.Sli_sal_orderEntry_view != null ? a.Sli_sal_orderEntry_view.Fnumber : string.Empty,
@@ -216,7 +214,7 @@ namespace WebApi_SY.Controllers
                 fsliRoller = a.Sli_sal_orderEntry_view != null ? a.Sli_sal_orderEntry_view.FsliRoller : string.Empty,
                 fsliHeatingTimes = a.Sli_sal_orderEntry_view != null ? a.Sli_sal_orderEntry_view.FsliHeatingTimes : 0,
                 fsliGrade = a.Sli_sal_orderEntry_view != null ? a.Sli_sal_orderEntry_view.FsliGrade : string.Empty,
-                fsumNumberEntry = a.Sli_sal_orderEntry_view != null ? a.Sli_sal_orderEntry_view.FSumNumber : 0
+                fsumNumberEntry = a.Sli_sal_orderEntry_view != null ? a.Sli_sal_orderEntry_view.FSumNumber : string.Empty
             }).ToArray();
 
             var response = new
