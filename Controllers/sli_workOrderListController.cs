@@ -150,23 +150,23 @@ namespace WebApi_SY.Controllers
 
 
         [Microsoft.AspNetCore.Mvc.HttpGet]
-        public IHttpActionResult GetTable(int page = 1, int pageSize = 10, string forderEntryid = null, string fproductNumber = null, int? fworkOrderListStatus = null)
+        public IHttpActionResult GetTable(int page = 1, int pageSize = 10, string billNo = null, int? customerId = null, string productName = null)
         {
             var context = new YourDbContext();
-            var query = from p in context.Sli_workOrderList
+            var query = from p in context.Sli_sal_orders_view
                         select p;
 
-            if (!string.IsNullOrEmpty(forderEntryid))
+            if (!string.IsNullOrEmpty(billNo))
             {
-                query = query.Where(q => q.forderEntryid.Contains(forderEntryid));
+                query = query.Where(q => q.BillNo.Contains(billNo));
             }
-            if (!string.IsNullOrEmpty(fproductNumber))
+            if (customerId.HasValue)
             {
-                query = query.Where(q => q.fproductNumber.Contains(fproductNumber));
+                query = query.Where(q => q.CustomerId == customerId.Value);
             }
-            if (fworkOrderListStatus.HasValue)
+            if (!string.IsNullOrEmpty(productName))
             {
-                query = query.Where(q => q.fworkOrderListStatus == fworkOrderListStatus.Value);
+                query = query.Where(q => q.ProductName.Contains(productName));
             }
 
             var totalCount = query.Count();
@@ -174,15 +174,46 @@ namespace WebApi_SY.Controllers
             var paginatedQuery = query.Skip((page - 1) * pageSize).Take(pageSize);
             var result = paginatedQuery.Select(a => new
             {
-                id = a.id,
-                forderEntryid = a.forderEntryid,
-                fmaterialid = a.fmaterialid,
-                fproductNumber = a.fproductNumber,
-                fworkQty = a.fworkQty,
-                fworkWeight = a.fworkWeight,
-                fnote = a.fnote,
-                fworkOrderListStatus = a.fworkOrderListStatus,
-                splittype = a.splittype
+                id = a.Id,
+                billNo = a.BillNo,
+                orderId = a.OrderId,
+                orderDate = a.OrderDate,
+                customerId = a.CustomerId,
+                customerName = a.CustomerName,
+                customerNumber = a.CustomerNumber,
+                entryId1 = a.EntryId1,
+                entryId2 = a.EntryId2,
+                sequence = a.Sequence,
+                quantity = a.Quantity,
+                stockQuantity = a.StockQuantity,
+                deliveryDate = a.DeliveryDate,
+                weightMaterial = a.WeightMaterial,
+                materialId = a.MaterialId,
+                productNumber = a.ProductNumber,
+                productName = a.ProductName,
+                productDescription = a.ProductDescription,
+                outerDiameter = a.OuterDiameter,
+                innerDiameter = a.InnerDiameter,
+                height = a.Height,
+                allowanceOD = a.AllowanceOD,
+                allowanceID = a.AllowanceID,
+                allowanceH = a.AllowanceH,
+                weightForging = a.WeightForging,
+                weightGoods = a.WeightGoods,
+                drawingNo = a.DrawingNo,
+                metal = a.Metal,
+                goodsStatus = a.GoodsStatus,
+                processingMethod = a.ProcessingMethod,
+                deliveryMethod = a.DeliveryMethod,
+                blankModel = a.BlankModel,
+                punchingModel = a.PunchingModel,
+                temperatureBegin = a.TemperatureBegin,
+                temperatureEnd = a.TemperatureEnd,
+                mould = a.Mould,
+                roller = a.Roller,
+                heatingTimes = a.HeatingTimes,
+                grade = a.Grade,
+                orderNote = a.OrderNote
             }).ToArray();
 
             var response = new

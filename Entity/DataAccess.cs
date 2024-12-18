@@ -89,6 +89,8 @@ namespace WebApi_SY.Entity
 
         public DbSet<sli_sal_orderEntry_view> Sli_sal_orderEntry_view { get; set; }//销售订单关联客户视图
 
+        public DbSet<sli_sal_orders_view> Sli_sal_orders_view { get; set; }//销售订单关联客户视图
+
         public DbSet<sli_sal_orderDocument> Sli_sal_orderDocument { get; set; }//销售订单表单合并
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
