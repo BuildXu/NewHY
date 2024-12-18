@@ -150,7 +150,7 @@ namespace WebApi_SY.Controllers
 
 
         [Microsoft.AspNetCore.Mvc.HttpGet]
-        public IHttpActionResult GetTable(int page = 1, int pageSize = 10, string billNo = null, int? customerId = null, string productName = null)
+        public IHttpActionResult GetTableOrders(int page = 1, int pageSize = 10, string billNo = null, int? customerId = null, string productName = null)
         {
             var context = new YourDbContext();
             var query = from p in context.Sli_sal_orders_view
