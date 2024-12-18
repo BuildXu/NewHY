@@ -56,6 +56,9 @@ namespace WebApi_SY.Models
         public int FsliHeatingTimes { get; set; }
         public string FsliGrade { get; set; }
         public string FSumNumber { get; set; }
+
+        public int FworkOrderListQty { get; set; }
+        public int FworkOrderListRemain { get; set; }
         public virtual sli_sal_order_view sli_sal_order_view { get; set; }
     }
 }
