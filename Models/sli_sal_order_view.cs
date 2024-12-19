@@ -46,7 +46,7 @@ namespace WebApi_SY.Models
         public string FsliMetal { get; set; }
         public string FsliGoodsStatus { get; set; }
         public string FsliProcessing { get; set; }
-        public string FsliDelivery { get; set; }
+        public string Fslidelivery { get; set; }
         public string Fsliblankmodel { get; set; }
         public string FsliPunching { get; set; }
         public decimal FsliTemperatureBegin { get; set; }

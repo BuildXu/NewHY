@@ -206,7 +206,7 @@ namespace WebApi_SY.Controllers
                 fSliMetal = a.Fslimetal,
                 fSliGoodsStatus = a.Fsligoodsstatus,
                 fSliProcessing = a.Fsliprocessing,
-                fSliDelivery = a.flside,
+                fSliDelivery = a.fSlidelivery,
                 fSliBlankModel = a.Fsliblankmodel,
                 fSliPunching = a.Fslipunching,
                 fSliTemperatureBegin = a.fslite,
