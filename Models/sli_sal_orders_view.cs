@@ -9,47 +9,45 @@ namespace WebApi_SY.Models
     public class sli_sal_orders_view
     {
         [Key]
-        public int FID { get; set; }
-        public string FBILLNO { get; set; }
-        public string FDATE { get; set; }
-        public int FCUSTID { get; set; }
-        public string fcustNo { get; set; }
-        public string fcustName { get; set; }
-        public string fcustomer { get; set; }
-        public int OrderId { get; set; }
+        public int Fid { get; set; }
+        public string Fbillno { get; set; }
+        public string Fdate { get; set; }
+        public int Fcustid { get; set; }
+        public string Fcustno { get; set; }
+        public string Fcustname { get; set; }
+        public string Fcustomer { get; set; }
+        public int Orderid { get; set; }
         [Key]
-        public int FENTRYID { get; set; }
-        public int FSEQ { get; set; }
-        public decimal FQTY { get; set; }
-        public string FNOTE { get; set; }
-        public string FPLANDELIVERYDATE { get; set; }
-        public decimal FSTOCKQTY { get; set; }
-        public int FmaterialID { get; set; }
+        public int Fentryid { get; set; }
+        public int Fseq { get; set; }
+        public decimal Fqty { get; set; }
+        public string Fnote { get; set; }
+        public string Fplandeliverydate { get; set; }
+        public decimal Fstockqty { get; set; }
+        public int Fmaterialid { get; set; }
         public string Fnumber { get; set; }
         public string Fname { get; set; }
         public string Fdescription { get; set; }
-        public decimal FsliOuterDiameter { get; set; }
-        public decimal FsliInnerDiameter { get; set; }
-        public decimal FsliHight { get; set; }
-        public decimal FsliAllowanceOD { get; set; }
-        public decimal FsliAllowanceID { get; set; }
-        public decimal fsliallowanceH { get; set; }
-        public decimal FsliWeightMaterial { get; set; }
-        public decimal FsliWeightForging { get; set; }
-        public decimal FsliWeightGoods { get; set; }
-        public string FsliDrawingNo { get; set; }
-        public string FsliMetal { get; set; }
-        public string FsliGoodsStatus { get; set; }
-        public string FsliProcessing { get; set; }
-        public string FsliDelivery { get; set; }
-        public string FsliBlankModel { get; set; }
-        public string FsliPunching { get; set; }
-        public decimal FsliTemperatureBegin { get; set; }
-        public decimal FsliTempratureEnd { get; set; }
-        public string FsliMould { get; set; }
-        public string FsliRoller { get; set; }
-        public int FsliHeatingTimes { get; set; }
-        public string FsliGrade { get; set; }
-        public string FSumNumber { get; set; }
+        public decimal Fsliouterdiameter { get; set; }
+        public decimal Fsliinnerdiameter { get; set; }
+        public decimal Fslihight { get; set; }
+        public decimal Fsliallowanceod { get; set; }
+        public decimal Fsliallowanceid { get; set; }
+        public decimal Fsliallowanceh { get; set; }
+        public decimal Fsliweightmaterial { get; set; }
+        public decimal Fsliweightforging { get; set; }
+        public decimal Fsliweightgoods { get; set; }
+        public string Fslirawingno { get; set; }
+        public string Fslimetal { get; set; }
+        public string Fsligoodsstatus { get; set; }
+        public string Fsliprocessing { get; set; }
+        public string Fsliedelivery { get; set; }
+        public string Fsliblankmodel { get; set; }
+        public string Fslipunching { get; set; }
+        public decimal Fslimold { get; set; }
+        public decimal Fsliroller { get; set; }
+        public int Fsliheatingtimes { get; set; }
+        public string Fsligrade { get; set; }
+        public string Fsumnumber { get; set; }
     }
 }
