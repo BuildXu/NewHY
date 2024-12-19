@@ -44,7 +44,7 @@ namespace WebApi_SY.Models
         public string Fsliedelivery { get; set; }
         public string Fsliblankmodel { get; set; }
         public string Fslipunching { get; set; }
-        public decimal Fslimold { get; set; }
+        public decimal Fslimould { get; set; }
         public decimal Fsliroller { get; set; }
         public int Fsliheatingtimes { get; set; }
         public string Fsligrade { get; set; }
