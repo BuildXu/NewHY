@@ -28,7 +28,7 @@ namespace WebApi_SY.Models
         public decimal FQTY { get; set; }
         public string FNOTE { get; set; }
         public string FPLANDELIVERYDATE { get; set; }
-        public decimal FSTOCKQTY { get; set; }
+        public decimal fstockqty { get; set; }
         public int FmaterialID { get; set; }
         public string Fnumber { get; set; }
         public string Fname { get; set; }
@@ -37,22 +37,22 @@ namespace WebApi_SY.Models
         public decimal FsliInnerDiameter { get; set; }
         public decimal FsliHight { get; set; }
         public decimal FsliAllowanceOD { get; set; }
-        public decimal FsliAllowanceID { get; set; }
+        public decimal FsliAllowanceid { get; set; }
         public decimal fsliallowanceH { get; set; }
-        public decimal FsliWeightMaterial { get; set; }
-        public decimal FsliWeightForging { get; set; }
+        public decimal FsliWeightmaterial { get; set; }
+        public decimal FsliWeightforging { get; set; }
         public decimal FsliWeightGoods { get; set; }
-        public string FsliDrawingNo { get; set; }
+        public string Fslidrawingno { get; set; }
         public string FsliMetal { get; set; }
         public string FsliGoodsStatus { get; set; }
         public string FsliProcessing { get; set; }
         public string FsliDelivery { get; set; }
-        public string FsliBlankModel { get; set; }
+        public string Fsliblankmodel { get; set; }
         public string FsliPunching { get; set; }
         public decimal FsliTemperatureBegin { get; set; }
         public decimal FsliTempratureEnd { get; set; }
-        public string FsliMould { get; set; }
-        public string FsliRoller { get; set; }
+        public string Fslimould { get; set; }
+        public string Fsliroller { get; set; }
         public int FsliHeatingTimes { get; set; }
         public string FsliGrade { get; set; }
         public string FSumNumber { get; set; }

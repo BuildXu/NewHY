@@ -149,25 +149,25 @@ namespace WebApi_SY.Controllers
         }
 
         [Microsoft.AspNetCore.Mvc.HttpGet]
-        public IHttpActionResult GetTableOrders(int page = 1, int pageSize = 10, string fbillNo = null, string fcustNo = null, string fproductName = null)
+        public IHttpActionResult GetTableOrders(int page = 1, int pageSize = 10, string fBillNo = null, string fCustNo = null, string fProductName = null)
         {
             var context = new YourDbContext();
             var query = from p in context.Sli_sal_orders_view
                         select p;
 
-            if (!string.IsNullOrEmpty(fbillNo))
+            if (!string.IsNullOrEmpty(fBillNo))
             {
-                query = query.Where(q => q.FBILLNO.Contains(fbillNo));
+                query = query.Where(q => q.Fbillno.Contains(fBillNo));
             }
 
-            if (!string.IsNullOrEmpty(fcustNo))
+            if (!string.IsNullOrEmpty(fCustNo))
             {
-                query = query.Where(q => q.fcustNo.Contains(fcustNo));
+                query = query.Where(q => q.Fcustno.Contains(fCustNo));
             }
-        
-            if (!string.IsNullOrEmpty(fproductName))
+
+            if (!string.IsNullOrEmpty(fProductName))
             {
-                query = query.Where(q => q.Fname.Contains(fproductName));
+                query = query.Where(q => q.Fname.Contains(fProductName));
             }
 
             var totalCount = query.Count();
@@ -175,34 +175,34 @@ namespace WebApi_SY.Controllers
             var paginatedQuery = query.Skip((page - 1) * pageSize).Take(pageSize);
             var result = paginatedQuery.Select(a => new
             {
-                fId = a.FID,
-                fbillNo = a.FBILLNO,
-                fOrderId = a.OrderId,
-                fDate = a.FDATE,
-                fcustId = a.FCUSTID,
-                fcustName = a.fcustName,
-                fcustNo = a.fcustNo,
-                fcustomer = a.fcustomer,
-                fEntryId = a.FENTRYID,
-                fSeq = a.FSEQ,
-                fQty = a.FQTY,
-                fNote = a.FNOTE,
-                fPlanDeliveryDate = a.FPLANDELIVERYDATE,
-                fStockQty = a.FSTOCKQTY,
-                fmaterialId = a.FmaterialID,
+                fId = a.Fid,
+                fBillNo = a.Fbillno,
+                fOrderId = a.Orderid,
+                fDate = a.Fdate,
+                fCustId = a.Fcustid,
+                fCustName = a.Fcustname,
+                fCustNo = a.Fcustno,
+                fCustomer = a.Fcustomer,
+                fEntryId = a.Fentryid,
+                fSeq = a.Fseq,
+                fQty = a.Fqty,
+                fNote = a.Fnote,
+                fPlanDeliveryDate = a.Fplandeliverydate,
+                fStockQty = a.Fstockqty,
+                fMaterialId = a.Fmaterialid,
                 fNumber = a.Fnumber,
                 fName = a.Fname,
                 fDescription = a.Fdescription,
-                fSliOuterDiameter = a.FsliOuterDiameter,
-                fSliInnerDiameter = a.FsliInnerDiameter,
-                fSliHight = a.FsliHight,
-                fSliAllowanceOD = a.FsliAllowanceOD,
-                fSliAllowanceID = a.FsliAllowanceID,
-                fsliAllowanceH = a.fsliallowanceH,
-                fSliWeightMaterial = a.FsliWeightMaterial,
-                fSliWeightForging = a.FsliWeightForging,
-                fSliWeightGoods = a.FsliWeightGoods,
-                fSliDrawingNo = a.FsliDrawingNo,
+                fSliOuterDiameter = a.Fsliouterdiameter,
+                fSliInnerDiameter = a.Fsliinnerdiameter,
+                fSliHight = a.Fslihight,
+                fSliAllowanceOD = a.Fsliallowanceod,
+                fSliAllowanceID = a.Fsliallowanceid,
+                fSliAllowanceH = a.Fsliallowanceh,
+                fSliWeightMaterial = a.Fsliweightmaterial,
+                fSliWeightForging = a.Fsliweightforging,
+                fSliWeightGoods = a.Fsliweightgoods,
+                fSliDrawingNo = a.Fslidrawingno,
                 fSliMetal = a.FsliMetal,
                 fSliGoodsStatus = a.FsliGoodsStatus,
                 fSliProcessing = a.FsliProcessing,
