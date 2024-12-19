@@ -9,45 +9,47 @@ namespace WebApi_SY.Models
     public class sli_sal_orders_view
     {
         [Key]
-        public int Id { get; set; }
-        public string BillNo { get; set; }
+        public int FID { get; set; }
+        public string FBILLNO { get; set; }
+        public string FDATE { get; set; }
+        public int FCUSTID { get; set; }
+        public string fcustNo { get; set; }
+        public string fcustName { get; set; }
+        public string fcustomer { get; set; }
         public int OrderId { get; set; }
-        public string OrderDate { get; set; }
-        public int CustomerId { get; set; }
-        public string CustomerName { get; set; }
-        public string CustomerNumber { get; set; }
-        public int EntryId1 { get; set; }
-        public int EntryId2 { get; set; }
-        public int Sequence { get; set; }
-        public decimal Quantity { get; set; }
-        public decimal? StockQuantity { get; set; }
-        public string DeliveryDate { get; set; }
-        public decimal WeightMaterial { get; set; }
-        public int MaterialId { get; set; }
-        public string ProductNumber { get; set; }
-        public string ProductName { get; set; }
-        public string ProductDescription { get; set; }
-        public decimal OuterDiameter { get; set; }
-        public decimal InnerDiameter { get; set; }
-        public decimal Height { get; set; }
-        public decimal AllowanceOD { get; set; }
-        public decimal AllowanceID { get; set; }
-        public decimal AllowanceH { get; set; }
-        public decimal WeightForging { get; set; }
-        public decimal WeightGoods { get; set; }
-        public string DrawingNo { get; set; }
-        public string Metal { get; set; }
-        public string GoodsStatus { get; set; }
-        public string ProcessingMethod { get; set; }
-        public string DeliveryMethod { get; set; }
-        public string BlankModel { get; set; }
-        public string PunchingModel { get; set; }
-        public decimal TemperatureBegin { get; set; }
-        public decimal TemperatureEnd { get; set; }
-        public string Mould { get; set; }
-        public string Roller { get; set; }
-        public int HeatingTimes { get; set; }
-        public string Grade { get; set; }
-        public string OrderNote { get; set; }
+        [Key]
+        public int FENTRYID { get; set; }
+        public int FSEQ { get; set; }
+        public decimal FQTY { get; set; }
+        public string FNOTE { get; set; }
+        public string FPLANDELIVERYDATE { get; set; }
+        public decimal FSTOCKQTY { get; set; }
+        public int FmaterialID { get; set; }
+        public string Fnumber { get; set; }
+        public string Fname { get; set; }
+        public string Fdescription { get; set; }
+        public decimal FsliOuterDiameter { get; set; }
+        public decimal FsliInnerDiameter { get; set; }
+        public decimal FsliHight { get; set; }
+        public decimal FsliAllowanceOD { get; set; }
+        public decimal FsliAllowanceID { get; set; }
+        public decimal fsliallowanceH { get; set; }
+        public decimal FsliWeightMaterial { get; set; }
+        public decimal FsliWeightForging { get; set; }
+        public decimal FsliWeightGoods { get; set; }
+        public string FsliDrawingNo { get; set; }
+        public string FsliMetal { get; set; }
+        public string FsliGoodsStatus { get; set; }
+        public string FsliProcessing { get; set; }
+        public string FsliDelivery { get; set; }
+        public string FsliBlankModel { get; set; }
+        public string FsliPunching { get; set; }
+        public decimal FsliTemperatureBegin { get; set; }
+        public decimal FsliTempratureEnd { get; set; }
+        public string FsliMould { get; set; }
+        public string FsliRoller { get; set; }
+        public int FsliHeatingTimes { get; set; }
+        public string FsliGrade { get; set; }
+        public string FSumNumber { get; set; }
     }
 }
