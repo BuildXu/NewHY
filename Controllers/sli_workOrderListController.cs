@@ -149,7 +149,7 @@ namespace WebApi_SY.Controllers
         }
 
         [Microsoft.AspNetCore.Mvc.HttpGet]
-        public IHttpActionResult GetTableOrders(int page = 1, int pageSize = 10, string fbillNo = null, int? fcustId = null, string fproductName = null)
+        public IHttpActionResult GetTableOrders(int page = 1, int pageSize = 10, string fbillNo = null, string fcustNo = null, string fproductName = null)
         {
             var context = new YourDbContext();
             var query = from p in context.Sli_sal_orders_view
@@ -159,10 +159,12 @@ namespace WebApi_SY.Controllers
             {
                 query = query.Where(q => q.FBILLNO.Contains(fbillNo));
             }
-            if (fcustId.HasValue)
+
+            if (!string.IsNullOrEmpty(fcustNo))
             {
-                query = query.Where(q => q.FCUSTID == fcustId.Value);
+                query = query.Where(q => q.fcustNo.Contains(fcustNo));
             }
+        
             if (!string.IsNullOrEmpty(fproductName))
             {
                 query = query.Where(q => q.Fname.Contains(fproductName));
