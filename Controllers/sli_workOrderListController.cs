@@ -148,25 +148,24 @@ namespace WebApi_SY.Controllers
             }
         }
 
-
         [Microsoft.AspNetCore.Mvc.HttpGet]
-        public IHttpActionResult GetTableOrders(int page = 1, int pageSize = 10, string billNo = null, int? customerId = null, string productName = null)
+        public IHttpActionResult GetTableOrders(int page = 1, int pageSize = 10, string fbillNo = null, int? fcustId = null, string fproductName = null)
         {
             var context = new YourDbContext();
             var query = from p in context.Sli_sal_orders_view
                         select p;
 
-            if (!string.IsNullOrEmpty(billNo))
+            if (!string.IsNullOrEmpty(fbillNo))
             {
-                query = query.Where(q => q.BillNo.Contains(billNo));
+                query = query.Where(q => q.FBILLNO.Contains(fbillNo));
             }
-            if (customerId.HasValue)
+            if (fcustId.HasValue)
             {
-                query = query.Where(q => q.CustomerId == customerId.Value);
+                query = query.Where(q => q.FCUSTID == fcustId.Value);
             }
-            if (!string.IsNullOrEmpty(productName))
+            if (!string.IsNullOrEmpty(fproductName))
             {
-                query = query.Where(q => q.ProductName.Contains(productName));
+                query = query.Where(q => q.Fname.Contains(fproductName));
             }
 
             var totalCount = query.Count();
@@ -174,46 +173,47 @@ namespace WebApi_SY.Controllers
             var paginatedQuery = query.Skip((page - 1) * pageSize).Take(pageSize);
             var result = paginatedQuery.Select(a => new
             {
-                id = a.Id,
-                billNo = a.BillNo,
-                orderId = a.OrderId,
-                orderDate = a.OrderDate,
-                customerId = a.CustomerId,
-                customerName = a.CustomerName,
-                customerNumber = a.CustomerNumber,
-                entryId1 = a.EntryId1,
-                entryId2 = a.EntryId2,
-                sequence = a.Sequence,
-                quantity = a.Quantity,
-                stockQuantity = a.StockQuantity,
-                deliveryDate = a.DeliveryDate,
-                weightMaterial = a.WeightMaterial,
-                materialId = a.MaterialId,
-                productNumber = a.ProductNumber,
-                productName = a.ProductName,
-                productDescription = a.ProductDescription,
-                outerDiameter = a.OuterDiameter,
-                innerDiameter = a.InnerDiameter,
-                height = a.Height,
-                allowanceOD = a.AllowanceOD,
-                allowanceID = a.AllowanceID,
-                allowanceH = a.AllowanceH,
-                weightForging = a.WeightForging,
-                weightGoods = a.WeightGoods,
-                drawingNo = a.DrawingNo,
-                metal = a.Metal,
-                goodsStatus = a.GoodsStatus,
-                processingMethod = a.ProcessingMethod,
-                deliveryMethod = a.DeliveryMethod,
-                blankModel = a.BlankModel,
-                punchingModel = a.PunchingModel,
-                temperatureBegin = a.TemperatureBegin,
-                temperatureEnd = a.TemperatureEnd,
-                mould = a.Mould,
-                roller = a.Roller,
-                heatingTimes = a.HeatingTimes,
-                grade = a.Grade,
-                orderNote = a.OrderNote
+                fId = a.FID,
+                fbillNo = a.FBILLNO,
+                fOrderId = a.OrderId,
+                fDate = a.FDATE,
+                fcustId = a.FCUSTID,
+                fcustName = a.fcustName,
+                fcustNo = a.fcustNo,
+                fcustomer = a.fcustomer,
+                fEntryId = a.FENTRYID,
+                fSeq = a.FSEQ,
+                fQty = a.FQTY,
+                fNote = a.FNOTE,
+                fPlanDeliveryDate = a.FPLANDELIVERYDATE,
+                fStockQty = a.FSTOCKQTY,
+                fmaterialId = a.FmaterialID,
+                fNumber = a.Fnumber,
+                fName = a.Fname,
+                fDescription = a.Fdescription,
+                fSliOuterDiameter = a.FsliOuterDiameter,
+                fSliInnerDiameter = a.FsliInnerDiameter,
+                fSliHight = a.FsliHight,
+                fSliAllowanceOD = a.FsliAllowanceOD,
+                fSliAllowanceID = a.FsliAllowanceID,
+                fsliAllowanceH = a.fsliallowanceH,
+                fSliWeightMaterial = a.FsliWeightMaterial,
+                fSliWeightForging = a.FsliWeightForging,
+                fSliWeightGoods = a.FsliWeightGoods,
+                fSliDrawingNo = a.FsliDrawingNo,
+                fSliMetal = a.FsliMetal,
+                fSliGoodsStatus = a.FsliGoodsStatus,
+                fSliProcessing = a.FsliProcessing,
+                fSliDelivery = a.FsliDelivery,
+                fSliBlankModel = a.FsliBlankModel,
+                fSliPunching = a.FsliPunching,
+                fSliTemperatureBegin = a.FsliTemperatureBegin,
+                fSliTempratureEnd = a.FsliTempratureEnd,
+                fSliMould = a.FsliMould,
+                fSliRoller = a.FsliRoller,
+                fSliHeatingTimes = a.FsliHeatingTimes,
+                fSliGrade = a.FsliGrade,
+                fSumNumber = a.FSumNumber
             }).ToArray();
 
             var response = new
