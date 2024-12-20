@@ -15,7 +15,7 @@ namespace WebApi_SY.Models
             string newfproductNumber = fproductNumber+"-1";
             //DbSet Sli_workOrderListall = context.Sli_workOrderList;
             //var Sli_workOrderListAll= context.Sli_workOrderList;
-            var fproductNumberSQL = context.Sli_workOrderList.FirstOrDefault(p => p.fproductNumber == newfproductNumber);
+            var fproductNumberSQL = context.Sli_workOrderList.FirstOrDefault(p => p.Fproductno == newfproductNumber);
             context.Dispose();
             if (fproductNumberSQL != null)
             {
@@ -26,8 +26,8 @@ namespace WebApi_SY.Models
                 using (var context1 = new YourDbContext())
                 {
                      maxValue = context1.Sli_workOrderList
-                   .Where(e => e.fproductNumber.Contains(fproductNumber))
-                   .Max(e => e.fproductNumber) ;
+                   .Where(e => e.Fproductno.Contains(fproductNumber))
+                   .Max(e => e.Fproductno) ;
 
                 }
                     

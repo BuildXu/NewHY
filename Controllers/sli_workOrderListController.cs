@@ -36,7 +36,7 @@ namespace WebApi_SY.Controllers
                         Fworkqty = WList.Fworkqty,
                         Fworkweight = WList.Fworkweight,
                         Fnote = WList.Fnote,
-                        FworkOrderliststatus = WList.FworkOrderliststatus,
+                        Fworkorderliststatus = WList.Fworkorderliststatus,
                         Fsplittype = WList.Fsplittype
                     };
 
