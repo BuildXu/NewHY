@@ -30,14 +30,14 @@ namespace WebApi_SY.Controllers
                 {
                     var insert = new sli_workOrderList
                     {
-                        fproductNumber = maxfproductNumber.IncrementAfterLastSpecialCharacter(WList.fproductNumber),
-                        forderEntryid = WList.forderEntryid,
-                        fmaterialid = WList.fmaterialid,
-                        fworkQty = WList.fworkQty,
-                        fworkWeight = WList.fworkWeight,
-                        fnote = WList.fnote,
-                        fworkOrderListStatus = WList.fworkOrderListStatus,
-                        splittype = WList.splittype
+                        Fproductno = maxfproductNumber.IncrementAfterLastSpecialCharacter(WList.Fproductno),
+                        Forderentryid = WList.Forderentryid,
+                        Fmaterialid = WList.Fmaterialid,
+                        Fworkqty = WList.Fworkqty,
+                        Fworkweight = WList.Fworkweight,
+                        Fnote = WList.Fnote,
+                        FworkOrderliststatus = WList.FworkOrderliststatus,
+                        Fsplittype = WList.Fsplittype
                     };
 
                     context.Sli_workOrderList.Add(insert);
@@ -47,14 +47,14 @@ namespace WebApi_SY.Controllers
 
 
 
-                    var entityToUpdate = context.T_sal_orderEntry.FirstOrDefault(p => p.FENTRYID == Convert.ToInt32(WList.forderEntryid));
-                    if (WList.splittype != "样品")
+                    var entityToUpdate = context.T_sal_orderEntry.FirstOrDefault(p => p.FENTRYID == Convert.ToInt32(WList.Forderentryid));
+                    if (WList.Fsplittype != "样品")
                     {
                         if (entityToUpdate != null)
                         {
                             // 累加字段值
-                            entityToUpdate.FWORKORDERLISTQTY += Convert.ToInt32(WList.fworkQty);
-                            entityToUpdate.FWORKORDERLISTREMAIN -= Convert.ToInt32(WList.fworkQty);
+                            entityToUpdate.FWORKORDERLISTQTY += Convert.ToInt32(WList.Fworkqty);
+                            entityToUpdate.FWORKORDERLISTREMAIN -= Convert.ToInt32(WList.Fworkqty);
                             // 保存更改
                             //_context.SaveChanges();
                         }
