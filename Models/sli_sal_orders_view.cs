@@ -44,10 +44,12 @@ namespace WebApi_SY.Models
         public string Fsliedelivery { get; set; }
         public string Fsliblankmodel { get; set; }
         public string Fslipunching { get; set; }
-        public decimal Fslimould { get; set; }
+        public decimal Fslimould { get; set; }//test
         public decimal Fsliroller { get; set; }
         public int Fsliheatingtimes { get; set; }
         public string Fsligrade { get; set; }
         public string Fsumnumber { get; set; }
+        public int Fworkorderlistqty { get; set; }
+        public int Fworkorderlistremain { get; set; }
     }
 }

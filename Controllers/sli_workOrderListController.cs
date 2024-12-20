@@ -207,14 +207,16 @@ namespace WebApi_SY.Controllers
                 Fsliprocessing = a.Fsliprocessing,
                 Fsliedelivery = a.Fsliedelivery,
                 Fsliblankmodel = a.Fsliblankmodel,
-                FsliPunching = a.Fslipunching,
-                FsliTemperatureBegin = a.Fslimould,
-                FsliTempratureEnd = a.Fsliroller,
-                FsliMould = a.Fslimould,
-                FsliRoller = a.Fsliroller,
-                FsliHeatingTimes = a.Fsliheatingtimes,
-                FsliGrade = a.Fsligrade,
-                Fsumnumber = a.Fsumnumber
+                Fslipunching = a.Fslipunching,
+                Fslitemperaturebegin = a.Fslimould,
+                Fslitempratureend = a.Fsliroller,
+                Fslimould = a.Fslimould,
+                Fsliroller = a.Fsliroller,
+                Fsliheatingtimes = a.Fsliheatingtimes,
+                Fsligrade = a.Fsligrade,
+                Fsumnumber = a.Fsumnumber,
+                FworkOrderListqty=a.Fworkorderlistqty,
+                FworkOrderListremain=a.Fworkorderlistremain
             }).ToArray();
 
             var response = new
