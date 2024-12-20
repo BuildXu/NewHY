@@ -11,7 +11,7 @@ namespace WebApi_SY.Models
         
         public int Fid { get; set; }
         public string Fbillno { get; set; }
-        public string Fdate { get; set; }
+        public DateTime Fdate { get; set; }
         public int Fcustid { get; set; }
         public string Fcustno { get; set; }
         public string Fcustname { get; set; }

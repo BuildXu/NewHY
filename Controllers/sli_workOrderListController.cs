@@ -148,20 +148,26 @@ namespace WebApi_SY.Controllers
             }
         }
         [Microsoft.AspNetCore.Mvc.HttpGet]
-        public IHttpActionResult GetTableOrders(int page = 1, int pageSize = 10, string fBillNo = null, string fCustNo = null, string fProductName = null)
+        public IHttpActionResult GetTableOrders(int Page = 1, int PageSize = 10, string Fbillno = null, string Fcustno = null,
+     string Fcustname = null, string Fstartdate = null, string Fenddate = null, string fProductName = null)
         {
             var context = new YourDbContext();
             var query = from p in context.Sli_sal_orders_view
                         select p;
 
-            if (!string.IsNullOrEmpty(fBillNo))
+            if (!string.IsNullOrEmpty(Fbillno))
             {
-                query = query.Where(q => q.Fbillno.Contains(fBillNo));
+                query = query.Where(q => q.Fbillno.Contains(Fbillno));
             }
 
-            if (!string.IsNullOrEmpty(fCustNo))
+            if (!string.IsNullOrEmpty(Fcustno))
             {
-                query = query.Where(q => q.Fcustno.Contains(fCustNo));
+                query = query.Where(q => q.Fcustno.Contains(Fcustno));
+            }
+
+            if (!string.IsNullOrEmpty(Fcustname))
+            {
+                query = query.Where(q => q.Fcustname.Contains(Fcustname));
             }
 
             if (!string.IsNullOrEmpty(fProductName))
@@ -169,9 +175,30 @@ namespace WebApi_SY.Controllers
                 query = query.Where(q => q.Fname.Contains(fProductName));
             }
 
+            if (!string.IsNullOrEmpty(Fstartdate) && !string.IsNullOrEmpty(Fenddate))
+            {
+                // 将字符串类型的日期转换为 DateTime 类型
+                DateTime startDate = DateTime.Parse(Fstartdate);
+                DateTime endDate = DateTime.Parse(Fenddate);
+               
+                query = query.Where(q =>  q.Fdate >= startDate && q.Fdate <= endDate);
+            }
+            else if (!string.IsNullOrEmpty(Fstartdate))
+            {
+                // 将字符串类型的开始日期转换为 DateTime 类型
+                DateTime startDate = DateTime.Parse(Fstartdate);
+                query = query.Where(q => q.Fdate >= startDate);
+            }
+            else if (!string.IsNullOrEmpty(Fenddate))
+            {
+                // 将字符串类型的结束日期转换为 DateTime 类型
+                DateTime endDate = DateTime.Parse(Fenddate);
+                query = query.Where(q => q.Fdate <= endDate);
+            }
+
             var totalCount = query.Count();
-            var totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
-            var paginatedQuery = query.Skip((page - 1) * pageSize).Take(pageSize);
+            var totalPages = (int)Math.Ceiling((double)totalCount / PageSize);
+            var paginatedQuery = query.Skip((Page - 1) * PageSize).Take(PageSize);
             var result = paginatedQuery.Select(a => new
             {
                 Fid = a.Fid,
@@ -215,17 +242,17 @@ namespace WebApi_SY.Controllers
                 Fsliheatingtimes = a.Fsliheatingtimes,
                 Fsligrade = a.Fsligrade,
                 Fsumnumber = a.Fsumnumber,
-                Fworkorderlistqty=a.Fworkorderlistqty,
-                Fworkorderlistremain=a.Fworkorderlistremain,
-                Fworkorderliststatus=a.Fworkorderliststatus
+                Fworkorderlistqty = a.Fworkorderlistqty,
+                Fworkorderlistremain = a.Fworkorderlistremain,
+                Fworkorderliststatus = a.Fworkorderliststatus
             }).ToArray();
 
             var response = new
             {
                 totalCounts = totalCount,
                 totalPages = totalPages,
-                currentPage = page,
-                pageSize = pageSize,
+                currentPage = Page,
+                pageSize = PageSize,
                 data = result
             };
 
