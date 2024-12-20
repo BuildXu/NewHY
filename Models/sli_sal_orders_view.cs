@@ -8,7 +8,7 @@ namespace WebApi_SY.Models
 {
     public class sli_sal_orders_view
     {
-        [Key]
+        
         public int Fid { get; set; }
         public string Fbillno { get; set; }
         public string Fdate { get; set; }
