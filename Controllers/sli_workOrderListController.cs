@@ -112,14 +112,14 @@ namespace WebApi_SY.Controllers
                 context.Sli_workOrderList.Remove(entity);
                 await context.SaveChangesAsync();
 
-                var entityToUpdate = context.T_sal_orderEntry.FirstOrDefault(p => p.FENTRYID == Convert.ToInt32(entity.forderEntryid));
-                if (entity.splittype != "样品")
+                var entityToUpdate = context.T_sal_orderEntry.FirstOrDefault(p => p.FENTRYID == Convert.ToInt32(entity.Forderentryid));
+                if (entity.Fsplittype != "样品")
                 {
                     if (entityToUpdate != null)
                     {
                         // 累加字段值
-                        entityToUpdate.FWORKORDERLISTQTY -= Convert.ToInt32(entity.fworkQty);
-                        entityToUpdate.FWORKORDERLISTREMAIN += Convert.ToInt32(entity.fworkQty);
+                        entityToUpdate.FWORKORDERLISTQTY -= Convert.ToInt32(entity.Fworkqty);
+                        entityToUpdate.FWORKORDERLISTREMAIN += Convert.ToInt32(entity.Fworkqty);
                         // 保存更改
                         //_context.SaveChanges();
                     }
@@ -149,7 +149,7 @@ namespace WebApi_SY.Controllers
         }
         [Microsoft.AspNetCore.Mvc.HttpGet]
         public IHttpActionResult GetTableOrders(int Page = 1, int PageSize = 10, string Fbillno = null, string Fcustno = null,
-    string Fcustname = null, DateTime? Fstartdate = null, DateTime? Fenddate = null, string fProductName = null)
+      string Fcustname = null, DateTime? Fstartdate = null, DateTime? Fenddate = null, string fProductName = null)
         {
             var context = new YourDbContext();
             var query = from p in context.Sli_sal_orders_view
@@ -241,11 +241,15 @@ namespace WebApi_SY.Controllers
 
             var response = new
             {
-                totalCounts = totalCount,
-                totalPages = totalPages,
-                currentPage = Page,
-                pageSize = PageSize,
-                data = result
+                code = 200,
+                msg = "操作成功",
+                data = new
+                {
+                    data = result,
+                    current = Page,
+                    pageSize = PageSize,
+                    totalCounts = totalCount
+                }
             };
 
             return Ok(response);
