@@ -149,7 +149,7 @@ namespace WebApi_SY.Controllers
         }
         [Microsoft.AspNetCore.Mvc.HttpGet]
         public IHttpActionResult GetTableOrders(int Page = 1, int PageSize = 10, string Fbillno = null, string Fcustno = null,
-     string Fcustname = null, string Fstartdate = null, string Fenddate = null, string fProductName = null)
+    string Fcustname = null, DateTime? Fstartdate = null, DateTime? Fenddate = null, string fProductName = null)
         {
             var context = new YourDbContext();
             var query = from p in context.Sli_sal_orders_view
@@ -175,25 +175,17 @@ namespace WebApi_SY.Controllers
                 query = query.Where(q => q.Fname.Contains(fProductName));
             }
 
-            if (!string.IsNullOrEmpty(Fstartdate) && !string.IsNullOrEmpty(Fenddate))
+            if (Fstartdate.HasValue && Fenddate.HasValue)
             {
-                // 将字符串类型的日期转换为 DateTime 类型
-                DateTime startDate = DateTime.Parse(Fstartdate);
-                DateTime endDate = DateTime.Parse(Fenddate);
-               
-                query = query.Where(q =>  q.Fdate >= startDate && q.Fdate <= endDate);
+                query = query.Where(q => q.Fdate >= Fstartdate.Value && q.Fdate <= Fenddate.Value);
             }
-            else if (!string.IsNullOrEmpty(Fstartdate))
+            else if (Fstartdate.HasValue)
             {
-                // 将字符串类型的开始日期转换为 DateTime 类型
-                DateTime startDate = DateTime.Parse(Fstartdate);
-                query = query.Where(q => q.Fdate >= startDate);
+                query = query.Where(q => q.Fdate >= Fstartdate.Value);
             }
-            else if (!string.IsNullOrEmpty(Fenddate))
+            else if (Fenddate.HasValue)
             {
-                // 将字符串类型的结束日期转换为 DateTime 类型
-                DateTime endDate = DateTime.Parse(Fenddate);
-                query = query.Where(q => q.Fdate <= endDate);
+                query = query.Where(q => q.Fdate <= Fenddate.Value);
             }
 
             var totalCount = query.Count();
@@ -203,7 +195,7 @@ namespace WebApi_SY.Controllers
             {
                 Fid = a.Fid,
                 Fbillno = a.Fbillno,
-                Forderid = a.Orderid,
+                Forderid = a.Forderid,
                 Fdate = a.Fdate,
                 Fcustid = a.Fcustid,
                 Fcustname = a.Fcustname,
@@ -228,11 +220,11 @@ namespace WebApi_SY.Controllers
                 Fsliweightmaterial = a.Fsliweightmaterial,
                 Fsliweightforging = a.Fsliweightforging,
                 Fsliweightgoods = a.Fsliweightgoods,
-                Fslirawingno = a.Fslirawingno,
+                Fslirawingno = a.Fslidrawingno,
                 Fslimetal = a.Fslimetal,
                 Fsligoodsstatus = a.Fsligoodsstatus,
                 Fsliprocessing = a.Fsliprocessing,
-                Fsliedelivery = a.Fsliedelivery,
+                Fsliedelivery = a.Fslidelivery,
                 Fsliblankmodel = a.Fsliblankmodel,
                 Fslipunching = a.Fslipunching,
                 Fslitemperaturebegin = a.Fslimould,

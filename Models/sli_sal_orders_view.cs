@@ -16,7 +16,7 @@ namespace WebApi_SY.Models
         public string Fcustno { get; set; }
         public string Fcustname { get; set; }
         public string Fcustomer { get; set; }
-        public int Orderid { get; set; }
+        public int Forderid { get; set; }
         [Key]
         public int Fentryid { get; set; }
         public int Fseq { get; set; }
@@ -37,11 +37,11 @@ namespace WebApi_SY.Models
         public decimal Fsliweightmaterial { get; set; }
         public decimal Fsliweightforging { get; set; }
         public decimal Fsliweightgoods { get; set; }
-        public string Fslirawingno { get; set; }
+        public string Fslidrawingno { get; set; }
         public string Fslimetal { get; set; }
         public string Fsligoodsstatus { get; set; }
         public string Fsliprocessing { get; set; }
-        public string Fsliedelivery { get; set; }
+        public string Fslidelivery { get; set; }
         public string Fsliblankmodel { get; set; }
         public string Fslipunching { get; set; }
         public decimal Fslimould { get; set; }//test
