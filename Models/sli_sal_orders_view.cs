@@ -51,5 +51,8 @@ namespace WebApi_SY.Models
         public string Fsumnumber { get; set; }
         public int Fworkorderlistqty { get; set; }
         public int Fworkorderlistremain { get; set; }
+        public int Fworkorderliststatus { get; set; }
+
+        
     }
 }

@@ -215,8 +215,9 @@ namespace WebApi_SY.Controllers
                 Fsliheatingtimes = a.Fsliheatingtimes,
                 Fsligrade = a.Fsligrade,
                 Fsumnumber = a.Fsumnumber,
-                FworkOrderListqty=a.Fworkorderlistqty,
-                FworkOrderListremain=a.Fworkorderlistremain
+                Fworkorderlistqty=a.Fworkorderlistqty,
+                Fworkorderlistremain=a.Fworkorderlistremain,
+                Fworkorderliststatus=a.Fworkorderliststatus
             }).ToArray();
 
             var response = new
