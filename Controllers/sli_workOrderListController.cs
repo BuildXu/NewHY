@@ -148,8 +148,7 @@ namespace WebApi_SY.Controllers
             }
         }
         [Microsoft.AspNetCore.Mvc.HttpGet]
-        public IHttpActionResult GetTableOrders(int Page = 1, int PageSize = 10, string Fbillno = null, string Fcustno = null,
-      string Fcustname = null, DateTime? Fstartdate = null, DateTime? Fenddate = null, string fProductName = null)
+        public IHttpActionResult GetTableOrders(int Page = 1, int PageSize = 10, string Fbillno = null, string Fcustno = null,string Fcustname = null, DateTime? Fstartdate = null, DateTime? Fenddate = null, string fProductName = null)
         {
             var context = new YourDbContext();
             var query = from p in context.Sli_sal_orders_view
@@ -175,10 +174,10 @@ namespace WebApi_SY.Controllers
                 query = query.Where(q => q.Fname.Contains(fProductName));
             }
 
-            if (Fstartdate.HasValue && Fenddate.HasValue)
-            {
-                query = query.Where(q => q.Fdate >= Fstartdate.Value && q.Fdate <= Fenddate.Value);
-            }
+            //if (Fstartdate.HasValue && Fenddate.HasValue)
+            //{
+            //    query = query.Where(q => q.Fdate >= Fstartdate.Value && q.Fdate <= Fenddate.Value);
+            //}
             else if (Fstartdate.HasValue)
             {
                 query = query.Where(q => q.Fdate >= Fstartdate.Value);
