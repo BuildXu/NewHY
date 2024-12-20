@@ -15,6 +15,6 @@ namespace WebApi_SY.Models
         public decimal fworkWeight { get; set; }  // 拆分重量
         public string fnote { get; set; }    // 备注
         public int fworkOrderListStatus { get; set; } //  工件状态
-        public string splittype { get; set; }  // 工件类型
+        public string splittype { get; set; }  // 工件类型  产品 / 加工件  /  试样  /  破坏件
     }
 }
