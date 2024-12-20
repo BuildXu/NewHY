@@ -33,7 +33,7 @@ namespace WebApi_SY.Controllers
         }
 
         [Microsoft.AspNetCore.Mvc.HttpGet]
-        public IHttpActionResult GetTable(int page = 1, int pageSize = 10, string fbillNo = null,  string fcustName = null, string fcustNo = null)
+        public IHttpActionResult GetTable(int Page = 1, int Pagezize = 10, string Fbillno = null,  string Fcustname = null, string Fcustno = null)
         {
             var context = new YourDbContext();
             var query = from p in context.Sli_sal_order_view
@@ -44,24 +44,24 @@ namespace WebApi_SY.Controllers
                             Sli_sal_orderEntry_view = c
                         };
 
-            if (!string.IsNullOrEmpty(fbillNo))
+            if (!string.IsNullOrEmpty(Fbillno))
             {
-                query = query.Where(q => q.Sli_sal_order_view.FBILLNO.Contains(fbillNo));
+                query = query.Where(q => q.Sli_sal_order_view.FBILLNO.Contains(Fbillno));
             }
        
           
-            if (!string.IsNullOrEmpty(fcustName))
+            if (!string.IsNullOrEmpty(Fcustname))
             {
-                query = query.Where(q => q.Sli_sal_order_view.FNAME.Contains(fcustName));
+                query = query.Where(q => q.Sli_sal_order_view.FNAME.Contains(Fcustname));
             }
-            if (!string.IsNullOrEmpty(fcustNo))
+            if (!string.IsNullOrEmpty(Fcustno))
             {
-                query = query.Where(q => q.Sli_sal_order_view.FNUMBER.Contains(fcustNo));
+                query = query.Where(q => q.Sli_sal_order_view.FNUMBER.Contains(Fcustno));
             }
 
             var totalCount = query.Count();
-            var totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
-            var paginatedQuery = query.Skip((page - 1) * pageSize).Take(pageSize);
+            var totalPages = (int)Math.Ceiling((double)totalCount / Pagezize);
+            var paginatedQuery = query.Skip((Page - 1) * Pagezize).Take(Pagezize);
             var result = paginatedQuery.Select(a => new
             {
                 Id = a.Sli_sal_order_view != null ? a.Sli_sal_order_view.FID : 0,
@@ -111,8 +111,8 @@ namespace WebApi_SY.Controllers
             {
                 totalCounts = totalCount,
                 totalPages = totalPages,
-                currentPage = page,
-                pageSize = pageSize,
+                currentPage = Page,
+                pageSize = Pagezize,
                 data = result
             };
 
