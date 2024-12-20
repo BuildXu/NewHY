@@ -33,7 +33,7 @@ namespace WebApi_SY.Controllers
         }
 
         [Microsoft.AspNetCore.Mvc.HttpGet]
-        public IHttpActionResult GetTable(int Page = 1, int Pagezize = 10, string Fbillno = null,  string Fcustname = null, string Fcustno = null)
+        public IHttpActionResult GetTableSeOrder(int Page = 1, int Pagezize = 10, string Fbillno = null,  string Fcustname = null, string Fcustno = null)
         {
             var context = new YourDbContext();
             var query = from p in context.Sli_sal_order_view
