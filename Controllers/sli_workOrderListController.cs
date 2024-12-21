@@ -151,7 +151,7 @@ namespace WebApi_SY.Controllers
         public IHttpActionResult GetTableOrders(int Page = 1, int PageSize = 10, string Fbillno = null, string Fcustno = null,string Fcustname = null, DateTime? Fstartdate = null, DateTime? Fenddate = null, string fProductName = null)
         {
             var context = new YourDbContext();
-            var query = from p in context.Sli_sal_orders_view
+            var query = from p in context.Sli_sal_orders_view    //  用于销售订单列表查询---》workorderlist
                         select p;
 
             if (!string.IsNullOrEmpty(Fbillno))
