@@ -513,6 +513,7 @@
     <Compile Include="Models\sli_sal_orders_view.cs" />
     <Compile Include="Models\sli_user.cs" />
     <Compile Include="Models\sli_workorder.cs" />
+    <Compile Include="Models\sli_workOrderList_view.cs" />
     <Compile Include="Models\sli_workOrderList.cs" />
     <Compile Include="Models\t_sal_orderEntry.cs" />
     <Compile Include="Models\t_stock.cs" />
