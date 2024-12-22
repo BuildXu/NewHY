@@ -163,31 +163,31 @@ namespace WebApi_SY.Controllers
                 var context = new YourDbContext();
                 var header = new sli_plan_bill
                 {
-                    fplanlNumber = model.fplanlNumber,
-                    fissuedDate = model.fissuedDate,
-                    fplanContractEntry=model.fplanContractEntry,
-                    fqty = model.fqty,
-                    fweight = model.fweight,
-                    fplanBeginDate = model.fplanBeginDate,
-                    fplanEndDate = model.fplanEndDate,
-                    factualBeginDate = model.factualBeginDate,
-                    factualEndDate = model.factualEndDate,
-                    fnote=model.fnote,
-                    fdays = model.fdays,
+                    Fplanlnumber = model.Fplanlnumber,
+                    Fissueddate = model.Fissueddate,
+                    Fplancontractentry = model.Fplancontractentry,
+                    Fqty = model.Fqty,
+                    Fweight = model.Fweight,
+                    Fplanbegindate = model.Fplanbegindate,
+                    Fplanenddate = model.Fplanenddate,
+                    Factualbegindate = model.Factualbegindate,
+                    Factualenddate = model.Factualenddate,
+                    Fnote = model.Fnote,
+                    Fdays = model.Fdays,
                     sli_plan_billlEntry = model.sli_plan_billlEntry.Select(d => new sli_plan_billlEntry
                     {
                         //fmodelID = model.Id,
-                        fplanOptionIdId = d.fplanOptionIdId,
-                        fqty = d.fqty,
-                        fweight = d.fweight,
-                        fplanStartDate = d.fplanStartDate,
-                        fplanEndDate = d.fplanEndDate,
-                        factualStartDate= d.factualStartDate,
-                        factualEndDate= d.factualEndDate,
-                        fPlanDays = d.fPlanDays,
-                        fcapacity = d.fcapacity,
-                        fdepartID = d.fdepartID,
-                        fempId = d.fempId
+                        Fplanoptionidid = d.Fplanoptionidid,
+                        Fqty = d.Fqty,
+                        Fweight = d.Fweight,
+                        Fplanstartdate = d.Fplanstartdate,
+                        Fplanenddate = d.Fplanenddate,
+                        Factualstartdate = d.Factualstartdate,
+                        Factualenddate = d.Factualenddate,
+                        Fplandays = d.Fplandays,
+                        Fcapacity = d.Fcapacity,
+                        Fdepartid = d.Fdepartid,
+                        Fempid = d.Fempid
                     }).ToList()
                 };
 
@@ -196,8 +196,8 @@ namespace WebApi_SY.Controllers
                 var dataNull = new
                 {
                     msg = "Success",
-                    modelid = header.id,
-                    Date = header.id.ToString() + "保存成功"
+                    modelid = header.Id,
+                    Date = header.Id.ToString() + "保存成功"
 
                 };
                 return dataNull;

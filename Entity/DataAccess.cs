@@ -118,7 +118,7 @@ namespace WebApi_SY.Entity
             modelBuilder.Entity<sli_plan_bill>()
                .HasMany(h => h.sli_plan_billlEntry)
                .WithOne(d => d.sli_plan_bill)
-               .HasForeignKey(d => d.fplanBillId);
+               .HasForeignKey(d => d.Fplanbillid);
 
             modelBuilder.Entity<sli_workorder>()
                .HasMany(h => h.sli_workorderentry)
