@@ -19,7 +19,7 @@ namespace WebApi_SY.Controllers
 
         }
         [System.Web.Http.HttpPost]
-        public async Task<object> Insert([Microsoft.AspNetCore.Mvc.FromBody] sli_plan_model model)
+        public async Task<object> Insert([Microsoft.AspNetCore.Mvc.FromBody] Sli_plan_model model)
         {
             //string json = "{\"header\":{\"name\":\"Header Name\",\"details\":[{\"detailContent\":\"Detail 1\"},{\"detailContent\":\"Detail 2\"}]}}";
 
@@ -28,23 +28,24 @@ namespace WebApi_SY.Controllers
             {
                 var context = new YourDbContext();
                 //_context = context;
-                var header = new sli_plan_model
+                var header = new Sli_plan_model
                 {
-                    fmodelNumber = model.fmodelNumber,
-                    fmodelName = model.fmodelName,
-                    fplanBeginDate = model.fplanBeginDate,
-                    fplanEndDate = model.fplanEndDate,
-                    fdays = model.fdays,
-                    fnote=model.fnote,
-                    sli_plan_modelEntry = model.sli_plan_modelEntry.Select(d => new sli_plan_modelEntry
+                    Fmodelnumber = model.Fmodelnumber,
+                    Fmodelname = model.Fmodelname,
+                    Fplanbegindate = model.Fplanbegindate,
+                    Fplanenddate = model.Fplanenddate,
+                    Fdays = model.Fdays,
+                    Fnote = model.Fnote,
+                    Sli_plan_modelEntry = model.Sli_plan_modelEntry.Select(d => new Sli_plan_modelEntry
                     {
-                        //fmodelID = model.Id,
-                        fplanOptionId = d.fplanOptionId,
-                        fdays = d.fdays,
-                        fdepartID = d.fdepartID,
-                        fempId = d.fempId
+                        //Fmodelid = model.Id,
+                        Fplanoptionid = d.Fplanoptionid,
+                        Fdays = d.Fdays,
+                        Fdepartid = d.Fdepartid,
+                        Fempid = d.Fempid
+                    
 
-                    }).ToList()
+                }).ToList()
                 };
 
 
@@ -81,21 +82,21 @@ namespace WebApi_SY.Controllers
             //                Sli_plan_model = p,
             //                Sli_plan_modelEntry = c
             //            };
-            var query = context.Sli_plan_model.Include(a => a.sli_plan_modelEntry);
+            var query = context.Sli_plan_model.Include(a => a.Sli_plan_modelEntry);
             if (!string.IsNullOrEmpty(fmodelNumber))
             {
-                query = query.Where(q => q.fmodelNumber.Contains(fmodelNumber));
+                query = query.Where(q => q.Fmodelnumber.Contains(fmodelNumber));
                 
             }
 
             if (!string.IsNullOrEmpty(fmodelName))
             {
-                query = query.Where(q => q.fmodelName.Contains(fmodelName));
+                query = query.Where(q => q.Fmodelnumber.Contains(fmodelName));
             }
 
             if (fdays.HasValue)
             {
-                query = query.Where(q => q.fdays == fdays.Value);
+                query = query.Where(q => q.Fdays == fdays.Value);
             }
 
             var totalCount = query.Count();
@@ -105,21 +106,20 @@ namespace WebApi_SY.Controllers
             var result = paginatedQuery.Select(a => new
             {
                 id = a.Id,
-                fmodelNumber = a.fmodelNumber,
-                fmodelName = a.fmodelName ,
-                fplanBeginDate = a.fplanBeginDate,
-                fplanEndDate = a.fplanEndDate,
-                fdays = a.fdays ,
-                fnote=a.fnote,
-                Sli_plan_modelEntry = a.sli_plan_modelEntry.Select(b => new
+                Fmodelnumber = a.Fmodelnumber,
+                Fmodelname = a.Fmodelname,
+                Fplanbegindate = a.Fplanbegindate,
+                Fplanenddate = a.Fplanenddate,
+                Fdays = a.Fdays,
+                Fnote = a.Fnote,
+                Sli_plan_modelEntry = a.Sli_plan_modelEntry.Select(b => new
                 {
                     id = b.Id,
-                    fmodelID=b.fmodelID,
-                    fplanOptionId=b.fplanOptionId,
-                    fdays=b.fdays ,
-                    fdepartID=b.fdepartID,
-                    fempId = b.fdepartID
-                    
+                    Fmodelid = b.Fmodelid,
+                    Fplanoptionid = b.Fplanoptionid,
+                    Fdays = b.Fdays,
+                    Fdepartid = b.Fdepartid,
+                    Fempid = b.Fempid
                 })
 
             });
@@ -154,7 +154,7 @@ namespace WebApi_SY.Controllers
             //                Sli_plan_model = p,
             //                Sli_plan_modelEntry = c
             //            };
-            var query = context.Sli_plan_model.Include(a => a.sli_plan_modelEntry);
+            var query = context.Sli_plan_model.Include(a => a.Sli_plan_modelEntry);
             if (id.HasValue)
             {
                 query = query.Where(q => q.Id==id);
@@ -164,21 +164,21 @@ namespace WebApi_SY.Controllers
             
             var result = query.Select(a => new
             {
-                id = a.Id,
-                fmodelNumber = a.fmodelNumber,
-                fmodelName = a.fmodelName,
-                fplanBeginDate = a.fplanBeginDate,
-                fplanEndDate = a.fplanEndDate,
-                fdays = a.fdays,
-                fnote=  a.fnote,
-                Sli_plan_modelEntry = a.sli_plan_modelEntry.Select(b => new
+                Id = a.Id,
+                Fmodelnumber = a.Fmodelnumber,
+                Fmodelname = a.Fmodelname,
+                Fplanbegindate = a.Fplanbegindate,
+                Fplanenddate = a.Fplanenddate,
+                Fdays = a.Fdays,
+                Fnote = a.Fnote,
+                Sli_plan_modelEntry = a.Sli_plan_modelEntry.Select(b => new
                 {
                     id = b.Id,
-                    fmodelID = b.fmodelID,
-                    fplanOptionId = b.fplanOptionId,
-                    fdays = b.fdays,
-                    fdepartID = b.fdepartID,
-                    fempId = b.fdepartID
+                    Fmodelid = b.Fmodelid,
+                    Fplanoptionid = b.Fplanoptionid,
+                    Fdays = b.Fdays,
+                    Fdepartid = b.Fdepartid,
+                    Fempid = b.Fdepartid
 
                 })
 
@@ -205,7 +205,7 @@ namespace WebApi_SY.Controllers
                 var context = new YourDbContext();
                 //var entity = await context.Sli_plan_model.FindAsync(id);
                 //var headersToDelete = context.Sli_plan_model.Where(h => id.Contains(h.Id)).ToList();
-                var headersToDelete = context.Sli_plan_model.Include(h => h.sli_plan_modelEntry).Where(h => id.Contains(h.Id)).ToList();
+                var headersToDelete = context.Sli_plan_model.Include(h => h.Sli_plan_modelEntry).Where(h => id.Contains(h.Id)).ToList();
                 if (headersToDelete == null)
                 {
                     var dataNull = new
@@ -221,7 +221,7 @@ namespace WebApi_SY.Controllers
                 context.Sli_plan_model.RemoveRange(headersToDelete);
                 foreach (var DeleteID in id)
                 {
-                    var Sli_plan_modelEntrys = context.Sli_plan_modelEntry.Where(b => b.fmodelID == DeleteID);
+                    var Sli_plan_modelEntrys = context.Sli_plan_modelEntry.Where(b => b.Fmodelid == DeleteID);
                     context.Sli_plan_modelEntry.RemoveRange(Sli_plan_modelEntrys);
                 }
 
@@ -258,7 +258,7 @@ namespace WebApi_SY.Controllers
 
         //public async Task<object> Update(sli_plan_model model)
         [Microsoft.AspNetCore.Mvc.HttpPost]
-        public async Task<object> Update([Microsoft.AspNetCore.Mvc.FromBody] sli_plan_model model)
+        public async Task<object> Update([Microsoft.AspNetCore.Mvc.FromBody] Sli_plan_model model)
         {
             try
             {
@@ -285,26 +285,26 @@ namespace WebApi_SY.Controllers
 
 
                     var Sli_plan_models = context.Sli_plan_model.FirstOrDefault(p => p.Id == model.Id);
-                    var Sli_plan_modelEntrys = context.Sli_plan_modelEntry.Where(p => p.fmodelID == model.Id).ToList();
+                    var Sli_plan_modelEntrys = context.Sli_plan_modelEntry.Where(p => p.Fmodelid == model.Id).ToList();
 
 
-                    Sli_plan_models.fmodelName = model.fmodelName;
-                    Sli_plan_models.fmodelNumber= model.fmodelNumber;
-                    Sli_plan_models.fplanBeginDate = model.fplanBeginDate;
-                    Sli_plan_models.fplanEndDate = model.fplanEndDate;
-                    Sli_plan_models.fdays = model.fdays;
-                    Sli_plan_models.fnote = model.fnote;
+                    Sli_plan_models.Fmodelname = model.Fmodelname;
+                    Sli_plan_models.Fmodelnumber = model.Fmodelnumber;
+                    Sli_plan_models.Fplanbegindate = model.Fplanbegindate;
+                    Sli_plan_models.Fplanenddate = model.Fplanenddate;
+                    Sli_plan_models.Fdays = model.Fdays;
+                    Sli_plan_models.Fnote = model.Fnote;
                     context.Sli_plan_modelEntry.RemoveRange(Sli_plan_modelEntrys);
 
-                    foreach (var childTableData in model.sli_plan_modelEntry)
+                    foreach (var childTableData in model.Sli_plan_modelEntry)
                     {
-                        var entry = new sli_plan_modelEntry
+                        var entry = new Sli_plan_modelEntry
                         {
-                            fmodelID = model.Id,
-                            fplanOptionId = childTableData.fplanOptionId,
-                            fdays = childTableData.fdays,
-                            fdepartID = childTableData.fdepartID,
-                            fempId = childTableData.fempId
+                            Fmodelid = model.Id,
+                            Fplanoptionid = childTableData.Fplanoptionid,
+                            Fdays = childTableData.Fdays,
+                            Fdepartid = childTableData.Fdepartid,
+                            Fempid = childTableData.Fempid
 
                         };
                         context.Sli_plan_modelEntry.Add(entry);

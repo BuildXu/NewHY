@@ -11,8 +11,8 @@ namespace WebApi_SY.Entity
     {
         //public DbSet<sli_test> Sli_test { get; set; }
 
-        public DbSet<sli_plan_model> Sli_plan_model { get; set; }
-        public DbSet<sli_plan_modelEntry> Sli_plan_modelEntry { get; set; }
+        public DbSet<Sli_plan_model> Sli_plan_model { get; set; }
+        public DbSet<Sli_plan_modelEntry> Sli_plan_modelEntry { get; set; }
 
         public DbSet<sli_user> Sli_user { get; set; }
         public DbSet<t_stock> T_stock { get; set; }
@@ -105,10 +105,10 @@ namespace WebApi_SY.Entity
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<sli_plan_model>()
-               .HasMany(h => h.sli_plan_modelEntry)
-               .WithOne(d => d.sli_plan_model)
-               .HasForeignKey(d => d.fmodelID);
+            modelBuilder.Entity<Sli_plan_model>()
+               .HasMany(h => h.Sli_plan_modelEntry)
+               .WithOne(d => d.Sli_plan_model)
+               .HasForeignKey(d => d.Fmodelid);
 
             modelBuilder.Entity<sli_sal_order_view>()
               .HasMany(h => h.sli_sal_orderEntry_view)

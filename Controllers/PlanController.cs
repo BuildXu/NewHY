@@ -32,7 +32,7 @@ namespace WebApi_SY.Controllers
             
         //}
         [System.Web.Http.HttpPost]
-        public async Task<object> AddOrder([Microsoft.AspNetCore.Mvc.FromBody] sli_plan_model model)
+        public async Task<object> AddOrder([Microsoft.AspNetCore.Mvc.FromBody] Sli_plan_model model)
         {
             //string json = "{\"header\":{\"name\":\"Header Name\",\"details\":[{\"detailContent\":\"Detail 1\"},{\"detailContent\":\"Detail 2\"}]}}";
 
@@ -41,20 +41,20 @@ namespace WebApi_SY.Controllers
             {
                 var context = new YourDbContext();
                 //_context = context;
-                var header = new sli_plan_model
+                var header = new Sli_plan_model
                 {
-                    fmodelNumber = model.fmodelNumber,
-                    fmodelName = model.fmodelName,
-                    fplanBeginDate = model.fplanBeginDate,
-                    fplanEndDate = model.fplanEndDate,
-                    fdays = model.fdays,
-                    sli_plan_modelEntry = model.sli_plan_modelEntry.Select(d => new sli_plan_modelEntry
+                    Fmodelnumber = model.Fmodelnumber,
+                    Fmodelname = model.Fmodelname,
+                    Fplanbegindate = model.Fplanbegindate,
+                    Fplanenddate = model.Fplanenddate,
+                    Fdays = model.Fdays,
+                    Sli_plan_modelEntry = model.Sli_plan_modelEntry.Select(d => new Sli_plan_modelEntry
                     {
                         //fmodelID = model.Id,
-                        fplanOptionId = d.fplanOptionId,
-                        fdays = d.fdays,
-                        fdepartID = d.fdepartID,
-                        fempId = d.fempId
+                        Fplanoptionid = d.Fplanoptionid,
+                        Fdays = d.Fdays,
+                        Fdepartid = d.Fdepartid,
+                        Fempid = d.Fempid
 
                     }).ToList()
                 };
@@ -269,7 +269,7 @@ namespace WebApi_SY.Controllers
         }
 
          [System.Web.Http.HttpPost]
-        public async Task<IActionResult> UpdateOrder(sli_plan_model model)
+        public async Task<IActionResult> UpdateOrder(Sli_plan_model model)
         {
             var context = new YourDbContext();
             if (context.Entry(model).State == Microsoft.EntityFrameworkCore.EntityState.Detached)
@@ -301,7 +301,7 @@ namespace WebApi_SY.Controllers
                     //string json = JsonConvert.SerializeObject(data);
                     return dataNull;
                 }
-                var Sli_plan_modelEntrys = context.Sli_plan_modelEntry.Where(b => b.fmodelID == id);
+                var Sli_plan_modelEntrys = context.Sli_plan_modelEntry.Where(b => b.Fmodelid == id);
                 context.Sli_plan_modelEntry.RemoveRange(Sli_plan_modelEntrys);
                 context.Sli_plan_model.Remove(entity);
                 await context.SaveChangesAsync();
@@ -354,7 +354,7 @@ namespace WebApi_SY.Controllers
         {
             var context = new YourDbContext();
             var query = from p in context.Sli_plan_model
-                        join c in context.Sli_plan_modelEntry on p.Id equals c.fmodelID
+                        join c in context.Sli_plan_modelEntry on p.Id equals c.Fmodelid
                         select new
                         {
                             Sli_plan_model = p,
@@ -363,17 +363,17 @@ namespace WebApi_SY.Controllers
 
             if (!string.IsNullOrEmpty(fmodelNumber))
             {
-                query = query.Where(q => q.Sli_plan_model.fmodelNumber.Contains(fmodelNumber));
+                query = query.Where(q => q.Sli_plan_model.Fmodelnumber.Contains(fmodelNumber));
             }
 
             if (!string.IsNullOrEmpty(fmodelName))
             {
-                query = query.Where(q => q.Sli_plan_model.fmodelName.Contains(fmodelName));
+                query = query.Where(q => q.Sli_plan_model.Fmodelname.Contains(fmodelName));
             }
 
             if (fdays.HasValue)
             {
-                query = query.Where(q => q.Sli_plan_model.fdays == fdays.Value);
+                query = query.Where(q => q.Sli_plan_model.Fdays == fdays.Value);
             }
 
             var totalCount = query.Count(); //记录数
@@ -381,18 +381,18 @@ namespace WebApi_SY.Controllers
             var paginatedQuery = query.Skip((page - 1) * pageSize).Take(pageSize); //  某页记录
             var result = paginatedQuery.Select(a => new     //  返回 查询记录   并加入去NULL值逻辑
             {
-                id = a.Sli_plan_model != null ? a.Sli_plan_model.Id : 0,
-                FmodelNumber = a.Sli_plan_model != null ? a.Sli_plan_model.fmodelNumber : string.Empty,
-                FmodelName = a.Sli_plan_model != null ? a.Sli_plan_model.fmodelName : string.Empty,
-                FplanBeginDate = a.Sli_plan_model == null ? a.Sli_plan_model.fplanBeginDate: string.Empty ,
-                FplanEndDate = a.Sli_plan_model == null ? a.Sli_plan_model.fplanEndDate : string.Empty,
-                Fdays = a.Sli_plan_model == null ? a.Sli_plan_model.fdays : 0,
-                fSli_plan_modelentryid = a.Sli_plan_modelEntry != null ? a.Sli_plan_modelEntry.Id : 0,
-                fSli_plan_modelentryfmodelID = a.Sli_plan_modelEntry != null ? a.Sli_plan_modelEntry.fmodelID : 0,
-                fSli_plan_modelentryfplanOptionId = a.Sli_plan_modelEntry != null ? a.Sli_plan_modelEntry.fplanOptionId : 0,
-                fSli_plan_modelentryfdays = a.Sli_plan_modelEntry != null ? a.Sli_plan_modelEntry.fdays : 0,
-                fSli_plan_modelentryfdepartID = a.Sli_plan_modelEntry != null ? a.Sli_plan_modelEntry.fdepartID : 0,
-                fSli_plan_modelentryfempId = a.Sli_plan_modelEntry != null ? a.Sli_plan_modelEntry.fempId  : string.Empty
+                Id = a.Sli_plan_model != null ? a.Sli_plan_model.Id : 0,
+                Fmodelnumber = a.Sli_plan_model != null ? a.Sli_plan_model.Fmodelnumber : string.Empty,
+                Fmodelname = a.Sli_plan_model != null ? a.Sli_plan_model.Fmodelname : string.Empty,
+                Fplanbegindate = a.Sli_plan_model == null ? a.Sli_plan_model.Fplanbegindate : string.Empty,
+                Fplanenddate = a.Sli_plan_model == null ? a.Sli_plan_model.Fplanenddate : string.Empty,
+                Fdays = a.Sli_plan_model == null ? a.Sli_plan_model.Fdays : 0,
+                FSli_plan_modelentryid = a.Sli_plan_modelEntry != null ? a.Sli_plan_modelEntry.Id : 0,
+                FSli_plan_modelentryfmodelid = a.Sli_plan_modelEntry != null ? a.Sli_plan_modelEntry.Fmodelid : 0,
+                FSli_plan_modelentryfplanoptionid = a.Sli_plan_modelEntry != null ? a.Sli_plan_modelEntry.Fplanoptionid : 0,
+                FSli_plan_modelentryfdays = a.Sli_plan_modelEntry != null ? a.Sli_plan_modelEntry.Fdays : 0,
+                FSli_plan_modelentryfdepartid = a.Sli_plan_modelEntry != null ? a.Sli_plan_modelEntry.Fdepartid : 0,
+                FSli_plan_modelentryfempid = a.Sli_plan_modelEntry != null ? a.Sli_plan_modelEntry.Fempid : string.Empty
             }); 
 
             var response = new    // 定义 前端返回数据  总记录，总页，当前页 ，size,返回记录
