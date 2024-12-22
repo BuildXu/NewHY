@@ -148,7 +148,7 @@ namespace WebApi_SY.Controllers
             }
         }
         [Microsoft.AspNetCore.Mvc.HttpGet]
-        public IHttpActionResult GetTableOrders(int Page = 1, int PageSize = 10, string Fbillno = null, string Fcustno = null,string Fcustname = null, DateTime? Fstartdate = null, DateTime? Fenddate = null, string fProductName = null)
+        public IHttpActionResult GetTableOrders(int Page = 1, int PageSize = 10, string Fbillno = null, string Fcustno = null,string Fcustname = null, DateTime? Fstartdate = null, DateTime? Fenddate = null, string Fproductname = null)
             /// 用于销售订单列表查询---》workorderlist
         {
             var context = new YourDbContext();
@@ -170,9 +170,9 @@ namespace WebApi_SY.Controllers
                 query = query.Where(q => q.Fcustname.Contains(Fcustname));
             }
 
-            if (!string.IsNullOrEmpty(fProductName))
+            if (!string.IsNullOrEmpty(Fproductname))
             {
-                query = query.Where(q => q.Fname.Contains(fProductName));
+                query = query.Where(q => q.Fname.Contains(Fproductname));
             }
 
             //if (Fstartdate.HasValue && Fenddate.HasValue)
