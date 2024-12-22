@@ -17,58 +17,70 @@ namespace WebApi_SY.Controllers
             // _context = context;
 
         }
+
         [System.Web.Http.HttpPost]
         public async Task<object> Insert([Microsoft.AspNetCore.Mvc.FromBody] sli_plan_bill bill)
         {
-            try
+
+
             {
-                var context = new YourDbContext();
-                var header = new sli_plan_bill
+                try
                 {
-                    Fplanlnumber = bill.Fplanlnumber,
-                    Fissueddate = bill.Fissueddate,
-                    Fplancontractentry = bill.Fplancontractentry,
-                    Fqty = bill.Fqty,
-                    Fweight = bill.Fweight,
-                    Fplanbegindate = bill.Fplanbegindate,
-                    Fplanenddate = bill.Fplanenddate,
-                    Factualbegindate = bill.Factualbegindate,
-                    Factualenddate = bill.Factualenddate,
-                    Fnote = bill.Fnote,
-                    Fdays = bill.Fdays,
-                    sli_plan_billlEntry = bill.sli_plan_billlEntry.Select(d => new sli_plan_billlEntry
+                    using (var context = new YourDbContext())
                     {
-                        //fmodelID = bill.Id,
-                        Fplanoptionidid = d.Fplanoptionidid,
-                        Fqty = d.Fqty,
-                        Fweight = d.Fweight,
-                        Fplanstartdate = d.Fplanstartdate,
-                        Fplanenddate = d.Fplanenddate,
-                        Factualstartdate = d.Factualstartdate,
-                        Factualenddate = d.Factualenddate,
-                        Fplandays = d.Fplandays,
-                        Fcapacity = d.Fcapacity,
-                        Fdepartid = d.Fdepartid,
-                        Fempid = d.Fempid
-                    }).ToList()
-                };
+                        // 创建并配置 sli_plan_bill 实例
+                        var header = new sli_plan_bill
+                        {
+                            Fplanlnumber = bill.Fplanlnumber,
+                            Fissueddate = bill.Fissueddate,
+                            Fplancontractentry = bill.Fplancontractentry,
+                            Fqty = bill.Fqty,
+                            Fweight = bill.Fweight,
+                            Fplanbegindate = bill.Fplanbegindate,
+                            Fplanenddate = bill.Fplanenddate,
+                            Factualbegindate = bill.Factualbegindate,
+                            Factualenddate = bill.Factualenddate,
+                            Fnote = bill.Fnote,
+                            Fdays = bill.Fdays,
+                            sli_plan_billlEntry = bill.sli_plan_billlEntry.Select(d => new sli_plan_billlEntry
+                            {
+                                Fplanoptionidid = d.Fplanoptionidid,
+                                Fqty = d.Fqty,
+                                Fweight = d.Fweight,
+                                Fplanstartdate = d.Fplanstartdate,
+                                Fplanenddate = d.Fplanenddate,
+                                Factualstartdate = d.Factualstartdate,
+                                Factualenddate = d.Factualenddate,
+                                Fplandays = d.Fplandays,
+                                Fcapacity = d.Fcapacity,
+                                Fdepartid = d.Fdepartid,
+                                Fempid = d.Fempid
+                            }).ToList(),
+                            sli_plan_billorder = bill.sli_plan_billorder.Select(o => new sli_plan_billorder
+                            {
+                                Fplanbillid = o.Id, // 设置外键
+                                Forderentryid = o.Forderentryid, // 根据实际属性设置
+                                //ForderDate = o.ForderDate // 根据实际属性设置
+                                                          // 设置其他属性...
+                            }).ToList()
+                        };
 
+                        context.Sli_plan_bill.Add(header);
+                        await context.SaveChangesAsync();
 
-
-                context.Sli_plan_bill.Add(header);
-                await context.SaveChangesAsync();
-                var dataNull = new
+                        var dataNull = new
+                        {
+                            msg = "Success",
+                            planid = header.Id,
+                            Date = $"{header.Id} 保存成功"
+                        };
+                        return dataNull;
+                    }
+                }
+                catch (Exception ex)
                 {
-                    msg = "Success",
-                    planid = header.Id,
-                    Date = header.Id.ToString() + "保存成功"
-
-                };
-                return dataNull;
-            }
-            catch (Exception ex)
-            {
-                return JsonConvert.SerializeObject(ex.ToString());
+                    return JsonConvert.SerializeObject(ex.ToString());
+                }
             }
 
 
