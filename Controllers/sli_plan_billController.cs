@@ -70,6 +70,7 @@ namespace WebApi_SY.Controllers
 
                         var dataNull = new
                         {
+                            code=200,
                             msg = "Success",
                             planid = header.Id,
                             Date = $"{header.Id} 保存成功"
