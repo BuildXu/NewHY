@@ -120,6 +120,11 @@ namespace WebApi_SY.Entity
                .WithOne(d => d.sli_plan_bill)
                .HasForeignKey(d => d.Fplanbillid);
 
+            modelBuilder.Entity<sli_plan_bill>()
+             .HasMany(h => h.sli_plan_billorder)
+             .WithOne()
+              .HasForeignKey("Fplanbillid"); // 外键列名
+
             modelBuilder.Entity<sli_workorder>()
                .HasMany(h => h.sli_workorderentry)
                .WithOne(d => d.sli_workorder)
