@@ -11,13 +11,15 @@ namespace WebApi_SY.Entity
     {
         //public DbSet<sli_test> Sli_test { get; set; }
 
-        public DbSet<sli_plan_model> Sli_plan_model { get; set; }
-        public DbSet<sli_plan_modelEntry> Sli_plan_modelEntry { get; set; }
+        public DbSet<Sli_plan_model> Sli_plan_model { get; set; }
+        public DbSet<Sli_plan_modelEntry> Sli_plan_modelEntry { get; set; }
 
         public DbSet<sli_user> Sli_user { get; set; }
         public DbSet<t_stock> T_stock { get; set; }
         //12.5 部署  查询，新增
         public DbSet<sli_workOrderList> Sli_workOrderList { get; set; }
+
+        public DbSet<sli_workorderlist_view> sli_workorderlist_view { get; set; }
         public DbSet<t_sal_orderEntry> T_sal_orderEntry { get; set; }
 
         public DbSet<sli_plan_bill> Sli_plan_bill { get; set; }                 // 交付计划 Plan  交付计划
@@ -105,10 +107,10 @@ namespace WebApi_SY.Entity
         
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<sli_plan_model>()
-               .HasMany(h => h.sli_plan_modelEntry)
-               .WithOne(d => d.sli_plan_model)
-               .HasForeignKey(d => d.fmodelID);
+            modelBuilder.Entity<Sli_plan_model>()
+               .HasMany(h => h.Sli_plan_modelEntry)
+               .WithOne(d => d.Sli_plan_model)
+               .HasForeignKey(d => d.Fmodelid);
 
             modelBuilder.Entity<sli_sal_order_view>()
               .HasMany(h => h.sli_sal_orderEntry_view)
@@ -118,12 +120,17 @@ namespace WebApi_SY.Entity
             modelBuilder.Entity<sli_plan_bill>()
                .HasMany(h => h.sli_plan_billlEntry)
                .WithOne(d => d.sli_plan_bill)
-               .HasForeignKey(d => d.fplanBillId);
+               .HasForeignKey(d => d.Fplanbillid);
+
+            modelBuilder.Entity<sli_plan_bill>()
+             .HasMany(h => h.sli_plan_billorder)
+             .WithOne()
+              .HasForeignKey("Fplanbillid"); // 外键列名
 
             modelBuilder.Entity<sli_workorder>()
                .HasMany(h => h.sli_workorderentry)
                .WithOne(d => d.sli_workorder)
-               .HasForeignKey(d => d.ForderEntryid);
+               .HasForeignKey(d => d.Forderentryid);
 
             modelBuilder.Entity<sli_sale_taxturebill>()
                .HasOne(h => h.sli_sale_taxture)

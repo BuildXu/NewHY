@@ -17,58 +17,71 @@ namespace WebApi_SY.Controllers
             // _context = context;
 
         }
+
         [System.Web.Http.HttpPost]
         public async Task<object> Insert([Microsoft.AspNetCore.Mvc.FromBody] sli_plan_bill bill)
         {
-            try
+
+
             {
-                var context = new YourDbContext();
-                var header = new sli_plan_bill
+                try
                 {
-                    fplanlNumber = bill.fplanlNumber,
-                    fissuedDate = bill.fissuedDate,
-                    fplanContractEntry = bill.fplanContractEntry,
-                    fqty = bill.fqty,
-                    fweight = bill.fweight,
-                    fplanBeginDate = bill.fplanBeginDate,
-                    fplanEndDate = bill.fplanEndDate,
-                    factualBeginDate = bill.factualBeginDate,
-                    factualEndDate = bill.factualEndDate,
-                    fnote = bill.fnote,
-                    fdays = bill.fdays,
-                    sli_plan_billlEntry = bill.sli_plan_billlEntry.Select(d => new sli_plan_billlEntry
+                    using (var context = new YourDbContext())
                     {
-                        //fmodelID = bill.Id,
-                        fplanOptionIdId = d.fplanOptionIdId,
-                        fqty = d.fqty,
-                        fweight = d.fweight,
-                        fplanStartDate = d.fplanStartDate,
-                        fplanEndDate = d.fplanEndDate,
-                        factualStartDate = d.factualStartDate,
-                        factualEndDate = d.factualEndDate,
-                        fPlanDays = d.fPlanDays,
-                        fcapacity = d.fcapacity,
-                        fdepartID = d.fdepartID,
-                        fempId = d.fempId
-                    }).ToList()
-                };
+                        // 创建并配置 sli_plan_bill 实例
+                        var header = new sli_plan_bill
+                        {
+                            Fplanlnumber = bill.Fplanlnumber,
+                            Fissueddate = bill.Fissueddate,
+                            Fplancontractentry = bill.Fplancontractentry,
+                            Fqty = bill.Fqty,
+                            Fweight = bill.Fweight,
+                            Fplanbegindate = bill.Fplanbegindate,
+                            Fplanenddate = bill.Fplanenddate,
+                            Factualbegindate = bill.Factualbegindate,
+                            Factualenddate = bill.Factualenddate,
+                            Fnote = bill.Fnote,
+                            Fdays = bill.Fdays,
+                            sli_plan_billlEntry = bill.sli_plan_billlEntry.Select(d => new sli_plan_billlEntry
+                            {
+                                Fplanoptionidid = d.Fplanoptionidid,
+                                Fqty = d.Fqty,
+                                Fweight = d.Fweight,
+                                Fplanstartdate = d.Fplanstartdate,
+                                Fplanenddate = d.Fplanenddate,
+                                Factualstartdate = d.Factualstartdate,
+                                Factualenddate = d.Factualenddate,
+                                Fplandays = d.Fplandays,
+                                Fcapacity = d.Fcapacity,
+                                Fdepartid = d.Fdepartid,
+                                Fempid = d.Fempid
+                            }).ToList(),
+                            sli_plan_billorder = bill.sli_plan_billorder.Select(o => new sli_plan_billorder
+                            {
+                                Fplanbillid = o.Id, // 设置外键
+                                Forderentryid = o.Forderentryid, // 根据实际属性设置
+                                //ForderDate = o.ForderDate // 根据实际属性设置
+                                                          // 设置其他属性...
+                            }).ToList()
+                        };
 
+                        context.Sli_plan_bill.Add(header);
+                        await context.SaveChangesAsync();
 
-
-                context.Sli_plan_bill.Add(header);
-                await context.SaveChangesAsync();
-                var dataNull = new
+                        var dataNull = new
+                        {
+                            code=200,
+                            msg = "Success",
+                            planid = header.Id,
+                            Date = $"{header.Id} 保存成功"
+                        };
+                        return dataNull;
+                    }
+                }
+                catch (Exception ex)
                 {
-                    msg = "Success",
-                    planid = header.id,
-                    Date = header.id.ToString() + "保存成功"
-
-                };
-                return dataNull;
-            }
-            catch (Exception ex)
-            {
-                return JsonConvert.SerializeObject(ex.ToString());
+                    return JsonConvert.SerializeObject(ex.ToString());
+                }
             }
 
 
@@ -94,7 +107,7 @@ namespace WebApi_SY.Controllers
                     //string json = JsonConvert.SerializeObject(data);
                     return dataNull;
                 }
-                var Sli_plan_billEntrys = context.Sli_plan_billlEntry.Where(b => b.fplanBillId == id);
+                var Sli_plan_billEntrys = context.Sli_plan_billlEntry.Where(b => b.Fplanbillid == id);
                 context.Sli_plan_billlEntry.RemoveRange(Sli_plan_billEntrys);
                 context.Sli_plan_bill.Remove(entity);
                 await context.SaveChangesAsync();
@@ -144,7 +157,7 @@ namespace WebApi_SY.Controllers
         {
             var context = new YourDbContext();
             var query = from p in context.Sli_plan_bill
-                        join c in context.Sli_plan_billlEntry on p.id equals c.fplanBillId
+                        join c in context.Sli_plan_billlEntry on p.Id equals c.Fplanbillid
                         select new
                         {
                             Sli_plan_bill = p,
@@ -152,7 +165,7 @@ namespace WebApi_SY.Controllers
                         };
             if (!string.IsNullOrEmpty(fplanNumber))
             {
-                query = query.Where(q => q.Sli_plan_bill.fplanlNumber.Contains(fplanNumber));
+                query = query.Where(q => q.Sli_plan_bill.Fplanlnumber.Contains(fplanNumber));
             }
 
             //if (!string.IsNullOrEmpty(fmodelName))
@@ -170,7 +183,7 @@ namespace WebApi_SY.Controllers
             var paginatedQuery = query.Skip((page - 1) * pageSize).Take(pageSize);
             var result = paginatedQuery.Select(a => new
             {
-                id = a.Sli_plan_bill != null ? a.Sli_plan_bill.id : 0
+                id = a.Sli_plan_bill != null ? a.Sli_plan_bill.Id : 0
                 //,
                 //FmodelNumber = a.Sli_plan_model != null ? a.Sli_plan_model.fmodelNumber : string.Empty,
                 //FmodelName = a.Sli_plan_model != null ? a.Sli_plan_model.fmodelName : string.Empty,
