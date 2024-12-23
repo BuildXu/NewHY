@@ -7,6 +7,7 @@ using System.Linq;
 using System.Runtime.Remoting.Contexts;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.ModelBinding;
 using WebApi_SY.Entity;
 using WebApi_SY.Models;
 
@@ -93,61 +94,67 @@ namespace WebApi_SY.Controllers
 
         }
         [System.Web.Http.HttpPost]
-        public async Task<object> Delete(int id)
+        public async Task<object> Delete([Form] int[] ids)
         {
             try
             {
                 var context = new YourDbContext();
-                var entity = await context.Sli_workOrderList.FindAsync(id);
-                if (entity == null)
-                {
-                    var dataNull = new
-                    {
-                        code = 200,
-                        msg = "ok",
-                        orderId = id.ToString(),
-                        date = id.ToString() + "不存在"
-                    };
-                    //string json = JsonConvert.SerializeObject(data);
-                    return dataNull;
-                }
+                var deletedEntities = new List<sli_workOrderList>();
+                var updateData = new Dictionary<int, int>(); // 用于记录需要更新的FWORKORDERLISTQTY和FWORKORDERLISTREMAIN
 
-                context.Sli_workOrderList.Remove(entity);
-                await context.SaveChangesAsync();
-
-                var entityToUpdate = context.T_sal_orderEntry.FirstOrDefault(p => p.FENTRYID == Convert.ToInt32(entity.Forderentryid));
-                if (entity.Fsplittype != "样品")
+                foreach (var id in ids)
                 {
-                    if (entityToUpdate != null)
+                    var entity = await context.Sli_workOrderList.FindAsync(id);
+                    if (entity != null)
                     {
-                        // 累加字段值
-                        entityToUpdate.FWORKORDERLISTQTY -= Convert.ToInt32(entity.Fworkqty);
-                        entityToUpdate.FWORKORDERLISTREMAIN += Convert.ToInt32(entity.Fworkqty);
-                        // 保存更改
-                        //_context.SaveChanges();
+                        deletedEntities.Add(entity);
+                        // 记录需要更新的数据
+                        var entityToUpdate = context.T_sal_orderEntry.FirstOrDefault(p => p.FENTRYID == Convert.ToInt32(entity.Forderentryid));
+                        if (entity.Fsplittype != "样品" && entityToUpdate != null)
+                        {
+                            if (!updateData.ContainsKey(entityToUpdate.FENTRYID))
+                            {
+                                updateData[entityToUpdate.FENTRYID] = 0;
+                            }
+                            updateData[entityToUpdate.FENTRYID] -= Convert.ToInt32(entity.Fworkqty);
+                            updateData[entityToUpdate.FENTRYID] += Convert.ToInt32(entity.Fworkqty);
+                        }
                     }
                 }
 
-                // var data = new { Status = "Success", Message = "Data retrieved successfully", Data = new { /* actual data here */ } };
-                var data = new
+                // 删除实体
+                context.Sli_workOrderList.RemoveRange(deletedEntities);
+                await context.SaveChangesAsync();
+
+                // 更新相关实体
+                foreach (var kvp in updateData)
+                {
+                    var entityToUpdate = context.T_sal_orderEntry.Find(kvp.Key);
+                    if (entityToUpdate != null)
+                    {
+                        entityToUpdate.FWORKORDERLISTQTY += kvp.Value;
+                        entityToUpdate.FWORKORDERLISTREMAIN += kvp.Value;
+                    }
+                }
+                await context.SaveChangesAsync();
+
+                return new
                 {
                     code = 200,
                     msg = "Success",
-                    orderId = id.ToString(),
-                    date = id.ToString() + "删除成功"
+                    deletedOrderIds = ids.Where(id => deletedEntities.Any(e => e.id == id)).ToList(),
+                    date = "删除成功"
                 };
-                return data;
             }
             catch (Exception ex)
             {
-                var data = new
+                return new
                 {
                     code = 400,
                     msg = "失败",
-                    orderId = id.ToString(),
+                    orderId = string.Join(",", ids),
                     date = ex.ToString()
                 };
-                return data;
             }
         }
         //******************
@@ -226,50 +233,52 @@ namespace WebApi_SY.Controllers
                 // 选择需要的字段（根据需要调整）
                 var result = paginatedQuery.Select(a => new
                 {
-                    a.Id,
-                    a.Fproductno,
-                    a.Fbillno,
-                    a.Fdate,
-                    a.Fcustomer,
-                    a.Fdescription,
-                    a.Fsumnumber,
-                    a.Fworkqty,
-                    a.Fworkweight,
-                    a.Fcustid,
-                    a.Fcustno,
-                    a.Fcustname,
-                    a.Fid,
-                    a.Fentryid,
-                    a.Fseq,
-                    a.Fqty,
-                    a.Fnote,
-                    a.Fplandeleliverydate,
-                    a.Fstockqty,
-                    a.Fmaterialid,
-                    a.Fnumber,
-                    a.Fname,
-                    a.Fsliouterdiameter,
-                    a.Fsliinnerdiameter,
-                    a.Fslihight,
-                    a.Fsliallowanceod,
-                    a.Fsliallowanceid,
-                    a.Fsliallowanceh,
-                    a.Fsliweightmaterial,
-                    a.Fsliweightforging,
-                    a.Fsliweightgoods,
-                    a.Fslidrawingno,
-                    a.Fslimetal,
-                    a.Fsligoodsstatus,
-                    a.Fsliprocessing,
-                    a.Fslidelivery,
-                    a.Fsliblankmodel,
-                    a.Fslipunching,
-                    a.Fslitemperaturebegin,
-                    a.Fslitemperatureend,
-                    a.Fslimould,
-                    a.Fsliroller,
-                    a.Fsliheatingtimes,
-                    a.Fsligrade
+                    Id = a.Id,
+                    Fproductno = a.Fproductno,
+                    Fbillno = a.Fbillno,
+                    Fdate = a.Fdate,
+                    Fcustomer = a.Fcustomer,
+                    Fdescription = a.Fdescription,
+                    Fsumnumber = a.Fsumnumber,
+                    Fworkqty = a.Fworkqty,
+                    Fworkweight = a.Fworkweight,
+                    Fcustid = a.Fcustid,
+                    Fcustno = a.Fcustno,
+                    Fcustname = a.Fcustname,
+                    Fid = a.Fid,
+                    Fentryid = a.Fentryid,
+                    Fseq = a.Fseq,
+                    Fqty = a.Fqty,
+                    Fnote = a.Fnote,
+                    Fplandeleliverydate = a.Fplandeleliverydate,
+                    Fstockqty = a.Fstockqty,
+                    Fmaterialid = a.Fmaterialid,
+                    Fnumber = a.Fnumber,
+                    Fname = a.Fname,
+                    Fsliouterdiameter = a.Fsliouterdiameter,
+                    Fsliinnerdiameter = a.Fsliinnerdiameter,
+                    Fslihight = a.Fslihight,
+                   // --注意这里可能是 Fsliheight 的拼写错误 
+                    Fsliallowanceod = a.Fsliallowanceod,
+                    Fsliallowanceid = a.Fsliallowanceid,
+                    Fsliallowanceh = a.Fsliallowanceh,
+                    Fsliweightmaterial = a.Fsliweightmaterial,
+                    Fsliweightforging = a.Fsliweightforging,
+                    Fsliweightgoods = a.Fsliweightgoods,
+                    Fslidrawingno = a.Fslidrawingno,
+                    Fslimetal = a.Fslimetal,
+                    Fsligoodsstatus = a.Fsligoodsstatus,
+                    Fsliprocessing = a.Fsliprocessing,
+                    Fslidelivery = a.Fslidelivery,
+                    Fsbloblankmodel = a.Fsliblankmodel,
+                    //--注意这里可能是 Fsliblankmodel 的拼写错误
+                    Fslipunching = a.Fslipunching,
+                    Fslitemperaturebegin = a.Fslitemperaturebegin,
+                    Fslitemperatureend = a.Fslitemperatureend,
+                    Fslimould = a.Fslimould,
+                    Fsliroller = a.Fsliroller,
+                    Fsliheatingtimes = a.Fsliheatingtimes,
+                    Fsligrade = a.Fsligrade
                     // 添加其他需要的字段
                 }).ToList();
 
@@ -338,7 +347,7 @@ namespace WebApi_SY.Controllers
             var paginatedQuery = query.Skip((Page - 1) * PageSize).Take(PageSize);
             var result = paginatedQuery.Select(a => new
             {
-                Fid = a.Fid,
+                //Fid = a.Fid,
                 Fbillno = a.Fbillno,
                 Forderid = a.Forderid,
                 Fdate = a.Fdate,
