@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -10,22 +11,20 @@ namespace WebApi_SY.Models
     {
         
         public int Fid { get; set; }
-
-        public string Fproductno { get; set; }
-
         public string Fbillno { get; set; }
         public DateTime Fdate { get; set; }
         public int Fcustid { get; set; }
         public string Fcustno { get; set; }
         public string Fcustname { get; set; }
         public string Fcustomer { get; set; }
-        public int Forderid { get; set; }
         [Key]
+      //  public int Fid { get; set; }
+        public int Forderid { get; set; }
         public int Fentryid { get; set; }
         public int Fseq { get; set; }
         public decimal Fqty { get; set; }
         public string Fnote { get; set; }
-        public string Fplandeliverydate { get; set; }
+        public DateTime? Fplandeliverydate { get; set; }
         public decimal Fstockqty { get; set; }
         public int Fmaterialid { get; set; }
         public string Fnumber { get; set; }
@@ -47,8 +46,10 @@ namespace WebApi_SY.Models
         public string Fslidelivery { get; set; }
         public string Fsliblankmodel { get; set; }
         public string Fslipunching { get; set; }
-        public decimal Fslimould { get; set; }//test
-        public decimal Fsliroller { get; set; }
+        public int FsliTemperatureBegin { get; set; }
+        public int FsliTempratureEnd { get; set; }
+        public string Fslimould { get; set; }
+        public string Fsliroller { get; set; }
         public int Fsliheatingtimes { get; set; }
         public string Fsligrade { get; set; }
         public string Fsumnumber { get; set; }
@@ -56,6 +57,6 @@ namespace WebApi_SY.Models
         public int Fworkorderlistremain { get; set; }
         public int Fworkorderliststatus { get; set; }
 
-        
+
     }
 }
