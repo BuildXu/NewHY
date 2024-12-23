@@ -69,7 +69,6 @@ namespace WebApi_SY.Controllers
                 {
                     code = 200,
                     msg = "OK",
-
                     date = " "
 
                 };
