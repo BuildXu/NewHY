@@ -48,7 +48,7 @@ namespace WebApi_SY.Models
         public string Fslimould { get; set; } // 模具
         public string Fsliroller { get; set; } // 轧辊规格
         public int Fsliheatingtimes { get; set; } // 加热次数
-        public string Fsligrade { get; set; } // 等级
-        public string Fsumnumber { get; set; } // 总编号（字符串类型）
+        public string Fsligrade { get; set; } // 锻件等级
+        public string Fsumnumber { get; set; } // 产品信息
     }
 }

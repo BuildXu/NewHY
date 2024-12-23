@@ -1,7 +1,10 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Ajax.Utilities;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
 using System.Threading.Tasks;
 using System.Web.Http;
 using WebApi_SY.Entity;
@@ -147,6 +150,109 @@ namespace WebApi_SY.Controllers
                 return data;
             }
         }
+        //******************
+
+        [Microsoft.AspNetCore.Mvc.HttpGet]
+
+            public IActionResult GetWorkOrderList(
+                int Page = 1,
+                int PageSize = 10,
+                string Fbillno = null,
+                DateTime? Fstartdate = null,
+                DateTime? Fenddate = null,
+                string Fcustomer = null,
+                string Fdescription = null,
+                string Fsumnumber = null)
+            {
+            var context = new YourDbContext();
+            // 构建基础查询
+            var query = from p in context.sli_workorderlist_view
+                            select p;
+
+                // 根据Fbillno过滤
+                if (!string.IsNullOrEmpty(Fbillno))
+                {
+                    query = query.Where(q => q.Fbillno.Contains(Fbillno));
+                }
+
+                // 根据日期区间过滤
+                if (Fstartdate.HasValue && Fenddate.HasValue)
+                {
+                    query = query.Where(q => q.Fdate >= Fstartdate.Value && q.Fdate <= Fenddate.Value);
+                }
+                else if (Fstartdate.HasValue)
+                {
+                    query = query.Where(q => q.Fdate >= Fstartdate.Value);
+                }
+                else if (Fenddate.HasValue)
+                {
+                    query = query.Where(q => q.Fdate <= Fenddate.Value);
+                }
+
+                // 根据Fcustomer过滤
+                if (!string.IsNullOrEmpty(Fcustomer))
+                {
+                    query = query.Where(q => q.Fcustomer.Contains(Fcustomer));
+                }
+
+                // 根据Fdescription过滤
+                if (!string.IsNullOrEmpty(Fdescription))
+                {
+                    query = query.Where(q => q.Fdescription.Contains(Fdescription));
+                }
+
+                // 根据Fsumnumber过滤
+                if (!string.IsNullOrEmpty(Fsumnumber))
+                {
+                    query = query.Where(q => q.Fsumnumber.Contains(Fsumnumber));
+                }
+
+                // 获取总数和总页数
+                var totalCount = query.Count();
+                var totalPages = (int)Math.Ceiling((double)totalCount / PageSize);
+
+                // 分页查询
+                var paginatedQuery = query
+                    .OrderBy(q => q.Id) // 根据需要排序，这里以Id为例
+                    .Skip((Page - 1) * PageSize)
+                    .Take(PageSize);
+
+                // 选择需要的字段（根据需要调整）
+                var result = paginatedQuery.Select(a => new
+                {
+                    a.Id,
+                    a.Fbillno,
+                    a.Fdate,
+                    a.Fcustomer,
+                    a.Fdescription,
+                    a.Fsumnumber,
+                    a.Fworkqty,
+                    a.Fworkweight,
+                    a.Fcustid,
+                    a.Fcustno,
+                    a.Fcustname,
+                    // 添加其他需要的字段
+                }).ToList();
+
+                // 构建响应
+                var response = new
+                {
+                    code = 200,
+                    msg = "操作成功",
+                    data = new
+                    {
+                        data = result,
+                        current = Page,
+                        pageSize = PageSize,
+                        totalCount = totalCount,
+                        totalPages = totalPages
+                    }
+                };
+
+                return Ok(response);
+            }
+        
+        // ----------------
         [Microsoft.AspNetCore.Mvc.HttpGet]
         public IHttpActionResult GetTableOrders(int Page = 1, int PageSize = 10, string Fbillno = null, string Fcustno = null,string Fcustname = null, DateTime? Fstartdate = null, DateTime? Fenddate = null, string Fproductname = null)
             /// 用于销售订单列表查询---》workorderlist
