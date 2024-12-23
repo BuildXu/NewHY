@@ -157,6 +157,7 @@ namespace WebApi_SY.Controllers
             public IActionResult GetWorkOrderList(
                 int Page = 1,
                 int PageSize = 10,
+                string Fproductno=null,
                 string Fbillno = null,
                 DateTime? Fstartdate = null,
                 DateTime? Fenddate = null,
@@ -174,9 +175,14 @@ namespace WebApi_SY.Controllers
                 {
                     query = query.Where(q => q.Fbillno.Contains(Fbillno));
                 }
+            // 根据Fproductno过滤
+            if (!string.IsNullOrEmpty(Fproductno))
+            {
+                query = query.Where(q => q.Fproductno.Contains(Fproductno));
+            }
 
-                // 根据日期区间过滤
-                if (Fstartdate.HasValue && Fenddate.HasValue)
+            // 根据日期区间过滤
+            if (Fstartdate.HasValue && Fenddate.HasValue)
                 {
                     query = query.Where(q => q.Fdate >= Fstartdate.Value && q.Fdate <= Fenddate.Value);
                 }
