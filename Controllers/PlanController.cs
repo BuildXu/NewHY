@@ -195,6 +195,7 @@ namespace WebApi_SY.Controllers
                 await context.SaveChangesAsync();
                 var dataNull = new
                 {
+                    code=200,
                     msg = "Success",
                     modelid = header.Id,
                     Date = header.Id.ToString() + "保存成功"
