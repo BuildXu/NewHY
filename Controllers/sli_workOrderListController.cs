@@ -227,6 +227,7 @@ namespace WebApi_SY.Controllers
                 var result = paginatedQuery.Select(a => new
                 {
                     a.Id,
+                    a.Fproductno,
                     a.Fbillno,
                     a.Fdate,
                     a.Fcustomer,
