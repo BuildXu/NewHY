@@ -7,6 +7,7 @@ using System.Linq;
 using System.Runtime.Remoting.Contexts;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.ModelBinding;
 using WebApi_SY.Entity;
 using WebApi_SY.Models;
 
@@ -93,61 +94,67 @@ namespace WebApi_SY.Controllers
 
         }
         [System.Web.Http.HttpPost]
-        public async Task<object> Delete(int id)
+        public async Task<object> Delete([Form] int[] ids)
         {
             try
             {
                 var context = new YourDbContext();
-                var entity = await context.Sli_workOrderList.FindAsync(id);
-                if (entity == null)
-                {
-                    var dataNull = new
-                    {
-                        code = 200,
-                        msg = "ok",
-                        orderId = id.ToString(),
-                        date = id.ToString() + "不存在"
-                    };
-                    //string json = JsonConvert.SerializeObject(data);
-                    return dataNull;
-                }
+                var deletedEntities = new List<sli_workOrderList>();
+                var updateData = new Dictionary<int, int>(); // 用于记录需要更新的FWORKORDERLISTQTY和FWORKORDERLISTREMAIN
 
-                context.Sli_workOrderList.Remove(entity);
-                await context.SaveChangesAsync();
-
-                var entityToUpdate = context.T_sal_orderEntry.FirstOrDefault(p => p.FENTRYID == Convert.ToInt32(entity.Forderentryid));
-                if (entity.Fsplittype != "样品")
+                foreach (var id in ids)
                 {
-                    if (entityToUpdate != null)
+                    var entity = await context.Sli_workOrderList.FindAsync(id);
+                    if (entity != null)
                     {
-                        // 累加字段值
-                        entityToUpdate.FWORKORDERLISTQTY -= Convert.ToInt32(entity.Fworkqty);
-                        entityToUpdate.FWORKORDERLISTREMAIN += Convert.ToInt32(entity.Fworkqty);
-                        // 保存更改
-                        //_context.SaveChanges();
+                        deletedEntities.Add(entity);
+                        // 记录需要更新的数据
+                        var entityToUpdate = context.T_sal_orderEntry.FirstOrDefault(p => p.FENTRYID == Convert.ToInt32(entity.Forderentryid));
+                        if (entity.Fsplittype != "样品" && entityToUpdate != null)
+                        {
+                            if (!updateData.ContainsKey(entityToUpdate.FENTRYID))
+                            {
+                                updateData[entityToUpdate.FENTRYID] = 0;
+                            }
+                            updateData[entityToUpdate.FENTRYID] -= Convert.ToInt32(entity.Fworkqty);
+                            updateData[entityToUpdate.FENTRYID] += Convert.ToInt32(entity.Fworkqty);
+                        }
                     }
                 }
 
-                // var data = new { Status = "Success", Message = "Data retrieved successfully", Data = new { /* actual data here */ } };
-                var data = new
+                // 删除实体
+                context.Sli_workOrderList.RemoveRange(deletedEntities);
+                await context.SaveChangesAsync();
+
+                // 更新相关实体
+                foreach (var kvp in updateData)
+                {
+                    var entityToUpdate = context.T_sal_orderEntry.Find(kvp.Key);
+                    if (entityToUpdate != null)
+                    {
+                        entityToUpdate.FWORKORDERLISTQTY += kvp.Value;
+                        entityToUpdate.FWORKORDERLISTREMAIN += kvp.Value;
+                    }
+                }
+                await context.SaveChangesAsync();
+
+                return new
                 {
                     code = 200,
                     msg = "Success",
-                    orderId = id.ToString(),
-                    date = id.ToString() + "删除成功"
+                    deletedOrderIds = ids.Where(id => deletedEntities.Any(e => e.id == id)).ToList(),
+                    date = "删除成功"
                 };
-                return data;
             }
             catch (Exception ex)
             {
-                var data = new
+                return new
                 {
                     code = 400,
                     msg = "失败",
-                    orderId = id.ToString(),
+                    orderId = string.Join(",", ids),
                     date = ex.ToString()
                 };
-                return data;
             }
         }
         //******************
