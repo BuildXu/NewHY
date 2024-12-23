@@ -249,8 +249,8 @@ namespace WebApi_SY.Controllers
                     }
                 };
 
-                return Ok(response);
-            }
+             return new OkObjectResult(response);
+        }
         
         // ----------------
         [Microsoft.AspNetCore.Mvc.HttpGet]
