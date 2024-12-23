@@ -26,36 +26,36 @@ namespace WebApi_SY.Controllers
                 var context = new YourDbContext();
                 var header = new sli_workorder
                 {
-                    FworkBillNumber = model.FworkBillNumber,
+                    Fworkbillnumber = model.Fworkbillnumber,
                     Fdate = model.Fdate,
-                    FbeginDatePlan = model.FbeginDatePlan,
-                    FendDatePlan = model.FendDatePlan,
-                    FqtyMain = model.FqtyMain,
-                    FqtyFinishedMain = model.FqtyFinishedMain,
-                    FqtyScrapedMain = model.FqtyScrapedMain,
-                    FweightMain = model.FweightMain,
-                    FweightFinishedMain = model.FweightFinishedMain,
-                    FweightScrapedMain = model.FweightScrapedMain,
+                    Fbegindateplan = model.Fbegindateplan,
+                    Fenddateplan = model.Fenddateplan,
+                    Fqtymain = model.Fqtymain,
+                    Fqtyfinishedmain = model.Fqtyfinishedmain,
+                    Fqtyscrapedmain = model.Fqtyscrapedmain,
+                    Fweightmain = model.Fweightmain,
+                    Fweightfinishedmain = model.Fweightfinishedmain,
+                    Fweightscrapedmain = model.Fweightscrapedmain,
                     Fnotes = model.Fnotes,
-                    FworkProcessId = model.FworkProcessId,
-                    FworkRequisitionId = model.FworkRequisitionId,
-                    FticketType = model.FticketType,
+                    Fworkprocessid = model.Fworkprocessid,
+                    Fworkrequisitionid = model.Fworkrequisitionid,
+                    Ftickettype = model.Ftickettype,
                     sli_workorderentry = model.sli_workorderentry.Select(d => new sli_workorderentry
                     {
                         //fmodelID = model.Id,
-                        FworkListId = d.FworkListId,
-                        ForderEntryid = d.ForderEntryid,
-                        FrowNumber = d.FrowNumber,
-                        ForderRowNumber = d.ForderRowNumber,
+                        Fworklistid = d.Fworklistid,
+                        Forderentryid = d.Forderentryid,
+                        Frownumber = d.Frownumber,
+                        Forderrownumber = d.Forderrownumber,
                         Fmaterialid = d.Fmaterialid,
                         Fqty = d.Fqty,
-                        FqtyFinished = d.FqtyFinished,
-                        FqtyScraped = d.FqtyScraped,
+                        Fqtyfinished = d.Fqtyfinished,
+                        Fqtyscraped = d.Fqtyscraped,
                         Fweight = d.Fweight,
-                        FweightFinished = d.FweightFinished,
-                        FweightScraped = d.FweightScraped,
-                        Sli_workRequisitionId = d.Sli_workRequisitionId,
-                        Sli_workProcessId = d.Sli_workProcessId
+                        Fweightfinished = d.Fweightfinished,
+                        Fweightscraped = d.Fweightscraped,
+                        sli_workrequisitionid = d.sli_workrequisitionid,
+                        sli_workprocessid = d.sli_workprocessid
                     }).ToList()
                 };
 
@@ -66,8 +66,8 @@ namespace WebApi_SY.Controllers
                 var dataNull = new
                 {
                     msg = "Success",
-                    modelid = header.ID,
-                    Date = header.ID.ToString() + "保存成功"
+                    modelid = header.Id,
+                    Date = header.Id.ToString() + "保存成功"
 
                 };
                 return dataNull;

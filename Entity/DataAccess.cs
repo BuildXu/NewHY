@@ -130,7 +130,7 @@ namespace WebApi_SY.Entity
             modelBuilder.Entity<sli_workorder>()
                .HasMany(h => h.sli_workorderentry)
                .WithOne(d => d.sli_workorder)
-               .HasForeignKey(d => d.ForderEntryid);
+               .HasForeignKey(d => d.Forderentryid);
 
             modelBuilder.Entity<sli_sale_taxturebill>()
                .HasOne(h => h.sli_sale_taxture)
