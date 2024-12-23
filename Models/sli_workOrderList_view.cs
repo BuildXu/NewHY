@@ -9,7 +9,7 @@ namespace WebApi_SY.Models
     {
         public int Id { get; set; } // 主键ID
         public decimal Fworkqty { get; set; } // 工件数量
-        public decimal Fworkweight { get; set; } // 拆分重量
+        public decimal Fworkweight { get; set; } // 工件重量
         public string Fbillno { get; set; } // 单据编号
         public DateTime Fdate { get; set; } // 日期
         public int Fcustid { get; set; } // 客户ID
@@ -24,8 +24,8 @@ namespace WebApi_SY.Models
         public DateTime Fplandeleliverydate { get; set; } // 计划交货日期
         public decimal Fstockqty { get; set; } // 库存数量
         public int B_Fmaterialid { get; set; } // 物料ID（B表）
-        public string Fnumber { get; set; } // 编号
-        public string Fname { get; set; } // 名称
+        public string Fnumber { get; set; } // 物料编号
+        public string Fname { get; set; } // 物料名称
         public string Fdescription { get; set; } // 描述
         public decimal Fsliouterdiameter { get; set; } // 外径
         public decimal Fsliinnerdiameter { get; set; } // 内径
@@ -36,10 +36,10 @@ namespace WebApi_SY.Models
         public decimal Fsliweightmaterial { get; set; } // 材料重量
         public decimal Fsliweightforging { get; set; } // 锻造重量
         public decimal Fsliweightgoods { get; set; } // 成品重量
-        public string Fslidrawingno { get; set; } // 图纸编号
-        public string Fslimetal { get; set; } // 金属类型
-        public int Fsligoodsstatus { get; set; } // 货物状态
-        public string Fsliprocessing { get; set; } // 加工方式
+        public string Fslidrawingno { get; set; } // 图号
+        public string Fslimetal { get; set; } // 材质
+        public int Fsligoodsstatus { get; set; } // 发货状态
+        public string Fsliprocessing { get; set; } // 加工要求
         public string Fslidelivery { get; set; } // 交货状态
         public string Fsliblankmodel { get; set; } // 毛坯型号
         public string Fslipunching { get; set; } // 冲压信息
