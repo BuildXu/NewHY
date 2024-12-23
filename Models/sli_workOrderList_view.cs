@@ -21,10 +21,10 @@ namespace WebApi_SY.Models
         public string Fentryid { get; set; } // 分录ID
         public int Fseq { get; set; } // 序号
         public decimal Fqty { get; set; } // 数量
-        public string B_Fnote { get; set; } // 备注（B表）
+        public string Fnote { get; set; } // 备注（B表）
         public DateTime Fplandeleliverydate { get; set; } // 计划交货日期
         public decimal Fstockqty { get; set; } // 库存数量
-        public int B_Fmaterialid { get; set; } // 物料ID（B表）
+        public int Fmaterialid { get; set; } // 物料ID（B表）
         public string Fnumber { get; set; } // 物料编号
         public string Fname { get; set; } // 物料名称
         public string Fdescription { get; set; } // 描述
