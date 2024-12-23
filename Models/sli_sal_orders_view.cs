@@ -10,6 +10,9 @@ namespace WebApi_SY.Models
     {
         
         public int Fid { get; set; }
+
+        public string Fproductno { get; set; }
+
         public string Fbillno { get; set; }
         public DateTime Fdate { get; set; }
         public int Fcustid { get; set; }

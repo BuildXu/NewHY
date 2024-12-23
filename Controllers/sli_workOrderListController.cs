@@ -34,6 +34,7 @@ namespace WebApi_SY.Controllers
                     var insert = new sli_workOrderList
                     {
                         Fproductno = maxfproductNumber.IncrementAfterLastSpecialCharacter(WList.Fproductno),
+                        //Frowno = maxfproductNumber.IncrementAfterLastSpecialCharacter(WList.Fproductno),
                         Forderentryid = WList.Forderentryid,
                         Fmaterialid = WList.Fmaterialid,
                         Fworkqty = WList.Fworkqty,

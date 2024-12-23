@@ -8,6 +8,7 @@ namespace WebApi_SY.Models
     public class sli_workOrderList
     {
         public int id { get; set; }
+        //public string Fproductno { get; set; }
         public string Forderentryid { get; set; }   // 订单行ID
         public string Fproductno { get; set; }  // 物料名称
         public int Fmaterialid { get; set; }     //  物料id

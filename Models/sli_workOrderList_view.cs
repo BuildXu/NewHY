@@ -8,6 +8,7 @@ namespace WebApi_SY.Models
     public class sli_workorderlist_view
     {
         public int Id { get; set; } // 主键ID
+        public string Fproductno { get; set; } // 工件号
         public decimal Fworkqty { get; set; } // 工件数量
         public decimal Fworkweight { get; set; } // 工件重量
         public string Fbillno { get; set; } // 单据编号
