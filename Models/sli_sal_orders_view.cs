@@ -23,7 +23,7 @@ namespace WebApi_SY.Models
         public string Fcustname { get; set; }
         public string Fcustomer { get; set; }
         [Key]
-      //  public int Fid { get; set; }
+        //public int Fid { get; set; }
         public int Forderid { get; set; }
         public int Fentryid { get; set; }
         public int Fseq { get; set; }

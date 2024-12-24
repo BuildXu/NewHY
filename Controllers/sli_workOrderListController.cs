@@ -347,7 +347,7 @@ namespace WebApi_SY.Controllers
             var paginatedQuery = query.Skip((Page - 1) * PageSize).Take(PageSize);
             var result = paginatedQuery.Select(a => new
             {
-                Fid = a.Fid,
+                //Fid = a.Fid,
                 Fbillno = a.Fbillno,
                 Forderid = a.Forderid,
                 Fdate = a.Fdate,
