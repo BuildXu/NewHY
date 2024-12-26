@@ -19,49 +19,34 @@ namespace WebApi_SY.Controllers
 
         }
         [System.Web.Http.HttpPost]
-        public async Task<object> Insert([Microsoft.AspNetCore.Mvc.FromBody] sli_workorder model)
+        public async Task<object> Insert([Microsoft.AspNetCore.Mvc.FromBody] sli_work_order model)
         {
             try
             {
                 var context = new YourDbContext();
-                var header = new sli_workorder
+                var header = new sli_work_order
                 {
-                    Fworkbillnumber = model.Fworkbillnumber,
+                    Fbillno = model.Fbillno,
                     Fdate = model.Fdate,
-                    Fbegindateplan = model.Fbegindateplan,
-                    Fenddateplan = model.Fenddateplan,
-                    Fqtymain = model.Fqtymain,
-                    Fqtyfinishedmain = model.Fqtyfinishedmain,
-                    Fqtyscrapedmain = model.Fqtyscrapedmain,
-                    Fweightmain = model.Fweightmain,
-                    Fweightfinishedmain = model.Fweightfinishedmain,
-                    Fweightscrapedmain = model.Fweightscrapedmain,
-                    Fnotes = model.Fnotes,
-                    Fworkprocessid = model.Fworkprocessid,
-                    Fworkrequisitionid = model.Fworkrequisitionid,
-                    Ftickettype = model.Ftickettype,
-                    sli_workorderentry = model.sli_workorderentry.Select(d => new sli_workorderentry
+                    Fqty = model.Fqty,
+                    Fweight = model.Fweight,
+                    Fplanstart = model.Fplanstart,
+                    Fplanend = model.Fplanend,
+                    Fordertype = model.Fordertype,
+                    sli_work_orderEntry = model.sli_work_orderEntry.Select(d => new sli_work_orderEntry
                     {
-                        //fmodelID = model.Id,
-                        Fworklistid = d.Fworklistid,
+                        //Id = model.Id,
+                        Fseq = d.Fseq,
                         Forderentryid = d.Forderentryid,
-                        Frownumber = d.Frownumber,
-                        Forderrownumber = d.Forderrownumber,
-                        Fmaterialid = d.Fmaterialid,
-                        Fqty = d.Fqty,
-                        Fqtyfinished = d.Fqtyfinished,
-                        Fqtyscraped = d.Fqtyscraped,
-                        Fweight = d.Fweight,
-                        Fweightfinished = d.Fweightfinished,
-                        Fweightscraped = d.Fweightscraped,
-                        sli_workrequisitionid = d.sli_workrequisitionid,
-                        sli_workprocessid = d.sli_workprocessid
+                        Forderid = d.Forderid,
+                        Fworkorderlistid = d.Id,
+
                     }).ToList()
                 };
 
 
 
-                context.Sli_workorder.Add(header);
+                context.Sli_work_order.Add(header);
                 await context.SaveChangesAsync();
                 var dataNull = new
                 {

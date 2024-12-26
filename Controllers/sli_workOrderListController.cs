@@ -161,7 +161,7 @@ namespace WebApi_SY.Controllers
 
         [Microsoft.AspNetCore.Mvc.HttpGet]
 
-            public IActionResult GetWorkOrderList(
+            public IHttpActionResult GetWorkOrderList(
                 int Page = 1,
                 int PageSize = 10,
                 string Fproductno=null,
@@ -189,11 +189,11 @@ namespace WebApi_SY.Controllers
             }
 
             // 根据日期区间过滤
-            if (Fstartdate.HasValue && Fenddate.HasValue)
-                {
-                    query = query.Where(q => q.Fdate >= Fstartdate.Value && q.Fdate <= Fenddate.Value);
-                }
-                else if (Fstartdate.HasValue)
+            //if (Fstartdate.HasValue && Fenddate.HasValue)
+            //    {
+            //        query = query.Where(q => q.Fdate >= Fstartdate.Value && q.Fdate <= Fenddate.Value);
+            //    }
+                 if (Fstartdate.HasValue)
                 {
                     query = query.Where(q => q.Fdate >= Fstartdate.Value);
                 }
@@ -278,7 +278,8 @@ namespace WebApi_SY.Controllers
                     Fslimould = a.Fslimould,
                     Fsliroller = a.Fsliroller,
                     Fsliheatingtimes = a.Fsliheatingtimes,
-                    Fsligrade = a.Fsligrade
+                    Fsligrade = a.Fsligrade,
+                    Fsplittype = a.Fsplittype
                     // 添加其他需要的字段
                 }).ToList();
 
@@ -297,7 +298,7 @@ namespace WebApi_SY.Controllers
                     }
                 };
 
-             return new OkObjectResult(response);
+             return  Ok(response);
         }
         
         // ----------------

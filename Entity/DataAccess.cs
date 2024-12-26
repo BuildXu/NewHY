@@ -39,8 +39,8 @@ namespace WebApi_SY.Entity
         
         
         //生产订单  查询、新增12.5部署 
-        public DbSet<sli_workorder> Sli_workorder { get; set; }        // 生产  prd   生产订单 
-        public DbSet<sli_workorderentry> Sli_workorderentry { get; set; }
+        public DbSet<sli_work_order> Sli_work_order { get; set; }        // 生产  prd   生产订单 
+        public DbSet<sli_work_orderEntry> Sli_work_orderEntry { get; set; }
 
         public DbSet<sli_sale_taxture> Sli_sale_taxture { get; set; }
         public DbSet<sli_sale_taxturebill> Sli_sale_taxturebill { get; set; }
@@ -127,10 +127,10 @@ namespace WebApi_SY.Entity
              .WithOne()
               .HasForeignKey("Fplanbillid"); // 外键列名
 
-            modelBuilder.Entity<sli_workorder>()
-               .HasMany(h => h.sli_workorderentry)
-               .WithOne(d => d.sli_workorder)
-               .HasForeignKey(d => d.Forderentryid);
+            modelBuilder.Entity<sli_work_order>()
+               .HasMany(h => h.sli_work_orderEntry)
+               .WithOne(d => d.sli_work_order)
+               .HasForeignKey(d => d.Id);
 
             modelBuilder.Entity<sli_sale_taxturebill>()
                .HasOne(h => h.sli_sale_taxture)

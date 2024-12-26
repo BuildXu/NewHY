@@ -60,13 +60,13 @@ namespace WebApi_SY.Controllers
             {
                 query = query.Where(t => t.id == id.Value);
             }
-
+            var datas = query.ToList();
             //var datas = query.ToList();
             var response = new    // 定义 前端返回数据  总记录，总页，当前页 ，size,返回记录
             {
                 code = 200,
                 msg = "OK",
-                data = query
+                data = datas
             };
 
             return Json(response);
@@ -452,14 +452,14 @@ namespace WebApi_SY.Controllers
             {
                 query = query.Where(t => t.id == id.Value);
             }
-
+            var datas = query.ToList();
             //var datas = query.ToList();
             var response = new    // 定义 前端返回数据  总记录，总页，当前页 ，size,返回记录
             {
                 code = 200,
                 msg = "OK",
 
-                data = query
+                data = datas
             };
 
             return Json(response);
