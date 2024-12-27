@@ -9,7 +9,7 @@ using WebApi_SY.Entity;
 using WebApi_SY.Models;
 
 
-// 管理工艺流转卡 
+// 管理工艺流转卡   a 
 
 //  1. 为选中的每一个  Fworkorderlistid   创建 工艺  sli_work_processBill      (work_order 列表维护页面 两级查询 ) 
 // --- 用work_order + workorderenty     创建的 为workorderlist  创建一个附表吗？
