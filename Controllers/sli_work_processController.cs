@@ -10,7 +10,7 @@ using WebApi_SY.Models;
 
 namespace WebApi_SY.Controllers
 {
-    public class sli_work_processController : ApiController   // 创建工艺流转卡
+    public class sli_work_processController : ApiController   // 管理工艺流转卡
     {
         
     }

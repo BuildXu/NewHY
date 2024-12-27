@@ -10,7 +10,7 @@ using WebApi_SY.Models;
 
 namespace WebApi_SY.Controllers
 {
-    public class sli_work_reportController : ApiController
+    public class sli_work_reportController : ApiController  // 管理生产报工
     {
         
     }
