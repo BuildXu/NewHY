@@ -79,8 +79,8 @@ namespace WebApi_SY.Controllers
 
                                 sale.Fnumber = sale1.Fnumber;
                                 sale.Fname = sale1.Fname;
-                                sale.Fdate = sale1.Fdate;
-                                if (sale1.FmaterialID is null)
+                                sale.Fdate = Convert.ToDateTime(sale1.Fdate);
+                                if (sale1.FmaterialID =="")
                                 {
                                     sale.FmaterialID = 0;
                                 }
@@ -89,7 +89,16 @@ namespace WebApi_SY.Controllers
                                     sale.FmaterialID = sale1.FmaterialID;
                                 }
 
-                                sale.FcustomerID = sale1.FcustomerID;
+                                if (sale1.FcustomerID == "")
+                                {
+                                    sale.FcustomerID = 0;
+                                }
+                                else
+                                {
+                                    sale.FcustomerID = sale1.FcustomerID;
+                                    //sale.FmaterialID = sale1.FmaterialID;
+                                }
+                                
                                 //sale.Fstatus = sale1.Fstatus;
                                 //if (sale1.ForderNo == "")
                                 //{
@@ -130,11 +139,22 @@ namespace WebApi_SY.Controllers
                                     {
                                         ftechOptionID1 = billItem.ftechOptionID;
                                     }
+                                    var fnewnote = "";
+                                    if (billItem.fnote == "")
+                                    {
+                                        fnewnote = "";
+                                    }
+                                    else
+                                    {
+                                        fnewnote = billItem.fnote;
+                                    }
                                     billList.Add(new sli_document_tech_saleBill
                                     {
                                         fmainID = sale.Id,
                                         ftechOptionID = ftechOptionID1,
-                                        fnote = billItem.fnote
+
+
+                                        fnote = fnewnote
                                     });
                                 }
 
