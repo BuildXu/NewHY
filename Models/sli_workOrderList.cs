@@ -41,6 +41,7 @@ namespace WebApi_SY.Models
 
         public int Fobject { get; set; } // 当前工步   ---对应 object
 
+        public int Fmo { get; set; } // 配料状态
         public int Fstatus { get; set; } //  状态 0 / 1
 
         public int Fpause { get; set; } // 暂停   --- 0  /   1
