@@ -132,6 +132,10 @@ namespace WebApi_SY.Entity
                .WithOne(d => d.sli_work_order)
                .HasForeignKey(d => d.Id);
 
+           // modelBuilder.Entity<sli_work_orderEntry>()
+           //.Property(p => p.Fentryid)
+           //.ValueGeneratedOnAdd();   //字段自增
+
             modelBuilder.Entity<sli_sale_taxturebill>()
                .HasOne(h => h.sli_sale_taxture)
                .WithMany(d => d.sli_sale_taxturebill)

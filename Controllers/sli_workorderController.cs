@@ -35,11 +35,11 @@ namespace WebApi_SY.Controllers
                     Fordertype = model.Fordertype,
                     sli_work_orderEntry = model.sli_work_orderEntry.Select(d => new sli_work_orderEntry
                     {
-                        //Id = model.Id,
+                        Id = model.Id,
                         Fseq = d.Fseq,
                         Forderentryid = d.Forderentryid,
                         Forderid = d.Forderid,
-                        Fworkorderlistid = d.Id,
+                        Fworkorderlistid = d.Fworkorderlistid,
 
                     }).ToList()
                 };
