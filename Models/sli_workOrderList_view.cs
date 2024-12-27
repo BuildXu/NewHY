@@ -112,13 +112,14 @@ namespace WebApi_SY.Models
 
         public int Ffinisthqty { get; set; } // 完工数量
 
-      //  public int Fstockqty { get; set; } // 库存数量
+        //public int Fstockqty { get; set; } // 库存数量
 
         public int Foption { get; set; } // 当前工序  ---对应 option
 
         public int Fobject { get; set; } // 当前工步   ---对应 object
 
-        public int Fstatus { get; set; } //  状态 0 / 1
+        public int Fmo { get; set; }    // 已配料状态   0 未配 /  1  已配
+        public int Fstatus { get; set; } //  状态 0   未审核 / 1  审核
 
         public int Fpause { get; set; } // 暂停   --- 0  /   1
 
