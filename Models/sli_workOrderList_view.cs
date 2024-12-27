@@ -54,6 +54,8 @@ namespace WebApi_SY.Models
         //public string Fsumnumber { get; set; } // 产品信息
         [Key]
         public int Id { get; set; }
+
+        public int Fworkorderlistid { get; set; }  //  视图里加一个   id   就是工件号  id
         public string Fproductno { get; set; }
         public decimal? Fworkqty { get; set; }
         public decimal? Fworkweight { get; set; }
