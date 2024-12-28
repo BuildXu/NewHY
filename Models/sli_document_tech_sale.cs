@@ -6,6 +6,7 @@ using System.Web;
 
 namespace WebApi_SY.Models
 {
+    //产品工艺档案
     public class sli_document_tech_sale
     {
         public int Id { get; set; }

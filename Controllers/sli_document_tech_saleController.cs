@@ -41,7 +41,7 @@ namespace WebApi_SY.Controllers
          //public async Task<object> InsertData()
 
         public IHttpActionResult   InsertData()
-        {
+      {
             try
             {
                 //var context = new YourDbContext();
@@ -129,32 +129,17 @@ namespace WebApi_SY.Controllers
 
                                 foreach (var billItem in Bill1)
                                 {
-                                    var ftechOptionID1 = 0;
+                                    //var ftechOptionID1 = 0;
 
-                                    if (billItem.ftechOptionID =="")
-                                    {
-                                        ftechOptionID1 = 0;
-                                    }
-                                    else
-                                    {
-                                        ftechOptionID1 = billItem.ftechOptionID;
-                                    }
-                                    var fnewnote = "";
-                                    if (billItem.fnote == "")
-                                    {
-                                        fnewnote = "";
-                                    }
-                                    else
-                                    {
-                                        fnewnote = billItem.fnote;
-                                    }
+                                    
+                                    
                                     billList.Add(new sli_document_tech_saleBill
                                     {
                                         fmainID = sale.Id,
-                                        ftechOptionID = ftechOptionID1,
+                                        ftechOptionID = billItem.ftechOptionID,
 
 
-                                        fnote = fnewnote
+                                        fnote = billItem.fnote
                                     });
                                 }
 
@@ -175,20 +160,20 @@ namespace WebApi_SY.Controllers
 
                                 foreach (var entryItem in Entry1)
                                 {
-                                    var ftechObjectID1 = 0;
+                                    //var ftechObjectID1 = 0;
 
-                                    if (entryItem.ftechObjectID =="")
-                                    {
-                                        ftechObjectID1 = 0;
-                                    }
-                                    else
-                                    {
-                                        ftechObjectID1 = entryItem.ftechObjectID;
-                                    }
+                                    //if (entryItem.ftechObjectID =="")
+                                    //{
+                                    //    ftechObjectID1 = 0;
+                                    //}
+                                    //else
+                                    //{
+                                    //    ftechObjectID1 = entryItem.ftechObjectID;
+                                    //}
                                     entryList.Add(new sli_document_tech_saleBillEntry
                                     {
                                         fbillID = sale.Id,
-                                        ftechObjectID = ftechObjectID1,
+                                        ftechObjectID = entryItem.ftechObjectID,
                                         fnote = entryItem.fnote,
                                         ftarget = entryItem.ftarget,
                                         fmin = entryItem.fmin,

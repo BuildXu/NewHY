@@ -80,6 +80,11 @@ namespace WebApi_SY.Entity
         public DbSet<sli_document_quality_standardBillEntry_view> Sli_document_quality_standardBillEntry_view { get; set; }//质量标准表体2视图
         public DbSet<sli_document_quality_standardAttachment_view> Sli_document_quality_standardAttachment_view { get; set; }//质量标准附件视图
 
+        public DbSet<sli_document_process_model> Sli_document_process_model { get; set; }//产品工艺档案表头
+        public DbSet<sli_document_process_modelBill> Sli_document_process_modelBill { get; set; }//产品工艺档案表体1
+        public DbSet<sli_document_process_modelBillEntry> Sli_document_process_modelBillEntry { get; set; }//产品工艺档案表体2
+        public DbSet<sli_document_process_modelAttachment> Sli_document_process_modelAttachment { get; set; }//产品工艺档案附件
+
         public DbSet<sli_sale_orderImportentry> Sli_sale_orderImportentry { get; set; }//销售订单导入表体
         public DbSet<sli_sale_orderImport> Sli_sale_orderImport { get; set; }//销售订单导入表头
         public DbSet<sli_sale_orderImport_view> Sli_sale_orderImport_view { get; set; }//销售订单导入视图
@@ -217,6 +222,22 @@ namespace WebApi_SY.Entity
                .HasOne(h => h.sli_document_quality_standard_view)
                .WithMany(d => d.sli_document_quality_standardAttachment_view)
                .HasForeignKey(d => d.fmainID);
+
+            //产品工艺档案外键关联
+            modelBuilder.Entity<sli_document_process_modelBill>()
+               .HasOne(h => h.sli_document_process_model)
+               .WithMany(d => d.sli_document_process_modelBill)
+               .HasForeignKey(d => d.Id);
+
+            modelBuilder.Entity<sli_document_process_modelBillEntry>()
+               .HasOne(h => h.sli_document_process_modelBill)
+               .WithMany(d => d.sli_document_process_modelBillEntry)
+               .HasForeignKey(d => d.Fbillid);
+
+            modelBuilder.Entity<sli_document_process_modelAttachment>()
+               .HasOne(h => h.sli_document_process_model)
+               .WithMany(d => d.sli_document_process_modelAttachment)
+               .HasForeignKey(d => d.id);
 
         }
 
