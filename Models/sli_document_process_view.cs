@@ -19,7 +19,7 @@ namespace WebApi_SY.Models
         public string Ftaxtrue { get; set; } // 材质
 
         public int Fprocessid { get; set; } // 工序ID
-        public int Foptionid { get; set; }  // 工序ID (给下游传参)
+        public int Fprocessoption { get; set; }  // 工序ID (给下游传参)
 
 
         public string Fprocessname { get; set; } // 工序名称
