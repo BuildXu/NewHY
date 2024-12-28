@@ -12,6 +12,7 @@ namespace WebApi_SY.Models
         [Key]
         public int Id { get; set; }
         public string Fnumber { get; set; }
+
         public string Fname { get; set; }
         public string Fdate { get; set; }
         public int? Fbillerid { get; set; }

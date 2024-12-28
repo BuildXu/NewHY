@@ -496,6 +496,7 @@
     <Compile Include="Models\sli_bd_tech_option.cs" />
     <Compile Include="Models\sli_bd_tech_option_view.cs" />
     <Compile Include="Models\sli_dept_info.cs" />
+    <Compile Include="Models\sli_document_process_model.cs" />
     <Compile Include="Models\sli_document_quality_standard.cs" />
     <Compile Include="Models\sli_document_quality_standard_view.cs" />
     <Compile Include="Models\sli_document_tech_sale.cs" />
