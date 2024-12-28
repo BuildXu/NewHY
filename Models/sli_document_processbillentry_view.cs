@@ -6,17 +6,10 @@ using System.Web;
 
 namespace WebApi_SY.Models
 {
-    public class sli_document_process_view
+    public class sli_document_processbillentry_view
     {
         [Key]
         public int Fentryid { get; set; } // 主键ID
-        public int Id { get; set; } //主表ID
-
-        public string Fnumber { get; set; } // 编号
-
-        public string Fdate { get; set; } // 日期
-
-        public string Ftaxtrue { get; set; } // 税务真实标记
 
         public int Fprocessid { get; set; } // 流程ID
 

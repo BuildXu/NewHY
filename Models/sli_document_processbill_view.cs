@@ -6,18 +6,19 @@ using System.Web;
 
 namespace WebApi_SY.Models
 {
-    public class sli_document_process_view
+    public class sli_document_processbill_view
     {
+
         [Key]
-        public int Fentryid { get; set; } // 主键ID
-        public int Id { get; set; } //主表ID
+        public int Fbillid { get; set; } // 主键ID
+        public int Id { get; set; } // 主表ID
 
         public string Fnumber { get; set; } // 编号
 
         public string Fdate { get; set; } // 日期
 
         public string Ftaxtrue { get; set; } // 税务真实标记
-
+     
         public int Fprocessid { get; set; } // 流程ID
 
         public string Fprocessname { get; set; } // 流程名称
@@ -26,10 +27,5 @@ namespace WebApi_SY.Models
 
         public int Fdeptid { get; set; } // 部门ID
 
-        public int Fstepid { get; set; } // 步骤ID
-
-        public string Fstepname { get; set; } // 步骤名称
-
-        public string Fstepnote { get; set; } // 步骤备注
     }
 }
