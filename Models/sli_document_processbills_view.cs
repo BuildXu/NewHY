@@ -6,7 +6,7 @@ using System.Web;
 
 namespace WebApi_SY.Models
 {
-    public class sli_document_processbill_view
+    public class sli_document_processbills_view
     {
         // 主键 
         public int Id { get; set; }
