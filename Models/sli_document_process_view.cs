@@ -12,24 +12,26 @@ namespace WebApi_SY.Models
         public int Fentryid { get; set; } // 主键ID
         public int Id { get; set; } //主表ID
 
-        public string Fnumber { get; set; } // 编号
+        public string Fnumber { get; set; } // 工艺档案编号
 
         public string Fdate { get; set; } // 日期
 
-        public string Ftaxtrue { get; set; } // 税务真实标记
+        public string Ftaxtrue { get; set; } // 材质
 
-        public int Fprocessid { get; set; } // 流程ID
+        public int Fprocessid { get; set; } // 工序ID
+        public int Foptionid { get; set; }  // 工序ID (给下游传参)
 
-        public string Fprocessname { get; set; } // 流程名称
 
-        public string Fprocessnote { get; set; } // 流程备注
+        public string Fprocessname { get; set; } // 工序名称
+
+        public string Fprocessnote { get; set; } // 工序备注
 
         public int Fdeptid { get; set; } // 部门ID
 
-        public int Fstepid { get; set; } // 步骤ID
+        public int Fstepid { get; set; } // 工步ID
 
-        public string Fstepname { get; set; } // 步骤名称
+        public string Fstepname { get; set; } // 工步名称
 
-        public string Fstepnote { get; set; } // 步骤备注
+        public string Fstepnote { get; set; } // 工步说明
     }
 }
