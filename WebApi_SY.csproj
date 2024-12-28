@@ -508,6 +508,7 @@
     <Compile Include="Models\sli_prd_processReport.cs" />
     <Compile Include="Models\sli_prd_processTicket.cs" />
     <Compile Include="Models\sli_prd_pruductionPlanB.cs" />
+    <Compile Include="Models\sli_work_process.cs" />
     <Compile Include="Models\sli_quality_request.cs" />
     <Compile Include="Models\sli_sale_orderImport.cs" />
     <Compile Include="Models\sli_sale_orderImport_view.cs" />

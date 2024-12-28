@@ -100,6 +100,9 @@ namespace WebApi_SY.Entity
 
         public DbSet<sli_sal_orderDocument> Sli_sal_orderDocument { get; set; }//销售订单表单合并
 
+        public DbSet<sli_work_processbill> sli_work_processbill { get; set; }
+        public DbSet<sli_work_processbillentry> sli_work_processbillentry { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //ConnectionStrings 19vs7gv47690.vicp.fun,46716
@@ -238,7 +241,10 @@ namespace WebApi_SY.Entity
                .HasOne(h => h.sli_document_process_model)
                .WithMany(d => d.sli_document_process_modelAttachment)
                .HasForeignKey(d => d.id);
-
+            modelBuilder.Entity<sli_work_processbillentry>()
+               .HasOne(h => h.sli_work_processbill)
+               .WithMany(d => d.sli_work_processbillentry)
+               .HasForeignKey(d => d.Fbillid);
         }
 
     }
