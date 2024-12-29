@@ -16,11 +16,14 @@ namespace WebApi_SY.Controllers
 {
     public class sli_document_process_modelController : ApiController
     {
-        public sli_document_process_modelController()
-        {
-            // _context = context;
+        private readonly YourDbContext _context; // 声明上下文变量
 
+        // 通过构造函数注入上下文
+        public sli_document_process_modelController(YourDbContext context)
+        {
+            _context = context;
         }
+
         public IHttpActionResult InsertData()
         {
             using (var scope = new TransactionScope())  //保存时报错回滚保存操作
@@ -186,6 +189,46 @@ namespace WebApi_SY.Controllers
                     // 捕获其他异常
                     return BadRequest("General error: " + ex.Message);
                 }
+            }
+        }
+
+        //   查询----------
+        [Microsoft.AspNetCore.Mvc.HttpGet]
+        public IHttpActionResult GetDocuments(int page = 1, int pagesize = 40)
+        {
+            try
+            {
+                var query = _context.sli_work_processbill.AsQueryable(); // sli_document_process_view
+
+                // 可以根据需要添加过滤条件，例如：
+                // query = query.Where(d => d.Fdate >= startDate && d.Fdate <= endDate);
+
+                int total = query.Count();
+                var data = query
+                            .OrderBy(d => d.Id) // 排序方式可根据需求调整
+                            .Skip((page - 1) * pagesize)
+                            .Take(pagesize)
+                            .ToList();
+
+                var response = new
+                {
+                    code = 200,
+                    msg = "操作成功",
+                    data = new
+                    {
+                        data = data,
+                        page = page,
+                        pagesize = pagesize,
+                        total = total
+                    }
+                };
+
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                // 记录异常日志（建议使用日志框架）
+                return InternalServerError(new Exception("查询失败，请稍后再试。"));
             }
         }
     }

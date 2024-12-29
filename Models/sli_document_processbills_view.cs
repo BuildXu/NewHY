@@ -9,6 +9,7 @@ namespace WebApi_SY.Models
     public class sli_document_processbills_view
     {
         // 主键 
+        [Key]
         public int Id { get; set; }
 
         // 工艺档案编号
