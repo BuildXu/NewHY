@@ -245,6 +245,10 @@ namespace WebApi_SY.Entity
                .HasOne(h => h.sli_work_processbill)
                .WithMany(d => d.sli_work_processbillentry)
                .HasForeignKey(d => d.Fbillid);
+            modelBuilder.Entity<sli_manu_planentry>()
+               .HasOne(h => h.sli_manu_plan)
+               .WithMany(d => d.sli_manu_planentry)
+               .HasForeignKey(d => d.Id);
         }
 
     }
