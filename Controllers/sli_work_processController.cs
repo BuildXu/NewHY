@@ -66,10 +66,10 @@ namespace WebApi_SY.Controllers
 //请求示例：
 //    [
 //    {
-//        "Id": 1,
-//        "Fwoentryid": 101,
-//        "Fseq": 1,
-//        "Fworkorderlistid": 201,
+//        "Id": 1,      // 自增，不用传
+//        "Fwoentryid": 101,   //   从 sli_work_orderEntry  /  Fentryid
+//        "Fseq": 1,              //  前端  --》 行号
+//        "Fworkorderlistid": 201,    //   sli_work_orderEntry  /  Fentryid
 //        "Fprocessoption": 1,
 //        "Fstartdate": "2023-10-01T00:00:00",
 //        "Fenddate": "2023-10-05T00:00:00",
