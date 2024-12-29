@@ -86,7 +86,7 @@ namespace WebApi_SY.Controllers
 
                                     foreach (var billItem in Bill1)
                                     {
-                                        
+
                                         billList.Add(new sli_document_process_modelBill
                                         {
                                             Id = sale.Id,
@@ -114,7 +114,7 @@ namespace WebApi_SY.Controllers
 
                                     foreach (var entryItem in Entry1)
                                     {
-                                        
+
                                         entryList.Add(new sli_document_process_modelBillEntry
                                         {
                                             Fbillid = bill.Fbillid,
@@ -162,7 +162,7 @@ namespace WebApi_SY.Controllers
                     }
 
 
-                
+
                     var data = new
                     {
                         code = 200,
@@ -191,50 +191,54 @@ namespace WebApi_SY.Controllers
                 }
             }
         }
-
-        //   查询----------
-        [Microsoft.AspNetCore.Mvc.HttpGet]
-        public IHttpActionResult GetDocprocess(int page = 1, int pagesize = 40)
-        {
-            try
-            {
-                var query = _context.sli_work_processbill.AsQueryable(); // sli_document_process_view
-
-                // 可以根据需要添加过滤条件，例如：
-                // query = query.Where(d => d.Fdate >= startDate && d.Fdate <= endDate);
-
-                int total = query.Count();
-                var data = query
-                            .OrderBy(d => d.Id) // 排序方式可根据需求调整
-                            .Skip((page - 1) * pagesize)
-                            .Take(pagesize)
-                            .ToList();
-
-                var response = new
-                {
-                    code = 200,
-                    msg = "操作成功",
-                    data = new
-                    {
-                        data = data,
-                        page = page,
-                        pagesize = pagesize,
-                        total = total
-                    }
-                };
-
-                return Ok(response);
-            }
-            catch (Exception ex)
-            {
-                // 记录异常日志（建议使用日志框架）
-                return InternalServerError(new Exception("查询失败，请稍后再试。"));
-            }
-        }
-
-
     }
 }
+        //   查询----------
+
+
+
+//        [Microsoft.AspNetCore.Mvc.HttpGet]
+//        public IHttpActionResult GetDocprocess(int page = 1, int pagesize = 40)
+//        {
+//            try
+//            {
+//                var query = _context.sli_work_processbill.AsQueryable(); // sli_document_process_view
+
+//                // 可以根据需要添加过滤条件，例如：
+//                // query = query.Where(d => d.Fdate >= startDate && d.Fdate <= endDate);
+
+//                int total = query.Count();
+//                var data = query
+//                            .OrderBy(d => d.Id) // 排序方式可根据需求调整
+//                            .Skip((page - 1) * pagesize)
+//                            .Take(pagesize)
+//                            .ToList();
+
+//                var response = new
+//                {
+//                    code = 200,
+//                    msg = "操作成功",
+//                    data = new
+//                    {
+//                        data = data,
+//                        page = page,
+//                        pagesize = pagesize,
+//                        total = total
+//                    }
+//                };
+
+//                return Ok(response);
+//            }
+//            catch (Exception ex)
+//            {
+//                // 记录异常日志（建议使用日志框架）
+//                return InternalServerError(new Exception("查询失败，请稍后再试。"));
+//            }
+//        }
+
+
+//    }
+//}
 
 //返回类似如下的 JSON 响应：
 
