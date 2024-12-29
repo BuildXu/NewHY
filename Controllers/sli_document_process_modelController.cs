@@ -194,7 +194,7 @@ namespace WebApi_SY.Controllers
 
         //   查询----------
         [Microsoft.AspNetCore.Mvc.HttpGet]
-        public IHttpActionResult GetDocuments(int page = 1, int pagesize = 40)
+        public IHttpActionResult GetDocprocess(int page = 1, int pagesize = 40)
         {
             try
             {
@@ -231,5 +231,35 @@ namespace WebApi_SY.Controllers
                 return InternalServerError(new Exception("查询失败，请稍后再试。"));
             }
         }
+
+
     }
 }
+
+//返回类似如下的 JSON 响应：
+
+
+//{
+//    "code": 200,
+//    "msg": "操作成功",
+//    "data": {
+//    "data": [
+//            {
+//        "Id": 1,
+//                "Fnumber": "档案001",
+//                "Fdate": "2023-01-01T00:00:00",
+//                "Ftaxtrue": true,
+//                "Fprocessid": 101,
+//                "Fprocessoption": 1,
+//                "Fprocessname": "工序A",
+//                "Fprocessnote": "说明A",
+//                "Fdeptid": 201,
+//                "Fbillid": 1001
+//            },
+//            // 更多数据...
+//        ],
+//        "page": 1,
+//        "pagesize": 40,
+//        "total": 100
+//    }
+//}
