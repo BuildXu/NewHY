@@ -29,8 +29,8 @@ namespace WebApi_SY.Models
 
     public class sli_work_processbillentry
     {
-        public int Id { get; set; }
-        public string Fbillid { get; set; }
+
+        public int Fbillid { get; set; }
         public int Fentryid { get; set; }
         public int Fseq { get; set; }
         public int Fwobillid { get; set; }

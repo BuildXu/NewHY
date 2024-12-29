@@ -38,7 +38,7 @@ namespace WebApi_SY.Controllers
                 // 设置外键关系（如果需要）
                 foreach (var entry in bill.sli_work_processbillentry)
                 {
-                    entry.Fbillid = bill.Id.ToString(); // 假设 Fbillid 是外键
+                    entry.Fbillid = bill.Id; // 假设 Fbillid 是外键
                 }
 
                 _context.sli_work_processbill.Add(bill);
