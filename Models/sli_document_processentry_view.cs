@@ -8,6 +8,7 @@ namespace WebApi_SY.Models
 {
     public class sli_document_processebillntry_view
     {
+
         // 主键 
         public int Id { get; set; }
 

@@ -85,6 +85,11 @@ namespace WebApi_SY.Entity
         public DbSet<sli_document_process_modelBillEntry> Sli_document_process_modelBillEntry { get; set; }//产品工艺档案表体2
         public DbSet<sli_document_process_modelAttachment> Sli_document_process_modelAttachment { get; set; }//产品工艺档案附件
 
+        public DbSet<sli_document_process_model_view> Sli_document_process_model_view { get; set; }//产品工艺档案表头
+        public DbSet<sli_document_process_modelBill_view> Sli_document_process_modelBill_view { get; set; }//产品工艺档案表体1
+        public DbSet<sli_document_process_modelBillEntry_view> Sli_document_process_modelBillEntry_view { get; set; }//产品工艺档案表体2
+        public DbSet<sli_document_process_modelAttachment_view> Sli_document_process_modelAttachment_view { get; set; }//产品工艺档案附件
+
         public DbSet<sli_sale_orderImportentry> Sli_sale_orderImportentry { get; set; }//销售订单导入表体
         public DbSet<sli_sale_orderImport> Sli_sale_orderImport { get; set; }//销售订单导入表头
         public DbSet<sli_sale_orderImport_view> Sli_sale_orderImport_view { get; set; }//销售订单导入视图
@@ -100,8 +105,8 @@ namespace WebApi_SY.Entity
 
         public DbSet<sli_sal_orderDocument> Sli_sal_orderDocument { get; set; }//销售订单表单合并
 
-        public DbSet<sli_work_processbill> sli_work_processbill { get; set; }
-        public DbSet<sli_work_processbillentry> sli_work_processbillentry { get; set; }
+        //public DbSet<sli_work_processbill> sli_work_processbill { get; set; }
+        //public DbSet<sli_work_processbillentry> sli_work_processbillentry { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -240,7 +245,25 @@ namespace WebApi_SY.Entity
             modelBuilder.Entity<sli_document_process_modelAttachment>()
                .HasOne(h => h.sli_document_process_model)
                .WithMany(d => d.sli_document_process_modelAttachment)
-               .HasForeignKey(d => d.id);
+               .HasForeignKey(d => d.fmainid);
+
+            //产品工艺档案视图外键关联
+            modelBuilder.Entity<sli_document_process_modelBill_view>()
+              .HasOne(h => h.sli_document_process_model_view)
+              .WithMany(d => d.sli_document_process_modelBill_view)
+              .HasForeignKey(d => d.Id);
+
+            modelBuilder.Entity<sli_document_process_modelBillEntry_view>()
+               .HasOne(h => h.sli_document_process_modelBill_view)
+               .WithMany(d => d.sli_document_process_modelBillEntry_view)
+               .HasForeignKey(d => d.Fbillid);
+
+            modelBuilder.Entity<sli_document_process_modelAttachment_view>()
+               .HasOne(h => h.sli_document_process_model_view)
+               .WithMany(d => d.sli_document_process_modelAttachment_view)
+               .HasForeignKey(d => d.fmainid);
+
+
             modelBuilder.Entity<sli_work_processbillentry>()
                .HasOne(h => h.sli_work_processbill)
                .WithMany(d => d.sli_work_processbillentry)

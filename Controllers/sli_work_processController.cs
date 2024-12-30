@@ -1,14 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web.Http;
+﻿using System.Web.Http;
 using WebApi_SY.Entity;
-using WebApi_SY.Models;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 
 namespace WebApi_SY.Controllers
 {
@@ -24,78 +15,78 @@ namespace WebApi_SY.Controllers
         }
 
 
-        [System.Web.Http.HttpPost]
-        public async Task<object> Insert([Microsoft.AspNetCore.Mvc.FromBody] IEnumerable<sli_work_processbill> bills)
-        {
+        //[System.Web.Http.HttpPost]
+        //public async Task<object> Insert([Microsoft.AspNetCore.Mvc.FromBody] IEnumerable<sli_work_processbill> bills)
+        //{
 
-            if (bills == null || !bills.Any())
-            {
-                return BadRequest("没有提供任何工作流程账单数据。");
-            }
+        //    if (bills == null || !bills.Any())
+        //    {
+        //        return BadRequest("没有提供任何工作流程账单数据。");
+        //    }
 
-            foreach (var bill in bills)
-            {
-                // 设置外键关系（如果需要）
-                foreach (var entry in bill.sli_work_processbillentry)
-                {
-                    entry.Fbillid = bill.Id; // 假设 Fbillid 是外键
-                }
+        //    foreach (var bill in bills)
+        //    {
+        //        // 设置外键关系（如果需要）
+        //        foreach (var entry in bill.sli_work_processbillentry)
+        //        {
+        //            entry.Fbillid = bill.Id; // 假设 Fbillid 是外键
+        //        }
 
-                _context.sli_work_processbill.Add(bill);
-            }
+        //        _context.sli_work_processbill.Add(bill);
+        //    }
 
-            try
-            {
-                await _context.SaveChangesAsync();
-                return Ok("工序流程单及其条目已成功添加。");
-            }
-            catch (Exception ex)
-            {
-                // 日志记录异常（建议使用日志框架）
-                return (500, new { message = $"服务器错误: {ex.Message}" });
-            }
+        //    try
+        //    {
+        //        await _context.SaveChangesAsync();
+        //        return Ok("工序流程单及其条目已成功添加。");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        // 日志记录异常（建议使用日志框架）
+        //        return (500, new { message = $"服务器错误: {ex.Message}" });
+        //    }
 
-        }
+        //}
 
-        //   查询----------
-        [Microsoft.AspNetCore.Mvc.HttpGet]
-        public IHttpActionResult GetDocuments(int page = 1, int pagesize = 40)
-        {
-            try
-            {
-                var query = _context.sli_work_processbill.AsQueryable(); // sli_document_process_view
+        ////   查询----------
+        //[Microsoft.AspNetCore.Mvc.HttpGet]
+        //public IHttpActionResult GetDocuments(int page = 1, int pagesize = 40)
+        //{
+        //    try
+        //    {
+        //        var query = _context.sli_work_processbill.AsQueryable(); // sli_document_process_view
 
-                // 可以根据需要添加过滤条件，例如：
-                // query = query.Where(d => d.Fdate >= startDate && d.Fdate <= endDate);
+        //        // 可以根据需要添加过滤条件，例如：
+        //        // query = query.Where(d => d.Fdate >= startDate && d.Fdate <= endDate);
 
-                int total = query.Count();
-                var data = query
-                            .OrderBy(d => d.Id) // 排序方式可根据需求调整
-                            .Skip((page - 1) * pagesize)
-                            .Take(pagesize)
-                            .ToList();
+        //        int total = query.Count();
+        //        var data = query
+        //                    .OrderBy(d => d.Id) // 排序方式可根据需求调整
+        //                    .Skip((page - 1) * pagesize)
+        //                    .Take(pagesize)
+        //                    .ToList();
 
-                var response = new
-                {
-                    code = 200,
-                    msg = "操作成功",
-                    data = new
-                    {
-                        data = data,
-                        page = page,
-                        pagesize = pagesize,
-                        total = total
-                    }
-                };
+        //        var response = new
+        //        {
+        //            code = 200,
+        //            msg = "操作成功",
+        //            data = new
+        //            {
+        //                data = data,
+        //                page = page,
+        //                pagesize = pagesize,
+        //                total = total
+        //            }
+        //        };
 
-                return Ok(response);
-            }
-            catch (Exception ex)
-            {
-                // 记录异常日志（建议使用日志框架）
-                return InternalServerError(new Exception("查询失败，请稍后再试。"));
-            }
-        }
+        //        return Ok(response);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        // 记录异常日志（建议使用日志框架）
+        //        return InternalServerError(new Exception("查询失败，请稍后再试。"));
+        //    }
+        //}
     }
 
 

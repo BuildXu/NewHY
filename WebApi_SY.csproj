@@ -500,6 +500,7 @@
     <Compile Include="Models\sli_document_processentry_view.cs" />
     <Compile Include="Models\sli_document_process_model.cs" />
     <Compile Include="Models\sli_document_processbills_view.cs" />
+    <Compile Include="Models\sli_document_process_model_view.cs" />
     <Compile Include="Models\sli_document_quality_standard.cs" />
     <Compile Include="Models\sli_document_quality_standard_view.cs" />
     <Compile Include="Models\sli_document_tech_sale.cs" />

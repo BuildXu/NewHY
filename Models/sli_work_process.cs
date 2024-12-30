@@ -7,9 +7,11 @@ namespace WebApi_SY.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
 
     public class sli_work_processbill
     {
+        [Key]
         public int Id { get; set; }
         public int Fwoentryid { get; set; }
         public int Fseq { get; set; }
@@ -31,6 +33,7 @@ namespace WebApi_SY.Models
     {
 
         public int Fbillid { get; set; }
+        [Key]
         public int Fentryid { get; set; }
         public int Fseq { get; set; }
         public int Fwobillid { get; set; }
