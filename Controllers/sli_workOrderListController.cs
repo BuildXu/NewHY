@@ -231,57 +231,57 @@ namespace WebApi_SY.Controllers
                     .Take(PageSize);
 
                 // 选择需要的字段（根据需要调整）
-                var result = paginatedQuery.Select(a => new
-                {
-                    Id = a.Id,
-                    Fproductno = a.Fproductno,
-                    Fbillno = a.Fbillno,
-                    Fdate = a.Fdate,
-                    Fcustomer = a.Fcustomer,
-                    Fdescription = a.Fdescription,
-                    Fsumnumber = a.Fsumnumber,
-                    Fworkqty = a.Fworkqty,
-                    Fworkweight = a.Fworkweight,
-                    Fcustid = a.Fcustid,
-                    Fcustno = a.Fcustno,
-                    Fcustname = a.Fcustname,
-                    Fid = a.Fid,
-                    Fentryid = a.Fentryid,
-                    Fseq = a.Fseq,
-                    Fqty = a.Fqty,
-                    Fnote = a.Fnote,
-                    Fplandeleliverydate = a.Fplandeleliverydate,
-                    Fstockqty = a.Fstockqty,
-                    Fmaterialid = a.Fmaterialid,
-                    Fnumber = a.Fnumber,
-                    Fname = a.Fname,
-                    Fsliouterdiameter = a.Fsliouterdiameter,
-                    Fsliinnerdiameter = a.Fsliinnerdiameter,
-                    Fslihight = a.Fslihight,
-                   // --注意这里可能是 Fsliheight 的拼写错误 
-                    Fsliallowanceod = a.Fsliallowanceod,
-                    Fsliallowanceid = a.Fsliallowanceid,
-                    Fsliallowanceh = a.Fsliallowanceh,
-                    Fsliweightmaterial = a.Fsliweightmaterial,
-                    Fsliweightforging = a.Fsliweightforging,
-                    Fsliweightgoods = a.Fsliweightgoods,
-                    Fslidrawingno = a.Fslidrawingno,
-                    Fslimetal = a.Fslimetal,
-                    Fsligoodsstatus = a.Fsligoodsstatus,
-                    Fsliprocessing = a.Fsliprocessing,
-                    Fslidelivery = a.Fslidelivery,
-                    Fsbloblankmodel = a.Fsliblankmodel,
-                    //--注意这里可能是 Fsliblankmodel 的拼写错误
-                    Fslipunching = a.Fslipunching,
-                    Fslitemperaturebegin = a.Fslitemperaturebegin,
-                    Fslitemperatureend = a.Fslitemperatureend,
-                    Fslimould = a.Fslimould,
-                    Fsliroller = a.Fsliroller,
-                    Fsliheatingtimes = a.Fsliheatingtimes,
-                    Fsligrade = a.Fsligrade,
-                    Fsplittype = a.Fsplittype
-                    // 添加其他需要的字段
-                }).ToList();
+                //var result = paginatedQuery.Select(a => new
+                //{
+                //    Id = a.Id,
+                //    Fproductno = a.Fproductno,
+                //    Fbillno = a.Fbillno,
+                //    Fdate = a.Fdate,
+                //    Fcustomer = a.Fcustomer,
+                //    Fdescription = a.Fdescription,
+                //    Fsumnumber = a.Fsumnumber,
+                //    Fworkqty = a.Fworkqty,
+                //    Fworkweight = a.Fworkweight,
+                //    Fcustid = a.Fcustid,
+                //    Fcustno = a.Fcustno,
+                //    Fcustname = a.Fcustname,
+                //    Fid = a.Fid,
+                //    Fentryid = a.Fentryid,
+                //    Fseq = a.Fseq,
+                //    Fqty = a.Fqty,
+                //    Fnote = a.Fnote,
+                //    Fplandeleliverydate = a.Fplandeleliverydate,
+                //    Fstockqty = a.Fstockqty,
+                //    Fmaterialid = a.Fmaterialid,
+                //    Fnumber = a.Fnumber,
+                //    Fname = a.Fname,
+                //    Fsliouterdiameter = a.Fsliouterdiameter,
+                //    Fsliinnerdiameter = a.Fsliinnerdiameter,
+                //    Fslihight = a.Fslihight,
+                //   // --注意这里可能是 Fsliheight 的拼写错误 
+                //    Fsliallowanceod = a.Fsliallowanceod,
+                //    Fsliallowanceid = a.Fsliallowanceid,
+                //    Fsliallowanceh = a.Fsliallowanceh,
+                //    Fsliweightmaterial = a.Fsliweightmaterial,
+                //    Fsliweightforging = a.Fsliweightforging,
+                //    Fsliweightgoods = a.Fsliweightgoods,
+                //    Fslidrawingno = a.Fslidrawingno,
+                //    Fslimetal = a.Fslimetal,
+                //    Fsligoodsstatus = a.Fsligoodsstatus,
+                //    Fsliprocessing = a.Fsliprocessing,
+                //    Fslidelivery = a.Fslidelivery,
+                //    Fsbloblankmodel = a.Fsliblankmodel,
+                //    //--注意这里可能是 Fsliblankmodel 的拼写错误
+                //    Fslipunching = a.Fslipunching,
+                //    Fslitemperaturebegin = a.Fslitemperaturebegin,
+                //    Fslitemperatureend = a.Fslitemperatureend,
+                //    Fslimould = a.Fslimould,
+                //    Fsliroller = a.Fsliroller,
+                //    Fsliheatingtimes = a.Fsliheatingtimes,
+                //    Fsligrade = a.Fsligrade,
+                //    Fsplittype = a.Fsplittype
+                //    // 添加其他需要的字段
+                //}).ToList();
 
                 // 构建响应
                 var response = new
@@ -290,7 +290,7 @@ namespace WebApi_SY.Controllers
                     msg = "操作成功",
                     data = new
                     {
-                        data = result,
+                        data = paginatedQuery,
                         current = Page,
                         pageSize = PageSize,
                         totalCount = totalCount,

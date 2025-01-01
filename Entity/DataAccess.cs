@@ -105,6 +105,8 @@ namespace WebApi_SY.Entity
 
         public DbSet<sli_sal_orderDocument> Sli_sal_orderDocument { get; set; }//销售订单表单合并
 
+        //public DbSet<sli_work_order> Sli_work_order { get; set; }//生产订单
+
         //public DbSet<sli_work_processbill> sli_work_processbill { get; set; }
         //public DbSet<sli_work_processbillentry> sli_work_processbillentry { get; set; }
 
@@ -135,15 +137,12 @@ namespace WebApi_SY.Entity
                .WithOne(d => d.sli_plan_bill)
                .HasForeignKey(d => d.Fplanbillid);
 
-            modelBuilder.Entity<sli_plan_bill>()
-             .HasMany(h => h.sli_plan_billorder)
-             .WithOne()
-              .HasForeignKey("Fplanbillid"); // 外键列名
+            //modelBuilder.Entity<sli_plan_bill>()
+            // .HasMany(h => h.sli_plan_billorder)
+            // .WithOne()
+            //  .HasForeignKey("Fplanbillid"); // 外键列名
 
-            modelBuilder.Entity<sli_work_order>()
-               .HasMany(h => h.sli_work_orderEntry)
-               .WithOne(d => d.sli_work_order)
-               .HasForeignKey(d => d.Id);
+            
 
            // modelBuilder.Entity<sli_work_orderEntry>()
            //.Property(p => p.Fentryid)
@@ -268,6 +267,14 @@ namespace WebApi_SY.Entity
                .HasOne(h => h.sli_work_processbill)
                .WithMany(d => d.sli_work_processbillentry)
                .HasForeignKey(d => d.Fbillid);
+
+
+            modelBuilder.Entity<sli_work_orderEntry>()
+               .HasOne(h => h.sli_work_order)
+               .WithMany(d => d.sli_work_orderEntry)
+               .HasForeignKey(d => d.Id);
+
+
         }
 
     }
