@@ -1,4 +1,5 @@
 ﻿using Kingdee.BOS.WebApi.DataEntities;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -53,7 +54,7 @@ namespace WebApi_SY.Controllers
                 await context.SaveChangesAsync();
                 var dataNull = new
                 {
-                    code=200,
+                    code = 200,
                     msg = "Success",
                     modelid = header.Id,
                     Date = header.Id.ToString() + "保存成功"
@@ -121,6 +122,61 @@ namespace WebApi_SY.Controllers
                     currentPages = page,
                     pageSizes = pageSize,
                     data = result
+                }
+
+
+            };
+
+            return Ok(response);
+        }
+
+
+
+        public IHttpActionResult GetTableWorkorder_view(int page = 1, int pageSize = 10)
+        {
+            var context = new YourDbContext();
+
+            var query = context.Sli_work_order_view;
+
+            var totalCount = query.Count();
+            var totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
+            var paginatedQuery = query.OrderByDescending(b => b.Id).Skip((page - 1) * pageSize).Take(pageSize);
+            //var result = paginatedQuery.Select(a => new
+            //{
+            //    id = a.Id,
+            //    Fbillno = a.Fbillno,
+            //    Fdate = a.Fdate,
+            //    Fqty = a.Fqty,
+            //    Fweight = a.Fweight,
+            //    Fplanstart = a.Fplanstart,
+            //    Fplanend = a.Fplanend,
+            //    Fordertype = a.Fordertype,
+            //    Sli_plan_modelEntry = a.sli_work_orderEntry.Select(b => new
+            //    {
+            //        Fentryid = b.Fentryid,
+            //        Id = b.Id,
+            //        Fworkorderlistid = b.Fworkorderlistid,
+            //        Fseq = b.Fseq,
+            //        Fqty = b.Fqty,
+            //        Fcommitqty = b.Fcommitqty,
+            //        Forderid = b.Forderid,
+            //        Forderentryid = b.Forderentryid,
+            //        Fstatus = b.Fstatus,
+            //        Fclosed = b.Fclosed,
+            //    })
+
+            //});
+            var response = new    // 定义 前端返回数据  总记录，总页，当前页 ，size,返回记录
+            {
+                code = 200,
+                msg = "OK",
+                data = new
+                {
+                    totalCounts = totalCount,
+                    totalPagess = totalPages,
+                    currentPages = page,
+                    pageSizes = pageSize,
+                    data = paginatedQuery
                 }
 
 

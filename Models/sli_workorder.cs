@@ -46,4 +46,20 @@ namespace WebApi_SY.Models
         [JsonIgnore]
         public virtual sli_work_order sli_work_order { get; set; }
     }
+
+
+    public class sli_work_order_view
+    {
+        [Key]
+        public int Id { get; set; }
+        public string Fbillno { get; set; }   //生产订单号
+        public DateTime Fdate { get; set; }  //单据日期
+        public decimal Fqty { get; set; }  //生产数量
+        public decimal Fweight { get; set; }  //重量
+        public DateTime Fplanstart { get; set; } //计划开始时间
+        public DateTime Fplanend { get; set; }//计划结束时间
+        public string Fordertype { get; set; }//生产订单类型
+        public int Fentryid { get; set; }
+        //public virtual ICollection<sli_work_orderEntry> sli_work_orderEntry { get; set; }
+    }
 }

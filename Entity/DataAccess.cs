@@ -41,7 +41,7 @@ namespace WebApi_SY.Entity
         //生产订单  查询、新增12.5部署 
         public DbSet<sli_work_order> Sli_work_order { get; set; }        // 生产  prd   生产订单 
         public DbSet<sli_work_orderEntry> Sli_work_orderEntry { get; set; }
-
+        public DbSet<sli_work_order_view> Sli_work_order_view { get; set; }  //关联表体的FentryID
         public DbSet<sli_sale_taxture> Sli_sale_taxture { get; set; }
         public DbSet<sli_sale_taxturebill> Sli_sale_taxturebill { get; set; }
         public DbSet<sli_sale_taxturebillEntry> Sli_sale_taxturebillEntry { get; set; }
