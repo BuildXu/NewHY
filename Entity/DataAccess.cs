@@ -41,7 +41,7 @@ namespace WebApi_SY.Entity
         //生产订单  查询、新增12.5部署 
         public DbSet<sli_work_order> Sli_work_order { get; set; }        // 生产  prd   生产订单 
         public DbSet<sli_work_orderEntry> Sli_work_orderEntry { get; set; }
-        public DbSet<sli_work_order_view> Sli_work_order_view { get; set; }  //关联表体的FentryID
+        public DbSet<sli_work_orders_view> Sli_work_orders_view { get; set; }  //关联表体的FentryID
         public DbSet<sli_sale_taxture> Sli_sale_taxture { get; set; }
         public DbSet<sli_sale_taxturebill> Sli_sale_taxturebill { get; set; }
         public DbSet<sli_sale_taxturebillEntry> Sli_sale_taxturebillEntry { get; set; }
@@ -104,6 +104,9 @@ namespace WebApi_SY.Entity
         public DbSet<sli_sal_orders_view> Sli_sal_orders_view { get; set; }//销售订单关联客户视图
 
         public DbSet<sli_sal_orderDocument> Sli_sal_orderDocument { get; set; }//销售订单表单合并
+
+        public DbSet<sli_work_processBill> Sli_work_processBill { get; set; }//工艺流转卡表头
+        public DbSet<sli_work_processBillEntry> Sli_work_processBillEntry { get; set; }//工艺流转卡表体
 
         //public DbSet<sli_work_order> Sli_work_order { get; set; }//生产订单
 
@@ -273,6 +276,11 @@ namespace WebApi_SY.Entity
                .HasOne(h => h.sli_work_order)
                .WithMany(d => d.sli_work_orderEntry)
                .HasForeignKey(d => d.Id);
+
+            modelBuilder.Entity<sli_work_processBillEntry>()
+               .HasOne(h => h.sli_work_processBill)
+               .WithMany(d => d.sli_work_processBillEntry)
+               .HasForeignKey(d => d.Fbillid);
 
 
         }

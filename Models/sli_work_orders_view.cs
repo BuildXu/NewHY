@@ -8,6 +8,7 @@ namespace WebApi_SY.Models
 {
     public class sli_work_orders_view
     {
+        [Key]
         public int Fwoid { get; set; } // 主键ID
 
         public string Fwobillno { get; set; } // 单据编号
@@ -114,7 +115,7 @@ namespace WebApi_SY.Models
 
         public int Fmo { get; set; } // 已配料状态 0 未配 / 1 已配
 
-        public int Fstatus { get; set; } // 状态 0 未审核 / 1 审核
+        public int Fworkorderliststatus { get; set; } // 状态 0 未审核 / 1 审核
 
         public int Fpause { get; set; } // 暂停 0 / 1
 

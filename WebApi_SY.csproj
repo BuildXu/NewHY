@@ -455,6 +455,7 @@
     <Compile Include="Controllers\sli_bd_process_objectController.cs" />
     <Compile Include="Controllers\sli_document_process_modelviewController.cs" />
     <Compile Include="Controllers\sli_document_process_modelController.cs" />
+    <Compile Include="Controllers\sli_work_processBillController.cs" />
     <Compile Include="Controllers\sli_work_reportController.cs" />
     <Compile Include="Controllers\sli_work_processController.cs" />
     <Compile Include="Controllers\sli_bd_process_optionController.cs" />
@@ -526,6 +527,7 @@
     <Compile Include="Models\sli_workOrderList_view.cs" />
     <Compile Include="Models\sli_work_orders_view.cs" />
     <Compile Include="Models\sli_workOrderList.cs" />
+    <Compile Include="Models\sli_work_processBill.cs" />
     <Compile Include="Models\t_sal_orderEntry.cs" />
     <Compile Include="Models\t_stock.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
