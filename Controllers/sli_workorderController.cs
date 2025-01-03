@@ -136,11 +136,11 @@ namespace WebApi_SY.Controllers
         {
             var context = new YourDbContext();
 
-            var query = context.Sli_work_order_view;
+            var query = context.Sli_work_orders_view;
 
             var totalCount = query.Count();
             var totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
-            var paginatedQuery = query.OrderByDescending(b => b.Id).Skip((page - 1) * pageSize).Take(pageSize);
+            var paginatedQuery = query.OrderByDescending(b => b.Fwoid).Skip((page - 1) * pageSize).Take(pageSize);
             //var result = paginatedQuery.Select(a => new
             //{
             //    id = a.Id,
