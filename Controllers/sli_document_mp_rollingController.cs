@@ -20,26 +20,28 @@ namespace WebApi_SY.Controllers
             {
                 var header = new sli_document_mp_rolling
                 {
+                   
+                    
                     Id = rolling.Id,
-                    Fnumber = rolling.Fnumber,
-                    Fversion = rolling.Fversion,
-                    Fproducttype = rolling.Fproducttype,
-                    Fstatus = rolling.Fstatus,
-                    Fbiller = rolling.Fbiller,
-                    Fsliouterdiameter = rolling.Fsliouterdiameter,
-                    Fsliinnerdiameter = rolling.Fsliinnerdiameter,
-                    Fslihight = rolling.Fslihight,
-                    Fsliallowanceod = rolling.Fsliallowanceod,
-                    Fsliallowanceid = rolling.Fsliallowanceid,
-                    fsliallowanceh = rolling.fsliallowanceh,
-                    Fsliweightmaterial = rolling.Fsliweightmaterial,
-                    Fsliweightforging = rolling.Fsliweightforging,
-                    Fsliweightgoods = rolling.Fsliweightgoods,
-                    Fsliweightfurnace = rolling.Fsliweightfurnace,
-                    Fslidrawingno = rolling.Fslidrawingno,
-                    Fslimetal = rolling.Fslimetal,
-                    Fheattreatment = rolling.Fheattreatment,
-                    Fcooldown = rolling.Fcooldown
+                    //Fnumber = rolling.Fnumber,
+                    //Fversion = rolling.Fversion,
+                    //Fproducttype = rolling.Fproducttype,
+                    //Fstatus = rolling.Fstatus,
+                    //Fbiller = rolling.Fbiller,
+                    //Fsliouterdiameter = rolling.Fsliouterdiameter,
+                    //Fsliinnerdiameter = rolling.Fsliinnerdiameter,
+                    //Fslihight = rolling.Fslihight,
+                    //Fsliallowanceod = rolling.Fsliallowanceod,
+                    //Fsliallowanceid = rolling.Fsliallowanceid,
+                    //fsliallowanceh = rolling.fsliallowanceh,
+                    //Fsliweightmaterial = rolling.Fsliweightmaterial,
+                    //Fsliweightforging = rolling.Fsliweightforging,
+                    //Fsliweightgoods = rolling.Fsliweightgoods,
+                    //Fsliweightfurnace = rolling.Fsliweightfurnace,
+                    //Fslidrawingno = rolling.Fslidrawingno,
+                    //Fslimetal = rolling.Fslimetal,
+                    //Fheattreatment = rolling.Fheattreatment,
+                    //Fcooldown = rolling.Fcooldown
                 };
                 //context.Sli_bd_process_object.Add(header);
                 await context.SaveChangesAsync();
@@ -66,7 +68,7 @@ namespace WebApi_SY.Controllers
         }
 
         [System.Web.Http.HttpPost]
-        public async Task<object> Process_object_Update([Microsoft.AspNetCore.Mvc.FromBody] sli_bd_process_object option)
+        public async Task<object> mp_rolling_Update([Microsoft.AspNetCore.Mvc.FromBody] sli_bd_process_object option)
         {
             try
             {
@@ -122,7 +124,7 @@ namespace WebApi_SY.Controllers
         }
 
         [System.Web.Http.HttpPost]
-        public async Task<object> Process_object_Delete(List<int> id)
+        public async Task<object> mp_rolling_Delete(List<int> id)
         {
             try
             {
@@ -168,7 +170,7 @@ namespace WebApi_SY.Controllers
         }
 
         [System.Web.Http.HttpGet]
-        public IHttpActionResult GetTableByProcess_object(int page = 1, int pageSize = 10, string FNumber = null, string FName = null)
+        public IHttpActionResult GetTableBymp_rolling(int page = 1, int pageSize = 10, string FNumber = null, string FName = null)
         {
             var context = new YourDbContext();
             IQueryable<sli_bd_process_object> query = context.Sli_bd_process_object;
