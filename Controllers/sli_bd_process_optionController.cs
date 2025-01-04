@@ -29,6 +29,7 @@ namespace WebApi_SY.Controllers
                 };
                 context.Sli_bd_process_option.Add(header);
                 await context.SaveChangesAsync();
+                await context.SaveChangesAsync();
                 var datas = new
                 {
                     code = 200,

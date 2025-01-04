@@ -18,8 +18,9 @@ namespace WebApi_SY.Controllers
             // _context = context;
 
         }
-        
+
         [System.Web.Http.HttpPost]
+        public async Task<object> Insert([Microsoft.AspNetCore.Mvc.FromBody] sli_work_processBill model)
         {
             try
             {

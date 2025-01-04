@@ -11,7 +11,7 @@ using WebApi_SY.Models;
 
 namespace WebApi_SY.Controllers
 {
-    public class ValuesController : ApiController
+    public class sli_document_mp_rolling : ApiController
     {
         
         // GET api/values
