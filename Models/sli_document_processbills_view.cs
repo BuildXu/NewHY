@@ -41,12 +41,12 @@ namespace WebApi_SY.Models
         public int Fbillid { get; set; }
 
         // 可选：重写ToString方法以便于调试
-        public override string ToString()
-        {
-            return $"Id: {Id}, Fnumber: {Fnumber}, Fdate: {Fdate.ToShortDateString()}, " +
-                   $"Ftaxtrue: {Ftaxtrue}, Fprocessid: {Fprocessid}, Fprocessoption: {Fprocessoption}, " +
-                   $"Fprocessname: {Fprocessname}, Fprocessnote: {Fprocessnote}, " +
-                   $"Fdeptid: {Fdeptid}, Fbillid: {Fbillid}";
-        }
+        //public override string ToString()
+        //{
+        //    return $"Id: {Id}, Fnumber: {Fnumber}, Fdate: {Fdate.ToShortDateString()}, " +
+        //           $"Ftaxtrue: {Ftaxtrue}, Fprocessid: {Fprocessid}, Fprocessoption: {Fprocessoption}, " +
+        //           $"Fprocessname: {Fprocessname}, Fprocessnote: {Fprocessnote}, " +
+        //           $"Fdeptid: {Fdeptid}, Fbillid: {Fbillid}";
+        //}
     }
 }
