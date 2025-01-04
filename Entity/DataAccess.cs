@@ -270,19 +270,6 @@ namespace WebApi_SY.Entity
                .HasOne(h => h.sli_work_processbill)
                .WithMany(d => d.sli_work_processbillentry)
                .HasForeignKey(d => d.Fbillid);
-
-
-            modelBuilder.Entity<sli_work_orderEntry>()
-               .HasOne(h => h.sli_work_order)
-               .WithMany(d => d.sli_work_orderEntry)
-               .HasForeignKey(d => d.Id);
-
-            modelBuilder.Entity<sli_work_processBillEntry>()
-               .HasOne(h => h.sli_work_processBill)
-               .WithMany(d => d.sli_work_processBillEntry)
-               .HasForeignKey(d => d.Fbillid);
-
-
         }
 
     }

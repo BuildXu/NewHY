@@ -8,18 +8,18 @@ using WebApi_SY.Models;
 
 namespace WebApi_SY.Controllers
 {
-    public class sli_document_process_modelviewController : ApiController
+    public class sli_document_process_model_viewController : ApiController
     {
         private readonly YourDbContext _context;
 
         // 添加一个默认的无参构造函数
-        public sli_document_process_modelviewController()
+        public sli_document_process_model_viewController()
         {
             // 在此处进行必要的初始化操作，如果有需要的话
         }
 
         // 或者添加一个带有依赖注入的构造函数，确保依赖注入容器能正确提供所需的依赖
-        public sli_document_process_modelviewController(YourDbContext context)
+        public sli_document_process_model_viewController(YourDbContext context)
         {
             _context = context;
         }
