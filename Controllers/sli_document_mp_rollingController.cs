@@ -13,19 +13,33 @@ namespace WebApi_SY.Controllers
     public class sli_document_mp_rollingController : ApiController
     {
         [System.Web.Http.HttpPost]
-        public async Task<object> mp_rolling_Insert([Microsoft.AspNetCore.Mvc.FromBody] sli_document_mp_rolling option)
+        public async Task<object> mp_rolling_Insert([Microsoft.AspNetCore.Mvc.FromBody] sli_document_mp_rolling rolling)
         {
             var context = new YourDbContext();
             try
             {
                 var header = new sli_document_mp_rolling
                 {
-                    //fname = option.fname,
-                    //fnumber = option.fnumber,
-                    //fnote = option.fnote,
-                    //fstatus = option.fstatus,
-                    //fused = option.fused,
-                    //fcreateDate = option.fcreateDate
+                    Id = rolling.Id,
+                    Fnumber = rolling.Fnumber,
+                    Fversion = rolling.Fversion,
+                    Fproducttype = rolling.Fproducttype,
+                    Fstatus = rolling.Fstatus,
+                    Fbiller = rolling.Fbiller,
+                    Fsliouterdiameter = rolling.Fsliouterdiameter,
+                    Fsliinnerdiameter = rolling.Fsliinnerdiameter,
+                    Fslihight = rolling.Fslihight,
+                    Fsliallowanceod = rolling.Fsliallowanceod,
+                    Fsliallowanceid = rolling.Fsliallowanceid,
+                    fsliallowanceh = rolling.fsliallowanceh,
+                    Fsliweightmaterial = rolling.Fsliweightmaterial,
+                    Fsliweightforging = rolling.Fsliweightforging,
+                    Fsliweightgoods = rolling.Fsliweightgoods,
+                    Fsliweightfurnace = rolling.Fsliweightfurnace,
+                    Fslidrawingno = rolling.Fslidrawingno,
+                    Fslimetal = rolling.Fslimetal,
+                    Fheattreatment = rolling.Fheattreatment,
+                    Fcooldown = rolling.Fcooldown
                 };
                 //context.Sli_bd_process_object.Add(header);
                 await context.SaveChangesAsync();

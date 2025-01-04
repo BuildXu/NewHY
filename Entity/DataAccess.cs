@@ -85,6 +85,9 @@ namespace WebApi_SY.Entity
         public DbSet<sli_document_process_modelBillEntry> Sli_document_process_modelBillEntry { get; set; }//产品工艺档案表体2
         public DbSet<sli_document_process_modelAttachment> Sli_document_process_modelAttachment { get; set; }//产品工艺档案附件
 
+
+        public DbSet<sli_document_mp_rolling> sli_document_mp_rolling { get; set; }//产品工艺文件
+
         public DbSet<sli_document_process_model_view> Sli_document_process_model_view { get; set; }//产品工艺档案表头
         public DbSet<sli_document_process_modelBill_view> Sli_document_process_modelBill_view { get; set; }//产品工艺档案表体1
         public DbSet<sli_document_process_modelBillEntry_view> Sli_document_process_modelBillEntry_view { get; set; }//产品工艺档案表体2
