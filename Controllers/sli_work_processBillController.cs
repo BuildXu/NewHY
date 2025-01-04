@@ -20,7 +20,6 @@ namespace WebApi_SY.Controllers
         }
         
         [System.Web.Http.HttpPost]
-        public async Task<object> Insert1([Microsoft.AspNetCore.Mvc.FromBody] sli_work_processBill model)
         {
             try
             {
@@ -42,15 +41,6 @@ namespace WebApi_SY.Controllers
                     {
                         Fbillid = model.Id,
                         Fseq = d.Fseq,
-                        Fwobillid = d.Fwobillid,
-                        Fprocessobject = d.Fprocessobject,
-                        Fstartdate = d.Fstartdate,
-                        Fenddate = d.Fenddate,
-                        Fqty = d.Fqty,
-                        Fweight = d.Fweight,
-                        Fcommitqty = d.Fcommitqty,
-                        Fcommitweight = d.Fcommitweight,
-                        Fstatus = d.Fstatus,
 
                     }).ToList()
                 };
@@ -76,6 +66,7 @@ namespace WebApi_SY.Controllers
 
 
         }
+
     }
 }
 
