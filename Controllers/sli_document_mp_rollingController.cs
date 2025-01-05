@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Runtime.Remoting.Messaging;
 using System.Threading.Tasks;
 using System.Web.Http;
 using WebApi_SY.Entity;
@@ -138,7 +139,7 @@ namespace WebApi_SY.Controllers
                 foreach (var deleteid in id)
                 {
 
-                    var entity = await context.Sli_bd_process_object.FindAsync(deleteid);
+                    var entity = await context.sli_document_mp_rolling.FindAsync(deleteid);
                     if (entity == null)
                     {
                         var dataNull = new
@@ -150,7 +151,7 @@ namespace WebApi_SY.Controllers
                         };
                         return dataNull;
                     }
-                    context.Sli_bd_process_object.RemoveRange(entity);
+                    context.Sli_bd_process_object.RemoveRange();
 
 
                 }
@@ -176,25 +177,23 @@ namespace WebApi_SY.Controllers
         }
 
         //   查询页面   查询接口
+
         [System.Web.Http.HttpGet]
         public IHttpActionResult GetTableBymp_rolling(int page = 1, int pageSize = 10, string FNumber = null, string FName = null)
         {
             var context = new YourDbContext();
-            IQueryable<sli_document_mp_rolling> query = context.sli_document_mp_rolling;
+            IQueryable<WebApi_SY.Models.sli_document_mp_rolling> query = context.sli_document_mp_rolling;
 
             if (!string.IsNullOrEmpty(FNumber))
             {
-                query = query.Where(q => q.fnumber.Contains(FNumber));
+                query = query.Where(q => q.Fnumber.Contains(FNumber));
             }
 
-            if (!string.IsNullOrEmpty(FName))
-            {
-                query = query.Where(q => q.fname.Contains(FName));
-            }
+          
             var totalCount = query.Count(); //记录数
             var totalPages = (int)Math.Ceiling((double)totalCount / pageSize); // 页数
-            var paginatedQuery = query.OrderByDescending(b => b.id).Skip((page - 1) * pageSize).Take(pageSize); //  某页记录
-            //var datas = query.ToList();
+            var paginatedQuery = query.OrderByDescending(b => b.Id).Skip((page - 1) * pageSize).Take(pageSize); //  某页记录
+                                                                                                                //var datas = query.ToList();
             var response = new    // 定义 前端返回数据  总记录，总页，当前页 ，size,返回记录
             {
                 code = 200,
