@@ -18,12 +18,11 @@ namespace WebApi_SY.Controllers
             var context = new YourDbContext();
             try
             {
-                var header = new sli_document_mp_rolling
+                var mp_Rolling = new sli_document_mp_rolling
                 {
-                   
-                    
-                    Id = rolling.Id,
-                    //Fnumber = rolling.Fnumber,
+                    // 假设这里的 Id 属性已经在 sli_document_mp_rolling 类中正确定义
+                    //Id = rolling.Id,
+                    Fnumber = rolling.Fnumber,
                     //Fversion = rolling.Fversion,
                     //Fproducttype = rolling.Fproducttype,
                     //Fstatus = rolling.Fstatus,
