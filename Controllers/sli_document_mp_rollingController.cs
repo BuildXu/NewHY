@@ -13,6 +13,10 @@ namespace WebApi_SY.Controllers
     public class sli_document_mp_rollingController : ApiController
     {
         [System.Web.Http.HttpPost]
+        //新增接口，无必要，这一步用存触发器或存储过程实现，自动新增 （销售订单行新增时根据产品类型 & 对应档案信息）
+        // 如果物料没有维护产品类型？ 
+        //*****************   
+
         public async Task<object> mp_rolling_Insert([Microsoft.AspNetCore.Mvc.FromBody] sli_document_mp_rolling rolling)
         {
             var context = new YourDbContext();
@@ -22,7 +26,7 @@ namespace WebApi_SY.Controllers
                 {
                     // 假设这里的 Id 属性已经在 sli_document_mp_rolling 类中正确定义
                     //Id = rolling.Id,
-                    Fnumber = rolling.Fnumber,
+                    //Fnumber = rolling.Fnumber,
                     //Fversion = rolling.Fversion,
                     //Fproducttype = rolling.Fproducttype,
                     //Fstatus = rolling.Fstatus,
@@ -67,6 +71,7 @@ namespace WebApi_SY.Controllers
         }
 
         [System.Web.Http.HttpPost]
+        //  调用查询接口（根据），修改后，提交Update 接口，修改相应信息
         public async Task<object> mp_rolling_Update([Microsoft.AspNetCore.Mvc.FromBody] sli_bd_process_object option)
         {
             try
@@ -123,6 +128,8 @@ namespace WebApi_SY.Controllers
         }
 
         [System.Web.Http.HttpPost]
+
+        //  工艺文件删除接口，根据Id 删除  ---前台删除控制，后台操作逻辑  
         public async Task<object> mp_rolling_Delete(List<int> id)
         {
             try
@@ -168,11 +175,12 @@ namespace WebApi_SY.Controllers
             }
         }
 
+        //   查询页面   查询接口
         [System.Web.Http.HttpGet]
         public IHttpActionResult GetTableBymp_rolling(int page = 1, int pageSize = 10, string FNumber = null, string FName = null)
         {
             var context = new YourDbContext();
-            IQueryable<sli_bd_process_object> query = context.Sli_bd_process_object;
+            IQueryable<sli_document_mp_rolling> query = context.sli_document_mp_rolling;
 
             if (!string.IsNullOrEmpty(FNumber))
             {
