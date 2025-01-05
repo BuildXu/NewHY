@@ -76,7 +76,7 @@
       <HintPath>packages\SharpZipLib.1.4.2\lib\netstandard2.0\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
     <Reference Include="Kingdee.BOS.WebApi.Client">
-      <HintPath>C:\Users\Administrator\Desktop\NetSDK_V8.1.0（老用户升级使用）\.net4.0_sdk_v8.1.0\Kingdee.BOS.WebApi.Client.dll</HintPath>
+      <HintPath>..\..\Kingdee.BOS.WebApi.Client.dll</HintPath>
     </Reference>
     <Reference Include="MathNet.Numerics, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cd8b63ad3d691a37, processorArchitecture=MSIL">
       <HintPath>packages\MathNet.Numerics.Signed.5.0.0\lib\net461\MathNet.Numerics.dll</HintPath>
