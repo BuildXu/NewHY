@@ -52,12 +52,12 @@ namespace WebApi_SY.Controllers
                 context.Sli_work_processBill.Add(header);
                 await context.SaveChangesAsync();
 
-                var entry = new sli_work_processBillEntry
-                {
-                    Fbillid = header.Id,
-                };
-                context.Sli_work_processBillEntry.Add(entry);
-                await context.SaveChangesAsync();
+                //var entry = new sli_work_processBillEntry
+                //{
+                //    Fbillid = header.Id,
+                //};
+                //context.Sli_work_processBillEntry.Add(entry);
+                //await context.SaveChangesAsync();
 
                 var dataNull = new
                 {
