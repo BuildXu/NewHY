@@ -120,5 +120,6 @@ namespace WebApi_SY.Models
         public int Fpause { get; set; } // 暂停 0 / 1
 
         public int Fcancel { get; set; } // 取消 0 / 1
+        public int Fworkordlistid { get; set; } // 取消 0 / 1
     }
 }
