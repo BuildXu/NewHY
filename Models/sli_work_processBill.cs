@@ -29,6 +29,7 @@ namespace WebApi_SY.Models
     {
       
         public int Fbillid { get; set; }
+        [Key]
         public int Fentryid { get; set; }
         public int Fseq { get; set; }
         public int Fwobillid { get; set; }

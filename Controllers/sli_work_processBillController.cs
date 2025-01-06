@@ -20,36 +20,45 @@ namespace WebApi_SY.Controllers
         }
 
         [System.Web.Http.HttpPost]
-        public async Task<object> Insert([Microsoft.AspNetCore.Mvc.FromBody] sli_work_processBill model)
+        public async Task<object> Insert([Microsoft.AspNetCore.Mvc.FromBody] sli_workorderlist_view model)
         {
             try
             {
                 var context = new YourDbContext();
                 var header = new sli_work_processBill
                 {
-                    Fwoentryid = model.Fwoentryid,
+                    //Fwoentryid = model.Fwoentryid,
                     Fseq = model.Fseq,
                     Fqty = model.Fqty,
-                    Fweight = model.Fweight,
+                    //Fweight = model.Fweight,
                     Fworkorderlistid = model.Fworkorderlistid,
-                    Fprocessoption = model.Fprocessoption,
-                    Fstartdate = model.Fstartdate,
-                    Fenddate = model.Fenddate,
-                    Fcommitqty = model.Fcommitqty,
-                    Fcommitweight = model.Fcommitweight,
-                    Fstatus = model.Fstatus,
-                    sli_work_processBillEntry = model.sli_work_processBillEntry.Select(d => new sli_work_processBillEntry
-                    {
-                        Fbillid = model.Id,
-                        Fseq = d.Fseq,
+                    //Fprocessoption = model.Fprocessoption,
+                    //Fstartdate = model.Fstartdate,
+                    //Fenddate = model.Fenddate,
+                    //Fcommitqty = model.Fcommitqty,
+                    //Fcommitweight = model.Fcommitweight,
+                    //Fstatus = model.Fstatus,
+                    //sli_work_processBillEntry = model.sli_work_processBillEntry.Select(d => new sli_work_processBillEntry
+                    //{
+                    //    Fbillid = model.Id,
+                    //    //Fseq = d.Fseq,
 
-                    }).ToList()
+                    //}).ToList()
                 };
+
 
 
 
                 context.Sli_work_processBill.Add(header);
                 await context.SaveChangesAsync();
+
+                var entry = new sli_work_processBillEntry
+                {
+                    Fbillid = header.Id,
+                };
+                context.Sli_work_processBillEntry.Add(entry);
+                await context.SaveChangesAsync();
+
                 var dataNull = new
                 {
                     code = 200,
