@@ -72,13 +72,13 @@ namespace WebApi_SY.Controllers
         }
 
         [System.Web.Http.HttpPost]
-        //  调用查询接口（根据），修改后，提交Update 接口，修改相应信息
-        public async Task<object> mp_rolling_Update([Microsoft.AspNetCore.Mvc.FromBody] sli_bd_process_object option)
+        //  调用查询接口（sli_document_mp_rolling_view），修改后，提交Update 接口，修改相应信息
+        public async Task<object> mp_rolling_Update([Microsoft.AspNetCore.Mvc.FromBody] sli_document_mp_rolling objct)
         {
             try
             {
                 var context = new YourDbContext();
-                var entity = await context.Sli_bd_process_object.FindAsync(option.id);
+                var entity = await context.sli_document_mp_rolling.FindAsync(objct);
                 if (entity == null)
                 {
                     var dataNull = new
@@ -93,17 +93,17 @@ namespace WebApi_SY.Controllers
                 else
                 {
 
-                    var Sli_bd_process_objects = context.Sli_bd_process_object.FirstOrDefault(p => p.id == option.id);
+                    var sli_document_mp_rolling = context.sli_document_mp_rolling.FirstOrDefault(p => p.Id == objct.Id);
                     //var Sli_plan_modelEntrys = _context.Sli_plan_modelEntry.Where(p => p.fmodelID == model.Id).ToList();
 
 
-                    Sli_bd_process_objects.fname = option.fname;
-                    Sli_bd_process_objects.fnumber = option.fnumber;
-                    Sli_bd_process_objects.fnote = option.fnote;
-                    Sli_bd_process_objects.fstatus = option.fstatus;
-                    Sli_bd_process_objects.fused = option.fused;
-                    Sli_bd_process_objects.fcreateDate = option.fcreateDate;
-                    //Sli_bd_tech_options.fnote = model.fnote;
+                    sli_document_mp_rolling.Fsliallowanceid = objct.Fsliallowanceid;
+                    //sli_document_mp_rolling.Fsliallowanceod = object.Fsliallowanceod;
+                    //sli_document_mp_rolling.fsliallowanceh = object.fsliallowanceh;
+                    //sli_document_mp_rolling.fstatus = option.fstatus;
+                    //sli_document_mp_rolling.fused = option.fused;
+                    //sli_document_mp_rolling.fcreateDate = option.fcreateDate;
+                    ////Sli_bd_tech_options.fnote = model.fnote;
 
                     await context.SaveChangesAsync();
 
@@ -111,7 +111,7 @@ namespace WebApi_SY.Controllers
                     {
                         code = 200,
                         msg = "ok",
-                        date = Sli_bd_process_objects.id + "修改成功！"
+                        date = sli_document_mp_rolling.Id + "修改成功！"
                     };
                     return Ok(datas);
                 }
@@ -151,7 +151,7 @@ namespace WebApi_SY.Controllers
                         };
                         return dataNull;
                     }
-                    context.Sli_bd_process_object.RemoveRange();
+                    context.sli_document_mp_rolling.RemoveRange();
 
 
                 }
