@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -7,6 +8,7 @@ namespace WebApi_SY.Models
 {
     public class sli_document_mp_rolling
     { // 产品或对象的唯一标识符
+        [Key]
         public int Id { get; set; }
         // 编号
         public string Fnumber { get; set; }
