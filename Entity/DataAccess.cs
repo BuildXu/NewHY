@@ -282,10 +282,9 @@ namespace WebApi_SY.Entity
                .HasForeignKey(d => d.Id);
 
             modelBuilder.Entity<sli_witnessing_objectbill>()
-             .HasMany(h => h.sli_witnessing_object)
-             .WithOne(d => d.sli_witnessing_object)
+             .HasOne(h => h.sli_witnessing_object)
+             .WithMany(d => d.sli_witnessing_objectbill)
              .HasForeignKey(d => d.Id);
-
 
         }
 
