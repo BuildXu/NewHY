@@ -23,16 +23,22 @@ namespace WebApi_SY.Controllers
             var context = new YourDbContext();
             try
             {
+                // 检查 rolling 对象是否为 null
+                if (rolling == null)
+                {
+                    throw new ArgumentNullException(nameof(rolling), "传入的 rolling 对象不能为 null。");
+                }
+
                 var mp_Rolling = new sli_document_mp_rolling
                 {
                     // 假设这里的 Id 属性已经在 sli_document_mp_rolling 类中正确定义
                     //Id = rolling.Id,
-                    Fnumber = rolling.Fnumber,
-                    Fversion = rolling.Fversion,
-                    Fproducttype = rolling.Fproducttype,
+                    Fnumber = rolling.Fnumber ?? "默认编号",
+                    Fversion = rolling.Fversion ?? "默认版本",
+                    Fproducttype = rolling.Fproducttype ?? "默认产品类型",
                     Fstatus = rolling.Fstatus,
                     Fbiller = rolling.Fbiller,
-                    Fsliouterdiameter = rolling.Fsliouterdiameter,
+                    Fsliouterdiameter = rolling.Fsliouterdiameter+3+ rolling.Fsliinnerdiameter,
                     Fsliinnerdiameter = rolling.Fsliinnerdiameter,
                     Fslihight = rolling.Fslihight,
                     Fsliallowanceod = rolling.Fsliallowanceod,
@@ -54,7 +60,6 @@ namespace WebApi_SY.Controllers
                     code = 200,
                     msg = "Success",
                     //Date = header.id.ToString() + "保存成功"
-
                 };
                 return datas;
             }
@@ -65,7 +70,6 @@ namespace WebApi_SY.Controllers
                     code = 500,
                     msg = "失败",
                     Date = ex.ToString()
-
                 };
                 return dataerr;
             }
