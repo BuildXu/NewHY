@@ -183,36 +183,104 @@ namespace WebApi_SY.Controllers
         //   查询页面   查询接口
 
         [System.Web.Http.HttpGet]
-        public IHttpActionResult GetTableBymp_rolling(int page = 1, int pageSize = 10, string FNumber = null, string FName = null)
+        public IHttpActionResult GetTableBymp_rolling(int page = 1, int pageSize = 10, string Fnumber = null)
         {
             var context = new YourDbContext();
-            IQueryable<WebApi_SY.Models.sli_document_mp_rolling> query = context.sli_document_mp_rolling;
+            IQueryable<sli_document_mp_rolling> query = context.sli_document_mp_rolling;
 
-            if (!string.IsNullOrEmpty(FNumber))
+            try
             {
-                query = query.Where(q => q.Fnumber.Contains(FNumber));
-            }
-
-          
-            var totalCount = query.Count(); //记录数
-            var totalPages = (int)Math.Ceiling((double)totalCount / pageSize); // 页数
-            var paginatedQuery = query.OrderByDescending(b => b.Id).Skip((page - 1) * pageSize).Take(pageSize); //  某页记录
-                                                                                                                //var datas = query.ToList();
-            var response = new    // 定义 前端返回数据  总记录，总页，当前页 ，size,返回记录
-            {
-                code = 200,
-                msg = "OK",
-                data = new
+                // 更严格的 FNumber 检查，确保不为 null 或空
+                if (!string.IsNullOrWhiteSpace(Fnumber))
                 {
-                    totalCounts = totalCount,
-                    totalPagess = totalPages,
-                    currentPages = page,
-                    pageSizes = pageSize,
-                    data = paginatedQuery
+                    query = query.Where(q => q.Fnumber.Contains(Fnumber));
                 }
-            };
 
-            return Json(response);
+                // 检查查询结果是否为空
+                if (!query.Any())
+                {
+                    return Json(new
+                    {
+                        code = 404,
+                        msg = "No records found for the given criteria",
+                        data = new
+                        {
+                            totalCounts = 0,
+                            totalPagess = 0,
+                            currentPages = page,
+                            pageSizes = pageSize,
+                            data = new List<sli_document_mp_rolling>()
+                        }
+                    });
+                }
+
+                int totalCount = query.Count();
+
+                int totalPages = 0;
+                if (totalCount > 0)
+                {
+                    // 只有当总记录数大于 0 时才计算页数
+                    totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
+                }
+
+                var paginatedQuery = Enumerable.Empty<sli_document_mp_rolling>();
+                if (totalCount > 0)
+                {
+                    // 只有当总记录数大于 0 时才进行分页查询
+                    paginatedQuery = query.OrderByDescending(b => b.Id).Skip((page - 1) * pageSize).Take(pageSize);
+                }
+
+                // 检查分页查询结果是否为空
+                if (!paginatedQuery.Any())
+                {
+                    return Json(new
+                    {
+                        code = 404,
+                        msg = "No records found for the given page and page size",
+                        data = new
+                        {
+                            totalCounts = totalCount,
+                            totalPagess = totalPages,
+                            currentPages = page,
+                            pageSizes = pageSize,
+                            data = new List<sli_document_mp_rolling>()
+                        }
+                    });
+                }
+
+                var response = new
+                {
+                    code = 200,
+                    msg = "OK",
+                    data = new
+                    {
+                        totalCounts = totalCount,
+                        totalPagess = totalPages,
+                        currentPages = page,
+                        pageSizes = pageSize,
+                        data = paginatedQuery.ToList()
+                    }
+                };
+
+                return Json(response);
+            }
+            catch (Exception ex)
+            {
+                // 捕获异常并返回错误信息
+                return Json(new
+                {
+                    code = 500,
+                    msg = "An error occurred while processing the request: " + ex.Message,
+                    data = new
+                    {
+                        totalCounts = 0,
+                        totalPagess = 0,
+                        currentPages = page,
+                        pageSizes = pageSize,
+                        data = new List<sli_document_mp_rolling>()
+                    }
+                });
+            }
         }
     }
 }
