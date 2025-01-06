@@ -11,7 +11,7 @@ using WebApi_SY.Models;
 
 namespace WebApi_SY.Controllers
 {
-    public class sli_document_mp_rollingController : ApiController
+    public class Sli_document_mp_rollingController : ApiController
     {
         [System.Web.Http.HttpPost]
         //新增接口，无必要，这一步用存触发器或存储过程实现，自动新增 （销售订单行新增时根据产品类型 & 对应档案信息）
