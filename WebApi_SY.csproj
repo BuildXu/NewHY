@@ -507,6 +507,7 @@
     <Compile Include="Models\sli_document_tech_sale.cs" />
     <Compile Include="Models\sli_document_tech_sale_view.cs" />
     <Compile Include="Models\sli_plan_bill.cs" />
+    <Compile Include="Models\sli_witnessing_object.cs" />
     <Compile Include="Models\sli_plan_model.cs" />
     <Compile Include="Models\sli_prd_processReport.cs" />
     <Compile Include="Models\sli_prd_processTicket.cs" />

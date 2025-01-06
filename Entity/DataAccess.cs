@@ -71,6 +71,10 @@ namespace WebApi_SY.Entity
 
         public DbSet<sli_document_quality_standard> Sli_document_quality_standard { get; set; }//质量标准表头
         public DbSet<sli_document_quality_standardBill> Sli_document_quality_standardBill { get; set; }//质量标准表体1
+
+        public DbSet<sli_witnessing_object> sli_witnessing_object { get; set; }//见证计划表头
+        public DbSet<sli_witnessing_objectbill> sli_witnessing_objectbill { get; set; }//见证计划表体
+
         public DbSet<sli_document_quality_standardBillEntry> Sli_document_quality_standardBillEntry { get; set; }//质量标准表体2
         public DbSet<sli_document_quality_standardAttachment> Sli_document_quality_standardAttachment { get; set; }//质量标准附件
 
@@ -277,7 +281,10 @@ namespace WebApi_SY.Entity
                .WithMany(d => d.sli_work_orderEntry)
                .HasForeignKey(d => d.Id);
 
-            
+            modelBuilder.Entity<sli_witnessing_objectbill>()
+             .HasMany(h => h.sli_witnessing_object)
+             .WithOne(d => d.sli_witnessing_object)
+             .HasForeignKey(d => d.Id);
 
 
         }
