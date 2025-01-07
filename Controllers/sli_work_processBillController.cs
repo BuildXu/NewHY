@@ -20,37 +20,63 @@ namespace WebApi_SY.Controllers
         }
 
         [System.Web.Http.HttpPost]
-        public async Task<object> Insert([Microsoft.AspNetCore.Mvc.FromBody] sli_workorderlist_view model)
+        public IHttpActionResult Insert()
         {
             try
             {
                 var context = new YourDbContext();
-                var header = new sli_work_processBill
+                var json = Request.Content.ReadAsStringAsync().Result;
+                var root = JsonConvert.DeserializeAnonymousType(json, new
                 {
-                    //Fwoentryid = model.Fwoentryid,
-                    Fseq = model.Fseq,
-                    Fqty = model.Fqty,
-                    //Fweight = model.Fweight,
-                    Fworkorderlistid = model.Fworkorderlistid,
-                    //Fprocessoption = model.Fprocessoption,
-                    //Fstartdate = model.Fstartdate,
-                    //Fenddate = model.Fenddate,
-                    //Fcommitqty = model.Fcommitqty,
-                    //Fcommitweight = model.Fcommitweight,
-                    //Fstatus = model.Fstatus,
-                    //sli_work_processBillEntry = model.sli_work_processBillEntry.Select(d => new sli_work_processBillEntry
-                    //{
-                    //    Fbillid = model.Id,
-                    //    //Fseq = d.Fseq,
+                    Fworkordlistid = new int[] { },
+                    sli_workorderlist_view = new List<SliWorkorderlistView>()
+                });
 
-                    //}).ToList()
-                };
+                // 处理 Fworkordlistid 插入逻辑
+                if (root.Fworkordlistid != null)
+                {
+                    foreach (var id in root.Fworkordlistid)
+                    {
+                        if (root.sli_workorderlist_view != null)
+                        {
+                            foreach (var item in root.sli_workorderlist_view)
+                            {
+                                // 先插入外层对象
+                                var outerEntity = new sli_work_processBill
+                                {
+                                    Fworkorderlistid =id,
+                                    Fprocessoption = item.Foptionid,
+                                    Fstatus = item.Fstatus,
+                                    //Fstartdate=DateTime.Today,
+                                    //Fs = DateTime.Today,
+                                };
+                                var outerSaved = context.Sli_work_processBill.Add(outerEntity);
+                                context.SaveChanges();
+
+                                // 再插入内层对象
+                                if (item.sli_document_process_modelBillEntry_view != null)
+                                {
+                                    foreach (var innerItem in item.sli_document_process_modelBillEntry_view)
+                                    {
+                                        var innerEntity = new sli_work_processBillEntry
+                                        {
+                                            Fbillid= outerEntity.Id,
+                                            Fprocessobject = innerItem.Fobjectid
+                                        };
+                                        
+                                        context.Sli_work_processBillEntry.Add(innerEntity);
+                                    }
+                                }
+                                context.SaveChanges();
+                            }
+                        }
+                    }
+                }
+
+                // 处理 sli_workorderlist_view 插入逻辑
+                
 
 
-
-
-                context.Sli_work_processBill.Add(header);
-                await context.SaveChangesAsync();
 
                 //var entry = new sli_work_processBillEntry
                 //{
@@ -63,15 +89,16 @@ namespace WebApi_SY.Controllers
                 {
                     code = 200,
                     msg = "Success",
-                    modelid = header.Id,
-                    Date = header.Id.ToString() + "保存成功"
+                    //modelid = model.Fworkorderlistid,
+                    //Date = header.Id.ToString() + "保存成功"
 
                 };
-                return dataNull;
+                return Ok(dataNull);
             }
             catch (Exception ex)
             {
-                return JsonConvert.SerializeObject(ex.ToString());
+                return Ok(ex);
+                //return JsonConvert.SerializeObject(ex.ToString());
             }
 
 
