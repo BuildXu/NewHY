@@ -155,61 +155,61 @@ namespace WebApi_SY.Controllers
 
         }
 
-        [System.Web.Http.HttpPost]
-        public async Task<object> Add_sli_plan_bill([Microsoft.AspNetCore.Mvc.FromBody] sli_plan_bill model)
-        {
-            try
-            {
-                var context = new YourDbContext();
-                var header = new sli_plan_bill
-                {
-                    Fplanlnumber = model.Fplanlnumber,
-                    Fissueddate = model.Fissueddate,
-                    Fplancontractentry = model.Fplancontractentry,
-                    Fqty = model.Fqty,
-                    Fweight = model.Fweight,
-                    Fplanbegindate = model.Fplanbegindate,
-                    Fplanenddate = model.Fplanenddate,
-                    Factualbegindate = model.Factualbegindate,
-                    Factualenddate = model.Factualenddate,
-                    Fnote = model.Fnote,
-                    Fdays = model.Fdays,
-                    sli_plan_billlEntry = model.sli_plan_billlEntry.Select(d => new sli_plan_billlEntry
-                    {
-                        //fmodelID = model.Id,
-                        Fplanoptionidid = d.Fplanoptionidid,
-                        Fqty = d.Fqty,
-                        Fweight = d.Fweight,
-                        Fplanstartdate = d.Fplanstartdate,
-                        Fplanenddate = d.Fplanenddate,
-                        Factualstartdate = d.Factualstartdate,
-                        Factualenddate = d.Factualenddate,
-                        Fplandays = d.Fplandays,
-                        Fcapacity = d.Fcapacity,
-                        Fdepartid = d.Fdepartid,
-                        Fempid = d.Fempid
-                    }).ToList()
-                };
+        //[System.Web.Http.HttpPost]
+        //public async Task<object> Add_sli_plan_bill([Microsoft.AspNetCore.Mvc.FromBody] sli_plan_bill model)
+        //{
+        //    try
+        //    {
+        //        var context = new YourDbContext();
+        //        var header = new sli_plan_bill
+        //        {
+        //            Fplanlnumber = model.Fplanlnumber,
+        //            Fissueddate = model.Fissueddate,
+        //            Fplancontractentry = model.Fplancontractentry,
+        //            Fqty = model.Fqty,
+        //            Fweight = model.Fweight,
+        //            Fplanbegindate = model.Fplanbegindate,
+        //            Fplanenddate = model.Fplanenddate,
+        //            Factualbegindate = model.Factualbegindate,
+        //            Factualenddate = model.Factualenddate,
+        //            Fnote = model.Fnote,
+        //            Fdays = model.Fdays,
+        //            sli_plan_billlEntry = model.sli_plan_billlEntry.Select(d => new sli_plan_billlEntry
+        //            {
+        //                //fmodelID = model.Id,
+        //                Fplanoptionidid = d.Fplanoptionidid,
+        //                Fqty = d.Fqty,
+        //                Fweight = d.Fweight,
+        //                Fplanstartdate = d.Fplanstartdate,
+        //                Fplanenddate = d.Fplanenddate,
+        //                Factualstartdate = d.Factualstartdate,
+        //                Factualenddate = d.Factualenddate,
+        //                Fplandays = d.Fplandays,
+        //                Fcapacity = d.Fcapacity,
+        //                Fdepartid = d.Fdepartid,
+        //                Fempid = d.Fempid
+        //            }).ToList()
+        //        };
 
-                context.Sli_plan_bill.Add(header);
-                await context.SaveChangesAsync();
-                var dataNull = new
-                {
-                    code=200,
-                    msg = "Success",
-                    modelid = header.Id,
-                    Date = header.Id.ToString() + "保存成功"
+        //        context.Sli_plan_bill.Add(header);
+        //        await context.SaveChangesAsync();
+        //        var dataNull = new
+        //        {
+        //            code=200,
+        //            msg = "Success",
+        //            modelid = header.Id,
+        //            Date = header.Id.ToString() + "保存成功"
 
-                };
-                return dataNull;
-            }
-            catch(Exception ex)
-            {
-                return JsonConvert.SerializeObject(ex.ToString());
-            }
+        //        };
+        //        return dataNull;
+        //    }
+        //    catch(Exception ex)
+        //    {
+        //        return JsonConvert.SerializeObject(ex.ToString());
+        //    }
 
 
-        }
+        //}
 
             public async Task<object> Delete_sli_workOrderList(int id)
         {

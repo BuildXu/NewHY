@@ -140,7 +140,7 @@ namespace WebApi_SY.Controllers
 
             var totalCount = query.Count();
             var totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
-            var paginatedQuery = query.OrderByDescending(b => b.Fwoid).Skip((page - 1) * pageSize).Take(pageSize);
+            var paginatedQuery = query.OrderByDescending(d => d.Fwoid).Skip((page - 1) * pageSize).Take(pageSize);
             //var result = paginatedQuery.Select(a => new
             //{
             //    id = a.Id,
@@ -166,6 +166,78 @@ namespace WebApi_SY.Controllers
             //    })
 
             //});
+
+            var result = paginatedQuery.Select(a => new
+            {
+                Fwoid = a.Fwoid,
+                Fwobillno = a.Fwobillno,
+                Fproductno = a.Fproductno,
+                Fwodate = a.Fwodate,
+                Fqty = a.Fqty,
+                Fwoweight = a.Fwoweight,
+                Fwoplanstart = a.Fwoplanstart,
+                Fwoplanend = a.Fwoplanend,
+                Fwoordertype = a.Fwoordertype,
+                Fwoentryqty = a.Fwoentryqty,
+                Fwoecommitqty = a.Fwoecommitqty,
+                Fwoestatus = a.Fwoestatus,
+                Fwoeclosed = a.Fwoeclosed,
+                Fworkordlistid = a.Fworkordlistid,
+                Fworkqty = a.Fworkqty,
+                Fworkweight = a.Fworkweight,
+                Forderbillno = a.Forderbillno,
+                Fplandeleliverydate = a.Fplandeleliverydate,
+                Fslitemperatureend = a.Fslitemperatureend,
+                Fcustid = a.Fcustid,
+                Fcustno = a.Fcustno,
+                Fcustname = a.Fcustname,
+                Fcustomer = a.Fcustomer,
+                Fid = a.Fid,
+                Fentryid = a.Fentryid,
+                Fseq = a.Fseq,
+                // --注意这里可能是 Fsliheight 的拼写错误 
+                Forderqty = a.Forderqty,
+                Fnote = a.Fnote,
+                Fplandeliverydate = a.Fplandeliverydate,
+                Fmaterialid = a.Fmaterialid,
+                Fnumber = a.Fnumber,
+                Fname = a.Fname,
+                Fdescription = a.Fdescription,
+                Fsliouterdiameter = a.Fsliouterdiameter,
+                Fslihight = a.Fslihight,
+                Fsliallowanceod = a.Fsliallowanceod,
+                Fsliallowanceid = a.Fsliallowanceid,
+                Fsliallowanceh = a.Fsliallowanceh,
+                //--注意这里可能是 Fsliblankmodel 的拼写错误
+                Fsliweightmaterial = a.Fsliweightmaterial,
+                Fsliweightforging = a.Fsliweightforging,
+                Fsliweightgoods = a.Fsliweightgoods,
+                Fslidrawingno = a.Fslidrawingno,
+                Fslimetal = a.Fslimetal,
+                Fsligoodsstatus = a.Fsligoodsstatus,
+                Fsliprocessing = a.Fsliprocessing,
+                Fslidelivery = a.Fslidelivery,
+                Fsliblankmodel = a.Fsliblankmodel,
+                Fslipunching = a.Fslipunching,
+                Fslitemperaturebegin = a.Fslitemperaturebegin,
+                Fslimould = a.Fslimould,
+                Fsliroller = a.Fsliroller,
+                Fsliheatingtimes = a.Fsliheatingtimes,
+                Fsligrade = a.Fsligrade,
+                Fsumnumber = a.Fsumnumber,
+                Fsoqty = a.Fsoqty,
+                Fwoqty = a.Fwoqty,
+                Fwpqty = a.Fwpqty,
+                Ffinisthqty = a.Ffinisthqty,
+                Fstockqty = a.Fstockqty,
+                Foption = a.Foption,
+                Fobject = a.Fobject,
+                Fmo = a.Fmo,
+                Fworkorderliststatus = a.Fworkorderliststatus,
+                Fpause = a.Fpause,
+                Fcancel = a.Fcancel,
+                // 添加其他需要的字段
+            }).ToList();
             var response = new    // 定义 前端返回数据  总记录，总页，当前页 ，size,返回记录
             {
                 code = 200,
@@ -176,7 +248,7 @@ namespace WebApi_SY.Controllers
                     totalPagess = totalPages,
                     currentPages = page,
                     pageSizes = pageSize,
-                    data = paginatedQuery
+                    data = result
                 }
 
 
