@@ -94,8 +94,8 @@ namespace WebApi_SY.Controllers
                     //string json = JsonConvert.SerializeObject(data);
                     return dataNull;
                 }
-                var Sli_plan_billEntrys = context.sli_plan_billEntry.Where(b => b.Fplanbillid == id);
-                context.sli_plan_billEntry.RemoveRange(Sli_plan_billEntrys);
+                var Sli_plan_billEntrys = context.Sli_plan_billEntry.Where(b => b.Fplanbillid == id);
+                context.Sli_plan_billEntry.RemoveRange(Sli_plan_billEntrys);
                 context.Sli_plan_bill.Remove(entity);
                 await context.SaveChangesAsync();
                 // var data = new { Status = "Success", Message = "Data retrieved successfully", Data = new { /* actual data here */ } };
@@ -144,7 +144,7 @@ namespace WebApi_SY.Controllers
         {
             var context = new YourDbContext();
             var query = from p in context.Sli_plan_bill
-                        join c in context.sli_plan_billEntry on p.Id equals c.Fplanbillid
+                        join c in context.Sli_plan_billEntry on p.Id equals c.Fplanbillid
                         select new
                         {
                             Sli_plan_bill = p,
