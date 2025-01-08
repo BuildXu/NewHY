@@ -23,7 +23,7 @@ namespace WebApi_SY.Entity
         public DbSet<t_sal_orderEntry> T_sal_orderEntry { get; set; }
 
         public DbSet<sli_plan_bill> Sli_plan_bill { get; set; }                 // 交付计划 Plan  交付计划
-        public DbSet<sli_plan_billlEntry> Sli_plan_billlEntry { get; set; }
+        public DbSet<sli_plan_billEntry> Sli_plan_billEntry { get; set; }
 
         public DbSet<sli_prd_prudcutionPlanB> Sli_prd_prudcutionPlanB { get; set; }  //  生产车间Prd  投产计划  周计划
         public DbSet<sli_prd_pruductionPlanEntryB> Sli_prd_pruductionPlanEntryB { get; set; }
@@ -114,6 +114,7 @@ namespace WebApi_SY.Entity
 
         public DbSet<sli_work_processBill> Sli_work_processBill { get; set; }//工艺流转卡表头
         public DbSet<sli_work_processBillEntry> Sli_work_processBillEntry { get; set; }//工艺流转卡表体
+        public DbSet<sli_work_processBill_view> Sli_work_processBill_view { get; set; }//工艺路线视图
 
 
 
@@ -139,21 +140,32 @@ namespace WebApi_SY.Entity
               .WithOne(d => d.sli_sal_order_view)
               .HasForeignKey(d => d.FID);
 
-            modelBuilder.Entity<sli_plan_bill>()
-               .HasMany(h => h.sli_plan_billlEntry)
-               .WithOne(d => d.sli_plan_bill)
-               .HasForeignKey(d => d.Fplanbillid);
+            // modelBuilder.Entity<sli_plan_bill>()
+            //    .HasMany(h => h.sli_plan_billEntry)
+            //    .WithOne(d => d.sli_plan_bill)
+            //    .HasForeignKey(d => d.Fplanbillid);
 
             //modelBuilder.Entity<sli_plan_bill>()
-            // .HasMany(h => h.sli_plan_billorder)
-            // .WithOne()
-            //  .HasForeignKey("Fplanbillid"); // 外键列名
+            //   .HasMany(h => h.sli_plan_billorder)
+            //   .WithOne()
+            //   .HasForeignKey("Fplanbillid"); // 外键列名
 
-            
 
-           // modelBuilder.Entity<sli_work_orderEntry>()
-           //.Property(p => p.Fentryid)
-           //.ValueGeneratedOnAdd();   //字段自增
+            modelBuilder.Entity<sli_plan_bill>()
+              .HasMany(h => h.sli_plan_billEntry)
+              .WithOne(d => d.sli_plan_bill)
+              .HasForeignKey(d => d.Fplanbillid);
+
+            modelBuilder.Entity<sli_plan_bill>()
+                         .HasMany(h => h.sli_plan_billorder)
+                         .WithOne(d => d.sli_plan_bill) // 添加导航属性
+                         .HasForeignKey(d => d.Fplanbillid);
+
+
+
+            // modelBuilder.Entity<sli_work_orderEntry>()
+            //.Property(p => p.Fentryid)
+            //.ValueGeneratedOnAdd();   //字段自增
 
             modelBuilder.Entity<sli_sale_taxturebill>()
                .HasOne(h => h.sli_sale_taxture)

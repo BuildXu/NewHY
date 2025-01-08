@@ -18,11 +18,11 @@ namespace WebApi_SY.Models
         public string Fnote { get; set; }
         public int Fdays { get; set; }
 
-        public virtual ICollection<sli_plan_billlEntry> sli_plan_billlEntry { get; set; }
+        public virtual ICollection<sli_plan_billEntry> sli_plan_billEntry { get; set; }
         public virtual ICollection<sli_plan_billorder> sli_plan_billorder { get; set; } // 新增导航属性
     }
 
-    public class sli_plan_billlEntry
+    public class sli_plan_billEntry
     {
         public int Id { get; set; }
         public int Fplanbillid { get; set; }

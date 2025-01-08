@@ -19,7 +19,7 @@ namespace WebApi_SY.Models
         public string factualEndDate { get; set; }
         public string fnote { get; set; }
         public int fdays { get; set; }
-        public virtual ICollection<sli_plan_billlEntry> sli_plan_billlEntry { get; set; }
+        public virtual ICollection<sli_prd_processReportEntry> sli_prd_processReportEntry { get; set; }
     }
     public class sli_prd_processReportEntry
     {
@@ -36,6 +36,6 @@ namespace WebApi_SY.Models
         public decimal fcapacity { get; set; }
         public int fdepartID { get; set; }
         public int fempId { get; set; }
-        public virtual sli_plan_bill sli_plan_bill { get; set; }
+        public virtual sli_prd_processReport sli_prd_processReport { get; set; }
     }
 }

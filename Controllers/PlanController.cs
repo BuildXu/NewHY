@@ -174,7 +174,7 @@ namespace WebApi_SY.Controllers
         //            Factualenddate = model.Factualenddate,
         //            Fnote = model.Fnote,
         //            Fdays = model.Fdays,
-        //            sli_plan_billlEntry = model.sli_plan_billlEntry.Select(d => new sli_plan_billlEntry
+        //            sli_plan_billEntry = model.sli_plan_billEntry.Select(d => new sli_plan_billEntry
         //            {
         //                //fmodelID = model.Id,
         //                Fplanoptionidid = d.Fplanoptionidid,
