@@ -300,7 +300,148 @@ namespace WebApi_SY.Controllers
 
              return  Ok(response);
         }
-        
+
+        [Microsoft.AspNetCore.Mvc.HttpGet]
+
+        public IHttpActionResult GetWorkOrderListAll(
+               
+                string Fproductno = null,
+                string Fbillno = null,
+                DateTime? Fstartdate = null,
+                DateTime? Fenddate = null,
+                string Fcustomer = null,
+                string Fdescription = null,
+                string Fsumnumber = null)
+        {
+            var context = new YourDbContext();
+            // 构建基础查询
+            var query = from p in context.sli_workorderlist_view
+                        select p;
+
+            // 根据Fbillno过滤
+            if (!string.IsNullOrEmpty(Fbillno))
+            {
+                query = query.Where(q => q.Fbillno.Contains(Fbillno));
+            }
+            // 根据Fproductno过滤
+            if (!string.IsNullOrEmpty(Fproductno))
+            {
+                query = query.Where(q => q.Fproductno.Contains(Fproductno));
+            }
+
+            // 根据日期区间过滤
+            //if (Fstartdate.HasValue && Fenddate.HasValue)
+            //    {
+            //        query = query.Where(q => q.Fdate >= Fstartdate.Value && q.Fdate <= Fenddate.Value);
+            //    }
+            if (Fstartdate.HasValue)
+            {
+                query = query.Where(q => q.Fdate >= Fstartdate.Value);
+            }
+            else if (Fenddate.HasValue)
+            {
+                query = query.Where(q => q.Fdate <= Fenddate.Value);
+            }
+
+            // 根据Fcustomer过滤
+            if (!string.IsNullOrEmpty(Fcustomer))
+            {
+                query = query.Where(q => q.Fcustomer.Contains(Fcustomer));
+            }
+
+            // 根据Fdescription过滤
+            if (!string.IsNullOrEmpty(Fdescription))
+            {
+                query = query.Where(q => q.Fdescription.Contains(Fdescription));
+            }
+
+            // 根据Fsumnumber过滤
+            if (!string.IsNullOrEmpty(Fsumnumber))
+            {
+                query = query.Where(q => q.Fsumnumber.Contains(Fsumnumber));
+            }
+
+            // 获取总数和总页数
+            //var totalCount = query.Count();
+            //var totalPages = (int)Math.Ceiling((double)totalCount / PageSize);
+
+            //// 分页查询
+            //var paginatedQuery = query
+            //    .OrderBy(q => q.Id) // 根据需要排序，这里以Id为例
+            //    .Skip((Page - 1) * PageSize)
+            //    .Take(PageSize);
+
+            // 选择需要的字段（根据需要调整）
+            //var result = paginatedQuery.Select(a => new
+            //{
+            //    Id = a.Id,
+            //    Fproductno = a.Fproductno,
+            //    Fbillno = a.Fbillno,
+            //    Fdate = a.Fdate,
+            //    Fcustomer = a.Fcustomer,
+            //    Fdescription = a.Fdescription,
+            //    Fsumnumber = a.Fsumnumber,
+            //    Fworkqty = a.Fworkqty,
+            //    Fworkweight = a.Fworkweight,
+            //    Fcustid = a.Fcustid,
+            //    Fcustno = a.Fcustno,
+            //    Fcustname = a.Fcustname,
+            //    Fid = a.Fid,
+            //    Fentryid = a.Fentryid,
+            //    Fseq = a.Fseq,
+            //    Fqty = a.Fqty,
+            //    Fnote = a.Fnote,
+            //    Fplandeleliverydate = a.Fplandeleliverydate,
+            //    Fstockqty = a.Fstockqty,
+            //    Fmaterialid = a.Fmaterialid,
+            //    Fnumber = a.Fnumber,
+            //    Fname = a.Fname,
+            //    Fsliouterdiameter = a.Fsliouterdiameter,
+            //    Fsliinnerdiameter = a.Fsliinnerdiameter,
+            //    Fslihight = a.Fslihight,
+            //   // --注意这里可能是 Fsliheight 的拼写错误 
+            //    Fsliallowanceod = a.Fsliallowanceod,
+            //    Fsliallowanceid = a.Fsliallowanceid,
+            //    Fsliallowanceh = a.Fsliallowanceh,
+            //    Fsliweightmaterial = a.Fsliweightmaterial,
+            //    Fsliweightforging = a.Fsliweightforging,
+            //    Fsliweightgoods = a.Fsliweightgoods,
+            //    Fslidrawingno = a.Fslidrawingno,
+            //    Fslimetal = a.Fslimetal,
+            //    Fsligoodsstatus = a.Fsligoodsstatus,
+            //    Fsliprocessing = a.Fsliprocessing,
+            //    Fslidelivery = a.Fslidelivery,
+            //    Fsbloblankmodel = a.Fsliblankmodel,
+            //    //--注意这里可能是 Fsliblankmodel 的拼写错误
+            //    Fslipunching = a.Fslipunching,
+            //    Fslitemperaturebegin = a.Fslitemperaturebegin,
+            //    Fslitemperatureend = a.Fslitemperatureend,
+            //    Fslimould = a.Fslimould,
+            //    Fsliroller = a.Fsliroller,
+            //    Fsliheatingtimes = a.Fsliheatingtimes,
+            //    Fsligrade = a.Fsligrade,
+            //    Fsplittype = a.Fsplittype
+            //    // 添加其他需要的字段
+            //}).ToList();
+
+            // 构建响应
+            var response = new
+            {
+                code = 200,
+                msg = "操作成功",
+                data = new
+                {
+                    data = query,
+                    //current = Page,
+                    //pageSize = PageSize,
+                    //totalCount = totalCount,
+                    //totalPages = totalPages
+                }
+            };
+
+            return Ok(response);
+        }
+
         // ----------------
         [Microsoft.AspNetCore.Mvc.HttpGet]
         public IHttpActionResult GetTableOrders(int Page = 1, int PageSize = 10, string Fbillno = null, string Fcustno = null,string Fcustname = null, DateTime? Fstartdate = null, DateTime? Fenddate = null, string Fproductname = null)

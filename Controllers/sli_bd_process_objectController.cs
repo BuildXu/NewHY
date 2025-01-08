@@ -12,6 +12,11 @@ namespace WebApi_SY.Controllers
 {
     public class sli_bd_process_objectController : ApiController
     {
+        public sli_bd_process_objectController()
+        {
+            // _context = context;
+
+        }
         [System.Web.Http.HttpPost]
         public async Task<object> Process_object_Insert([Microsoft.AspNetCore.Mvc.FromBody] sli_bd_process_object option)
         {
@@ -154,7 +159,7 @@ namespace WebApi_SY.Controllers
         }
 
         [System.Web.Http.HttpGet]
-        public IHttpActionResult GetTableByProcess_object(int page = 1, int pageSize = 10, string FNumber = null, string FName = null)
+        public IHttpActionResult GetTableByProcess_object( string FNumber = null, string FName = null)
         {
             var context = new YourDbContext();
             IQueryable<sli_bd_process_object> query = context.Sli_bd_process_object;
@@ -168,9 +173,9 @@ namespace WebApi_SY.Controllers
             {
                 query = query.Where(q => q.fname.Contains(FName));
             }
-            var totalCount = query.Count(); //记录数
-            var totalPages = (int)Math.Ceiling((double)totalCount / pageSize); // 页数
-            var paginatedQuery = query.OrderByDescending(b => b.id).Skip((page - 1) * pageSize).Take(pageSize); //  某页记录
+            //var totalCount = query.Count(); //记录数
+            //var totalPages = (int)Math.Ceiling((double)totalCount / pageSize); // 页数
+            //var paginatedQuery = query.OrderByDescending(b => b.id).Skip((page - 1) * pageSize).Take(pageSize); //  某页记录
             //var datas = query.ToList();
             var response = new    // 定义 前端返回数据  总记录，总页，当前页 ，size,返回记录
             {
@@ -178,11 +183,11 @@ namespace WebApi_SY.Controllers
                 msg = "OK",
                 data = new
                 {
-                    totalCounts = totalCount,
-                    totalPagess = totalPages,
-                    currentPages = page,
-                    pageSizes = pageSize,
-                    data = paginatedQuery
+                    //totalCounts = totalCount,
+                    //totalPagess = totalPages,
+                    //currentPages = page,
+                    //pageSizes = pageSize,
+                    data = query
                 }
             };
 

@@ -10,7 +10,7 @@ namespace WebApi_SY.Models
     public class Sli_plan_model
     {
         public int Id { get; set; }
-        public string Fmodelnumber { get; set; }
+        public string Fmodelnumber { get; set; }   //
         public string Fmodelname { get; set; }
         public string Fplanbegindate { get; set; }
         public string Fplanenddate { get; set; }

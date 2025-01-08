@@ -114,6 +114,7 @@ namespace WebApi_SY.Entity
 
         public DbSet<sli_work_processBill> Sli_work_processBill { get; set; }//工艺流转卡表头
         public DbSet<sli_work_processBillEntry> Sli_work_processBillEntry { get; set; }//工艺流转卡表体
+        public DbSet<sli_work_processBill_view> Sli_work_processBill_view { get; set; }//工艺路线视图
 
 
 

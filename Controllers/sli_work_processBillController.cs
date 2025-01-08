@@ -29,7 +29,7 @@ namespace WebApi_SY.Controllers
                 var json = Request.Content.ReadAsStringAsync().Result;
                 var root = JsonConvert.DeserializeAnonymousType(json, new
                 {
-                    Fworkordlistid = new int[] { },
+                    Fworkordlistid = new List<WorkOrderListIds>(),
                     sli_workorderlist_view = new List<SliWorkorderlistView>()
                 });
 
@@ -48,10 +48,12 @@ namespace WebApi_SY.Controllers
                                 // 先插入外层对象
                                 var outerEntity = new sli_work_processBill
                                 {
-                                    Fworkorderlistid =id,
+                                    Fworkorderlistid = id.id,
                                     Fprocessoption = item.Foptionid,
                                     Fstatus = item.Fstatus,
-                                    Fseq= seq
+                                    Fseq = seq,
+                                    Fqty = id.Fqty,
+                                    Fweight = id.Fweight,
                                     //Fstartdate=DateTime.Today,
                                     //Fs = DateTime.Today,
                                 };
@@ -65,11 +67,13 @@ namespace WebApi_SY.Controllers
                                     {
                                         var innerEntity = new sli_work_processBillEntry
                                         {
-                                            Fbillid= outerEntity.Id,
+                                            Fbillid = outerEntity.Id,
                                             Fprocessobject = innerItem.Fobjectid,
-                                            Fseq= entryseq
+                                            Fseq = entryseq,
+                                            Fqty = id.Fqty,
+                                            Fweight = id.Fweight
                                         };
-                                        
+
                                         context.Sli_work_processBillEntry.Add(innerEntity);
                                     }
                                 }
@@ -82,7 +86,7 @@ namespace WebApi_SY.Controllers
                 }
 
                 // 处理 sli_workorderlist_view 插入逻辑
-                
+
 
 
 
@@ -112,11 +116,11 @@ namespace WebApi_SY.Controllers
 
         }
 
-        public IHttpActionResult GetTableWorkprocessBill(int page = 1, int pageSize = 10)
+        public IHttpActionResult GetTableWorkprocessBillall(int? id = null)
         {
             var context = new YourDbContext();
 
-            var query = context.Sli_work_processBill.Include(a => a.sli_work_processBillEntry);
+            var query = context.Sli_work_processBill.Include(a => a.sli_work_processBillEntry) ;
             //var query = from p in context.Sli_work_order
             //            join c in context.Sli_work_orderEntry on p.Id equals c.Id
             //            select new
@@ -124,11 +128,13 @@ namespace WebApi_SY.Controllers
             //                Sli_work_order = p,
             //                Sli_work_orderEntry = c
             //            };
+            if (id.HasValue)
+            {
+                query = query.Where(q => q.Id == id.Value);
+            }
 
-            var totalCount = query.Count();
-            var totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
-            var paginatedQuery = query.OrderByDescending(b => b.Id).Skip((page - 1) * pageSize).Take(pageSize);
-            var result = paginatedQuery.Select(a => new
+
+            var result = query.Select(a => new
             {
                 Fwoentryid = a.Fwoentryid,
                 Id = a.Id,
@@ -165,6 +171,55 @@ namespace WebApi_SY.Controllers
                 msg = "OK",
                 data = new
                 {
+
+                    data = result
+                }
+
+
+            };
+
+            return Ok(response);
+        }
+
+        public IHttpActionResult GetTableWorkprocessBill(int page = 1, int pageSize = 10)
+        {
+            var context = new YourDbContext();
+
+            var query = context.Sli_work_processBill;
+            //var query = from p in context.Sli_work_order
+            //            join c in context.Sli_work_orderEntry on p.Id equals c.Id
+            //            select new
+            //            {
+            //                Sli_work_order = p,
+            //                Sli_work_orderEntry = c
+            //            };
+
+            var totalCount = query.Count();
+            var totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
+            var paginatedQuery = query.OrderByDescending(b => b.Id).Skip((page - 1) * pageSize).Take(pageSize);
+            var result = paginatedQuery.Select(a => new
+            {
+                Fwoentryid = a.Fwoentryid,
+                Id = a.Id,
+                Fseq = a.Fseq,
+                Fworkorderlistid = a.Fworkorderlistid,
+                Fprocessoption = a.Fprocessoption,
+                Fstartdate = a.Fstartdate,
+                Fenddate = a.Fenddate,
+                Fqty = a.Fqty,
+                Fweight = a.Fweight,
+                Fcommitqty = a.Fcommitqty,
+                Fcommitweight = a.Fcommitweight,
+                Fstatus = a.Fstatus
+
+
+            });
+            var response = new    // 定义 前端返回数据  总记录，总页，当前页 ，size,返回记录
+            {
+                code = 200,
+                msg = "OK",
+                data = new
+                {
                     totalCounts = totalCount,
                     totalPagess = totalPages,
                     currentPages = page,
@@ -178,7 +233,70 @@ namespace WebApi_SY.Controllers
             return Ok(response);
         }
 
+        public IHttpActionResult GetTableWorkprocessBill_view(int page = 1, int pageSize = 10)
+        {
+            var context = new YourDbContext();
 
+            var query = context.Sli_work_processBill_view;
+            //var query = from p in context.Sli_work_order
+            //            join c in context.Sli_work_orderEntry on p.Id equals c.Id
+            //            select new
+            //            {
+            //                Sli_work_order = p,
+            //                Sli_work_orderEntry = c
+            //            };
+
+            var totalCount = query.Count();
+            var totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
+            var paginatedQuery = query.OrderByDescending(b => b.id).Skip((page - 1) * pageSize).Take(pageSize);
+            var result = paginatedQuery.Select(a => new
+            {
+                id = a.id,
+                Fseq = a.Fseq,
+                Fworkorderlistid = a.Fworkorderlistid,
+                Fprocessoption = a.Fprocessoption,
+                Fname = a.Fname,
+                foptionname = a.foptionname,
+                Fstartdate = a.Fstartdate,
+                Fenddate = a.Fenddate,
+                Fqty = a.Fqty,
+                Fweight = a.Fweight,
+                Fcommitqty = a.Fcommitqty,
+                Fcommitweight = a.Fcommitweight,
+                Fstatus = a.Fstatus
+                //Fbillid = a.Fbillid,
+                //Fentryid = a.Fentryid,
+                //Fentryseq = a.Fentryseq,
+                //Fwobillid = a.Fwobillid,
+                //Fprocessobject = a.Fprocessobject,
+                //fobjectname = a.fobjectname,
+                //Fentrystartdate = a.Fentrystartdate,
+                //Fentryenddate = a.Fentryenddate,
+                //Fentryqty = a.Fentryqty,
+                //Fentryweight = a.Fentryweight,
+                //Fentrycommitqty = a.Fentrycommitqty,
+                //Fentrycommitweight = a.Fentrycommitweight,
+                //Fentrystatus = a.Fentrystatus,
+
+            });
+            var response = new    // 定义 前端返回数据  总记录，总页，当前页 ，size,返回记录
+            {
+                code = 200,
+                msg = "OK",
+                data = new
+                {
+                    totalCounts = totalCount,
+                    totalPagess = totalPages,
+                    currentPages = page,
+                    pageSizes = pageSize,
+                    data = result
+                }
+
+
+            };
+
+            return Ok(response);
+        }
 
     }
 }
