@@ -452,6 +452,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MyController.cs" />
     <Compile Include="Controllers\PlanController.cs" />
+    <Compile Include="Controllers\sli_mes_lauchController.cs" />
     <Compile Include="Controllers\sli_document_mp_rollingController.cs" />
     <Compile Include="Controllers\sli_bd_process_objectController.cs" />
     <Compile Include="Controllers\sli_document_process_modelController.cs" />
