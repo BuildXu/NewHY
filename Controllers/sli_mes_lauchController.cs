@@ -15,31 +15,34 @@ namespace WebApi_SY.Controllers
         public sli_mes_lauchController()
         {
             // _context = context;
-
         }
+
         [System.Web.Http.HttpPost]
-        public async Task<object> Process_object_Insert([Microsoft.AspNetCore.Mvc.FromBody] sli_bd_process_object option)
+        public async Task<object> sli_mes_lauch_Insert([Microsoft.AspNetCore.Mvc.FromBody] sli_mes_lauchbill[] options)
         {
             var context = new YourDbContext();
             try
             {
-                var header = new sli_bd_process_object
+                foreach (var option in options)
                 {
-                    fname = option.fname,
-                    fnumber = option.fnumber,
-                    fnote = option.fnote,
-                    fstatus = option.fstatus,
-                    fused = option.fused,
-                    fcreateDate = option.fcreateDate
-                };
-                context.Sli_bd_process_object.Add(header);
+                    var header = new sli_mes_lauchbill
+                    {
+                        Fsourceid = option.Fsourceid,
+                        Fworkorderlistid = option.Fworkorderlistid,
+                        Fprocessoption = option.Fprocessoption,
+                        Fstartdate = option.Fstartdate,
+                        Fenddate = option.Fenddate,
+                        Fdeptid = option.Fdeptid,
+                        Fstatus = option.Fstatus
+                    };
+                    context.sli_mes_lauchbill.Add(header);
+                }
                 await context.SaveChangesAsync();
                 var datas = new
                 {
                     code = 200,
                     msg = "Success",
-                    Date = header.id.ToString() + "保存成功"
-
+                    Date = options.Length > 0 ? options[0].Id.ToString() + "等保存成功" : "无记录保存成功"
                 };
                 return datas;
             }
@@ -50,19 +53,18 @@ namespace WebApi_SY.Controllers
                     code = 500,
                     msg = "失败",
                     Date = ex.ToString()
-
                 };
                 return dataerr;
             }
         }
 
         [System.Web.Http.HttpPost]
-        public async Task<object> Process_object_Update([Microsoft.AspNetCore.Mvc.FromBody] sli_bd_process_object option)
+        public async Task<object> sli_mes_lauch_Update([Microsoft.AspNetCore.Mvc.FromBody] sli_mes_lauchbill option)
         {
             try
             {
                 var context = new YourDbContext();
-                var entity = await context.Sli_bd_process_object.FindAsync(option.id);
+                var entity = await context.sli_mes_lauchbill.FindAsync(option.Id);
                 if (entity == null)
                 {
                     var dataNull = new
@@ -76,18 +78,18 @@ namespace WebApi_SY.Controllers
                 }
                 else
                 {
-
-                    var Sli_bd_process_objects = context.Sli_bd_process_object.FirstOrDefault(p => p.id == option.id);
+                    var sli_mes_lauchbills = context.sli_mes_lauchbill.FirstOrDefault(p => p.Id == option.Id);
                     //var Sli_plan_modelEntrys = _context.Sli_plan_modelEntry.Where(p => p.fmodelID == model.Id).ToList();
 
 
-                    Sli_bd_process_objects.fname = option.fname;
-                    Sli_bd_process_objects.fnumber = option.fnumber;
-                    Sli_bd_process_objects.fnote = option.fnote;
-                    Sli_bd_process_objects.fstatus = option.fstatus;
-                    Sli_bd_process_objects.fused = option.fused;
-                    Sli_bd_process_objects.fcreateDate = option.fcreateDate;
-                    //Sli_bd_tech_options.fnote = model.fnote;
+                    sli_mes_lauchbills.Fsourceid = option.Fsourceid;
+                    sli_mes_lauchbills.Fworkorderlistid = option.Fworkorderlistid;
+                    sli_mes_lauchbills.Fprocessoption = option.Fprocessoption;
+                    sli_mes_lauchbills.Fstartdate = option.Fstartdate;
+                    sli_mes_lauchbills.Fenddate = option.Fenddate;
+                    sli_mes_lauchbills.Fdeptid = option.Fdeptid;
+                    sli_mes_lauchbills.Fstatus = option.Fstatus;
+
 
                     await context.SaveChangesAsync();
 
@@ -95,7 +97,7 @@ namespace WebApi_SY.Controllers
                     {
                         code = 200,
                         msg = "ok",
-                        date = Sli_bd_process_objects.id + "修改成功！"
+                        date = sli_mes_lauchbills.Id + "修改成功！"
                     };
                     return Ok(datas);
                 }
@@ -108,20 +110,19 @@ namespace WebApi_SY.Controllers
                     msg = "失败",
                     date = ex.ToString()
                 };
-                return Ok(datas); ;
+                return Ok(datas);
             }
         }
 
         [System.Web.Http.HttpPost]
-        public async Task<object> Process_object_Delete(List<int> id)
+        public async Task<object> sli_mes_lauch_Delete(List<int> id)
         {
             try
             {
                 var context = new YourDbContext();
                 foreach (var deleteid in id)
                 {
-
-                    var entity = await context.Sli_bd_process_object.FindAsync(deleteid);
+                    var entity = await context.sli_mes_lauchbill.FindAsync(deleteid);
                     if (entity == null)
                     {
                         var dataNull = new
@@ -133,9 +134,7 @@ namespace WebApi_SY.Controllers
                         };
                         return dataNull;
                     }
-                    context.Sli_bd_process_object.RemoveRange(entity);
-
-
+                    context.sli_mes_lauchbill.RemoveRange(entity);
                 }
                 await context.SaveChangesAsync();
                 var data = new
@@ -159,23 +158,40 @@ namespace WebApi_SY.Controllers
         }
 
         [System.Web.Http.HttpGet]
-        public IHttpActionResult GetTableByProcess_object(string FNumber = null, string FName = null)
+        public IHttpActionResult GetTableBySli_mes_lauch(int? Id = null, int? Fsourceid = null, int? Fworkorderlistid = null, int? Fprocessoption = null, DateTime? Fstartdate = null, DateTime? Fenddate = null, int? Fdeptid = null)
         {
             var context = new YourDbContext();
-            IQueryable<sli_bd_process_object> query = context.Sli_bd_process_object;
+            IQueryable<sli_mes_lauchbill> query = context.sli_mes_lauchbill;
 
-            if (!string.IsNullOrEmpty(FNumber))
+            if (Id.HasValue)
             {
-                query = query.Where(q => q.fnumber.Contains(FNumber));
+                query = query.Where(q => q.Id == Id);
             }
-
-            if (!string.IsNullOrEmpty(FName))
+            if (Fsourceid.HasValue)
             {
-                query = query.Where(q => q.fname.Contains(FName));
+                query = query.Where(q => q.Fsourceid == Fsourceid);
+            }
+            if (Fworkorderlistid.HasValue)
+            {
+                query = query.Where(q => q.Fworkorderlistid == Fworkorderlistid);
+            }
+            if (Fprocessoption.HasValue)
+                query = query.Where(q => q.Fprocessoption == Fprocessoption);
+            if (Fstartdate.HasValue)
+            {
+                query = query.Where(q => q.Fstartdate == Fstartdate);
+            }
+            if (Fenddate.HasValue)
+            {
+                query = query.Where(q => q.Fenddate == Fenddate);
+            }
+            if (Fdeptid.HasValue)
+            {
+                query = query.Where(q => q.Fdeptid == Fdeptid);
             }
             //var totalCount = query.Count(); //记录数
             //var totalPages = (int)Math.Ceiling((double)totalCount / pageSize); // 页数
-            //var paginatedQuery = query.OrderByDescending(b => b.id).Skip((page - 1) * pageSize).Take(pageSize); //  某页记录
+            //var paginatedQuery = query.OrderByDescending(b => b.Id).Skip((page - 1) * pageSize).Take(pageSize); //  某页记录
             //var datas = query.ToList();
             var response = new    // 定义 前端返回数据  总记录，总页，当前页 ，size,返回记录
             {
