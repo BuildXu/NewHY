@@ -118,6 +118,8 @@ namespace WebApi_SY.Entity
 
         public DbSet<sli_mes_lauchbill> sli_mes_lauchbill { get; set; }//投产清单表
 
+        public DbSet<sli_mes_orderoption> sli_mes_orderoption { get; set; }//投产清单表
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //ConnectionStrings 19vs7gv47690.vicp.fun,46716
