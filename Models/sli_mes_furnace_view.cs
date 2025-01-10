@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -28,9 +29,10 @@ namespace WebApi_SY.Models
             /// </summary>
             public string Fnumber { get; set; }
 
-            /// <summary>
-            /// 自增 ID
-            /// </summary>
+        /// <summary>
+        /// 自增 ID
+        /// </summary>
+        [Key]
             public int Id { get; set; }
 
             /// <summary>

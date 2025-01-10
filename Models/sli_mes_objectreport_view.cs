@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -36,6 +37,7 @@ namespace WebApi_SY.Models
         /// <summary>
         /// 自增的唯一标识符，使用 int 类型存储
         /// </summary>
+        [Key]
         public int Id { get; set; }
 
         /// <summary>
