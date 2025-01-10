@@ -26,7 +26,7 @@ namespace WebApi_SY.Models
     {
         public int Id { get; set; }// 计划表Id
         public int Fplanbillid { get; set; }// 主表Id
-        public string Fplanoptionidid { get; set; }// 工序Id
+        public int Fplanoptionidid { get; set; }// 工序Id
         public decimal Fqty { get; set; }//数量
         public decimal Fweight { get; set; }//重量
         public string Fplanstartdate { get; set; }//计划开始 (计算表头总天数,)

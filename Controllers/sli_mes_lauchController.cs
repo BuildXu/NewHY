@@ -18,29 +18,30 @@ namespace WebApi_SY.Controllers
         }
 
         [System.Web.Http.HttpPost]
-        public async Task<object> sli_mes_lauch_Insert([Microsoft.AspNetCore.Mvc.FromBody] sli_mes_lauchbill option)
+        public async Task<object> sli_mes_lauch_Insert([Microsoft.AspNetCore.Mvc.FromBody] sli_mes_lauchbill options)
         {
             var context = new YourDbContext();
             try
             {
-                var header = new sli_mes_lauchbill
-                {
-                    Fnumber = option.Fnumber,
-                    Fsourceid = option.Fsourceid,
-                    Fworkorderlistid = option.Fworkorderlistid,
-                    Fprocessoption = option.Fprocessoption,
-                    Fstartdate = option.Fstartdate,
-                    Fenddate = option.Fenddate,
-                    Fdeptid = option.Fdeptid,
-                    Fstatus = option.Fstatus
-                };
-                context.Add(header);
+
+                    var header = new sli_mes_lauchbill
+                    {
+                        Fsourceid = options.Fsourceid,
+                        Fworkorderlistid = options.Fworkorderlistid,
+                        Fprocessoption = options.Fprocessoption,
+                        Fstartdate = options.Fstartdate,
+                        Fenddate = options.Fenddate,
+                        Fdeptid = options.Fdeptid,
+                        Fstatus = options.Fstatus
+                    };
+                    context.sli_mes_lauchbill.Add(header);
+
                 await context.SaveChangesAsync();
                 var datas = new
                 {
                     code = 200,
                     msg = "Success",
-                    Date = header.Id.ToString() + "保存成功"
+                    Date =  "保存成功"
                 };
                 return datas;
             }
