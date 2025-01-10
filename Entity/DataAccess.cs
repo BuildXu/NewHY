@@ -24,7 +24,7 @@ namespace WebApi_SY.Entity
 
         public DbSet<sli_plan_bill> Sli_plan_bill { get; set; }                 // 交付计划 Plan  交付计划
         public DbSet<sli_plan_billEntry> Sli_plan_billEntry { get; set; }
-        public DbSet<sli_plan_billorder> sli_plan_billorder { get; set; }
+        public DbSet<sli_plan_billorder> Sli_plan_billorder { get; set; }
 
         public DbSet<sli_prd_prudcutionPlanB> Sli_prd_prudcutionPlanB { get; set; }  //  生产车间Prd  投产计划  周计划
         public DbSet<sli_prd_pruductionPlanEntryB> Sli_prd_pruductionPlanEntryB { get; set; }
