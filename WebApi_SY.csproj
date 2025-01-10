@@ -452,6 +452,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MyController.cs" />
     <Compile Include="Controllers\PlanController.cs" />
+    <Compile Include="Controllers\sli_mes_lauchController.cs" />
     <Compile Include="Controllers\sli_document_mp_rollingController.cs" />
     <Compile Include="Controllers\sli_bd_process_objectController.cs" />
     <Compile Include="Controllers\sli_document_process_modelController.cs" />
@@ -483,6 +484,7 @@
     <Compile Include="Models\IOrderStorage.cs" />
     <Compile Include="Models\JsonToDataTable.cs" />
     <Compile Include="Models\maxfproductNumber.cs" />
+    <Compile Include="Models\sli_mes_lauchbill.cs" />
     <Compile Include="Models\sli_document_mp_rolling.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\ResultData.cs" />
