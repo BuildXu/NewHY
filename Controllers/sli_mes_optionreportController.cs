@@ -27,6 +27,7 @@ namespace WebApi_SY.Controllers
                 {
                     var header = new sli_mes_optionreport
                     {
+                        Fnumber = option.Fnumber,
                         Fsourceid = option.Fsourceid,
                         Fworkorderlistid = option.Fworkorderlistid,
                         Fprocessoption = option.Fprocessoption,

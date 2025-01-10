@@ -25,6 +25,7 @@ namespace WebApi_SY.Controllers
             {
                 var header = new sli_mes_lauchbill
                 {
+                    Fnumber = option.Fnumber,
                     Fsourceid = option.Fsourceid,
                     Fworkorderlistid = option.Fworkorderlistid,
                     Fprocessoption = option.Fprocessoption,

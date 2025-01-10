@@ -6,9 +6,17 @@ using System.Web;
 namespace WebApi_SY.Models
 {
     public class sli_mes_lauchbill
-    {/// <summary>
-     /// 自增的唯一标识符
-     /// </summary>
+    {
+
+        /// <summary>
+        /// 投产单号，每次新增给一个统一单号
+        /// </summary>
+        public string Fnumber { get; set; }
+
+
+        /// <summary>
+        /// 自增的唯一标识符
+        /// </summary>
         public int Id { get; set; }
 
         /// <summary>

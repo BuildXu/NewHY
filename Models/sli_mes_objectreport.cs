@@ -8,10 +8,16 @@ namespace WebApi_SY.Models
    
         public class sli_mes_objectreport
         {
-            /// <summary>
-            /// 源单号，选单
-            /// </summary>
-            public int Fsourceid { get; set; }
+
+
+        /// <summary>
+        /// 工步报工单号，每次新增给一个统一单号
+        /// </summary>
+        public string Fnumber { get; set; }
+        /// <summary>
+        /// 源单号，选单
+        /// </summary>
+        public int Fsourceid { get; set; }
 
 
         public int Id { get; set; }

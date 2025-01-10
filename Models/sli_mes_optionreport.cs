@@ -8,6 +8,11 @@ namespace WebApi_SY.Models
    
         public class sli_mes_optionreport
         {
+
+        /// <summary>
+        /// 工序流转单号，每次新增给一个统一单号
+        /// </summary>
+        public string Fnumber { get; set; }
         /// <summary>
         /// 自增
         /// </summary>
