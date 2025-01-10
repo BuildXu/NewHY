@@ -12,6 +12,8 @@ namespace WebApi_SY.Models
         [Key]
         public int Id { get; set; }
 
+        public int Fsourceid { get; set; }
+
         // 工艺档案编号
         public string Fnumber { get; set; }
 
