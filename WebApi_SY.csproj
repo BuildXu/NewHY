@@ -488,6 +488,11 @@
     <Compile Include="Models\IOrderStorage.cs" />
     <Compile Include="Models\JsonToDataTable.cs" />
     <Compile Include="Models\maxfproductNumber.cs" />
+    <Compile Include="Models\sli_mes_orderoption_view.cs" />
+    <Compile Include="Models\sli_mes_optionreport_view.cs" />
+    <Compile Include="Models\sli_mes_objectreport_view.cs" />
+    <Compile Include="Models\sli_mes_lauchbill_view.cs" />
+    <Compile Include="Models\sli_mes_furnace_view.cs" />
     <Compile Include="Models\sli_mes_optionreport.cs" />
     <Compile Include="Models\sli_mes_objectreport.cs" />
     <Compile Include="Models\sli_mes_furnace.cs" />
