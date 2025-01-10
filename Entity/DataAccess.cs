@@ -117,20 +117,23 @@ namespace WebApi_SY.Entity
         public DbSet<sli_work_processBillEntry> Sli_work_processBillEntry { get; set; }//工艺流转卡表体
         public DbSet<sli_work_processBill_view> Sli_work_processBill_view { get; set; }//工艺路线视图
 
-        public DbSet<sli_mes_lauchbill> sli_mes_lauchbill { get; set; }//投产清单表
-
-        public DbSet<sli_mes_lauchbill> Sli_mes_lauchbill { get; set; }//投产计划
 
 
+        public DbSet<sli_mes_lauchbill> sli_mes_lauchbill { get; set; }//投产计划
+
+        public DbSet<sli_mes_lauchbill_view> sli_mes_lauchbill_view { get; set; }//投产计划
 
         public DbSet<sli_mes_orderoption> sli_mes_orderoption { get; set; }//投产清单表
+        public DbSet<sli_mes_orderoption_view> sli_mes_orderoption_view { get; set; }//投产清单表
 
         public DbSet<sli_mes_objectreport> sli_mes_objectreport { get; set; }//工步汇报
+        public DbSet<sli_mes_objectreport_view> sli_mes_objectreport_view { get; set; }//工步汇报
 
-        public DbSet<sli_mes_optionreport> sli_mes_optionreport { get; set; }//工步汇报
+        public DbSet<sli_mes_optionreport> sli_mes_optionreport { get; set; }//工序流转
+        public DbSet<sli_mes_optionreport_view> sli_mes_optionreport_view { get; set; }//工序流转
 
         public DbSet<sli_mes_furnace> sli_mes_furnace { get; set; }//装炉单
-
+        public DbSet<sli_mes_furnace_view> sli_mes_furnace_view { get; set; }//装炉单
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //ConnectionStrings 19vs7gv47690.vicp.fun,46716
@@ -151,7 +154,7 @@ namespace WebApi_SY.Entity
             modelBuilder.Entity<sli_sal_order_view>()
               .HasMany(h => h.sli_sal_orderEntry_view)
               .WithOne(d => d.sli_sal_order_view)
-              .HasForeignKey(d => d.Fid);
+              .HasForeignKey(d => d.FID);
 
             modelBuilder.Entity<sli_plan_bill>()
                .HasMany(h => h.sli_plan_billEntry)
