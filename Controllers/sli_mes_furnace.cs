@@ -10,39 +10,45 @@ using WebApi_SY.Models;
 
 namespace WebApi_SY.Controllers
 {
-    public class sli_mes_lauchController : ApiController
+    public class sli_mes_furnaceController : ApiController
     {
-        public sli_mes_lauchController()
+        public sli_mes_furnaceController()
         {
             // _context = context;
         }
 
         [System.Web.Http.HttpPost]
-        public async Task<object> sli_mes_lauch_Insert([Microsoft.AspNetCore.Mvc.FromBody] sli_mes_lauchbill option)
+        public async Task<object> sli_mes_furnace_Insert([Microsoft.AspNetCore.Mvc.FromBody] sli_mes_furnace[] options)
         {
             var context = new YourDbContext();
             try
             {
                 foreach (var option in options)
                 {
-                    var header = new sli_mes_lauchbill
+                    var header = new sli_mes_furnace
                     {
-                        Fsourceid = option.Fsourceid,
+                        Fnumber = option.Fnumber,
+                        Id = option.Id,
                         Fworkorderlistid = option.Fworkorderlistid,
-                        Fprocessoption = option.Fprocessoption,
-                        Fstartdate = option.Fstartdate,
-                        Fenddate = option.Fenddate,
+                        Fsourceid = option.Fsourceid,
+                        Fobjectid = option.Fobjectid,
+                        Fqty = option.Fqty,
+                        Fweight = option.Fweight,
+                        Ffurnaceno = option.Ffurnaceno,
+                        Fheatingno = option.Fheatingno,
+                        Fempid = option.Fempid,
                         Fdeptid = option.Fdeptid,
-                        Fstatus = option.Fstatus
+                        Fbiller = option.Fbiller,
+                        Fdate = option.Fdate
                     };
-                    context.sli_mes_lauchbill.Add(header);
+                    context.sli_mes_furnace.Add(header);
                 }
                 await context.SaveChangesAsync();
                 var datas = new
                 {
                     code = 200,
                     msg = "Success",
-                    Date = header.Id.ToString() + "保存成功"
+                    Date = options.Length > 0 ? options[0].Id.ToString() + "等保存成功" : "无记录保存成功"
                 };
                 return datas;
             }
@@ -59,12 +65,12 @@ namespace WebApi_SY.Controllers
         }
 
         [System.Web.Http.HttpPost]
-        public async Task<object> sli_mes_lauch_Update([Microsoft.AspNetCore.Mvc.FromBody] sli_mes_lauchbill option)
+        public async Task<object> sli_mes_furnaceUpdate([Microsoft.AspNetCore.Mvc.FromBody] sli_mes_furnace option)
         {
             try
             {
                 var context = new YourDbContext();
-                var entity = await context.Sli_mes_lauchbill.FindAsync(option.Id);
+                var entity = await context.sli_mes_furnace.FindAsync(option.Id);
                 if (entity == null)
                 {
                     var dataNull = new
@@ -78,17 +84,22 @@ namespace WebApi_SY.Controllers
                 }
                 else
                 {
-                    var sli_mes_lauchbills = context.Sli_mes_lauchbill.FirstOrDefault(p => p.Id == option.Id);
-                    //var Sli_plan_modelEntrys = _context.Sli_plan_modelEntry.Where(p => p.fmodelID == model.Id).ToList();
+                    var sli_mes_furnace = context.sli_mes_furnace.FirstOrDefault(p => p.Id == option.Id);
 
 
-                    sli_mes_lauchbills.Fsourceid = option.Fsourceid;
-                    sli_mes_lauchbills.Fworkorderlistid = option.Fworkorderlistid;
-                    sli_mes_lauchbills.Fprocessoption = option.Fprocessoption;
-                    sli_mes_lauchbills.Fstartdate = option.Fstartdate;
-                    sli_mes_lauchbills.Fenddate = option.Fenddate;
-                    sli_mes_lauchbills.Fdeptid = option.Fdeptid;
-                    sli_mes_lauchbills.Fstatus = option.Fstatus;
+                    sli_mes_furnace.Fnumber = option.Fnumber;
+                    sli_mes_furnace.Id = option.Id;
+                    sli_mes_furnace.Fworkorderlistid = option.Fworkorderlistid;
+                    sli_mes_furnace.Fsourceid = option.Fsourceid;
+                    sli_mes_furnace.Fobjectid = option.Fobjectid;
+                    sli_mes_furnace.Fqty = option.Fqty;
+                    sli_mes_furnace.Fweight = option.Fweight;
+                    sli_mes_furnace.Ffurnaceno = option.Ffurnaceno;
+                    sli_mes_furnace.Fheatingno = option.Fheatingno;
+                    sli_mes_furnace.Fempid = option.Fempid;
+                    sli_mes_furnace.Fdeptid = option.Fdeptid;
+                    sli_mes_furnace.Fbiller = option.Fbiller;
+                    sli_mes_furnace.Fdate = option.Fdate;
 
 
                     await context.SaveChangesAsync();
@@ -97,7 +108,7 @@ namespace WebApi_SY.Controllers
                     {
                         code = 200,
                         msg = "ok",
-                        date = sli_mes_lauchbills.Id + "修改成功！"
+                        date = sli_mes_furnace.Id + "修改成功！"
                     };
                     return Ok(datas);
                 }
@@ -115,14 +126,14 @@ namespace WebApi_SY.Controllers
         }
 
         [System.Web.Http.HttpPost]
-        public async Task<object> sli_mes_lauch_Delete(List<int> id)
+        public async Task<object> sli_mes_furnace_Delete(List<int> id)
         {
             try
             {
                 var context = new YourDbContext();
                 foreach (var deleteid in id)
                 {
-                    var entity = await context.Sli_mes_lauchbill.FindAsync(deleteid);
+                    var entity = await context.sli_mes_furnace.FindAsync(deleteid);
                     if (entity == null)
                     {
                         var dataNull = new
@@ -134,7 +145,7 @@ namespace WebApi_SY.Controllers
                         };
                         return dataNull;
                     }
-                    context.Sli_mes_lauchbill.RemoveRange(entity);
+                    context.sli_mes_furnace.Remove(entity);
                 }
                 await context.SaveChangesAsync();
                 var data = new
@@ -158,38 +169,62 @@ namespace WebApi_SY.Controllers
         }
 
         [System.Web.Http.HttpGet]
-        public IHttpActionResult GetTableBySli_mes_lauch(int? Id = null, int? Fsourceid = null, int? Fworkorderlistid = null, int? Fprocessoption = null, DateTime? Fstartdate = null, DateTime? Fenddate = null, int? Fdeptid = null)
+        public IHttpActionResult GetTableBySli_mes_furnace(int? Id = null, string Fnumber = null, int? Fworkorderlistid = null, int? Fsourceid = null, int? Fobjectid = null, float? Fqty = null, float? Fweight = null, string Ffurnaceno = null, string Fheatingno = null, int? Fempid = null, int? Fdeptid = null, int? Fbiller = null, DateTime? Fdate = null)
         {
             var context = new YourDbContext();
-            IQueryable<sli_mes_lauchbill> query = context.Sli_mes_lauchbill;
+            IQueryable<sli_mes_furnace> query = context.sli_mes_furnace;
 
             if (Id.HasValue)
             {
                 query = query.Where(q => q.Id == Id);
             }
-            if (Fsourceid.HasValue)
+            if (!string.IsNullOrEmpty(Fnumber))
             {
-                query = query.Where(q => q.Fsourceid == Fsourceid);
+                query = query.Where(q => q.Fnumber == Fnumber);
             }
             if (Fworkorderlistid.HasValue)
             {
                 query = query.Where(q => q.Fworkorderlistid == Fworkorderlistid);
             }
-            if (Fprocessoption.HasValue)
+            if (Fsourceid.HasValue)
             {
-                query = query.Where(q => q.Fprocessoption == Fprocessoption);
+                query = query.Where(q => q.Fsourceid == Fsourceid);
             }
-            if (Fstartdate.HasValue)
+            if (Fobjectid.HasValue)
             {
-                query = query.Where(q => q.Fstartdate == Fstartdate);
+                query = query.Where(q => q.Fobjectid == Fobjectid);
             }
-            if (Fenddate.HasValue)
+            if (Fqty.HasValue)
             {
-                query = query.Where(q => q.Fenddate == Fenddate);
+                query = query.Where(q => q.Fqty == Fqty);
+            }
+            if (Fweight.HasValue)
+            {
+                query = query.Where(q => q.Fweight == Fweight);
+            }
+            if (!string.IsNullOrEmpty(Ffurnaceno))
+            {
+                query = query.Where(q => q.Ffurnaceno == Ffurnaceno);
+            }
+            if (!string.IsNullOrEmpty(Fheatingno))
+            {
+                query = query.Where(q => q.Fheatingno == Fheatingno);
+            }
+            if (Fempid.HasValue)
+            {
+                query = query.Where(q => q.Fempid == Fempid);
             }
             if (Fdeptid.HasValue)
             {
                 query = query.Where(q => q.Fdeptid == Fdeptid);
+            }
+            if (Fbiller.HasValue)
+            {
+                query = query.Where(q => q.Fbiller == Fbiller);
+            }
+            if (Fdate.HasValue)
+            {
+                query = query.Where(q => q.Fdate == Fdate);
             }
             //var totalCount = query.Count(); //记录数
             //var totalPages = (int)Math.Ceiling((double)totalCount / pageSize); // 页数

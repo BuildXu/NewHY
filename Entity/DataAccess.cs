@@ -117,10 +117,19 @@ namespace WebApi_SY.Entity
         public DbSet<sli_work_processBillEntry> Sli_work_processBillEntry { get; set; }//工艺流转卡表体
         public DbSet<sli_work_processBill_view> Sli_work_processBill_view { get; set; }//工艺路线视图
 
+        public DbSet<sli_mes_lauchbill> sli_mes_lauchbill { get; set; }//投产清单表
 
         public DbSet<sli_mes_lauchbill> Sli_mes_lauchbill { get; set; }//投产计划
 
 
+
+        public DbSet<sli_mes_orderoption> sli_mes_orderoption { get; set; }//投产清单表
+
+        public DbSet<sli_mes_objectreport> sli_mes_objectreport { get; set; }//工步汇报
+
+        public DbSet<sli_mes_optionreport> sli_mes_optionreport { get; set; }//工步汇报
+
+        public DbSet<sli_mes_furnace> sli_mes_furnace { get; set; }//装炉单
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
