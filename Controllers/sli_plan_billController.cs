@@ -199,7 +199,7 @@ namespace WebApi_SY.Controllers
                     {
                         Id = entry.Id,
                         Fplanbillid = entry.Fplanbillid,
-                        Fplanoptionidid = entry.Fplanoptionidid ?? "",
+                        Fplanoptionidid = entry.Fplanoptionidid,
                         Fqty = entry.Fqty,
                         Fweight = entry.Fweight,
                         Fplanstartdate = entry.Fplanstartdate ?? "",
