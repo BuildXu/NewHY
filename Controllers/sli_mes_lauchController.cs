@@ -33,7 +33,7 @@ namespace WebApi_SY.Controllers
                     Fdeptid = option.Fdeptid,
                     Fstatus = option.Fstatus
                 };
-                context.sli_mes_lauchbill.Add(header);
+                context.Add(header);
                 await context.SaveChangesAsync();
                 var datas = new
                 {

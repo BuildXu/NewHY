@@ -485,6 +485,7 @@
     <Compile Include="Models\IOrderStorage.cs" />
     <Compile Include="Models\JsonToDataTable.cs" />
     <Compile Include="Models\maxfproductNumber.cs" />
+    <Compile Include="Models\sli_mes_objectreport.cs" />
     <Compile Include="Models\sli_mes_orderoption.cs" />
     <Compile Include="Models\sli_mes_lauchbill.cs" />
     <Compile Include="Models\sli_document_mp_rolling.cs" />

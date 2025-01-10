@@ -24,6 +24,7 @@ namespace WebApi_SY.Entity
 
         public DbSet<sli_plan_bill> Sli_plan_bill { get; set; }                 // 交付计划 Plan  交付计划
         public DbSet<sli_plan_billEntry> Sli_plan_billEntry { get; set; }
+        public DbSet<sli_plan_billorder> sli_plan_billorder { get; set; }
 
         public DbSet<sli_prd_prudcutionPlanB> Sli_prd_prudcutionPlanB { get; set; }  //  生产车间Prd  投产计划  周计划
         public DbSet<sli_prd_pruductionPlanEntryB> Sli_prd_pruductionPlanEntryB { get; set; }
@@ -118,13 +119,14 @@ namespace WebApi_SY.Entity
 
         public DbSet<sli_mes_lauchbill> sli_mes_lauchbill { get; set; }//投产清单表
 
+
         public DbSet<sli_mes_orderoption> sli_mes_orderoption { get; set; }//投产清单表
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //ConnectionStrings 19vs7gv47690.vicp.fun,46716
-            optionsBuilder.UseSqlServer("Data Source=61.174.243.28,45047;Initial Catalog=AIS20241011165800;User ID=sa;Password=pct258258!;TrustServerCertificate=True;");
-            //optionsBuilder.UseSqlServer("Data Source=19vs7gv47690.vicp.fun,16819;Initial Catalog=AIS20241011165800;User ID=sa;Password=kingdee123*;TrustServerCertificate=True;");
+            //optionsBuilder.UseSqlServer("Data Source=61.174.243.28,45047;Initial Catalog=AIS20241011165800;User ID=sa;Password=pct258258!;TrustServerCertificate=True;");
+            optionsBuilder.UseSqlServer("Data Source=19vs7gv47690.vicp.fun,16819;Initial Catalog=AIS20241011165800;User ID=sa;Password=kingdee123*;TrustServerCertificate=True;");
             //optionsBuilder.UseSqlServer("ConnectionStrings");
             //1111111
 
@@ -142,26 +144,20 @@ namespace WebApi_SY.Entity
               .WithOne(d => d.sli_sal_order_view)
               .HasForeignKey(d => d.FID);
 
-            // modelBuilder.Entity<sli_plan_bill>()
-            //    .HasMany(h => h.sli_plan_billEntry)
-            //    .WithOne(d => d.sli_plan_bill)
-            //    .HasForeignKey(d => d.Fplanbillid);
+            modelBuilder.Entity<sli_plan_bill>()
+               .HasMany(h => h.sli_plan_billEntry)
+               .WithOne(d => d.sli_plan_bill)
+               .HasForeignKey(d => d.Fplanbillid);
+
+            modelBuilder.Entity<sli_plan_bill>()
+               .HasMany(h => h.sli_plan_billorder)
+               .WithOne(d => d.sli_plan_bill)
+               .HasForeignKey(d => d.Fplanbillid);
 
             //modelBuilder.Entity<sli_plan_bill>()
-            //   .HasMany(h => h.sli_plan_billorder)
-            //   .WithOne()
-            //   .HasForeignKey("Fplanbillid"); // 外键列名
-
-
-            modelBuilder.Entity<sli_plan_bill>()
-              .HasMany(h => h.sli_plan_billEntry)
-              .WithOne(d => d.sli_plan_bill)
-              .HasForeignKey(d => d.Fplanbillid);
-
-            modelBuilder.Entity<sli_plan_bill>()
-                         .HasMany(h => h.sli_plan_billorder)
-                         .WithOne(d => d.sli_plan_bill) // 添加导航属性
-                         .HasForeignKey(d => d.Fplanbillid);
+            // .HasMany(h => h.sli_plan_billorder)
+            // .WithOne()
+            //  .HasForeignKey("Fplanbillid"); // 外键列名
 
 
 

@@ -71,7 +71,6 @@ namespace WebApi_SY.Controllers
         }
 
         [Microsoft.AspNetCore.Mvc.HttpGet]
-        //[Microsoft.AspNetCore.Mvc.Route("api/user/GetTableByUsername/{username}")]
         public IHttpActionResult GetTable(int page = 1, int pageSize = 10, string fmodelNumber = null, string fmodelName = null, int? fdays = null)
         {
             var context = new YourDbContext();
