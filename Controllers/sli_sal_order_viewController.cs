@@ -37,7 +37,7 @@ namespace WebApi_SY.Controllers
         {
             var context = new YourDbContext();
             var query = from p in context.Sli_sal_order_view
-                        join c in context.Sli_sal_orderEntry_view on p.FID equals c.sli_sal_order_view.FID
+                        join c in context.Sli_sal_orderEntry_view on p.Fid equals c.sli_sal_order_view.Fid
                         select new
                         {
                             Sli_sal_order_view = p,
@@ -46,17 +46,17 @@ namespace WebApi_SY.Controllers
 
             if (!string.IsNullOrEmpty(Fbillno))
             {
-                query = query.Where(q => q.Sli_sal_order_view.FBILLNO.Contains(Fbillno));
+                query = query.Where(q => q.Sli_sal_order_view.Fbillno.Contains(Fbillno));
             }
        
           
             if (!string.IsNullOrEmpty(Fcustname))
             {
-                query = query.Where(q => q.Sli_sal_order_view.FNAME.Contains(Fcustname));
+                query = query.Where(q => q.Sli_sal_order_view.Fname.Contains(Fcustname));
             }
             if (!string.IsNullOrEmpty(Fcustno))
             {
-                query = query.Where(q => q.Sli_sal_order_view.FNUMBER.Contains(Fcustno));
+                query = query.Where(q => q.Sli_sal_order_view.Fnumber.Contains(Fcustno));
             }
 
             var totalCount = query.Count();
@@ -64,18 +64,20 @@ namespace WebApi_SY.Controllers
             var paginatedQuery = query.Skip((Page - 1) * Pagezize).Take(Pagezize);
             var result = paginatedQuery.Select(a => new
             {
-                Id = a.Sli_sal_order_view != null ? a.Sli_sal_order_view.FID : 0,
-                Fbillno = a.Sli_sal_order_view != null ? a.Sli_sal_order_view.FBILLNO : string.Empty,
-                // Fdate = a.Sli_sal_order_view!= null? a.Sli_sal_order_view.FDATE : string.Empty,
-                Fcustomer = a.Sli_sal_order_view != null ? a.Sli_sal_order_view.FCUSTID : 0,
-                Fcustname = a.Sli_sal_order_view != null ? a.Sli_sal_order_view.FNAME : string.Empty,
-                Fcustno = a.Sli_sal_order_view != null ? a.Sli_sal_order_view.FNUMBER : string.Empty,
-                Fsumnumber = a.Sli_sal_order_view != null ? a.Sli_sal_order_view.FSumNUMBER : string.Empty,
+                Id = a.Sli_sal_order_view != null ? a.Sli_sal_order_view.Fid : 0,
+                Fbillno = a.Sli_sal_order_view != null ? a.Sli_sal_order_view.Fbillno : string.Empty,
+                //Fdate= a.Sli_sal_order_view.Fdate,
+                Fdate = a.Sli_sal_order_view!= null? a.Sli_sal_order_view.Fdate : null,
+                Fcustomer = a.Sli_sal_order_view != null ? a.Sli_sal_order_view.Fcustid : 0,
+                Fcustname = a.Sli_sal_order_view != null ? a.Sli_sal_order_view.Fname : string.Empty,
+                Fcustno = a.Sli_sal_order_view != null ? a.Sli_sal_order_view.Fnumber : string.Empty,
+                Fsumnumber = a.Sli_sal_order_view != null ? a.Sli_sal_order_view.Fsumnumber : string.Empty,
+                
                 // 子表的信息
-                Entryid = a.Sli_sal_orderEntry_view != null ? a.Sli_sal_orderEntry_view.FENTRYID : 0,
-                Fseq = a.Sli_sal_orderEntry_view != null ? a.Sli_sal_orderEntry_view.FSEQ : 0,
-                Fqty = a.Sli_sal_orderEntry_view != null ? a.Sli_sal_orderEntry_view.FQTY : 0,
-                Fnote = a.Sli_sal_orderEntry_view != null ? a.Sli_sal_orderEntry_view.FNOTE : string.Empty,
+                Entryid = a.Sli_sal_orderEntry_view != null ? a.Sli_sal_orderEntry_view.FentryId : 0,
+                Fseq = a.Sli_sal_orderEntry_view != null ? a.Sli_sal_orderEntry_view.Fseq : 0,
+                Fqty = a.Sli_sal_orderEntry_view != null ? a.Sli_sal_orderEntry_view.Fqty : 0,
+                Fnote = a.Sli_sal_orderEntry_view != null ? a.Sli_sal_orderEntry_view.Fnote : string.Empty,
                 // FplanDeliveryDate = a.Sli_sal_orderEntry_view!= null? a.Sli_sal_orderEntry_view.FPLANDELIVERYDATE : string.Empty,
                 Fstockqty = a.Sli_sal_orderEntry_view != null ? a.Sli_sal_orderEntry_view.fstockqty : 0,
                 Fmaterialid = a.Sli_sal_orderEntry_view != null ? a.Sli_sal_orderEntry_view.FmaterialID : 0,
@@ -109,11 +111,15 @@ namespace WebApi_SY.Controllers
 
             var response = new
             {
+                code = 200,
+                msg = "OK",
+                data = new { 
                 totalCounts = totalCount,
                 totalPages = totalPages,
                 currentPage = Page,
                 pageSize = Pagezize,
                 data = result
+                }
             };
 
             return Ok(response);

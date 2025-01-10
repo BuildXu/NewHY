@@ -9,30 +9,30 @@ namespace WebApi_SY.Models
     public class sli_sal_order_view
     {
         [Key]
-        public int FID { get; set; }
-        public string FBILLNO { get; set; }
-        public string FDATE { get; set; }
-        public int FCUSTID { get; set; }
-        public string FNUMBER { get; set; }
-        public string FNAME { get; set; }
-        public string FSumNUMBER { get; set; }
+        public int Fid { get; set; } //销售订单主表ID
+        public string Fbillno { get; set; }//销售订单单据号
+        public DateTime ? Fdate { get; set; }//销售订单日期
+        public int Fcustid { get; set; }//客户ID
+        public string Fnumber { get; set; }//客户代码
+        public string Fname { get; set; }//客户名称
+        public string Fsumnumber { get; set; }
         public virtual ICollection<sli_sal_orderEntry_view> sli_sal_orderEntry_view { get; set; }
     }
 
     public class sli_sal_orderEntry_view
     {
-        public int FID { get; set; }
+        public int Fid { get; set; } //主表ID
         [Key]
-        public int FENTRYID { get; set; }
-        public int FSEQ { get; set; }
-        public decimal FQTY { get; set; }
-        public string FNOTE { get; set; }
-        public string FPLANDELIVERYDATE { get; set; }
-        public decimal fstockqty { get; set; }
-        public int FmaterialID { get; set; }
-        public string Fnumber { get; set; }
-        public string Fname { get; set; }
-        public string Fdescription { get; set; }
+        public int FentryId { get; set; } //分录表ID
+        public int Fseq { get; set; } //行号
+        public decimal Fqty { get; set; }//数量
+        public string Fnote { get; set; }//备注
+        public string  Fplandeliverydate { get; set; }//交货日期
+        public decimal fstockqty { get; set; } //库存数量
+        public int FmaterialID { get; set; }//物料ID
+        public string Fnumber { get; set; }//物料代码
+        public string Fname { get; set; }//物料名称
+        public string Fdescription { get; set; }//规格型号
         public decimal FsliOuterDiameter { get; set; }
         public decimal FsliInnerDiameter { get; set; }
         public decimal FsliHight { get; set; }
