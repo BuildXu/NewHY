@@ -169,7 +169,7 @@ namespace WebApi_SY.Controllers
         }
 
         [System.Web.Http.HttpGet]
-        public IHttpActionResult GetTableBySli_mes_option(int? Id = null, string Fnumber = null, int? Fworkorderlistid = null, int? Fsourceid = null, int? Fobjectid = null, float? Fqty = null, float? Fweight = null, string Ffurnaceno = null, string Fheatingno = null, int? Fempid = null, int? Fdeptid = null, int? Fbiller = null, DateTime? Fdate = null)
+        public IHttpActionResult GetTableBySli_mes_furnace(int? Id = null, string Fnumber = null, int? Fworkorderlistid = null, int? Fsourceid = null, int? Fobjectid = null, float? Fqty = null, float? Fweight = null, string Ffurnaceno = null, string Fheatingno = null, int? Fempid = null, int? Fdeptid = null, int? Fbiller = null, DateTime? Fdate = null)
         {
             var context = new YourDbContext();
             IQueryable<sli_mes_furnace> query = context.sli_mes_furnace;
