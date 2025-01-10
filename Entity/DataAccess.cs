@@ -124,6 +124,8 @@ namespace WebApi_SY.Entity
 
         public DbSet<sli_mes_objectreport> sli_mes_objectreport { get; set; }//工步汇报
 
+        public DbSet<sli_mes_optionreport> sli_mes_optionreport { get; set; }//工步汇报
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //ConnectionStrings 19vs7gv47690.vicp.fun,46716
