@@ -160,7 +160,7 @@ namespace WebApi_SY.Controllers
             var context = new YourDbContext();
 
             var query = from p in context.Sli_plan_bill
-                        join c in context.Sli_plan_billlEntry on p.Id equals c.Fplanbillid
+
                         select new
                         {
                             Header = p,

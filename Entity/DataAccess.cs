@@ -118,6 +118,9 @@ namespace WebApi_SY.Entity
         public DbSet<sli_work_processBill_view> Sli_work_processBill_view { get; set; }//工艺路线视图
 
 
+        public DbSet<sli_mes_lauchbill> Sli_mes_lauchbill { get; set; }//投产计划
+
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

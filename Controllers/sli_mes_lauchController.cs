@@ -35,7 +35,7 @@ namespace WebApi_SY.Controllers
                         Fdeptid = option.Fdeptid,
                         Fstatus = option.Fstatus
                     };
-                    context.sli_mes_lauchbill.Add(header);
+                    context.Sli_mes_lauchbill.Add(header);
                 }
                 await context.SaveChangesAsync();
                 var datas = new
@@ -64,7 +64,7 @@ namespace WebApi_SY.Controllers
             try
             {
                 var context = new YourDbContext();
-                var entity = await context.sli_mes_lauchbill.FindAsync(option.Id);
+                var entity = await context.Sli_mes_lauchbill.FindAsync(option.Id);
                 if (entity == null)
                 {
                     var dataNull = new
@@ -78,7 +78,7 @@ namespace WebApi_SY.Controllers
                 }
                 else
                 {
-                    var sli_mes_lauchbills = context.sli_mes_lauchbill.FirstOrDefault(p => p.Id == option.Id);
+                    var sli_mes_lauchbills = context.Sli_mes_lauchbill.FirstOrDefault(p => p.Id == option.Id);
                     //var Sli_plan_modelEntrys = _context.Sli_plan_modelEntry.Where(p => p.fmodelID == model.Id).ToList();
 
 
@@ -122,7 +122,7 @@ namespace WebApi_SY.Controllers
                 var context = new YourDbContext();
                 foreach (var deleteid in id)
                 {
-                    var entity = await context.sli_mes_lauchbill.FindAsync(deleteid);
+                    var entity = await context.Sli_mes_lauchbill.FindAsync(deleteid);
                     if (entity == null)
                     {
                         var dataNull = new
@@ -134,7 +134,7 @@ namespace WebApi_SY.Controllers
                         };
                         return dataNull;
                     }
-                    context.sli_mes_lauchbill.RemoveRange(entity);
+                    context.Sli_mes_lauchbill.RemoveRange(entity);
                 }
                 await context.SaveChangesAsync();
                 var data = new
@@ -161,7 +161,7 @@ namespace WebApi_SY.Controllers
         public IHttpActionResult GetTableBySli_mes_lauch(int? Id = null, int? Fsourceid = null, int? Fworkorderlistid = null, int? Fprocessoption = null, DateTime? Fstartdate = null, DateTime? Fenddate = null, int? Fdeptid = null)
         {
             var context = new YourDbContext();
-            IQueryable<sli_mes_lauchbill> query = context.sli_mes_lauchbill;
+            IQueryable<sli_mes_lauchbill> query = context.Sli_mes_lauchbill;
 
             if (Id.HasValue)
             {
