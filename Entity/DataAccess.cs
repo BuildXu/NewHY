@@ -154,7 +154,7 @@ namespace WebApi_SY.Entity
             modelBuilder.Entity<sli_sal_order_view>()
               .HasMany(h => h.sli_sal_orderEntry_view)
               .WithOne(d => d.sli_sal_order_view)
-              .HasForeignKey(d => d.FID);
+              .HasForeignKey(d => d.Fid);
 
             modelBuilder.Entity<sli_plan_bill>()
                .HasMany(h => h.sli_plan_billEntry)
