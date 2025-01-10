@@ -15,6 +15,9 @@ namespace WebApi_SY.Models
 
 
         public int Id { get; set; }
+
+        // 工件id
+        public int Fworkorderlistid { get; set; }
         /// <summary>
         /// 工步代码，选单
         /// </summary>

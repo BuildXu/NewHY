@@ -13,6 +13,9 @@ namespace WebApi_SY.Models
         /// </summary>
         public int Id { get; set; }
 
+        // 工件id
+        public int Fworkorderlistid { get; set; }
+
         /// <summary>
         /// 源单号，选单
         /// </summary>
@@ -22,6 +25,8 @@ namespace WebApi_SY.Models
         /// 序代码，选单
         /// </summary>
         public int Fprocessoption { get; set; }
+
+
 
         /// <summary>
         /// 数量，选单（可修改）
