@@ -119,6 +119,9 @@ namespace WebApi_SY.Entity
 
         public DbSet<sli_mes_lauchbill> sli_mes_lauchbill { get; set; }//投产清单表
 
+        public DbSet<sli_mes_lauchbill> Sli_mes_lauchbill { get; set; }//投产计划
+
+
 
         public DbSet<sli_mes_orderoption> sli_mes_orderoption { get; set; }//投产清单表
 
@@ -131,8 +134,8 @@ namespace WebApi_SY.Entity
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //ConnectionStrings 19vs7gv47690.vicp.fun,46716
-            //optionsBuilder.UseSqlServer("Data Source=61.174.243.28,45047;Initial Catalog=AIS20241011165800;User ID=sa;Password=pct258258!;TrustServerCertificate=True;");
-            optionsBuilder.UseSqlServer("Data Source=19vs7gv47690.vicp.fun,16819;Initial Catalog=AIS20241011165800;User ID=sa;Password=kingdee123*;TrustServerCertificate=True;");
+            optionsBuilder.UseSqlServer("Data Source=61.174.243.28,45047;Initial Catalog=AIS20241011165800;User ID=sa;Password=pct258258!;TrustServerCertificate=True;");
+            //optionsBuilder.UseSqlServer("Data Source=19vs7gv47690.vicp.fun,16819;Initial Catalog=AIS20241011165800;User ID=sa;Password=kingdee123*;TrustServerCertificate=True;");
             //optionsBuilder.UseSqlServer("ConnectionStrings");
             //1111111
 
