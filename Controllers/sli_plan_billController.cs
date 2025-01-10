@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -42,7 +43,7 @@ namespace WebApi_SY.Controllers
                         Factualenddate = bill.Factualenddate,
                         Fnote = bill.Fnote,
                         Fdays = bill.Fdays,
-                        sli_plan_billlEntry = bill.sli_plan_billlEntry.Select(d => new sli_plan_billlEntry
+                        sli_plan_billEntry = bill.sli_plan_billEntry.Select(d => new sli_plan_billEntry
                         {
                             Fplanoptionidid = d.Fplanoptionidid,
                             Fqty = d.Fqty,
@@ -107,8 +108,8 @@ namespace WebApi_SY.Controllers
                     //string json = JsonConvert.SerializeObject(data);
                     return dataNull;
                 }
-                var Sli_plan_billEntrys = context.Sli_plan_billlEntry.Where(b => b.Fplanbillid == id);
-                context.Sli_plan_billlEntry.RemoveRange(Sli_plan_billEntrys);
+                var Sli_plan_billEntrys = context.Sli_plan_billEntry.Where(b => b.Fplanbillid == id);
+                context.Sli_plan_billEntry.RemoveRange(Sli_plan_billEntrys);
                 context.Sli_plan_bill.Remove(entity);
                 await context.SaveChangesAsync();
                 // var data = new { Status = "Success", Message = "Data retrieved successfully", Data = new { /* actual data here */ } };
@@ -153,58 +154,81 @@ namespace WebApi_SY.Controllers
 
         [Microsoft.AspNetCore.Mvc.HttpGet]
         //[Microsoft.AspNetCore.Mvc.Route("api/user/GetTableByUsername/{username}")]
-        public IHttpActionResult GetTable(int page = 1, int pageSize = 10, string fplanNumber = null)
+        public IHttpActionResult GetTable(int ? id  =null)
         {
             var context = new YourDbContext();
+
             var query = from p in context.Sli_plan_bill
-                        join c in context.Sli_plan_billlEntry on p.Id equals c.Fplanbillid
                         select new
                         {
-                            Sli_plan_bill = p,
-                            Sli_plan_billEntry = c
+                            Header = p,
+                            Entries = p.sli_plan_billEntry.DefaultIfEmpty(),
+                            Orders = p.sli_plan_billorder.DefaultIfEmpty()
                         };
-            if (!string.IsNullOrEmpty(fplanNumber))
+            if (id.HasValue)
             {
-                query = query.Where(q => q.Sli_plan_bill.Fplanlnumber.Contains(fplanNumber));
+                query = query.Where(p =>id == id.Value);
             }
 
-            //if (!string.IsNullOrEmpty(fmodelName))
-            //{
-            //    query = query.Where(q => q.Sli_plan_bill.fplanName.Contains(fmodelName));
-            //}
+            //var planBills = query
+            //  .Include("sli_plan_billEntry")
+            //  .Include("sli_plan_billorder")
+            //  .ToList();
 
-            //if (fdays.HasValue)
-            //{
-            //    query = query.Where(q => q.Sli_plan_model.fdays == fdays.Value);
-            //}
-
-            var totalCount = query.Count();
-            var totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
-            var paginatedQuery = query.Skip((page - 1) * pageSize).Take(pageSize);
-            var result = paginatedQuery.Select(a => new
+            //var planBills = query.ToList();
+            var result = new List<object>();
+            foreach (var bill in query)
             {
-                id = a.Sli_plan_bill != null ? a.Sli_plan_bill.Id : 0
-                //,
-                //FmodelNumber = a.Sli_plan_model != null ? a.Sli_plan_model.fmodelNumber : string.Empty,
-                //FmodelName = a.Sli_plan_model != null ? a.Sli_plan_model.fmodelName : string.Empty,
-                //FplanBeginDate = a.Sli_plan_model == null ? a.Sli_plan_model.fplanBeginDate : string.Empty,
-                //FplanEndDate = a.Sli_plan_model == null ? a.Sli_plan_model.fplanEndDate : string.Empty,
-                //Fdays = a.Sli_plan_model == null ? a.Sli_plan_model.fdays : 0,
-                //fSli_plan_modelentryid = a.Sli_plan_modelEntry != null ? a.Sli_plan_modelEntry.Id : 0,
-                //fSli_plan_modelentryfmodelID = a.Sli_plan_modelEntry != null ? a.Sli_plan_modelEntry.fmodelID : 0,
-                //fSli_plan_modelentryfplanOptionId = a.Sli_plan_modelEntry != null ? a.Sli_plan_modelEntry.fplanOptionId : string.Empty,
-                //fSli_plan_modelentryfdays = a.Sli_plan_modelEntry != null ? a.Sli_plan_modelEntry.fdays : 0,
-                //fSli_plan_modelentryfdepartID = a.Sli_plan_modelEntry != null ? a.Sli_plan_modelEntry.fdepartID : 0,
-                //fSli_plan_modelentryfempId = a.Sli_plan_modelEntry != null ? a.Sli_plan_modelEntry.fempId : string.Empty
-            });
-
+                var billData = new
+                {
+                    Id = bill.Header.Id,
+                    Fplanlnumber = bill.Header.Fplanlnumber ?? "",
+                    Fissueddate = bill.Header.Fissueddate ?? "",
+                    Fplancontractentry = bill.Header.Fplancontractentry,
+                    Fqty = bill.Header.Fqty,
+                    Fweight = bill.Header.Fweight,
+                    Fplanbegindate = bill.Header.Fplanbegindate ?? "",
+                    Fplanenddate = bill.Header.Fplanenddate ?? "",
+                    Factualbegindate = bill.Header.Factualbegindate ?? "",
+                    Factualenddate = bill.Header.Factualenddate ?? "",
+                    Fnote = bill.Header.Fnote ?? "",
+                    Fdays = bill.Header.Fdays,
+                    sli_plan_billEntry = bill.Entries?.Select(entry => new
+                    {
+                        Id = entry.Id,
+                        Fplanbillid = entry.Fplanbillid,
+                        Fplanoptionidid = entry.Fplanoptionidid ?? "",
+                        Fqty = entry.Fqty,
+                        Fweight = entry.Fweight,
+                        Fplanstartdate = entry.Fplanstartdate ?? "",
+                        Fplanenddate = entry.Fplanenddate ?? "",
+                        Factualstartdate = entry.Factualstartdate ?? "",
+                        Factualenddate = entry.Factualenddate ?? "",
+                        Fplandays = entry.Fplandays,
+                        Fcapacity = entry.Fcapacity,
+                        Fdepartid = entry.Fdepartid,
+                        Fempid = entry.Fempid
+                    }),
+                    sli_plan_billorder = bill.Orders?.Select(order => new
+                    {
+                        Id = order.Id,
+                        Fplanbillid = order.Fplanbillid,
+                        
+                        Forderentryid = order.Forderentryid,
+                        Fstatus = order.Fstatus
+                    })
+                };
+                result.Add(billData);
+            }
             var response = new
             {
-                totalCounts = totalCount,
-                totalPagess = totalPages,
-                currentPages = page,
-                pageSizes = pageSize,
-                data = result
+                code = 200,
+                msg = "操作成功",
+                data = new
+                {
+                   
+                    data = result
+                }
             };
 
             return Ok(response);
@@ -214,6 +238,39 @@ namespace WebApi_SY.Controllers
             // return NotFound();
             // }
         }
+
+
+        [Microsoft.AspNetCore.Mvc.HttpGet]
+        //[Microsoft.AspNetCore.Mvc.Route("api/user/GetTableByUsername/{username}")]
+        public IHttpActionResult GetTableHeader(int page = 1, int pageSize = 10)
+        {
+            var context = new YourDbContext();
+            IQueryable<sli_plan_bill>  query = context.Sli_plan_bill;
+            //if (id.HasValue)
+            //{
+            //    query = query.Where(q => q.Id == id.Value);
+            //}
+
+            var totalCount = query.Count();
+            var totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
+            var paginatedQuery = query.Skip((page - 1) * pageSize).Take(pageSize);
+            //var datas = query.ToList();
+            //var datas = query.ToList();
+            var response = new    // 定义 前端返回数据  总记录，总页，当前页 ，size,返回记录
+            {
+                code = 200,
+                msg = "OK",
+                totalCounts = totalCount,
+                totalPagess = totalPages,
+                currentPages = page,
+                pageSizes = pageSize,
+                data = paginatedQuery
+            };
+
+            return Json(response);
+
+        }
+
     }
 
 
