@@ -235,5 +235,126 @@ namespace WebApi_SY.Controllers
 
             return Json(response);
         }
+        [System.Web.Http.HttpGet]
+        public IHttpActionResult GetTableBySli_mes_option_view(
+    int? Id = null,
+    int? Fworkorderlistid = null,
+    int? Fprocessoption = null,
+    float? Fqty = null,
+    float? Fweight = null,
+    float? Fcommitqty = null,
+    float? Fpassqty = null,
+    int? Fbiller = null,
+    DateTime? Fstartdate = null,
+    DateTime? Fenddate = null,
+    DateTime? Fdate = null,
+    string Fcustno = null,
+    string Fcustname = null,
+    string Fname = null,
+    string Fnumber = null,
+    int? Fempid = null,
+    int? Fdeptid = null,
+    string Foptionno = null,
+    string Foptionname = null)
+        {
+            var context = new YourDbContext();
+            IQueryable<sli_mes_orderoption_view> query = context.sli_mes_orderoption_view;
+
+            if (Id.HasValue)
+            {
+                query = query.Where(q => q.Id == Id);
+            }
+            if (Fworkorderlistid.HasValue)
+            {
+                query = query.Where(q => q.Fworkorderlistid == Fworkorderlistid);
+            }
+            if (Fprocessoption.HasValue)
+            {
+                query = query.Where(q => q.Fprocessoption == Fprocessoption);
+            }
+            if (Fqty.HasValue)
+            {
+                query = query.Where(q => q.Fqty == Fqty);
+            }
+            if (Fweight.HasValue)
+            {
+                query = query.Where(q => q.Fweight == Fweight);
+            }
+            if (Fcommitqty.HasValue)
+            {
+                query = query.Where(q => q.Fcommitqty == Fcommitqty);
+            }
+            if (Fpassqty.HasValue)
+            {
+                query = query.Where(q => q.Fpassqty == Fpassqty);
+            }
+            if (Fbiller.HasValue)
+            {
+                query = query.Where(q => q.Fbiller == Fbiller);
+            }
+            if (Fstartdate.HasValue)
+            {
+                query = query.Where(q => q.Fstartdate == Fstartdate);
+            }
+            if (Fenddate.HasValue)
+            {
+                query = query.Where(q => q.Fenddate == Fenddate);
+            }
+            if (Fdate.HasValue)
+            {
+                query = query.Where(q => q.Fdate == Fdate);
+            }
+            if (!string.IsNullOrEmpty(Fcustno))
+            {
+                query = query.Where(q => q.Fcustno == Fcustno);
+            }
+            if (!string.IsNullOrEmpty(Fcustname))
+            {
+                query = query.Where(q => q.Fcustname == Fcustname);
+            }
+            if (!string.IsNullOrEmpty(Fname))
+            {
+                query = query.Where(q => q.Fname == Fname);
+            }
+            if (!string.IsNullOrEmpty(Fnumber))
+            {
+                query = query.Where(q => q.Fnumber == Fnumber);
+            }
+            if (Fempid.HasValue)
+            {
+                query = query.Where(q => q.Fempid == Fempid);
+            }
+            if (Fdeptid.HasValue)
+            {
+                query = query.Where(q => q.Fdeptid == Fdeptid);
+            }
+            if (!string.IsNullOrEmpty(Foptionno))
+            {
+                query = query.Where(q => q.Foptionno == Foptionno);
+            }
+            if (!string.IsNullOrEmpty(Foptionname))
+            {
+                query = query.Where(q => q.Foptionname == Foptionname);
+            }
+            //var totalCount = query.Count(); //记录数
+            //var totalPages = (int)Math.Ceiling((double)totalCount / pageSize); // 页数
+            //var paginatedQuery = query.OrderByDescending(b => b.Id).Skip((page - 1) * pageSize).Take(pageSize); //  某页记录
+            //var datas = query.ToList();
+            var response = new    // 定义 前端返回数据  总记录，总页，当前页 ，size,返回记录
+            {
+                code = 200,
+                msg = "OK",
+                data = new
+                {
+                    //totalCounts = totalCount,
+                    //totalPagess = totalPages,
+                    //currentPages = page,
+                    //pageSizes = pageSize,
+                    data = query
+                }
+            };
+
+            return Json(response);
+        }
     }
 }

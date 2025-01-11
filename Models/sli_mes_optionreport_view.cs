@@ -95,4 +95,5 @@ namespace WebApi_SY.Models
         /// </summary>
         public string Foptionname { get; set; }
     }
+
 }

@@ -169,7 +169,7 @@ namespace WebApi_SY.Controllers
         }
 
         [System.Web.Http.HttpGet]
-        public IHttpActionResult GetTableBySli_mes_furnace(int? Id = null, string Fnumber = null, int? Fworkorderlistid = null, int? Fsourceid = null, int? Fobjectid = null, float? Fqty = null, float? Fweight = null, string Ffurnaceno = null, string Fheatingno = null, int? Fempid = null, int? Fdeptid = null, int? Fbiller = null, DateTime? Fdate = null)
+        public IHttpActionResult GetTableBySli_mes_furnace(int page = 1, int pageSize = 10, int? Id = null, string Fnumber = null, int? Fworkorderlistid = null, int? Fsourceid = null, int? Fobjectid = null, float? Fqty = null, float? Fweight = null, string Ffurnaceno = null, string Fheatingno = null, int? Fempid = null, int? Fdeptid = null, int? Fbiller = null, DateTime? Fdate = null)
         {
             var context = new YourDbContext();
             IQueryable<sli_mes_furnace> query = context.sli_mes_furnace;
@@ -226,21 +226,21 @@ namespace WebApi_SY.Controllers
             {
                 query = query.Where(q => q.Fdate == Fdate);
             }
-            //var totalCount = query.Count(); //记录数
-            //var totalPages = (int)Math.Ceiling((double)totalCount / pageSize); // 页数
-            //var paginatedQuery = query.OrderByDescending(b => b.Id).Skip((page - 1) * pageSize).Take(pageSize); //  某页记录
-            //var datas = query.ToList();
+            var totalCount = query.Count(); //记录数
+            var totalPages = (int)Math.Ceiling((double)totalCount / pageSize); // 页数
+            var paginatedQuery = query.OrderByDescending(b => b.Id).Skip((page - 1) * pageSize).Take(pageSize); //  某页记录
+            var datas = query.ToList();
             var response = new    // 定义 前端返回数据  总记录，总页，当前页 ，size,返回记录
             {
                 code = 200,
                 msg = "OK",
                 data = new
                 {
-                    //totalCounts = totalCount,
-                    //totalPagess = totalPages,
-                    //currentPages = page,
-                    //pageSizes = pageSize,
-                    data = query
+                    totalCounts = totalCount,
+                    totalPagess = totalPages,
+                    currentPages = page,
+                    pageSizes = pageSize,
+                    data = paginatedQuery
                 }
             };
 

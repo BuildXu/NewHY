@@ -163,12 +163,28 @@ namespace WebApi_SY.Controllers
                 return data;
             }
         }
-
         [System.Web.Http.HttpGet]
-        public IHttpActionResult GetTableBySli_mes_option(int? Id = null, int? Fsourceid = null, int? Fobjectid = null, float? Fqty = null, float? Fweight = null, float? Fcommitqty = null, float? Fpassqty = null, int? Fempid = null, int? Fdeptid = null, int? Fbiller = null, DateTime? Fdate = null)
+        public IHttpActionResult GetTableBySli_mes_option(
+            int? Id = null,
+            int? Fsourceid = null,
+            int? Fobjectid = null,
+            float? Fqty = null,
+            float? Fweight = null,
+            float? Fcommitqty = null,
+            float? Fpassqty = null,
+            int? Fempid = null,
+            int? Fdeptid = null,
+            int? Fbiller = null,
+            DateTime? Fdate = null,
+            string Fcustno = null,
+            string Fcustname = null,
+            string Fname = null,
+            int? Fworkorderlistid = null,
+            string Fobjectno = null,
+            string Fobjectname = null)
         {
             var context = new YourDbContext();
-            IQueryable<sli_mes_objectreport> query = context.sli_mes_objectreport;
+            IQueryable<sli_mes_objectreport_view> query = context.sli_mes_objectreport_view;
 
             if (Id.HasValue)
             {
@@ -213,6 +229,30 @@ namespace WebApi_SY.Controllers
             if (Fdate.HasValue)
             {
                 query = query.Where(q => q.Fdate == Fdate);
+            }
+            if (!string.IsNullOrEmpty(Fcustno))
+            {
+                query = query.Where(q => q.Fcustno == Fcustno);
+            }
+            if (!string.IsNullOrEmpty(Fcustname))
+            {
+                query = query.Where(q => q.Fcustname == Fcustname);
+            }
+            if (!string.IsNullOrEmpty(Fname))
+            {
+                query = query.Where(q => q.Fname == Fname);
+            }
+            if (Fworkorderlistid.HasValue)
+            {
+                query = query.Where(q => q.Fworkorderlistid == Fworkorderlistid);
+            }
+            if (!string.IsNullOrEmpty(Fobjectno))
+            {
+                query = query.Where(q => q.Fobjectno == Fobjectno);
+            }
+            if (!string.IsNullOrEmpty(Fobjectname))
+            {
+                query = query.Where(q => q.Fobjectname == Fobjectname);
             }
             //var totalCount = query.Count(); //记录数
             //var totalPages = (int)Math.Ceiling((double)totalCount / pageSize); // 页数
