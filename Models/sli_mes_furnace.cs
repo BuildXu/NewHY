@@ -10,7 +10,7 @@ namespace WebApi_SY.Models
         /// <summary>
         /// 装炉单号，写表体（每次派工，给一个统一单号）
         /// </summary>
-        public string Fnumber { get; set; }
+        public string  Fnumber { get; set; }
 
         /// <summary>
         /// 自增 ID
@@ -30,17 +30,17 @@ namespace WebApi_SY.Models
         /// <summary>
         /// 工步代码，选单
         /// </summary>
-        public int Fobjectid { get; set; }
+        public int Foptionid { get; set; }
 
         /// <summary>
         /// 数量，选单（可修改）
         /// </summary>
-        public float Fqty { get; set; }
+        public decimal Fqty { get; set; }
 
         /// <summary>
         /// 重量，选单（可修改）
         /// </summary>
-        public float Fweight { get; set; }
+        public decimal Fweight { get; set; }
 
         /// <summary>
         /// 炉 Id
@@ -70,6 +70,6 @@ namespace WebApi_SY.Models
         /// <summary>
         /// 装炉日期，前端获取当前
         /// </summary>
-        public DateTime Fdate { get; set; }
+        public DateTime ? Fdate { get; set; }
     }
 }

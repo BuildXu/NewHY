@@ -28,10 +28,10 @@ namespace WebApi_SY.Controllers
                     var header = new sli_mes_furnace
                     {
                         Fnumber = option.Fnumber,
-                        Id = option.Id,
+                        //Id = option.Id,
                         Fworkorderlistid = option.Fworkorderlistid,
                         Fsourceid = option.Fsourceid,
-                        Fobjectid = option.Fobjectid,
+                        Foptionid = option.Foptionid,
                         Fqty = option.Fqty,
                         Fweight = option.Fweight,
                         Ffurnaceno = option.Ffurnaceno,
@@ -41,7 +41,7 @@ namespace WebApi_SY.Controllers
                         Fbiller = option.Fbiller,
                         Fdate = option.Fdate
                     };
-                    context.sli_mes_furnace.Add(header);
+                    context.Sli_mes_furnace.Add(header);
                 }
                 await context.SaveChangesAsync();
                 var datas = new
@@ -70,7 +70,7 @@ namespace WebApi_SY.Controllers
             try
             {
                 var context = new YourDbContext();
-                var entity = await context.sli_mes_furnace.FindAsync(option.Id);
+                var entity = await context.Sli_mes_furnace.FindAsync(option.Id);
                 if (entity == null)
                 {
                     var dataNull = new
@@ -84,14 +84,14 @@ namespace WebApi_SY.Controllers
                 }
                 else
                 {
-                    var sli_mes_furnace = context.sli_mes_furnace.FirstOrDefault(p => p.Id == option.Id);
+                    var sli_mes_furnace = context.Sli_mes_furnace.FirstOrDefault(p => p.Id == option.Id);
 
 
                     sli_mes_furnace.Fnumber = option.Fnumber;
-                    sli_mes_furnace.Id = option.Id;
+                    //sli_mes_furnace.Id = option.Id;
                     sli_mes_furnace.Fworkorderlistid = option.Fworkorderlistid;
                     sli_mes_furnace.Fsourceid = option.Fsourceid;
-                    sli_mes_furnace.Fobjectid = option.Fobjectid;
+                    sli_mes_furnace.Foptionid = option.Foptionid;
                     sli_mes_furnace.Fqty = option.Fqty;
                     sli_mes_furnace.Fweight = option.Fweight;
                     sli_mes_furnace.Ffurnaceno = option.Ffurnaceno;
@@ -133,7 +133,7 @@ namespace WebApi_SY.Controllers
                 var context = new YourDbContext();
                 foreach (var deleteid in id)
                 {
-                    var entity = await context.sli_mes_furnace.FindAsync(deleteid);
+                    var entity = await context.Sli_mes_furnace.FindAsync(deleteid);
                     if (entity == null)
                     {
                         var dataNull = new
@@ -145,7 +145,7 @@ namespace WebApi_SY.Controllers
                         };
                         return dataNull;
                     }
-                    context.sli_mes_furnace.Remove(entity);
+                    context.Sli_mes_furnace.Remove(entity);
                 }
                 await context.SaveChangesAsync();
                 var data = new
@@ -169,67 +169,46 @@ namespace WebApi_SY.Controllers
         }
 
         [System.Web.Http.HttpGet]
-        public IHttpActionResult GetTableBySli_mes_furnace(int page = 1, int pageSize = 10, int? Id = null, string Fnumber = null, int? Fworkorderlistid = null, int? Fsourceid = null, int? Fobjectid = null, float? Fqty = null, float? Fweight = null, string Ffurnaceno = null, string Fheatingno = null, int? Fempid = null, int? Fdeptid = null, int? Fbiller = null, DateTime? Fdate = null)
+        public IHttpActionResult GetTableBySli_mes_furnace(int page = 1, int pageSize = 10 )
+            //string Fnumber = null, int? Fworkorderlistid = null, int? Fsourceid = null, int? Foptionid = null, float? Fqty = null, float? Fweight = null, string Ffurnaceno = null, string Fheatingno = null, int? Fempid = null, int? Fdeptid = null, int? Fbiller = null, DateTime? Fdate = null
         {
             var context = new YourDbContext();
-            IQueryable<sli_mes_furnace> query = context.sli_mes_furnace;
+            var query = context.Sli_mes_furnace_view;
+            //var query = from p in context.Sli_work_order
+            //            join c in context.Sli_work_orderEntry on p.Id equals c.Id
+            //            select new
+            //            {
+            //                Sli_work_order = p,
+            //                Sli_work_orderEntry = c
+            //            };
 
-            if (Id.HasValue)
+            var totalCount = query.Count();
+            var totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
+            var paginatedQuery = query.OrderByDescending(b => b.Id).Skip((page - 1) * pageSize).Take(pageSize);
+            var result = paginatedQuery.Select(a => new
             {
-                query = query.Where(q => q.Id == Id);
-            }
-            if (!string.IsNullOrEmpty(Fnumber))
-            {
-                query = query.Where(q => q.Fnumber == Fnumber);
-            }
-            if (Fworkorderlistid.HasValue)
-            {
-                query = query.Where(q => q.Fworkorderlistid == Fworkorderlistid);
-            }
-            if (Fsourceid.HasValue)
-            {
-                query = query.Where(q => q.Fsourceid == Fsourceid);
-            }
-            if (Fobjectid.HasValue)
-            {
-                query = query.Where(q => q.Fobjectid == Fobjectid);
-            }
-            if (Fqty.HasValue)
-            {
-                query = query.Where(q => q.Fqty == Fqty);
-            }
-            if (Fweight.HasValue)
-            {
-                query = query.Where(q => q.Fweight == Fweight);
-            }
-            if (!string.IsNullOrEmpty(Ffurnaceno))
-            {
-                query = query.Where(q => q.Ffurnaceno == Ffurnaceno);
-            }
-            if (!string.IsNullOrEmpty(Fheatingno))
-            {
-                query = query.Where(q => q.Fheatingno == Fheatingno);
-            }
-            if (Fempid.HasValue)
-            {
-                query = query.Where(q => q.Fempid == Fempid);
-            }
-            if (Fdeptid.HasValue)
-            {
-                query = query.Where(q => q.Fdeptid == Fdeptid);
-            }
-            if (Fbiller.HasValue)
-            {
-                query = query.Where(q => q.Fbiller == Fbiller);
-            }
-            if (Fdate.HasValue)
-            {
-                query = query.Where(q => q.Fdate == Fdate);
-            }
-            var totalCount = query.Count(); //记录数
-            var totalPages = (int)Math.Ceiling((double)totalCount / pageSize); // 页数
-            var paginatedQuery = query.OrderByDescending(b => b.Id).Skip((page - 1) * pageSize).Take(pageSize); //  某页记录
-            var datas = query.ToList();
+                Fnumber = a.Fnumber,
+                Id = a.Id,
+                Fworkorderlistid = a.Fworkorderlistid,
+                Fsourceid = a.Fsourceid,
+                Fcustno = a.Fcustno,
+                Fcustname = a.Fcustname,
+                Fname = a.Fname,
+                Fqty = a.Fqty,
+                Fweight = a.Fweight,
+                Foptionid = a.Foptionid,
+                Foptionno = a.Foptionno,
+                Foptionname = a.Foptionname,
+                Ffurnaceno = a.Ffurnaceno,
+                Fheatingno = a.Fheatingno,
+                Fempid = a.Fempid,
+                Fdeptid = a.Fdeptid,
+                Fbiller = a.Fbiller,
+                Fdate = a.Fdate,
+                Fdept_name = a.Fdept_name,
+                Femp_name = a.Femp_name
+
+            });
             var response = new    // 定义 前端返回数据  总记录，总页，当前页 ，size,返回记录
             {
                 code = 200,
@@ -240,11 +219,13 @@ namespace WebApi_SY.Controllers
                     totalPagess = totalPages,
                     currentPages = page,
                     pageSizes = pageSize,
-                    data = paginatedQuery
+                    data = result
                 }
+
+
             };
 
-            return Json(response);
+            return Ok(response);
         }
     }
 }

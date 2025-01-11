@@ -108,6 +108,8 @@ namespace WebApi_SY.Models
         public decimal Fcommitweight { get; set; }
         // 对应s1.Fstatus
         public int Fstatus { get; set; }
+        public int Fsourceid { get; set; }
+        //public int Fprocessobject { get; set; }
 
         //// 对应s2.Fbillid
         //public int Fbillid { get; set; }

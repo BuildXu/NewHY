@@ -45,19 +45,27 @@ namespace WebApi_SY.Models
         public int Fsourceid { get; set; }
 
         /// <summary>
-        /// 工步对象 ID，使用 int 类型存储
+        /// 工序对象 ID，使用 int 类型存储
         /// </summary>
-        public int Fobjectid { get; set; }
+        public int Foptionid { get; set; }
+        /// <summary>
+        /// 工序对象 编码，使用 int 类型存储
+        /// </summary>
+        public string Foptionno { get; set; }
+        /// <summary>
+        /// 工序对象 名称，使用 int 类型存储
+        /// </summary>
+        public string Foptionname { get; set; }
 
         /// <summary>
         /// 数量，使用 float 类型存储
         /// </summary>
-        public float Fqty { get; set; }
+        public decimal Fqty { get; set; }
 
         /// <summary>
         /// 重量，使用 float 类型存储
         /// </summary>
-        public float Fweight { get; set; }
+        public decimal Fweight { get; set; }
 
         /// <summary>
         /// 炉号，使用 varchar 类型存储
@@ -89,15 +97,6 @@ namespace WebApi_SY.Models
         /// </summary>
         public DateTime Fdate { get; set; }
 
-        /// <summary>
-        /// 工步对象编号，使用 varchar 类型存储
-        /// </summary>
-        public string Fobjectno { get; set; }
-
-        /// <summary>
-        /// 工步对象名称，使用 varchar 类型存储
-        /// </summary>
-        public string Fobjectname { get; set; }
 
         /// <summary>
         /// 部门名称，使用 varchar 类型存储

@@ -233,11 +233,11 @@ namespace WebApi_SY.Controllers
             return Ok(response);
         }
 
-        public IHttpActionResult GetTableWorkprocessBill_view(int page = 1, int pageSize = 10)
+        public IHttpActionResult GetTableWorkprocessBill_view( int ? id=null)
         {
             var context = new YourDbContext();
 
-            var query = context.Sli_work_processBill_view;
+            IQueryable<sli_work_processBill_view> query = context.Sli_work_processBill_view;
             //var query = from p in context.Sli_work_order
             //            join c in context.Sli_work_orderEntry on p.Id equals c.Id
             //            select new
@@ -245,11 +245,12 @@ namespace WebApi_SY.Controllers
             //                Sli_work_order = p,
             //                Sli_work_orderEntry = c
             //            };
+            if (id.HasValue)
+            {
+                query = query.Where(t => t.id == id.Value);
+            }
 
-            var totalCount = query.Count();
-            var totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
-            var paginatedQuery = query.OrderByDescending(b => b.id).Skip((page - 1) * pageSize).Take(pageSize);
-            var result = paginatedQuery.Select(a => new
+            var result = query.Select(a => new
             {
                 id = a.id,
                 Fseq = a.Fseq,
@@ -263,7 +264,9 @@ namespace WebApi_SY.Controllers
                 Fweight = a.Fweight,
                 Fcommitqty = a.Fcommitqty,
                 Fcommitweight = a.Fcommitweight,
-                Fstatus = a.Fstatus
+                Fstatus = a.Fstatus,
+                Fsourceid = a.Fsourceid,
+                //Fprocessobject = a.Fprocessobject
                 //Fbillid = a.Fbillid,
                 //Fentryid = a.Fentryid,
                 //Fentryseq = a.Fentryseq,
@@ -285,10 +288,7 @@ namespace WebApi_SY.Controllers
                 msg = "OK",
                 data = new
                 {
-                    totalCounts = totalCount,
-                    totalPagess = totalPages,
-                    currentPages = page,
-                    pageSizes = pageSize,
+                    
                     data = result
                 }
 
