@@ -240,8 +240,8 @@ namespace WebApi_SY.Controllers
            int? Fworkorderlistid = null,
            int? Fsourceid = null,
            int? Fobjectid = null,
-           float? Fqty = null,
-           float? Fweight = null,
+           decimal? Fqty = null,
+           decimal? Fweight = null,
            string Ffurnaceno = null,
            string Fheatingno = null,
            int? Fempid = null,
@@ -252,7 +252,7 @@ namespace WebApi_SY.Controllers
            string Fobjectname = null)
         {
             var context = new YourDbContext();
-            IQueryable<sli_mes_furnace_view> query = context.sli_mes_furnace_view;
+            IQueryable<sli_mes_furnace_view> query = context.Sli_mes_furnace_view;
 
             if (!string.IsNullOrEmpty(Fcustno))
             {
@@ -282,10 +282,10 @@ namespace WebApi_SY.Controllers
             {
                 query = query.Where(q => q.Fsourceid == Fsourceid);
             }
-            if (Fobjectid.HasValue)
-            {
-                query = query.Where(q => q.Fobjectid == Fobjectid);
-            }
+            //if (Fobjectid.HasValue)
+            //{
+            //    query = query.Where(q => q.Fobjectid == Fobjectid);
+            //}
             if (Fqty.HasValue)
             {
                 query = query.Where(q => q.Fqty == Fqty);
@@ -318,14 +318,14 @@ namespace WebApi_SY.Controllers
             {
                 query = query.Where(q => q.Fdate == Fdate);
             }
-            if (!string.IsNullOrEmpty(Fobjectno))
-            {
-                query = query.Where(q => q.Fobjectno == Fobjectno);
-            }
-            if (!string.IsNullOrEmpty(Fobjectname))
-            {
-                query = query.Where(q => q.Fobjectname == Fobjectname);
-            }
+            //if (!string.IsNullOrEmpty(Fobjectno))
+            //{
+            //    query = query.Where(q => q.Fobjectno == Fobjectno);
+            //}
+            //if (!string.IsNullOrEmpty(Fobjectname))
+            //{
+            //    query = query.Where(q => q.Fobjectname == Fobjectname);
+            //}
             //var totalCount = query.Count(); //记录数
             //var totalPages = (int)Math.Ceiling((double)totalCount / pageSize); // 页数
             //var paginatedQuery = query.OrderByDescending(b => b.Id).Skip((page - 1) * pageSize).Take(pageSize); //  某页记录
