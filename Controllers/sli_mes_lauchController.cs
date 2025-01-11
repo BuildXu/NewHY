@@ -155,12 +155,24 @@ namespace WebApi_SY.Controllers
                 return data;
             }
         }
-
         [System.Web.Http.HttpGet]
-        public IHttpActionResult GetTableBySli_mes_lauch(int? Id = null, int? Fsourceid = null, int? Fworkorderlistid = null, int? Fprocessoption = null, DateTime? Fstartdate = null, DateTime? Fenddate = null, int? Fdeptid = null)
+        public IHttpActionResult GetTableBySli_mes_lauch_view(
+            int? Id = null,
+            int? Fsourceid = null,
+            int? Fworkorderlistid = null,
+            int? Fprocessoption = null,
+            DateTime? Fstartdate = null,
+            DateTime? Fenddate = null,
+            int? Fdeptid = null,
+            int? Fstatus = null,
+            string Foptionno = null,
+            string Foptionname = null,
+            string Fcustno = null,
+            string Fcustname = null,
+            string Fname = null)
         {
             var context = new YourDbContext();
-            IQueryable<sli_mes_lauchbill> query = context.sli_mes_lauchbill;
+            IQueryable<sli_mes_lauchbill_view> query = context.sli_mes_lauchbill_view;
 
             if (Id.HasValue)
             {
@@ -189,6 +201,30 @@ namespace WebApi_SY.Controllers
             if (Fdeptid.HasValue)
             {
                 query = query.Where(q => q.Fdeptid == Fdeptid);
+            }
+            if (Fstatus.HasValue)
+            {
+                query = query.Where(q => q.Fstatus == Fstatus);
+            }
+            if (!string.IsNullOrEmpty(Foptionno))
+            {
+                query = query.Where(q => q.Foptionno == Foptionno);
+            }
+            if (!string.IsNullOrEmpty(Foptionname))
+            {
+                query = query.Where(q => q.Foptionname == Foptionname);
+            }
+            if (!string.IsNullOrEmpty(Fcustno))
+            {
+                query = query.Where(q => q.Fcustno == Fcustno);
+            }
+            if (!string.IsNullOrEmpty(Fcustname))
+            {
+                query = query.Where(q => q.Fcustname == Fcustname);
+            }
+            if (!string.IsNullOrEmpty(Fname))
+            {
+                query = query.Where(q => q.Fname == Fname);
             }
             //var totalCount = query.Count(); //记录数
             //var totalPages = (int)Math.Ceiling((double)totalCount / pageSize); // 页数
