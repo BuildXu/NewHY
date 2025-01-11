@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -28,10 +29,10 @@ namespace WebApi_SY.Models
         /// </summary>
         public string Fnumber { get; set; }
 
-        /// <summary>
-        /// 自增 ID
-        /// </summary>
-        public int Id { get; set; }
+            /// <summary>
+            /// 自增 ID
+            /// </summary>
+            public int Id { get; set; }
 
         /// <summary>
         /// 工作订单列表 ID，使用 int 类型存储
