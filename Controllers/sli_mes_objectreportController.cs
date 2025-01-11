@@ -164,7 +164,7 @@ namespace WebApi_SY.Controllers
             }
         }
         [System.Web.Http.HttpGet]
-        public IHttpActionResult GetTableBySli_mes_option(
+        public IHttpActionResult GetTableBySli_mes_option_view(
             int? Id = null,
             int? Fsourceid = null,
             int? Fobjectid = null,

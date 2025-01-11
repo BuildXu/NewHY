@@ -156,7 +156,7 @@ namespace WebApi_SY.Controllers
             }
         }
         [System.Web.Http.HttpGet]
-        public IHttpActionResult GetTableBySli_mes_lauch(
+        public IHttpActionResult GetTableBySli_mes_lauch_view(
             int? Id = null,
             int? Fsourceid = null,
             int? Fworkorderlistid = null,
