@@ -6,6 +6,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Windows.Interop;
 using WebApi_SY.Entity;
 using WebApi_SY.Models;
 
@@ -91,13 +92,13 @@ namespace WebApi_SY.Controllers
 
 
         [System.Web.Http.HttpPost]
-        public async Task<object> Delete(int id)
+        public async Task<object> Delete(List<int> id)
         {
             try
             {
                 var context = new YourDbContext();
-                var entity = await context.Sli_plan_bill.FindAsync(id);
-                if (entity == null)
+                var headersToDelete = context.Sli_plan_bill.Where(h => id.Contains(h.Id)).ToList();
+                if (headersToDelete == null)
                 {
                     var dataNull = new
                     {
@@ -109,9 +110,18 @@ namespace WebApi_SY.Controllers
                     //string json = JsonConvert.SerializeObject(data);
                     return dataNull;
                 }
-                var Sli_plan_billEntrys = context.Sli_plan_billEntry.Where(b => b.Fplanbillid == id);
-                context.Sli_plan_billEntry.RemoveRange(Sli_plan_billEntrys);
-                context.Sli_plan_bill.Remove(entity);
+                context.Sli_plan_bill.RemoveRange(headersToDelete);
+
+                foreach (var DeleteID in id)
+                {
+                    var Sli_plan_billEntry = context.Sli_plan_billEntry.Where(b => b.Fplanbillid == DeleteID);
+                    context.Sli_plan_billEntry.RemoveRange(Sli_plan_billEntry);
+
+                    var Sli_plan_billorder = context.Sli_plan_billorder.Where(b => b.Fplanbillid == DeleteID);
+                    context.Sli_plan_billorder.RemoveRange(Sli_plan_billorder);
+
+                }
+
                 await context.SaveChangesAsync();
                 // var data = new { Status = "Success", Message = "Data retrieved successfully", Data = new { /* actual data here */ } };
                 var data = new
@@ -139,16 +149,121 @@ namespace WebApi_SY.Controllers
         }
 
         [System.Web.Http.HttpPost]
-        public async Task<IActionResult> Update(sli_plan_bill bill)
+        public async Task<object> Update(sli_plan_bill bill)
         {
-            var context = new YourDbContext();
-            if (context.Entry(bill).State == Microsoft.EntityFrameworkCore.EntityState.Detached)
+            //var context = new YourDbContext();
+            //if (context.Entry(bill).State == Microsoft.EntityFrameworkCore.EntityState.Detached)
+            //{
+            //    context.Attach(bill);
+            //}
+            //context.Entry(bill).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            //await context.SaveChangesAsync();
+            //var data = new
+            //{
+            //    code = 200,
+            //    msg = "成功",
+            //    //orderId = id.ToString(),
+            //    date = bill.Id+"更新成功！"
+            //};
+            //return Ok(data);
+
+            try
             {
-                context.Attach(bill);
+                var context = new YourDbContext();
+                var entity = await context.Sli_plan_bill.FindAsync(bill.Id);
+                if (entity == null)
+                {
+                    var dataNull = new
+                    {
+                        code = 200,
+                        msg = "ok",
+                        date = "修改记录不存在"
+                    };
+                    //string json = JsonConvert.SerializeObject(data);
+                    return dataNull;
+                }
+                else
+                {
+                    //var headerEntity = context.Sli_plan_model.Include(h => h.sli_plan_modelEntry).FirstOrDefault(h => h.Id == model.Idi);
+                    //await Delete(model.Id);//
+
+                    //var context1 = new YourDbContext();
+                    //await Insert(model);
+
+
+                    var Sli_plan_models = context.Sli_plan_bill.FirstOrDefault(p => p.Id == bill.Id);
+                    var Sli_plan_modelEntrys = context.Sli_plan_billEntry.Where(p => p.Fplanbillid== bill.Id).ToList();
+                    var sli_plan_billorder = context.Sli_plan_billorder.Where(p => p.Fplanbillid == bill.Id).ToList();
+
+
+                    Sli_plan_models.Fplanlnumber = bill.Fplanlnumber;
+                    Sli_plan_models.Fissueddate = bill.Fissueddate;
+                    Sli_plan_models.Fplancontractentry = bill.Fplancontractentry;
+                    Sli_plan_models.Fqty = bill.Fqty;
+                    Sli_plan_models.Fweight = bill.Fweight;
+                    Sli_plan_models.Fplanbegindate = bill.Fplanbegindate;
+                    Sli_plan_models.Fplanenddate = bill.Fplanenddate;
+                    Sli_plan_models.Factualbegindate = bill.Factualbegindate;
+                    Sli_plan_models.Factualenddate = bill.Factualenddate;
+                    Sli_plan_models.Fnote = bill.Fnote;
+                    Sli_plan_models.Fdays = bill.Fdays;
+
+
+                    context.Sli_plan_billEntry.RemoveRange(Sli_plan_modelEntrys);
+                    context.Sli_plan_billorder.RemoveRange(sli_plan_billorder);
+
+                    foreach (var d in bill.sli_plan_billEntry)
+                    {
+                        var entry = new sli_plan_billEntry
+                        {
+                            Fplanbillid = bill.Id,
+                            Fplanoptionidid = d.Fplanoptionidid,
+                            Fqty = d.Fqty,
+                            Fweight = d.Fweight,
+                            Fplanstartdate = d.Fplanstartdate,
+                            Fplanenddate = d.Fplanenddate,
+                            Factualstartdate = d.Factualstartdate,
+                            Factualenddate = d.Factualenddate,
+                            Fplandays = d.Fplandays,
+                            Fcapacity = d.Fcapacity,
+                            Fdepartid = d.Fdepartid,
+                            Fempid = d.Fempid
+
+                        };
+                        context.Sli_plan_billEntry.Add(entry);
+                    }
+                    foreach (var c in bill.sli_plan_billorder)
+                    {
+                        var entry = new sli_plan_billorder
+                        {
+                            Fplanbillid = bill.Id, // 设置外键
+                            Forderentryid = c.Forderentryid, // 根据实际属性设置
+
+                        };
+                        context.Sli_plan_billorder.Add(entry);
+                    }
+                    await context.SaveChangesAsync();
+
+                    var datas = new
+                    {
+                        code = 200,
+                        msg = "ok",
+                        date = bill.Id+"更新成功！"
+                    };
+                    return Ok(datas);
+                }
             }
-            context.Entry(bill).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-            await context.SaveChangesAsync();
-            return new NoContentResult();
+            catch (Exception ex)
+            {
+                var datas = new
+                {
+                    code = 400,
+                    msg = "失败",
+                    date = ex.ToString()
+                };
+                return Ok(datas); ;
+            }
+
 
         }
 
@@ -169,7 +284,7 @@ namespace WebApi_SY.Controllers
                         };
             if (id.HasValue)
             {
-                query = query.Where(p =>id == id.Value);
+                query = query.Where(p =>p.Header.Id == id.Value);
             }
 
             //var planBills = query
