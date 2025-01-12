@@ -94,5 +94,13 @@ namespace WebApi_SY.Models
         /// 工步对象名称，使用 varchar 类型存储
         /// </summary>
         public string Fobjectname { get; set; }
+        /// <summary>
+        /// 部门名称
+        /// </summary>
+        public string Fdept_name { get; set; }
+        /// <summary>
+        /// 职员
+        /// </summary>
+        public string Femp_name { get; set; }
     }
 }
