@@ -34,6 +34,9 @@ namespace WebApi_SY.Models
         public int Fseq { get; set; } //序号
         public int Fwobillid { get; set; }
         public int Fprocessobject { get; set; } //工步ID
+
+        public int Fqualityoption { get; set; } //*******************新增 检验方案  存放 sli_document_quality_sorderBill /Id
+
         public DateTime? Fstartdate { get; set; }//开始时间
         public DateTime? Fenddate { get; set; }//结束时间
         public decimal Fqty { get; set; } //数量
