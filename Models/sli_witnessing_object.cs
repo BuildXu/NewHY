@@ -18,7 +18,7 @@ namespace WebApi_SY.Models
         public int Fcustomer { get; set; }
 
         // 存储注释信息，这里类型为 int，可根据实际需求修改为更合适的类型，如 string
-        public int Fnote { get; set; }
+        public string Fnote { get; set; }
 
         // 存储状态信息，通常用于表示对象的状态，如 0 表示未处理，1 表示已处理等
         public int Fstatus { get; set; }
