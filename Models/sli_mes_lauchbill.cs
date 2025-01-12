@@ -37,12 +37,12 @@ namespace WebApi_SY.Models
         /// <summary>
         /// 开始日期
         /// </summary>
-        public DateTime Fstartdate { get; set; }
+        public DateTime ? Fstartdate { get; set; }
 
         /// <summary>
         /// 结束日期
         /// </summary>
-        public DateTime Fenddate { get; set; }
+        public DateTime ? Fenddate { get; set; }
 
         /// <summary>
         /// 部门标识符

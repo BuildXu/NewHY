@@ -6,8 +6,11 @@ using System.Web;
 
 namespace WebApi_SY.Models
 {
- 
-        public class sli_mes_lauchbill_view
+    /// <summary>
+    /// 投产计划
+    /// </summary>
+
+    public class sli_mes_lauchbill_view
     {
         /// <summary>
         /// 客户编号，使用 nvarchar 存储
@@ -48,12 +51,12 @@ namespace WebApi_SY.Models
         /// <summary>
         /// 开始日期，使用 DateTime 存储
         /// </summary>
-        public DateTime Fstartdate { get; set; }
+        public DateTime ? Fstartdate { get; set; }
 
         /// <summary>
         /// 结束日期，使用 DateTime 存储
         /// </summary>
-        public DateTime Fenddate { get; set; }
+        public DateTime ? Fenddate { get; set; }
 
         /// <summary>
         /// 部门编号，使用 int 存储
@@ -74,5 +77,11 @@ namespace WebApi_SY.Models
         /// 选项名称，使用 varchar 存储
         /// </summary>
         public string Foptionname { get; set; }
+        /// <summary>
+        /// 部门编号，使用 int 存储
+        /// </summary>
+        public string Fdept_name { get; set; }
+        public string Fnumber { get; set; }
+
     }
 }
