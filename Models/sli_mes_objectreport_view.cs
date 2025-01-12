@@ -48,22 +48,22 @@ namespace WebApi_SY.Models
         /// <summary>
         /// 数量，使用 float 类型存储
         /// </summary>
-        public float Fqty { get; set; }
+        public decimal Fqty { get; set; }
 
         /// <summary>
         /// 重量，使用 float 类型存储
         /// </summary>
-        public float Fweight { get; set; }
+        public decimal Fweight { get; set; }
 
         /// <summary>
         /// 提交数量，使用 float 类型存储
         /// </summary>
-        public float Fcommitqty { get; set; }
+        public decimal Fcommitqty { get; set; }
 
         /// <summary>
         /// 合格数量，使用 float 类型存储
         /// </summary>
-        public float Fpassqty { get; set; }
+        public decimal Fpassqty { get; set; }
 
         /// <summary>
         /// 员工 ID，使用 int 类型存储

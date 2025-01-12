@@ -18,23 +18,28 @@ namespace WebApi_SY.Controllers
         }
 
         [System.Web.Http.HttpPost]
-        public async Task<object> sli_mes_lauch_Insert([Microsoft.AspNetCore.Mvc.FromBody] sli_mes_lauchbill options)
+        public async Task<object> sli_mes_lauch_Insert([Microsoft.AspNetCore.Mvc.FromBody] sli_mes_lauchbill[] options)
         {
             var context = new YourDbContext();
             try
             {
+                foreach (var option in options)
+                {
 
                     var header = new sli_mes_lauchbill
                     {
-                        Fsourceid = options.Fsourceid,
-                        Fworkorderlistid = options.Fworkorderlistid,
-                        Fprocessoption = options.Fprocessoption,
-                        Fstartdate = options.Fstartdate,
-                        Fenddate = options.Fenddate,
-                        Fdeptid = options.Fdeptid,
-                        Fstatus = options.Fstatus
+                        Fsourceid = option.Fsourceid,
+                        Fworkorderlistid = option.Fworkorderlistid,
+                        Fprocessoption = option.Fprocessoption,
+                        Fstartdate = option.Fstartdate ?? Convert.ToDateTime("2025-01-01"),
+                        Fenddate = option.Fenddate ?? Convert.ToDateTime("2025-01-01"),
+                        Fdeptid = option.Fdeptid,
+                        Fstatus = option.Fstatus,
+                        Fnumber = option.Fnumber
                     };
                     context.sli_mes_lauchbill.Add(header);
+                }
+                
 
                 await context.SaveChangesAsync();
                 var datas = new
@@ -156,79 +161,100 @@ namespace WebApi_SY.Controllers
             }
         }
         [System.Web.Http.HttpGet]
-        public IHttpActionResult GetTableBySli_mes_lauch_view(
-            int? Id = null,
-            int? Fsourceid = null,
-            int? Fworkorderlistid = null,
-            int? Fprocessoption = null,
-            DateTime? Fstartdate = null,
-            DateTime? Fenddate = null,
-            int? Fdeptid = null,
-            int? Fstatus = null,
-            string Foptionno = null,
-            string Foptionname = null,
-            string Fcustno = null,
-            string Fcustname = null,
-            string Fname = null)
+        public IHttpActionResult GetTableBySli_mes_lauch_view(int page = 1, int pageSize = 10)
         {
+
+            //int? Id = null,
+            //int? Fsourceid = null,
+            //int? Fworkorderlistid = null,
+            //int? Fprocessoption = null,
+            //DateTime? Fstartdate = null,
+            //DateTime? Fenddate = null,
+            //int? Fdeptid = null,
+            //int? Fstatus = null,
+            //string Foptionno = null,
+            //string Foptionname = null,
+            //string Fcustno = null,
+            //string Fcustname = null,
+            //string Fname = null
             var context = new YourDbContext();
             IQueryable<sli_mes_lauchbill_view> query = context.sli_mes_lauchbill_view;
 
-            if (Id.HasValue)
+            //if (Id.HasValue)
+            //{
+            //    query = query.Where(q => q.Id == Id);
+            //}
+            //if (Fsourceid.HasValue)
+            //{
+            //    query = query.Where(q => q.Fsourceid == Fsourceid);
+            //}
+            //if (Fworkorderlistid.HasValue)
+            //{
+            //    query = query.Where(q => q.Fworkorderlistid == Fworkorderlistid);
+            //}
+            //if (Fprocessoption.HasValue)
+            //{
+            //    query = query.Where(q => q.Fprocessoption == Fprocessoption);
+            //}
+            //if (Fstartdate.HasValue)
+            //{
+            //    query = query.Where(q => q.Fstartdate == Fstartdate);
+            //}
+            //if (Fenddate.HasValue)
+            //{
+            //    query = query.Where(q => q.Fenddate == Fenddate);
+            //}
+            //if (Fdeptid.HasValue)
+            //{
+            //    query = query.Where(q => q.Fdeptid == Fdeptid);
+            //}
+            //if (Fstatus.HasValue)
+            //{
+            //    query = query.Where(q => q.Fstatus == Fstatus);
+            //}
+            //if (!string.IsNullOrEmpty(Foptionno))
+            //{
+            //    query = query.Where(q => q.Foptionno == Foptionno);
+            //}
+            //if (!string.IsNullOrEmpty(Foptionname))
+            //{
+            //    query = query.Where(q => q.Foptionname == Foptionname);
+            //}
+            //if (!string.IsNullOrEmpty(Fcustno))
+            //{
+            //    query = query.Where(q => q.Fcustno == Fcustno);
+            //}
+            //if (!string.IsNullOrEmpty(Fcustname))
+            //{
+            //    query = query.Where(q => q.Fcustname == Fcustname);
+            //}
+            //if (!string.IsNullOrEmpty(Fname))
+            //{
+            //    query = query.Where(q => q.Fname == Fname);
+            //}
+            var totalCount = query.Count(); //记录数
+            var totalPages = (int)Math.Ceiling((double)totalCount / pageSize); // 页数
+            var paginatedQuery = query.OrderByDescending(b => b.Id).Skip((page - 1) * pageSize).Take(pageSize); //  某页记录
+            var result = paginatedQuery.Select(a => new
             {
-                query = query.Where(q => q.Id == Id);
-            }
-            if (Fsourceid.HasValue)
-            {
-                query = query.Where(q => q.Fsourceid == Fsourceid);
-            }
-            if (Fworkorderlistid.HasValue)
-            {
-                query = query.Where(q => q.Fworkorderlistid == Fworkorderlistid);
-            }
-            if (Fprocessoption.HasValue)
-            {
-                query = query.Where(q => q.Fprocessoption == Fprocessoption);
-            }
-            if (Fstartdate.HasValue)
-            {
-                query = query.Where(q => q.Fstartdate == Fstartdate);
-            }
-            if (Fenddate.HasValue)
-            {
-                query = query.Where(q => q.Fenddate == Fenddate);
-            }
-            if (Fdeptid.HasValue)
-            {
-                query = query.Where(q => q.Fdeptid == Fdeptid);
-            }
-            if (Fstatus.HasValue)
-            {
-                query = query.Where(q => q.Fstatus == Fstatus);
-            }
-            if (!string.IsNullOrEmpty(Foptionno))
-            {
-                query = query.Where(q => q.Foptionno == Foptionno);
-            }
-            if (!string.IsNullOrEmpty(Foptionname))
-            {
-                query = query.Where(q => q.Foptionname == Foptionname);
-            }
-            if (!string.IsNullOrEmpty(Fcustno))
-            {
-                query = query.Where(q => q.Fcustno == Fcustno);
-            }
-            if (!string.IsNullOrEmpty(Fcustname))
-            {
-                query = query.Where(q => q.Fcustname == Fcustname);
-            }
-            if (!string.IsNullOrEmpty(Fname))
-            {
-                query = query.Where(q => q.Fname == Fname);
-            }
-            //var totalCount = query.Count(); //记录数
-            //var totalPages = (int)Math.Ceiling((double)totalCount / pageSize); // 页数
-            //var paginatedQuery = query.OrderByDescending(b => b.Id).Skip((page - 1) * pageSize).Take(pageSize); //  某页记录
+                Fcustno = a.Fcustno,
+                Fcustname = a.Fcustname,
+                Fname = a.Fname,
+                Id = a.Id,
+                Fsourceid = a.Fsourceid,
+                Fworkorderlistid = a.Fworkorderlistid,
+                Fprocessoption = a.Fprocessoption,
+                Fstartdate = a.Fstartdate,
+                Fenddate = a.Fenddate,
+                Fdeptid = a.Fdeptid,
+                Fstatus = a.Fstatus,
+                Foptionno = a.Foptionno,
+                Foptionname = a.Foptionname,
+                Fdept_name = a.Fdept_name ?? string.Empty,
+                Fnumber = a.Fnumber
+
+
+            });
             //var datas = query.ToList();
             var response = new    // 定义 前端返回数据  总记录，总页，当前页 ，size,返回记录
             {
@@ -236,10 +262,10 @@ namespace WebApi_SY.Controllers
                 msg = "OK",
                 data = new
                 {
-                    //totalCounts = totalCount,
-                    //totalPagess = totalPages,
-                    //currentPages = page,
-                    //pageSizes = pageSize,
+                    totalCounts = totalCount,
+                    totalPagess = totalPages,
+                    currentPages = page,
+                    pageSizes = pageSize,
                     data = query
                 }
             };

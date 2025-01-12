@@ -28,7 +28,7 @@ namespace WebApi_SY.Controllers
                     var header = new sli_mes_orderoption
                     {
                         Fnumber = option.Fnumber,
-                        Fsourceid= ((int?)option.Fsourceid) ?? 0,
+                        Fsourceid= option.Fsourceid ?? 0,
                         Fworkorderlistid = option.Fworkorderlistid,
                         Fprocessoption = option.Fprocessoption,
                         Fqty = option.Fqty,
@@ -36,8 +36,8 @@ namespace WebApi_SY.Controllers
                         Fcommitqty = option.Fcommitqty,
                         Fpassqty = option.Fpassqty,
                         Fbiller = option.Fbiller,
-                        Fstartdate = option.Fstartdate ?? DateTime.MinValue,
-                        Fenddate = option.Fenddate ?? DateTime.MinValue,
+                        Fstartdate = option.Fstartdate ?? Convert.ToDateTime("2025-01-01"),
+                        Fenddate = option.Fenddate ?? Convert.ToDateTime("2025-01-01"),
                         Fdate = option.Fdate
                     };
                     context.Sli_mes_orderoption.Add(header);
@@ -186,7 +186,7 @@ namespace WebApi_SY.Controllers
                 Fname = a.Fname,
                 Fnumber = a.Fnumber,
                 Id = a.Id,
-                Fsourceid=a.Fsourceid,
+                Fsourceid=a.Fsourceid ?? 0,
                 Fworkorderlistid = a.Fworkorderlistid,
                 Fprocessoption = a.Fprocessoption,
                 Fqty = a.Fqty,

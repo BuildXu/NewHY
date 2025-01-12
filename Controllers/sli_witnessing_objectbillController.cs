@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.IdentityModel.Tokens;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -154,18 +155,25 @@ namespace WebApi_SY.Controllers
             }
         }
         [System.Web.Http.HttpGet]
-        public IHttpActionResult GetTableBysli_witnessing_objectbill_view(
-      int? Id = null,
-      int? Fsourceid = null,
-      int? Fseq = null,
-      int? Fobject = null,
-      string Fnote = null,
-      int? Fstatus = null)
+      public IHttpActionResult GetTableBysli_witnessing_objectbill_view(
+            int? Id = null,
+            int? Fsourceid = null,
+            int? Fseq = null,
+            int? Fobject = null,
+            int? Fobjectid = null,
+            string Fobjectno = null,
+            string Fobjectname = null,
+            string Fnote = null,
+            int? Fstatus = null,
+            string Forderno = null,
+            string Fcustomer = null,
+            string Fmaterialname = null,
+            string Fdescription = null)
         {
             var context = new YourDbContext();
             IQueryable<sli_witnessing_objectbill_view> query = context.sli_witnessing_objectbill_view;
 
-            if (Id.HasValue)
+            if(Id.HasValue)
             {
                 query = query.Where(q => q.Id == Id);
             }
@@ -181,6 +189,18 @@ namespace WebApi_SY.Controllers
             {
                 query = query.Where(q => q.Fobject == Fobject);
             }
+            if (Fobjectid.HasValue)
+            {
+                query = query.Where(q => q.Fobjectid == Fobjectid);
+            }
+            if (!string.IsNullOrEmpty(Fobjectno))
+            {
+                query = query.Where(q => q.Fobjectno == Fobjectno);
+            }
+            if (!string.IsNullOrEmpty(Fobjectname))
+            {
+                query = query.Where(q => q.Fobjectname == Fobjectname);
+            }
             if (!string.IsNullOrEmpty(Fnote))
             {
                 query = query.Where(q => q.Fnote == Fnote);
@@ -189,6 +209,23 @@ namespace WebApi_SY.Controllers
             {
                 query = query.Where(q => q.Fstatus == Fstatus);
             }
+            if (!string.IsNullOrEmpty(Forderno))
+            {
+                query = query.Where(q => q.Forderno == Forderno);
+            }
+            if (!string.IsNullOrEmpty(Fcustomer))
+            {
+                query = query.Where(q => q.Fcustomer == Fcustomer);
+            }
+            if (!string.IsNullOrEmpty(Fmaterialname))
+            {
+                query = query.Where(q => q.Fmaterialname == Fmaterialname);
+            }
+            if (!string.IsNullOrEmpty(Fdescription))
+            {
+                query = query.Where(q => q.Fdescription == Fdescription);
+            }
+
 
             var response = new
             {
