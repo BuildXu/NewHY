@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -19,7 +20,7 @@ namespace WebApi_SY.Models
         /// </summary>
         public int Fsourceid { get; set; }
 
-
+        [Key]
         public int Id { get; set; }
 
         // 工件id
@@ -32,22 +33,22 @@ namespace WebApi_SY.Models
             /// <summary>
             /// 数量，选单（可修改）
             /// </summary>
-            public float Fqty { get; set; }
+            public decimal Fqty { get; set; }
 
             /// <summary>
             /// 重量，选单（可修改）
             /// </summary>
-            public float Fweight { get; set; }
+            public decimal Fweight { get; set; }
 
             /// <summary>
             /// 关联数量，默认 0
             /// </summary>
-            public float Fcommitqty { get; set; } = 0;
+            public decimal Fcommitqty { get; set; } = 0;
 
             /// <summary>
             /// 合格数量，默认 0
             /// </summary>
-            public float Fpassqty { get; set; } = 0;
+            public decimal Fpassqty { get; set; } = 0;
 
             /// <summary>
             /// 作业员 id，前端选

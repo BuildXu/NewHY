@@ -126,8 +126,8 @@ namespace WebApi_SY.Entity
         public DbSet<sli_mes_orderoption> Sli_mes_orderoption { get; set; }//投产清单表
         public DbSet<sli_mes_orderoption_view> Sli_mes_orderoption_view { get; set; }//投产清单表
 
-        public DbSet<sli_mes_objectreport> sli_mes_objectreport { get; set; }//工步汇报
-        public DbSet<sli_mes_objectreport_view> sli_mes_objectreport_view { get; set; }//工步汇报
+        public DbSet<sli_mes_objectreport> Sli_mes_objectreport { get; set; }//工步汇报
+        public DbSet<sli_mes_objectreport_view> Sli_mes_objectreport_view { get; set; }//工步汇报
 
         public DbSet<sli_mes_optionreport> sli_mes_optionreport { get; set; }//工序流转
         public DbSet<sli_mes_optionreport_view> sli_mes_optionreport_view { get; set; }//工序流转

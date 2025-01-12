@@ -165,58 +165,83 @@ namespace WebApi_SY.Controllers
         }
 
         [System.Web.Http.HttpGet]
-        public IHttpActionResult GetTableBySli_mes_option(int? Id = null, int? Fsourceid = null, int? Fprocessoption = null, float? Fqty = null, float? Fweight = null, float? Fcommitqty = null, float? Fpassqty = null, int? Fempid = null, int? Fdeptid = null, int? Fbiller = null, DateTime? Fdate = null)
+        public IHttpActionResult GetTableBySli_mes_option(int page = 1, int pageSize = 10)
         {
+            //int? Id = null, int? Fsourceid = null, int? Fprocessoption = null, decimal? Fqty = null, decimal? Fweight = null, decimal? Fcommitqty = null, decimal? Fpassqty = null, int? Fempid = null, int? Fdeptid = null, int? Fbiller = null, DateTime? Fdate = null
             var context = new YourDbContext();
-            IQueryable<sli_mes_optionreport> query = context.sli_mes_optionreport;
+            IQueryable<sli_mes_optionreport_view> query = context.sli_mes_optionreport_view;
 
-            if (Id.HasValue)
+            //if (Id.HasValue)
+            //{
+            //    query = query.Where(q => q.Id == Id);
+            //}
+            //if (Fsourceid.HasValue)
+            //{
+            //    query = query.Where(q => q.Fsourceid == Fsourceid);
+            //}
+            //if (Fprocessoption.HasValue)
+            //{
+            //    query = query.Where(q => q.Fprocessoption == Fprocessoption);
+            //}
+            //if (Fqty.HasValue)
+            //{
+            //    query = query.Where(q => q.Fqty == Fqty);
+            //}
+            //if (Fweight.HasValue)
+            //{
+            //    query = query.Where(q => q.Fweight == Fweight);
+            //}
+            //if (Fcommitqty.HasValue)
+            //{
+            //    query = query.Where(q => q.Fcommitqty == Fcommitqty);
+            //}
+            //if (Fpassqty.HasValue)
+            //{
+            //    query = query.Where(q => q.Fpassqty == Fpassqty);
+            //}
+            //if (Fempid.HasValue)
+            //{
+            //    query = query.Where(q => q.Fempid == Fempid);
+            //}
+            //if (Fdeptid.HasValue)
+            //{
+            //    query = query.Where(q => q.Fdeptid == Fdeptid);
+            //}
+            //if (Fbiller.HasValue)
+            //{
+            //    query = query.Where(q => q.Fbiller == Fbiller);
+            //}
+            //if (Fdate.HasValue)
+            //{
+            //    query = query.Where(q => q.Fdate == Fdate);
+            //}
+            var totalCount = query.Count(); //记录数
+            var totalPages = (int)Math.Ceiling((double)totalCount / pageSize); // 页数
+            var paginatedQuery = query.OrderByDescending(b => b.Id).Skip((page - 1) * pageSize).Take(pageSize); //  某页记录
+            
+            var result = paginatedQuery.Select(a => new
             {
-                query = query.Where(q => q.Id == Id);
-            }
-            if (Fsourceid.HasValue)
-            {
-                query = query.Where(q => q.Fsourceid == Fsourceid);
-            }
-            if (Fprocessoption.HasValue)
-            {
-                query = query.Where(q => q.Fprocessoption == Fprocessoption);
-            }
-            if (Fqty.HasValue)
-            {
-                query = query.Where(q => q.Fqty == Fqty);
-            }
-            if (Fweight.HasValue)
-            {
-                query = query.Where(q => q.Fweight == Fweight);
-            }
-            if (Fcommitqty.HasValue)
-            {
-                query = query.Where(q => q.Fcommitqty == Fcommitqty);
-            }
-            if (Fpassqty.HasValue)
-            {
-                query = query.Where(q => q.Fpassqty == Fpassqty);
-            }
-            if (Fempid.HasValue)
-            {
-                query = query.Where(q => q.Fempid == Fempid);
-            }
-            if (Fdeptid.HasValue)
-            {
-                query = query.Where(q => q.Fdeptid == Fdeptid);
-            }
-            if (Fbiller.HasValue)
-            {
-                query = query.Where(q => q.Fbiller == Fbiller);
-            }
-            if (Fdate.HasValue)
-            {
-                query = query.Where(q => q.Fdate == Fdate);
-            }
-            //var totalCount = query.Count(); //记录数
-            //var totalPages = (int)Math.Ceiling((double)totalCount / pageSize); // 页数
-            //var paginatedQuery = query.OrderByDescending(b => b.Id).Skip((page - 1) * pageSize).Take(pageSize); //  某页记录
+                Fcustno = a.Fcustno,
+                Fcustname = a.Fcustname,
+                Fname = a.Fname,
+                Id = a.Id,
+                Fworkorderlistid = a.Fworkorderlistid,
+                Fsourceid = a.Fsourceid,
+                Fprocessoption = a.Fprocessoption,
+                Fqty = a.Fqty,
+                Fweight = a.Fweight,
+                Fcommitqty = a.Fcommitqty,
+                Fpassqty = a.Fpassqty,
+                Fempid = a.Fempid,
+                Fdeptid = a.Fdeptid,
+                Fbiller = a.Fbiller,
+                Fdate = a.Fdate,
+                Foptionno = a.Foptionno,
+                Foptionname = a.Foptionname,
+                Fdept_name = a.Fdept_name ?? string.Empty,
+                Femp_name = a.Femp_name ?? string.Empty
+
+            });
             //var datas = query.ToList();
             var response = new    // 定义 前端返回数据  总记录，总页，当前页 ，size,返回记录
             {
@@ -224,10 +249,10 @@ namespace WebApi_SY.Controllers
                 msg = "OK",
                 data = new
                 {
-                    //totalCounts = totalCount,
-                    //totalPagess = totalPages,
-                    //currentPages = page,
-                    //pageSizes = pageSize,
+                    totalCounts = totalCount,
+                    totalPagess = totalPages,
+                    currentPages = page,
+                    pageSizes = pageSize,
                     data = query
                 }
             };
@@ -239,10 +264,10 @@ namespace WebApi_SY.Controllers
     int? Id = null,
     int? Fsourceid = null,
     int? Fprocessoption = null,
-    float? Fqty = null,
-    float? Fweight = null,
-    float? Fcommitqty = null,
-    float? Fpassqty = null,
+    decimal? Fqty = null,
+    decimal? Fweight = null,
+    decimal? Fcommitqty = null,
+    decimal? Fpassqty = null,
     int? Fempid = null,
     int? Fdeptid = null,
     int? Fbiller = null,
