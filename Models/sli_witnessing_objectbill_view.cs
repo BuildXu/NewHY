@@ -26,7 +26,7 @@ namespace WebApi_SY.Models
 
         public int Fobject { get; set; }   //  sli_bd_process_object  /  id
 
-        public string Fobjectid { get; set; }   //  sli_bd_process_object  /  id
+        public int Fobjectid { get; set; }   //  sli_bd_process_object  /  id
 
         public string Fobjectno{ get; set; }   //  sli_bd_process_object  /  Fnumber
 
