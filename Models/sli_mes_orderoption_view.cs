@@ -35,6 +35,8 @@ namespace WebApi_SY.Models
         [Key]
         public int Id { get; set; }
 
+
+        public int Fsourceid { get; set; }  // 源单id   (sli_work_processbilletnry  / id )
         /// <summary>
         /// 工作订单列表 ID，存储工作订单列表的唯一标识，使用 int 类型
         /// </summary>

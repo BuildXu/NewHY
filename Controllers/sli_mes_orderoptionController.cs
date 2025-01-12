@@ -28,6 +28,7 @@ namespace WebApi_SY.Controllers
                     var header = new sli_mes_orderoption
                     {
                         Fnumber = option.Fnumber,
+                        Fsourceid= ((int?)option.Fsourceid) ?? 0,
                         Fworkorderlistid = option.Fworkorderlistid,
                         Fprocessoption = option.Fprocessoption,
                         Fqty = option.Fqty,
@@ -87,6 +88,7 @@ namespace WebApi_SY.Controllers
 
 
                     sli_mes_orderoption.Fnumber = option.Fnumber;
+                    sli_mes_orderoption.Fsourceid = option.Fsourceid;
                     sli_mes_orderoption.Fworkorderlistid = option.Fworkorderlistid;
                     sli_mes_orderoption.Fprocessoption = option.Fprocessoption;
                     sli_mes_orderoption.Fqty = option.Fqty;
@@ -184,6 +186,7 @@ namespace WebApi_SY.Controllers
                 Fname = a.Fname,
                 Fnumber = a.Fnumber,
                 Id = a.Id,
+                Fsourceid=a.Fsourceid,
                 Fworkorderlistid = a.Fworkorderlistid,
                 Fprocessoption = a.Fprocessoption,
                 Fqty = a.Fqty,
@@ -223,6 +226,7 @@ namespace WebApi_SY.Controllers
         [System.Web.Http.HttpGet]
         public IHttpActionResult GetTableBySli_mes_option_view(
     int? Id = null,
+    int? Fsourceid = null,
     int? Fworkorderlistid = null,
     int? Fprocessoption = null,
     decimal? Fqty = null,
@@ -248,6 +252,10 @@ namespace WebApi_SY.Controllers
             if (Id.HasValue)
             {
                 query = query.Where(q => q.Id == Id);
+            }
+            if (Fsourceid.HasValue)
+            {
+                query = query.Where(q => q.Fsourceid == Fsourceid);
             }
             if (Fworkorderlistid.HasValue)
             {
