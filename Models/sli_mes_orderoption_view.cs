@@ -48,22 +48,22 @@ namespace WebApi_SY.Models
         /// <summary>
         /// 数量，存储业务相关的数量信息，使用 float 类型
         /// </summary>
-        public float Fqty { get; set; }
+        public decimal Fqty { get; set; }
 
         /// <summary>
         /// 重量，存储业务相关的重量信息，使用 float 类型
         /// </summary>
-        public float Fweight { get; set; }
+        public decimal Fweight { get; set; }
 
         /// <summary>
         /// 提交数量，存储已提交的数量信息，使用 float 类型
         /// </summary>
-        public float Fcommitqty { get; set; }
+        public decimal Fcommitqty { get; set; }
 
         /// <summary>
         /// 合格数量，存储合格产品或服务的数量，使用 float 类型
         /// </summary>
-        public float Fpassqty { get; set; }
+        public decimal Fpassqty { get; set; }
 
         /// <summary>
         /// 制单人 ID，存储制单人的唯一标识，使用 int 类型
@@ -73,22 +73,22 @@ namespace WebApi_SY.Models
         /// <summary>
         /// 开始日期，存储业务开始的日期时间，使用 DateTime 类型
         /// </summary>
-        public DateTime Fstartdate { get; set; }
+        public DateTime  ? Fstartdate { get; set; }
 
         /// <summary>
         /// 结束日期，存储业务结束的日期时间，使用 DateTime 类型
         /// </summary>
-        public DateTime Fenddate { get; set; }
+        public DateTime ? Fenddate { get; set; }
 
         /// <summary>
         /// 员工 ID，存储员工的唯一标识，使用 int 类型
         /// </summary>
-        public int Fempid { get; set; }
+        public int ? Fempid { get; set; }
 
         /// <summary>
         /// 部门 ID，存储部门的唯一标识，使用 int 类型
         /// </summary>
-        public int Fdeptid { get; set; }
+        public int ? Fdeptid { get; set; }
 
         /// <summary>
         /// 日期，存储业务发生的日期时间，使用 DateTime 类型
@@ -104,5 +104,14 @@ namespace WebApi_SY.Models
         /// 选项名称，存储业务选项的名称，使用 varchar 类型
         /// </summary>
         public string Foptionname { get; set; }
+        /// <summary>
+        /// 部门名称
+        /// </summary>
+        public string Fdept_name { get; set; }
+        /// <summary>
+        /// 职员
+        /// </summary>
+        public string Femp_name { get; set; }
+
     }
 }

@@ -123,8 +123,8 @@ namespace WebApi_SY.Entity
 
         public DbSet<sli_mes_lauchbill_view> sli_mes_lauchbill_view { get; set; }//投产计划
 
-        public DbSet<sli_mes_orderoption> sli_mes_orderoption { get; set; }//投产清单表
-        public DbSet<sli_mes_orderoption_view> sli_mes_orderoption_view { get; set; }//投产清单表
+        public DbSet<sli_mes_orderoption> Sli_mes_orderoption { get; set; }//投产清单表
+        public DbSet<sli_mes_orderoption_view> Sli_mes_orderoption_view { get; set; }//投产清单表
 
         public DbSet<sli_mes_objectreport> sli_mes_objectreport { get; set; }//工步汇报
         public DbSet<sli_mes_objectreport_view> sli_mes_objectreport_view { get; set; }//工步汇报
@@ -134,6 +134,8 @@ namespace WebApi_SY.Entity
 
         public DbSet<sli_mes_furnace> Sli_mes_furnace { get; set; }//装炉单
         public DbSet<sli_mes_furnace_view> Sli_mes_furnace_view { get; set; }//装炉单
+
+        //public DbSet<sli_mes_orderoption_view> Sli_mes_orderoption_view { get; set; }//工序派工单
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //ConnectionStrings 19vs7gv47690.vicp.fun,46716

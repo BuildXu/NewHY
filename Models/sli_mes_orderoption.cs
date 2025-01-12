@@ -30,22 +30,22 @@ namespace WebApi_SY.Models
         /// <summary>
         /// 工件数量，选工序计划时带入
         /// </summary>
-        public float Fqty { get; set; }
+        public decimal Fqty { get; set; }
 
         /// <summary>
         /// 工件重量，选工序计划时带入
         /// </summary>
-        public float Fweight { get; set; }
+        public decimal Fweight { get; set; }
 
         /// <summary>
         /// 关联数量，默认 0
         /// </summary>
-        public float Fcommitqty { get; set; } = 0;
+        public decimal Fcommitqty { get; set; } = 0;
 
         /// <summary>
         /// 合格数量，默认 0
         /// </summary>
-        public float Fpassqty { get; set; } = 0;
+        public decimal Fpassqty { get; set; } = 0;
 
         /// <summary>
         /// 制单人，登录用户 id
@@ -55,12 +55,12 @@ namespace WebApi_SY.Models
         /// <summary>
         /// 计划开始日期，选工序计划时带入（可修改）
         /// </summary>
-        public DateTime Fstartdate { get; set; }
+        public DateTime ?  Fstartdate { get; set; }
 
         /// <summary>
         /// 计划结束日期，选工序计划时带入（可修改）
         /// </summary>
-        public DateTime Fenddate { get; set; }
+        public DateTime ? Fenddate { get; set; }
 
         /// <summary>
         /// 派工日期

@@ -41,7 +41,7 @@ namespace WebApi_SY.Models
         public int Fsourceid { get; set; }
 
         /// <summary>
-        /// 流程选项的标识符，使用 int 存储
+        /// 工序id，使用 int 存储
         /// </summary>
         public int Fprocessoption { get; set; }
 

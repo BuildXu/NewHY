@@ -35,11 +35,11 @@ namespace WebApi_SY.Controllers
                         Fcommitqty = option.Fcommitqty,
                         Fpassqty = option.Fpassqty,
                         Fbiller = option.Fbiller,
-                        Fstartdate = option.Fstartdate,
-                        Fenddate = option.Fenddate,
+                        Fstartdate = option.Fstartdate ?? DateTime.MinValue,
+                        Fenddate = option.Fenddate ?? DateTime.MinValue,
                         Fdate = option.Fdate
                     };
-                    context.sli_mes_orderoption.Add(header);
+                    context.Sli_mes_orderoption.Add(header);
                 }
                 await context.SaveChangesAsync();
                 var datas = new
@@ -68,7 +68,7 @@ namespace WebApi_SY.Controllers
             try
             {
                 var context = new YourDbContext();
-                var entity = await context.sli_mes_orderoption.FindAsync(option.Id);
+                var entity = await context.Sli_mes_orderoption.FindAsync(option.Id);
                 if (entity == null)
                 {
                     var dataNull = new
@@ -82,7 +82,7 @@ namespace WebApi_SY.Controllers
                 }
                 else
                 {
-                    var sli_mes_orderoption = context.sli_mes_orderoption.FirstOrDefault(p => p.Id == option.Id);
+                    var sli_mes_orderoption = context.Sli_mes_orderoption.FirstOrDefault(p => p.Id == option.Id);
                     //var Sli_plan_modelEntrys = _context.Sli_plan_modelEntry.Where(p => p.fmodelID == model.Id).ToList();
 
 
@@ -130,7 +130,7 @@ namespace WebApi_SY.Controllers
                 var context = new YourDbContext();
                 foreach (var deleteid in id)
                 {
-                    var entity = await context.sli_mes_orderoption.FindAsync(deleteid);
+                    var entity = await context.Sli_mes_orderoption.FindAsync(deleteid);
                     if (entity == null)
                     {
                         var dataNull = new
@@ -142,7 +142,7 @@ namespace WebApi_SY.Controllers
                         };
                         return dataNull;
                     }
-                    context.sli_mes_orderoption.Remove(entity);
+                    context.Sli_mes_orderoption.Remove(entity);
                 }
                 await context.SaveChangesAsync();
                 var data = new
@@ -166,84 +166,69 @@ namespace WebApi_SY.Controllers
         }
 
         [System.Web.Http.HttpGet]
-        public IHttpActionResult GetTableBySli_mes_option(int? Id = null, int? Fworkorderlistid = null, int? Fprocessoption = null, float? Fqty = null, float? Fweight = null, float? Fcommitqty = null, float? Fpassqty = null, int? Fbiller = null, DateTime? Fstartdate = null, DateTime? Fenddate = null, DateTime? Fdate = null)
+        public IHttpActionResult GetTableBySli_mes_option(int page = 1, int pageSize = 10)
+           // int? Id = null, int? Fworkorderlistid = null, int? Fprocessoption = null, decimal? Fqty = null, decimal? Fweight = null, decimal? Fcommitqty = null, decimal? Fpassqty = null, int? Fbiller = null, DateTime? Fstartdate = null, DateTime? Fenddate = null, DateTime? Fdate = null
         {
             var context = new YourDbContext();
-            IQueryable<sli_mes_orderoption> query = context.sli_mes_orderoption;
+            IQueryable<sli_mes_orderoption_view> query = context.Sli_mes_orderoption_view;
 
-            if (Id.HasValue)
-            {
-                query = query.Where(q => q.Id == Id);
-            }
-            if (Fworkorderlistid.HasValue)
-            {
-                query = query.Where(q => q.Fworkorderlistid == Fworkorderlistid);
-            }
-            if (Fprocessoption.HasValue)
-            {
-                query = query.Where(q => q.Fprocessoption == Fprocessoption);
-            }
-            if (Fqty.HasValue)
-            {
-                query = query.Where(q => q.Fqty == Fqty);
-            }
-            if (Fweight.HasValue)
-            {
-                query = query.Where(q => q.Fweight == Fweight);
-            }
-            if (Fcommitqty.HasValue)
-            {
-                query = query.Where(q => q.Fcommitqty == Fcommitqty);
-            }
-            if (Fpassqty.HasValue)
-            {
-                query = query.Where(q => q.Fpassqty == Fpassqty);
-            }
-            if (Fbiller.HasValue)
-            {
-                query = query.Where(q => q.Fbiller == Fbiller);
-            }
-            if (Fstartdate.HasValue)
-            {
-                query = query.Where(q => q.Fstartdate == Fstartdate);
-            }
-            if (Fenddate.HasValue)
-            {
-                query = query.Where(q => q.Fenddate == Fenddate);
-            }
-            if (Fdate.HasValue)
-            {
-                query = query.Where(q => q.Fdate == Fdate);
-            }
-            //var totalCount = query.Count(); //记录数
-            //var totalPages = (int)Math.Ceiling((double)totalCount / pageSize); // 页数
-            //var paginatedQuery = query.OrderByDescending(b => b.Id).Skip((page - 1) * pageSize).Take(pageSize); //  某页记录
+            
+            var totalCount = query.Count(); //记录数
+            var totalPages = (int)Math.Ceiling((double)totalCount / pageSize); // 页数
+            var paginatedQuery = query.OrderByDescending(b => b.Id).Skip((page - 1) * pageSize).Take(pageSize); //  某页记录
             //var datas = query.ToList();
+            var result = paginatedQuery.Select(a => new
+            {
+                Fcustno = a.Fcustno,
+                Fcustname = a.Fcustname,
+                Fname = a.Fname,
+                Fnumber = a.Fnumber,
+                Id = a.Id,
+                Fworkorderlistid = a.Fworkorderlistid,
+                Fprocessoption = a.Fprocessoption,
+                Fqty = a.Fqty,
+                Fweight = a.Fweight,
+                Fcommitqty = a.Fcommitqty,
+                Fpassqty = a.Fpassqty,
+                Fbiller = a.Fbiller,
+                Fstartdate = a.Fstartdate,
+                Fenddate = a.Fenddate ,
+                Fempid = a.Fempid ?? 0,
+                Fdeptid = a.Fdeptid ?? 0,
+                Fdate = a.Fdate,
+                Foptionno = a.Foptionno,
+                Foptionname = a.Foptionname,
+                Fdept_name = a.Fdept_name ?? string.Empty,
+                Femp_name = a.Femp_name ?? string.Empty
+
+            });
             var response = new    // 定义 前端返回数据  总记录，总页，当前页 ，size,返回记录
             {
                 code = 200,
                 msg = "OK",
                 data = new
                 {
-                    //totalCounts = totalCount,
-                    //totalPagess = totalPages,
-                    //currentPages = page,
-                    //pageSizes = pageSize,
-                    data = query
+                    totalCounts = totalCount,
+                    totalPagess = totalPages,
+                    currentPages = page,
+                    pageSizes = pageSize,
+                    data = result
                 }
+
+
             };
 
-            return Json(response);
+            return Ok(response);
         }
         [System.Web.Http.HttpGet]
         public IHttpActionResult GetTableBySli_mes_option_view(
     int? Id = null,
     int? Fworkorderlistid = null,
     int? Fprocessoption = null,
-    float? Fqty = null,
-    float? Fweight = null,
-    float? Fcommitqty = null,
-    float? Fpassqty = null,
+    decimal? Fqty = null,
+    decimal? Fweight = null,
+    decimal? Fcommitqty = null,
+    decimal? Fpassqty = null,
     int? Fbiller = null,
     DateTime? Fstartdate = null,
     DateTime? Fenddate = null,
@@ -258,7 +243,7 @@ namespace WebApi_SY.Controllers
     string Foptionname = null)
         {
             var context = new YourDbContext();
-            IQueryable<sli_mes_orderoption_view> query = context.sli_mes_orderoption_view;
+            IQueryable<sli_mes_orderoption_view> query = context.Sli_mes_orderoption_view;
 
             if (Id.HasValue)
             {
