@@ -15,8 +15,10 @@ namespace WebApi_SY.Models
         /// <summary>
         /// 自增行 id
         /// </summary>
+        ///
         public int Id { get; set; }
 
+        public int Fsourceid { get; set; }  // 源单id   (sli_work_processbilletnry  / id )
         /// <summary>
         /// 工件 Id，选工序计划时带入
         /// </summary>
