@@ -8,7 +8,7 @@ namespace WebApi_SY.Models
     public class sli_witnessing_objectbill
     {
        
-        public int Fsourceid { get; set; } //  销售订单行id
+        public int Fentryid { get; set; } //  销售订单行id
   
         public int Id { get; set; }      // 数据id  自增
 

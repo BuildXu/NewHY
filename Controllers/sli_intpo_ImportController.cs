@@ -198,85 +198,85 @@ namespace WebApi_SY.Controllers
             }
         }
 
-        [System.Web.Http.HttpGet]
-        public IHttpActionResult GetTableBysale_orderentry(int page = 1, int pageSize = 10, int? id = null)
-        {
-            var context = new YourDbContext();
-            IQueryable<sli_sale_orderImportentry> query = context.Sli_sale_orderImportentry;
+        //[System.Web.Http.HttpGet]
+        //public IHttpActionResult GetTableBysale_orderentry(int page = 1, int pageSize = 10, int? id = null)
+        //{
+        //    var context = new YourDbContext();
+        //    IQueryable<sli_sale_orderImportentry> query = context.Sli_sale_orderImportentry;
 
-            //if (!string.IsNullOrEmpty(Fname))
-            //{
-            //    query = query.Where(q => q.fname.Contains(Fname));
-            //}
-            if (id.HasValue)
-            {
-                query = query.Where(t => t.fid == id.Value);
-            }
+        //    //if (!string.IsNullOrEmpty(Fname))
+        //    //{
+        //    //    query = query.Where(q => q.fname.Contains(Fname));
+        //    //}
+        //    if (id.HasValue)
+        //    {
+        //        query = query.Where(t => t.fid == id.Value);
+        //    }
 
-            var totalCount = query.Count(); //记录数
-            var totalPages = (int)Math.Ceiling((double)totalCount / pageSize); // 页数
-            var paginatedQuery = query.OrderByDescending(b => b.id).Skip((page - 1) * pageSize).Take(pageSize); //  某页记录
-            //var datas = query.ToList();
-            var response = new    // 定义 前端返回数据  总记录，总页，当前页 ，size,返回记录
-            {
-                code = 200,
-                msg = "OK",
-                data = new
-                {
-                    totalCounts = totalCount,
-                    totalPagess = totalPages,
-                    currentPages = page,
-                    pageSizes = pageSize,
-                    data = paginatedQuery
-                }
-            };
+        //    var totalCount = query.Count(); //记录数
+        //    var totalPages = (int)Math.Ceiling((double)totalCount / pageSize); // 页数
+        //    var paginatedQuery = query.OrderByDescending(b => b.id).Skip((page - 1) * pageSize).Take(pageSize); //  某页记录
+        //    //var datas = query.ToList();
+        //    var response = new    // 定义 前端返回数据  总记录，总页，当前页 ，size,返回记录
+        //    {
+        //        code = 200,
+        //        msg = "OK",
+        //        data = new
+        //        {
+        //            totalCounts = totalCount,
+        //            totalPagess = totalPages,
+        //            currentPages = page,
+        //            pageSizes = pageSize,
+        //            data = paginatedQuery
+        //        }
+        //    };
 
-            return Json(response);
-        }
+        //    return Json(response);
+        //}
 
-        [System.Web.Http.HttpGet]
-        public IHttpActionResult GetTableBysale_order_view(int? id = null, int? fid = null, int page = 1, int pageSize = 10,  string FCustomerName = null)
-        {
-            var context = new YourDbContext();
-            IQueryable<sli_sale_orderImport_view> query = context.Sli_sale_orderImport_view;
+        //[System.Web.Http.HttpGet]
+        //public IHttpActionResult GetTableBysale_order_view(int? id = null, int? fid = null, int page = 1, int pageSize = 10,  string FCustomerName = null)
+        //{
+        //    var context = new YourDbContext();
+        //    IQueryable<sli_sale_orderImport_view> query = context.Sli_sale_orderImport_view;
 
-            if (!string.IsNullOrEmpty(FCustomerName))
-            {
-                query = query.Where(q => q.FCustomerName.Contains(FCustomerName));
-            }
-            if (id.HasValue)
-            {
-                query = query.Where(t => t.id == id.Value);
-            }
-            if (fid.HasValue)
-            {
-                query = query.Where(t => t.fid == fid.Value);
-            }
-            //if (fid.HasValue)
-            //{
-            //    query = query.Where(t => t.fid == fid.Value);
-            //}
+        //    if (!string.IsNullOrEmpty(FCustomerName))
+        //    {
+        //        query = query.Where(q => q.FCustomerName.Contains(FCustomerName));
+        //    }
+        //    if (id.HasValue)
+        //    {
+        //        query = query.Where(t => t.id == id.Value);
+        //    }
+        //    if (fid.HasValue)
+        //    {
+        //        query = query.Where(t => t.fid == fid.Value);
+        //    }
+        //    //if (fid.HasValue)
+        //    //{
+        //    //    query = query.Where(t => t.fid == fid.Value);
+        //    //}
 
-            var totalCount = query.Count(); //记录数
-            var totalPages = (int)Math.Ceiling((double)totalCount / pageSize); // 页数
-            var paginatedQuery = query.OrderByDescending(b => b.id).Skip((page - 1) * pageSize).Take(pageSize); //  某页记录
-            //var datas = query.ToList();
-            var response = new    // 定义 前端返回数据  总记录，总页，当前页 ，size,返回记录
-            {
-                code = 200,
-                msg = "OK",
-                data = new
-                {
-                    totalCounts = totalCount,
-                    totalPagess = totalPages,
-                    currentPages = page,
-                    pageSizes = pageSize,
-                    data = paginatedQuery
-                }
-            };
+        //    var totalCount = query.Count(); //记录数
+        //    var totalPages = (int)Math.Ceiling((double)totalCount / pageSize); // 页数
+        //    var paginatedQuery = query.OrderByDescending(b => b.id).Skip((page - 1) * pageSize).Take(pageSize); //  某页记录
+        //    //var datas = query.ToList();
+        //    var response = new    // 定义 前端返回数据  总记录，总页，当前页 ，size,返回记录
+        //    {
+        //        code = 200,
+        //        msg = "OK",
+        //        data = new
+        //        {
+        //            totalCounts = totalCount,
+        //            totalPagess = totalPages,
+        //            currentPages = page,
+        //            pageSizes = pageSize,
+        //            data = paginatedQuery
+        //        }
+        //    };
 
-            return Json(response);
-        }
+        //    return Json(response);
+        //}
 
 
         /// <summary>
@@ -285,91 +285,91 @@ namespace WebApi_SY.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [Microsoft.AspNetCore.Mvc.HttpPost]
-        public async Task<object> Update([Microsoft.AspNetCore.Mvc.FromBody] sli_sale_orderImport import)
-        {
-            try
-            {
-                var context = new YourDbContext();
-                var entity = await context.Sli_sale_orderImport.FindAsync(import.FID);
-                if (entity == null)
-                {
-                    var dataNull = new
-                    {
-                        code = 200,
-                        msg = "ok",
-                        date = "修改记录不存在"
-                    };
-                    return dataNull;
-                }
-                else
-                {
+        //public async Task<object> Update([Microsoft.AspNetCore.Mvc.FromBody] sli_sale_orderImport import)
+        //{
+        //    try
+        //    {
+        //        var context = new YourDbContext();
+        //        var entity = await context.Sli_sale_orderImport.FindAsync(import.FID);
+        //        if (entity == null)
+        //        {
+        //            var dataNull = new
+        //            {
+        //                code = 200,
+        //                msg = "ok",
+        //                date = "修改记录不存在"
+        //            };
+        //            return dataNull;
+        //        }
+        //        else
+        //        {
 
-                    var orderImport = context.Sli_sale_orderImport.FirstOrDefault(p => p.FID == import.FID);
-                    //var orderImportentry = context.Sli_sale_orderImportentry.Where(p => p.fid == import.FID).ToList();
+        //            var orderImport = context.Sli_sale_orderImport.FirstOrDefault(p => p.FID == import.FID);
+        //            //var orderImportentry = context.Sli_sale_orderImportentry.Where(p => p.fid == import.FID).ToList();
 
 
-                    orderImport.FCustomerName = import.FCustomerName;
-                    orderImport.FCustomerID = import.FCustomerID;
+        //            orderImport.FCustomerName = import.FCustomerName;
+        //            orderImport.FCustomerID = import.FCustomerID;
 
-                    //context.Sli_sale_orderImportentry.RemoveRange(orderImportentry);
-                    await context.SaveChangesAsync();
+        //            //context.Sli_sale_orderImportentry.RemoveRange(orderImportentry);
+        //            await context.SaveChangesAsync();
 
-                    foreach (var childTableData in import.sli_sale_orderImportentry)
-                    {
-                        var orderImportentry = context.Sli_sale_orderImportentry.FirstOrDefault(p => p.id == childTableData.id);
-                        //var entry = new sli_sale_orderImportentry
-                        //{
-                        //orderImportentry.fid = import.FID;
-                        orderImportentry.fmaterialNumber = childTableData.fmaterialNumber;
-                        orderImportentry.fseq = childTableData.fseq;
-                        orderImportentry.fchoose = childTableData.fchoose;
-                        orderImportentry.fsupplierSubmit = childTableData.fsupplierSubmit;
-                        orderImportentry.finquiryNo = childTableData.finquiryNo;
-                        orderImportentry.fsupplierName = childTableData.fsupplierName;
-                        orderImportentry.fprojectNo = childTableData.fprojectNo;
-                        orderImportentry.fdeliveryDate = childTableData.fdeliveryDate;
-                        orderImportentry.fname = childTableData.fname;
-                        orderImportentry.fdescription = childTableData.fdescription;
-                        orderImportentry.fsliMetal = childTableData.fsliMetal;
-                        orderImportentry.fqty = childTableData.fqty;
-                        orderImportentry.fsliHeatTreatment = childTableData.fsliHeatTreatment;
-                        orderImportentry.fsliTestBarQty = childTableData.fsliTestBarQty;
-                        orderImportentry.fsliExplanation = childTableData.fsliExplanation;
-                        orderImportentry.fsliNotice = childTableData.fsliNotice;
-                        orderImportentry.fsliDrawingNo = childTableData.fsliDrawingNo;
-                        orderImportentry.fsliBlank = childTableData.fsliBlank;
-                        orderImportentry.fsliWorkOrder = childTableData.fsliWorkOrder;
-                        orderImportentry.fsliSaleOrder = childTableData.fsliSaleOrder;
-                        orderImportentry.fsliQuotationNo = childTableData.fsliQuotationNo;
-                        orderImportentry.fsliStockNo = childTableData.fsliStockNo;
-                        orderImportentry.fsliStockLocation = childTableData.fsliStockLocation;
-                        await context.SaveChangesAsync();
-                        //};
-                        //context.Sli_sale_orderImportentry.Add(orderImportentry);
-                    }
-                    //await context.SaveChangesAsync();
+        //            foreach (var childTableData in import.sli_sale_orderImportentry)
+        //            {
+        //                var orderImportentry = context.Sli_sale_orderImportentry.FirstOrDefault(p => p.id == childTableData.id);
+        //                //var entry = new sli_sale_orderImportentry
+        //                //{
+        //                //orderImportentry.fid = import.FID;
+        //                orderImportentry.fmaterialNumber = childTableData.fmaterialNumber;
+        //                orderImportentry.fseq = childTableData.fseq;
+        //                orderImportentry.fchoose = childTableData.fchoose;
+        //                orderImportentry.fsupplierSubmit = childTableData.fsupplierSubmit;
+        //                orderImportentry.finquiryNo = childTableData.finquiryNo;
+        //                orderImportentry.fsupplierName = childTableData.fsupplierName;
+        //                orderImportentry.fprojectNo = childTableData.fprojectNo;
+        //                orderImportentry.fdeliveryDate = childTableData.fdeliveryDate;
+        //                orderImportentry.fname = childTableData.fname;
+        //                orderImportentry.fdescription = childTableData.fdescription;
+        //                orderImportentry.fsliMetal = childTableData.fsliMetal;
+        //                orderImportentry.fqty = childTableData.fqty;
+        //                orderImportentry.fsliHeatTreatment = childTableData.fsliHeatTreatment;
+        //                orderImportentry.fsliTestBarQty = childTableData.fsliTestBarQty;
+        //                orderImportentry.fsliExplanation = childTableData.fsliExplanation;
+        //                orderImportentry.fsliNotice = childTableData.fsliNotice;
+        //                orderImportentry.fsliDrawingNo = childTableData.fsliDrawingNo;
+        //                orderImportentry.fsliBlank = childTableData.fsliBlank;
+        //                orderImportentry.fsliWorkOrder = childTableData.fsliWorkOrder;
+        //                orderImportentry.fsliSaleOrder = childTableData.fsliSaleOrder;
+        //                orderImportentry.fsliQuotationNo = childTableData.fsliQuotationNo;
+        //                orderImportentry.fsliStockNo = childTableData.fsliStockNo;
+        //                orderImportentry.fsliStockLocation = childTableData.fsliStockLocation;
+        //                await context.SaveChangesAsync();
+        //                //};
+        //                //context.Sli_sale_orderImportentry.Add(orderImportentry);
+        //            }
+        //            //await context.SaveChangesAsync();
 
-                    var datas = new
-                    {
-                        code = 200,
-                        msg = "ok",
-                        date = "修改成功！"
-                    };
-                    return Ok(datas);
-                }
-            }
-            catch (Exception ex)
-            {
-                var datas = new
-                {
-                    code = 400,
-                    msg = "失败",
-                    date = ex.ToString()
-                };
-                return Ok(datas); ;
-            }
+        //            var datas = new
+        //            {
+        //                code = 200,
+        //                msg = "ok",
+        //                date = "修改成功！"
+        //            };
+        //            return Ok(datas);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        var datas = new
+        //        {
+        //            code = 400,
+        //            msg = "失败",
+        //            date = ex.ToString()
+        //        };
+        //        return Ok(datas); ;
+        //    }
 
-        }
+        //}
         /// <summary>
         /// 调用金蝶销售订单保存接口，写入excel导入数据；根据导入的生成的表头ID读取数据
         /// </summary>
