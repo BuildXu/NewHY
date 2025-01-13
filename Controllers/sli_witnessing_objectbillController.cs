@@ -19,23 +19,25 @@ namespace WebApi_SY.Controllers
         }
 
         [System.Web.Http.HttpPost]
-        public async Task<object> sli_mes_lauch_Insert([Microsoft.AspNetCore.Mvc.FromBody] sli_witnessing_objectbill options)
+        public async Task<object> sli_mes_lauch_Insert([Microsoft.AspNetCore.Mvc.FromBody] sli_witnessing_objectbill[] options)
         {
             var context = new YourDbContext();
             try
             {
-
+                foreach (var option in options)
+                {
                     var header = new sli_witnessing_objectbill
                     {
-                        Fsourceid = options.Fsourceid,
-                        Id = options.Id,
-                        Fseq = options.Fseq,
-                        Fobject = options.Fobject,
-                        Fnote = options.Fnote,
-                        Fstatus = options.Fstatus
+                        Fentryid = option.Fentryid,
+                        //Id = options.Id,
+                        Fseq = option.Fseq,
+                        Fobject = option.Fobject,
+                        Fnote = option.Fnote,
+                        Fstatus = option.Fstatus
                     };
                     context.sli_witnessing_objectbill.Add(header);
 
+                }
                 await context.SaveChangesAsync();
                 var datas = new
                 {
@@ -81,7 +83,7 @@ namespace WebApi_SY.Controllers
                     //var Sli_plan_modelEntrys = _context.Sli_plan_modelEntry.Where(p => p.fmodelID == model.Id).ToList();
 
 
-                    sli_witnessing_objectbill.Fsourceid = option.Fsourceid;
+                    sli_witnessing_objectbill.Fentryid = option.Fentryid;
                     sli_witnessing_objectbill.Id = option.Id;
                     sli_witnessing_objectbill.Fseq = option.Fseq;
                     sli_witnessing_objectbill.Fobject = option.Fobject;
@@ -155,77 +157,64 @@ namespace WebApi_SY.Controllers
             }
         }
         [System.Web.Http.HttpGet]
-      public IHttpActionResult GetTableBysli_witnessing_objectbill_view(
-            int? Id = null,
-            int? Fsourceid = null,
-            int? Fseq = null,
-            int? Fobject = null,
-            int? Fobjectid = null,
-            string Fobjectno = null,
-            string Fobjectname = null,
-            string Fnote = null,
-            int? Fstatus = null,
-            string Forderno = null,
-            string Fcustomer = null,
-            string Fmaterialname = null,
-            string Fdescription = null)
+        public IHttpActionResult GetTableBysli_witnessing_objectbill_view(int page = 1, int pageSize = 10)
         {
+
+      //      int? Id = null,
+      //int? Fsourceid = null,
+      //int? Fseq = null,
+      //int? Fobject = null,
+      //string Fnote = null,
+      //int? Fstatus = null
             var context = new YourDbContext();
             IQueryable<sli_witnessing_objectbill_view> query = context.sli_witnessing_objectbill_view;
 
-            if(Id.HasValue)
+            //if (Id.HasValue)
+            //{
+            //    query = query.Where(q => q.Id == Id);
+            //}
+            //if (Fsourceid.HasValue)
+            //{
+            //    query = query.Where(q => q.Fsourceid == Fsourceid);
+            //}
+            //if (Fseq.HasValue)
+            //{
+            //    query = query.Where(q => q.Fseq == Fseq);
+            //}
+            //if (Fobject.HasValue)
+            //{
+            //    query = query.Where(q => q.Fobject == Fobject);
+            //}
+            //if (!string.IsNullOrEmpty(Fnote))
+            //{
+            //    query = query.Where(q => q.Fnote == Fnote);
+            //}
+            //if (Fstatus.HasValue)
+            //{
+            //    query = query.Where(q => q.Fstatus == Fstatus);
+            //}
+            var totalCount = query.Count(); //记录数
+            var totalPages = (int)Math.Ceiling((double)totalCount / pageSize); // 页数
+            var paginatedQuery = query.OrderByDescending(b => b.Id).Skip((page - 1) * pageSize).Take(pageSize); //  某页记录
+            var result = paginatedQuery.Select(a => new
             {
-                query = query.Where(q => q.Id == Id);
-            }
-            if (Fsourceid.HasValue)
-            {
-                query = query.Where(q => q.Fsourceid == Fsourceid);
-            }
-            if (Fseq.HasValue)
-            {
-                query = query.Where(q => q.Fseq == Fseq);
-            }
-            if (Fobject.HasValue)
-            {
-                query = query.Where(q => q.Fobject == Fobject);
-            }
-            if (Fobjectid.HasValue)
-            {
-                query = query.Where(q => q.Fobjectid == Fobjectid);
-            }
-            if (!string.IsNullOrEmpty(Fobjectno))
-            {
-                query = query.Where(q => q.Fobjectno == Fobjectno);
-            }
-            if (!string.IsNullOrEmpty(Fobjectname))
-            {
-                query = query.Where(q => q.Fobjectname == Fobjectname);
-            }
-            if (!string.IsNullOrEmpty(Fnote))
-            {
-                query = query.Where(q => q.Fnote == Fnote);
-            }
-            if (Fstatus.HasValue)
-            {
-                query = query.Where(q => q.Fstatus == Fstatus);
-            }
-            if (!string.IsNullOrEmpty(Forderno))
-            {
-                query = query.Where(q => q.Forderno == Forderno);
-            }
-            if (!string.IsNullOrEmpty(Fcustomer))
-            {
-                query = query.Where(q => q.Fcustomer == Fcustomer);
-            }
-            if (!string.IsNullOrEmpty(Fmaterialname))
-            {
-                query = query.Where(q => q.Fmaterialname == Fmaterialname);
-            }
-            if (!string.IsNullOrEmpty(Fdescription))
-            {
-                query = query.Where(q => q.Fdescription == Fdescription);
-            }
+                Fsourceid = a.Fsourceid,
+                Forderno = a.Forderno,
+                Fcustomer = a.Fcustomer,
+                Fmaterialname = a.Fmaterialname,
+                Fdescription = a.Fdescription,
+                Id = a.Id,
+                Fentryid = a.Fentryid,
+                Fseq = a.Fseq,
+                Fobject = a.Fobject,
+                Fobjectno = a.Fobjectno,
+                Fobjectname = a.Fobjectname,
+                Fnote = a.Fnote ?? string.Empty,
+                Fstatus = a.Fstatus,
+                
 
+
+            });
 
             var response = new
             {
@@ -233,6 +222,10 @@ namespace WebApi_SY.Controllers
                 msg = "OK",
                 data = new
                 {
+                    totalCounts = totalCount,
+                    totalPagess = totalPages,
+                    currentPages = page,
+                    pageSizes = pageSize,
                     data = query.ToList()
                 }
             };
