@@ -8,7 +8,7 @@ namespace WebApi_SY.Models
 {
     public class sli_quality_requestion
     {
-         
+
         [Key]
         public int Id { get; set; }              // Id自增
         public int Fworkorderlistid { get; set; }  // 工件Id
@@ -20,6 +20,6 @@ namespace WebApi_SY.Models
         public DateTime Fdate { get; set; }       // 请检日期
         public DateTime Fendate { get; set; }     //  预计完成日期
         public int Fstatus { get; set; }      // 状态
-    
-}
+
+    }
 }
