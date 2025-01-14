@@ -9,11 +9,11 @@ namespace WebApi_SY.Models
     {
         public int id { get; set; }      //  主表Id
         public string fnumber { get; set; }  // 请检单号
-        public DateTime fdate { get; set; }    // 单据日期
+        public DateTime Fdate { get; set; }    // 单据日期
 
-        public DateTime fendDate { get; set; }   // 计划完成日期
+        public DateTime FendDate { get; set; }   // 计划完成日期
         //public int fbillerId { get; set; }
-        public int fdeptId { get; set; }   // 请检部门
+        public int FdeptId { get; set; }   // 请检部门
         public int Fempid { get; set; }   // 请检人
         public int Fstatus { get; set; }  //  状态
 
