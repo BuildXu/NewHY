@@ -152,6 +152,7 @@ namespace WebApi_SY.Controllers
                 {
                     Fbillid = b.Fbillid,
                     Fentryid = b.Fentryid,
+                    Fworkorderlistid=b.Fworkorderlistid,// ********1.14 增加
                     Fseq = b.Fseq,
                     Fwobillid = b.Fwobillid,
                     Fprocessobject = b.Fprocessobject,

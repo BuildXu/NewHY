@@ -37,8 +37,9 @@ namespace WebApi_SY.Entity
 
         public DbSet<sli_quality_request> sli_quality_request { get; set; }  //  生产车间Prd  投产计划  周计划
         public DbSet<sli_quality_requestEntry> sli_quality_requestEntry { get; set; }
-        
-        
+
+        public DbSet<sli_quality_request_view> sli_quality_request_view { get; set; }
+
         //生产订单  查询、新增12.5部署 
         public DbSet<sli_work_order> Sli_work_order { get; set; }        // 生产  prd   生产订单 
         public DbSet<sli_work_orderEntry> Sli_work_orderEntry { get; set; }
