@@ -7,8 +7,8 @@ namespace WebApi_SY.Models
 {
     public class sli_quality_request
     {
-        public int id { get; set; }
-        public string fplanNumber { get; set; }
+        public int id { get; set; }   
+        public string fplanNumber { get; set; } 
         public string fdate { get; set; }
         public string fstartDate { get; set; }
         public string fendDate { get; set; }
