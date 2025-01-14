@@ -84,7 +84,7 @@ namespace WebApi_SY.Controllers
 
 
                     sli_witnessing_objectbill.Fentryid = option.Fentryid;
-                    sli_witnessing_objectbill.Id = option.Id;
+                    //sli_witnessing_objectbill.Id = option.Id;
                     sli_witnessing_objectbill.Fseq = option.Fseq;
                     sli_witnessing_objectbill.Fobject = option.Fobject;
                     sli_witnessing_objectbill.Fstatus = option.Fstatus;
