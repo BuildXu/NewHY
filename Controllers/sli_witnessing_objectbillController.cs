@@ -198,12 +198,13 @@ namespace WebApi_SY.Controllers
             var paginatedQuery = query.OrderByDescending(b => b.Id).Skip((page - 1) * pageSize).Take(pageSize); //  某页记录
             var result = paginatedQuery.Select(a => new
             {
+                Id = a.Id,
                 Fsourceid = a.Fsourceid,
                 Forderno = a.Forderno,
                 Fcustomer = a.Fcustomer,
                 Fmaterialname = a.Fmaterialname,
                 Fdescription = a.Fdescription,
-                Id = a.Id,
+                
                 Fentryid = a.Fentryid,
                 Fseq = a.Fseq,
                 Fobject = a.Fobject,
@@ -226,7 +227,7 @@ namespace WebApi_SY.Controllers
                     totalPagess = totalPages,
                     currentPages = page,
                     pageSizes = pageSize,
-                    data = query.ToList()
+                    data = result
                 }
             };
 
