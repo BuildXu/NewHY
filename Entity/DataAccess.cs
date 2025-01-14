@@ -18,7 +18,7 @@ namespace WebApi_SY.Entity
         public DbSet<t_stock> T_stock { get; set; }
         //12.5 部署  查询，新增
         public DbSet<sli_workOrderList> Sli_workOrderList { get; set; }
-
+        public DbSet<sli_intpo_Import> sli_intpo_Import { get; set; }// **************
         public DbSet<sli_workorderlist_view> sli_workorderlist_view { get; set; }
         public DbSet<t_sal_orderEntry> T_sal_orderEntry { get; set; }
 
