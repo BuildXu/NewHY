@@ -33,6 +33,7 @@ namespace WebApi_SY.Models
         public int Fentryid { get; set; }//主键ID
         public int Fseq { get; set; } //序号
         public int Fwobillid { get; set; }
+        public int Fworkorderlistid { get; set; }  //*******************1.14 新增加上去的
         public int Fprocessobject { get; set; } //工步ID
 
         public int Fqualityoption { get; set; } //*******************新增 检验方案  存放 sli_document_quality_sorderBill /Id
