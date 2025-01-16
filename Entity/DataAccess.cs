@@ -39,6 +39,7 @@ namespace WebApi_SY.Entity
         public DbSet<sli_quality_requestEntry> Sli_quality_requestEntry { get; set; }
 
         public DbSet<sli_quality_request_view> Sli_quality_request_view { get; set; }
+        public DbSet<sli_quality_requestentry_view> Sli_quality_requestentry_view { get; set; }
 
         //生产订单  查询、新增12.5部署 
         public DbSet<sli_work_order> Sli_work_order { get; set; }        // 生产  prd   生产订单 
@@ -118,6 +119,7 @@ namespace WebApi_SY.Entity
         public DbSet<sli_work_processBill> Sli_work_processBill { get; set; }//工艺流转卡表头
         public DbSet<sli_work_processBillEntry> Sli_work_processBillEntry { get; set; }//工艺流转卡表体
         public DbSet<sli_work_processBill_view> Sli_work_processBill_view { get; set; }//工艺路线视图
+        public DbSet<sli_work_processBillEntry_view> Sli_work_processBillEntry_view { get; set; }//工艺路线表体视图
 
 
 
@@ -305,6 +307,11 @@ namespace WebApi_SY.Entity
                .WithMany(d => d.sli_work_processBillEntry)
                .HasForeignKey(d => d.Fbillid);
 
+            modelBuilder.Entity<sli_work_processBillEntry_view>()
+               .HasOne(h => h.sli_work_processBill_view)
+               .WithMany(d => d.sli_work_processBillEntry_view)
+               .HasForeignKey(d => d.Fbillid);
+
 
             modelBuilder.Entity<sli_work_orderEntry>()
                .HasOne(h => h.sli_work_order)
@@ -314,6 +321,11 @@ namespace WebApi_SY.Entity
             modelBuilder.Entity<sli_quality_requestEntry>()
               .HasOne(h => h.sli_quality_request)
               .WithMany(d => d.sli_quality_requestEntry)
+              .HasForeignKey(d => d.Id);
+
+            modelBuilder.Entity<sli_quality_requestentry_view>()
+              .HasOne(h => h.sli_quality_request_view)
+              .WithMany(d => d.sli_quality_requestentry_view)
               .HasForeignKey(d => d.Id);
 
             //modelBuilder.Entity<sli_witnessing_objectbill>()

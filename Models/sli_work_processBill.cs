@@ -113,34 +113,51 @@ namespace WebApi_SY.Models
         // 对应s1.Fstatus
         public int Fstatus { get; set; }
         public int Fsourceid { get; set; }
-        //public int Fprocessobject { get; set; }
+        public virtual ICollection<sli_work_processBillEntry_view> sli_work_processBillEntry_view { get; set; }
+    }
 
-        //// 对应s2.Fbillid
-        //public int Fbillid { get; set; }
-        //// 对应s2.Fentryid
-        //public int Fentryid { get; set; }
-        //// 对应s2.Fseq，即Fentryseq
-        //public int Fentryseq { get; set; }
-        //// 对应s2.Fwobillid
-        //public int Fwobillid { get; set; }
-        //// 对应s2.Fprocessobject，即fobjectname
-        //public int Fprocessobject { get; set; }
-        //// 对应s4.fname
-        //public string fobjectname { get; set; }
-        //// 对应s2.Fstartdate，即Fentrystartdate
-        //public DateTime? Fentrystartdate { get; set; }
-        //// 对应s2.Fenddate，即Fentryenddate
-        //public DateTime? Fentryenddate { get; set; }
-        //// 对应s2.Fqty，即Fentryqty
-        //public decimal Fentryqty { get; set; }
-        //// 对应s2.Fweight，即Fentryweight
-        //public decimal Fentryweight { get; set; }
-        //// 对应s2.Fcommitqty，即Fentrycommitqty
-        //public decimal Fentrycommitqty { get; set; }
-        //// 对应s2.Fcommitweight，即Fentrycommitweight
-        //public decimal Fentrycommitweight { get; set; }
-        //// 对应s2.Fstatus，即Fentrystatus
-        //public int Fentrystatus { get; set; }
+    public class sli_work_processBillEntry_view
+    {
+        // 对应 s1.Fbillid
+        public int Fbillid { get; set; }   // 关联主表视图ID
+        // 对应 s1.Fentryid
+        [Key]
+        public int Fentryid { get; set; }// 分录ID
+        // 对应 s1.Fseq
+        public int ? Fseq { get; set; } //行号
+        // 对应 s1.Fwobillid
+        public int ? Fwobillid { get; set; } //
+        // 对应 s1.Fworkorderlistid
+        public int ? Fworkorderlistid { get; set; } //工件ID
+        // 对应 s4.Fproductno
+        public string Fproductno { get; set; } //物料代码  Fmaterialname
+        public string Fmaterialnumber { get; set; } //物料代码  Fmaterialname
+        
+        public string Fmaterialname { get; set; } //物料名称  Fdescription
+
+        public string Fdescription { get; set; } //物料名称  Fdescription
+        public int Fprocessobject { get; set; } //工步ID
+        // 对应 s1.Fprocessobject
+        public string Fprocessobjectnumber { get; set; } //工步代码
+        // 对应 s3.fname
+        public string Fprocessobjectname { get; set; }//工步名称
+        // 对应 s1.Fstartdate
+        public DateTime ? Fstartdate { get; set; }//开始时间
+        // 对应 s1.Fenddate
+        public DateTime ? Fenddate { get; set; }//结束时间
+        // 对应 s1.Fqty
+        public decimal Fqty { get; set; }//数量
+        // 对应 s1.Fweight
+        public decimal Fweight { get; set; }//重量
+        // 对应 s1.Fcommitqty
+        public decimal Fcommitqty { get; set; }
+        // 对应 s1.Fcommitweight
+        public decimal Fcommitweight { get; set; }
+        // 对应 s1.Fqualityoption
+        public int Fqualityoption { get; set; }
+        // 对应 s1.Fstatus
+        public int Fstatus { get; set; }//状态
+        public virtual sli_work_processBill_view sli_work_processBill_view { get; set; }
     }
 
 }

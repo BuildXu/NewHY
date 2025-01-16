@@ -71,7 +71,8 @@ namespace WebApi_SY.Controllers
                                             Fprocessobject = innerItem.Fobjectid,
                                             Fseq = entryseq,
                                             Fqty = id.Fqty,
-                                            Fweight = id.Fweight
+                                            Fweight = id.Fweight,
+                                            Fworkorderlistid = id.id
                                         };
 
                                         context.Sli_work_processBillEntry.Add(innerEntity);
@@ -238,7 +239,7 @@ namespace WebApi_SY.Controllers
         {
             var context = new YourDbContext();
 
-            IQueryable<sli_work_processBill_view> query = context.Sli_work_processBill_view;
+            IQueryable<sli_work_processBill_view> query = context.Sli_work_processBill_view.Include(a => a.sli_work_processBillEntry_view);
             //var query = from p in context.Sli_work_order
             //            join c in context.Sli_work_orderEntry on p.Id equals c.Id
             //            select new
@@ -267,20 +268,29 @@ namespace WebApi_SY.Controllers
                 Fcommitweight = a.Fcommitweight,
                 Fstatus = a.Fstatus,
                 Fsourceid = a.Fsourceid,
-                //Fprocessobject = a.Fprocessobject
-                //Fbillid = a.Fbillid,
-                //Fentryid = a.Fentryid,
-                //Fentryseq = a.Fentryseq,
-                //Fwobillid = a.Fwobillid,
-                //Fprocessobject = a.Fprocessobject,
-                //fobjectname = a.fobjectname,
-                //Fentrystartdate = a.Fentrystartdate,
-                //Fentryenddate = a.Fentryenddate,
-                //Fentryqty = a.Fentryqty,
-                //Fentryweight = a.Fentryweight,
-                //Fentrycommitqty = a.Fentrycommitqty,
-                //Fentrycommitweight = a.Fentrycommitweight,
-                //Fentrystatus = a.Fentrystatus,
+                sli_work_processBillEntry_view = a.sli_work_processBillEntry_view.Select(b => new
+                {
+                    Fbillid = b.Fbillid,
+                    Fentryid = b.Fentryid,    //Fseq
+                    Fseq = b.Fseq ?? 0,    //
+                    Fwobillid = b.Fwobillid ?? 0,// ********1.14 增加
+                    Fworkorderlistid = a.Fworkorderlistid ,
+                    Fproductno = b.Fproductno ?? string.Empty,  //Fmaterialname
+                    Fmaterialnumber = b.Fmaterialnumber ?? string.Empty,  //Fmaterialname
+                    Fmaterialname = b.Fmaterialname ?? string.Empty,  //Fmaterialname
+                    Fdescription = b.Fdescription ?? string.Empty,  //Fmaterialname
+                    Fprocessobject = b.Fprocessobject,  //
+                    Fprocessobjectnumber = b.Fprocessobjectnumber,  //
+                    Fprocessobjectname = b.Fprocessobjectname,  //
+                    Fstartdate = b.Fstartdate,
+                    Fenddate = b.Fenddate,
+                    Fqty = b.Fqty,
+                    Fweight = b.Fweight,
+                    Fcommitqty = b.Fcommitqty,
+                    Fcommitweight = b.Fcommitweight,
+                    Fqualityoption = b.Fqualityoption,
+                    Fstatus = b.Fstatus
+                })
 
             });
             var response = new    // 定义 前端返回数据  总记录，总页，当前页 ，size,返回记录

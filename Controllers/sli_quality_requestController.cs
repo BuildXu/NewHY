@@ -27,32 +27,40 @@ namespace WebApi_SY.Controllers
             {
                 var header = new sli_quality_request
                 {
-                    fnumber = options.fnumber,
+                    Fnumber = options.Fnumber,
                     Fdate = options.Fdate,
-                    FendDate = options.FendDate,
-                    FdeptId = options.FdeptId,
+                    Fendate = options.Fendate,
+                    Fdeptid = options.Fdeptid,
                     Fempid = options.Fempid,
                     Fstatus = options.Fstatus,
-                    sli_quality_requestEntry = options.sli_quality_requestEntry.Select(d => new sli_quality_requestEntry
-                    {
-                        //Fmodelid = model.Id,
-                        Id = d.Id,
-                        Fsourceid = d.Fsourceid,
-                        Fworkorderlistid = d.Fworkorderlistid,
-                        fqty = d.fqty,
-                        fStatus = d.fStatus
-
-
-                    }).ToList()
+                    sli_quality_requestEntry = new List<sli_quality_requestEntry>()
                 };
+
+                if (options.sli_quality_requestEntry != null)
+                {
+                    //var i = 1;
+                    foreach (var entry in options.sli_quality_requestEntry)
+                    {
+                        header.sli_quality_requestEntry.Add(new sli_quality_requestEntry
+                        {
+                            //Fentryid = i,
+                            Fsourceid = entry.Fsourceid,
+                            Fworkorderlistid = entry.Fworkorderlistid,
+                            Fqty = entry.Fqty,
+                            Fobjectid = entry.Fobjectid,
+                            Fstatus = entry.Fstatus
+                        });
+                        //i++;
+                    }
+                }
                 context.Sli_quality_request.Add(header);
                 await context.SaveChangesAsync();
                 var dataNull = new
                 {
                     code = 200,
                     msg = "Success",
-                    modelid = header.id,
-                    Date = header.id.ToString() + "保存成功"
+                    modelid = header.Id,
+                    Date = header.Id.ToString() + "保存成功"
 
                 };
                 return dataNull;
@@ -69,7 +77,7 @@ namespace WebApi_SY.Controllers
             try
             {
                 var context = new YourDbContext();
-                var headersToDelete = context.Sli_quality_request.Where(h => id.Contains(h.id)).ToList();
+                var headersToDelete = context.Sli_quality_request.Where(h => id.Contains(h.Id)).ToList();
                 if (headersToDelete == null)
                 {
                     var dataNull = new
@@ -122,7 +130,7 @@ namespace WebApi_SY.Controllers
             try
             {
                 var context = new YourDbContext();
-                var entity = await context.Sli_quality_request.FindAsync(bill.id);
+                var entity = await context.Sli_quality_request.FindAsync(bill.Id);
                 if (entity == null)
                 {
                     var dataNull = new
@@ -143,14 +151,14 @@ namespace WebApi_SY.Controllers
                     //await Insert(model);
 
 
-                    var Sli_quality_request = context.Sli_quality_request.FirstOrDefault(p => p.id == bill.id);
-                    var Sli_quality_requestEntry = context.Sli_quality_requestEntry.Where(p => p.Id == bill.id).ToList();
+                    var Sli_quality_request = context.Sli_quality_request.FirstOrDefault(p => p.Id == bill.Id);
+                    var Sli_quality_requestEntry = context.Sli_quality_requestEntry.Where(p => p.Id == bill.Id).ToList();
 
 
-                    Sli_quality_request.fnumber = bill.fnumber;
+                    Sli_quality_request.Fnumber = bill.Fnumber;
                     Sli_quality_request.Fdate = bill.Fdate;
-                    Sli_quality_request.FendDate = bill.FendDate;
-                    Sli_quality_request.FdeptId = bill.FdeptId;
+                    Sli_quality_request.Fendate = bill.Fendate;
+                    Sli_quality_request.Fdeptid = bill.Fdeptid;
                     Sli_quality_request.Fempid = bill.Fempid;
                     Sli_quality_request.Fstatus = bill.Fstatus;
                     
@@ -162,11 +170,12 @@ namespace WebApi_SY.Controllers
                     {
                         var entry = new sli_quality_requestEntry
                         {
-                            Id = bill.id,
+                            Id = bill.Id,
                             Fsourceid = d.Fsourceid,
                             Fworkorderlistid = d.Fworkorderlistid,
-                            fqty = d.fqty,
-                            fStatus = d.fStatus
+                            Fqty = d.Fqty,
+                            Fstatus = d.Fstatus,
+                            Fobjectid = d.Fobjectid
                         };
                         context.Sli_quality_requestEntry.Add(entry);
                     }
@@ -177,7 +186,7 @@ namespace WebApi_SY.Controllers
                     {
                         code = 200,
                         msg = "ok",
-                        date = bill.id + "更新成功！"
+                        date = bill.Id + "更新成功！"
                     };
                     return Ok(datas);
                 }
@@ -212,6 +221,21 @@ namespace WebApi_SY.Controllers
             var paginatedQuery = query.OrderByDescending(b => b.Id).Skip((page - 1) * pageSize).Take(pageSize);
             //var datas = query.ToList();
             //var datas = query.ToList();
+            var result = paginatedQuery.Select(a => new
+            {
+                Id = a.Id,
+                fnumber = a.Fnumber,
+                Fdeptid = a.Fdeptid,
+                Fempid = a.Fempid,
+                Fdate = a.Fdate,
+                Fendate = a.Fendate,
+                Fstatus = a.Fstatus,
+                Fbillerid = a.Fbillerid ?? 0,
+                Fdept_name = a.Fdept_name,
+                FempName = a.FempName,
+
+
+            });
             var response = new    // 定义 前端返回数据  总记录，总页，当前页 ，size,返回记录
             {
                 code = 200,
@@ -239,31 +263,40 @@ namespace WebApi_SY.Controllers
             //                Sli_plan_model = p,
             //                Sli_plan_modelEntry = c
             //            };
-            var query = context.Sli_quality_request.Include(a => a.sli_quality_requestEntry);
+            var query = context.Sli_quality_request_view.Include(a => a.sli_quality_requestentry_view);
             if (id.HasValue)
             {
-                query = query.Where(q => q.id == id);
+                query = query.Where(q => q.Id == id);
 
             }
 
 
             var result = query.Select(a => new
             {
-                Id = a.id,
-                fnumber = a.fnumber,
+                Id = a.Id,
+                Fnumber = a.Fnumber,
                 Fdate = a.Fdate,
-                FendDate = a.FendDate,
-                FdeptId = a.FdeptId,
+                Fendate = a.Fendate,
+                Fdeptid = a.Fdeptid,
                 Fempid = a.Fempid,
                 Fstatus = a.Fstatus,
-                Sli_quality_requestEntry = a.sli_quality_requestEntry.Select(b => new
+                Fdept_name=a.Fdept_name,
+                FempName=a.FempName,
+                Sli_quality_requestEntry = a.sli_quality_requestentry_view.Select(b => new
                 {
                     id = b.Id,
                     Fentryid = b.Fentryid,
                     Fsourceid = b.Fsourceid,
                     Fworkorderlistid = b.Fworkorderlistid,
-                    fqty = b.fqty,
-                    fStatus = b.fStatus
+                    Fqty = b.Fqty,
+                    Fstatus = b.Fstatus,
+                    Fobjectid=b.Fobjectid,
+                    Fobjectnumber=b.Fobjectnumber,
+                    Fobjectname=b.Fobjectname,
+                    Fmaterialnumber = b.Fmaterialnumber,
+                    Fmaterialname = b.Fmaterialname,
+                    Fdescription = b.Fdescription,
+                    Fproductno = b.Fproductno
 
                 })
 
