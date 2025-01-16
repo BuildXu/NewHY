@@ -140,9 +140,10 @@ namespace WebApi_SY.Entity
         public DbSet<sli_mes_furnace_view> Sli_mes_furnace_view { get; set; }//装炉单
 
         //public DbSet<sli_mes_orderoption_view> Sli_mes_orderoption_view { get; set; }//工序派工单
+        public DbSet<sli_witnessing_orderbill_view> sli_witnessing_orderbill_view { get; set; }//见证任务
+        
 
 
- 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
