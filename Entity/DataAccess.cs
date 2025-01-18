@@ -139,10 +139,15 @@ namespace WebApi_SY.Entity
         public DbSet<sli_mes_furnace> Sli_mes_furnace { get; set; }//装炉单
         public DbSet<sli_mes_furnace_view> Sli_mes_furnace_view { get; set; }//装炉单
 
+        public DbSet<sli_quality_report> Sli_quality_report { get; set; }//质量报告表头
+        public DbSet<sli_quality_reportentry> Sli_quality_reportentry { get; set; }//质量报告表体
+        public DbSet<sli_quality_report_view> Sli_quality_report_view { get; set; }//质量报告表头视图
+        public DbSet<sli_quality_reportentry_view> Sli_quality_reportentry_view { get; set; }//质量报告表体视图
+
         //public DbSet<sli_mes_orderoption_view> Sli_mes_orderoption_view { get; set; }//工序派工单
 
 
- 
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -326,6 +331,16 @@ namespace WebApi_SY.Entity
             modelBuilder.Entity<sli_quality_requestentry_view>()
               .HasOne(h => h.sli_quality_request_view)
               .WithMany(d => d.sli_quality_requestentry_view)
+              .HasForeignKey(d => d.Id);
+
+            modelBuilder.Entity<sli_quality_reportentry>()
+              .HasOne(h => h.sli_quality_report)
+              .WithMany(d => d.sli_quality_reportentry)
+              .HasForeignKey(d => d.Id);
+
+            modelBuilder.Entity<sli_quality_reportentry_view>()
+              .HasOne(h => h.sli_quality_report_view)
+              .WithMany(d => d.sli_quality_reportentry_view)
               .HasForeignKey(d => d.Id);
 
             //modelBuilder.Entity<sli_witnessing_objectbill>()

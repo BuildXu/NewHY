@@ -454,6 +454,7 @@
     <Compile Include="Controllers\PlanController.cs" />
     <Compile Include="Controllers\sli_mes_furnace.cs" />
     <Compile Include="Controllers\sli_intpo_ImportController.cs" />
+    <Compile Include="Controllers\sli_quality_reportController.cs" />
     <Compile Include="Controllers\sli_quality_requestController.cs" />
     <Compile Include="Controllers\sli_witnessing_objectbillController.cs" />
     <Compile Include="Controllers\sli_mes_optionreportController.cs" />
@@ -492,7 +493,6 @@
     <Compile Include="Models\JsonToDataTable.cs" />
     <Compile Include="Models\maxfproductNumber.cs" />
     <Compile Include="Models\sli_quality_report.cs" />
-    <Compile Include="Models\sli_quality_request_view.cs" />
     <Compile Include="Models\sli_quality_requestion_view.cs" />
     <Compile Include="Models\sli_intpo_Import.cs" />
     <Compile Include="Models\sli_witnessing_objectbill.cs" />

@@ -104,8 +104,8 @@ namespace WebApi_SY.Controllers
                 {
                     code = 200,
                     msg = "Success",
-                    orderId = id.ToString(),
-                    date = id.ToString() + "删除成功"
+                    //orderId = id.ToString(),
+                    date =  "删除成功"
                 };
                 return data;
             }
@@ -244,7 +244,7 @@ namespace WebApi_SY.Controllers
                 totalPagess = totalPages,
                 currentPages = page,
                 pageSizes = pageSize,
-                data = paginatedQuery
+                data = result
             };
 
             return Json(response);
