@@ -10,6 +10,7 @@ namespace WebApi_SY.Models
         // 见证任务单号
         public string Fnumber { get; set; }
         // 见证任务Id
+        [Key]
         public int Id { get; set; }
         // 日期
         public DateTime Fdate { get; set; }
@@ -23,13 +24,14 @@ namespace WebApi_SY.Models
     public class sli_witnessing_orderbill
     {
         // 见证明细Id
+        [Key]
         public int Fentryid { get; set; }
         // 见证任务Id ---关联表头
         public int Id { get; set; }
         // 开始日期
-        public DateTime Fstartdate { get; set; }
+        public DateTime ? Fstartdate { get; set; }
         // 结束日期
-        public DateTime Fenddate { get; set; }
+        public DateTime ? Fenddate { get; set; }
         // 工步id
         public int Fobject { get; set; }
         // 备注

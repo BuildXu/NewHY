@@ -144,7 +144,9 @@ namespace WebApi_SY.Entity
         public DbSet<sli_quality_report_view> Sli_quality_report_view { get; set; }//质量报告表头视图
         public DbSet<sli_quality_reportentry_view> Sli_quality_reportentry_view { get; set; }//质量报告表体视图
 
-        //public DbSet<sli_mes_orderoption_view> Sli_mes_orderoption_view { get; set; }//工序派工单
+        public DbSet<sli_witnessing_order> Sli_witnessing_order { get; set; }//见证任务单表头
+        public DbSet<sli_witnessing_orderbill> Sli_witnessing_orderbill { get; set; }//见证任务单表体
+        public DbSet<sli_witnessing_orderbill_view> Sli_witnessing_orderbill_view { get; set; }//见证任务单视图
 
 
 
@@ -343,10 +345,10 @@ namespace WebApi_SY.Entity
               .WithMany(d => d.sli_quality_reportentry_view)
               .HasForeignKey(d => d.Id);
 
-            //modelBuilder.Entity<sli_witnessing_objectbill>()
-            // .HasOne(h => h.sli_witnessing_object)
-            // .WithMany(d => d.sli_witnessing_objectbill)
-            // .HasForeignKey(d => d.Id);
+            modelBuilder.Entity<sli_witnessing_orderbill>()
+             .HasOne(h => h.sli_witnessing_order)
+             .WithMany(d => d.sli_witnessing_orderbill)
+             .HasForeignKey(d => d.Id);
 
         }
 

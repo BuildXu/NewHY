@@ -464,6 +464,7 @@
     <Compile Include="Controllers\sli_document_mp_rollingController.cs" />
     <Compile Include="Controllers\sli_bd_process_objectController.cs" />
     <Compile Include="Controllers\sli_document_process_modelController.cs" />
+    <Compile Include="Controllers\sli_witnessing_orderController.cs" />
     <Compile Include="Controllers\sli_work_processBillController.cs" />
     <Compile Include="Controllers\sli_work_reportController.cs" />
     <Compile Include="Controllers\sli_bd_process_optionController.cs" />
