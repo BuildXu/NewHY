@@ -141,15 +141,17 @@ namespace WebApi_SY.Entity
 
         //public DbSet<sli_mes_orderoption_view> Sli_mes_orderoption_view { get; set; }//工序派工单
         public DbSet<sli_witnessing_orderbill_view> sli_witnessing_orderbill_view { get; set; }//见证任务
-        
+
+        public DbSet<sli_witnessing_order> sli_witnessing_order { get; set; }//见证任务表头
+        public DbSet<sli_witnessing_orderbill> sli_witnessing_orderbill { get; set; }//见证任务表体
 
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //ConnectionStrings 19vs7gv47690.vicp.fun,46716
-            optionsBuilder.UseSqlServer("Data Source=61.174.243.28,45047;Initial Catalog=AIS20241011165800;User ID=sa;Password=pct258258!;TrustServerCertificate=True;");
-            //optionsBuilder.UseSqlServer("Data Source=19vs7gv47690.vicp.fun,16819;Initial Catalog=AIS20241011165800;User ID=sa;Password=kingdee123*;TrustServerCertificate=True;");
+            //optionsBuilder.UseSqlServer("Data Source=61.174.243.28,45047;Initial Catalog=AIS20241011165800;User ID=sa;Password=pct258258!;TrustServerCertificate=True;");
+            optionsBuilder.UseSqlServer("Data Source=19vs7gv47690.vicp.fun,16819;Initial Catalog=AIS20241011165800;User ID=sa;Password=kingdee123*;TrustServerCertificate=True;");
             //optionsBuilder.UseSqlServer("ConnectionStrings");
             //1111111
 
@@ -327,6 +329,11 @@ namespace WebApi_SY.Entity
             modelBuilder.Entity<sli_quality_requestentry_view>()
               .HasOne(h => h.sli_quality_request_view)
               .WithMany(d => d.sli_quality_requestentry_view)
+              .HasForeignKey(d => d.Id);
+
+            modelBuilder.Entity<sli_witnessing_orderbill>()
+              .HasOne(h => h.sli_witnessing_order)
+              .WithMany(d => d.sli_witnessing_orderbill)
               .HasForeignKey(d => d.Id);
 
             //modelBuilder.Entity<sli_witnessing_objectbill>()
