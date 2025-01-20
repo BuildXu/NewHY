@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -7,7 +8,7 @@ namespace WebApi_SY.Models
 {
     public class sli_unconformify  //不合格品处理单
     {
-        
+        [Key]
         public int Id { get; set; }    //自增ID
         public string Fnumber { get; set; }  // 锻件编号
         public string FnameSpec { get; set; } //名称规格
@@ -24,7 +25,6 @@ namespace WebApi_SY.Models
         public int? Finspector { get; set; }//检验员ID
         public string FInopinion { get; set; }//检验员意见
         public int Fworkorderlistid { get; set; }//工件ID
-        public int Fproductno { get; set; }//工件编号
     }
     public class sli_unconformify_view  //不合格品处理单
     {
@@ -48,6 +48,6 @@ namespace WebApi_SY.Models
         public string Finspectorname { get; set; }//检验员
         public string FInopinion { get; set; }//检验员意见
         public int Fworkorderlistid { get; set; }//工件ID
-        public int Fproductno { get; set; }//工件编号
+        public string Fproductno { get; set; }//工件编号
     }
 }

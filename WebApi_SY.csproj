@@ -456,6 +456,7 @@
     <Compile Include="Controllers\sli_intpo_ImportController.cs" />
     <Compile Include="Controllers\sli_quality_reportController.cs" />
     <Compile Include="Controllers\sli_quality_requestController.cs" />
+    <Compile Include="Controllers\sli_unconformifyController.cs" />
     <Compile Include="Controllers\sli_witnessing_objectbillController.cs" />
     <Compile Include="Controllers\sli_mes_optionreportController.cs" />
     <Compile Include="Controllers\sli_mes_objectreportController.cs" />

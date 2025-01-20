@@ -148,6 +148,9 @@ namespace WebApi_SY.Entity
         public DbSet<sli_witnessing_orderbill> Sli_witnessing_orderbill { get; set; }//见证任务单表体
         public DbSet<sli_witnessing_orderbill_view> Sli_witnessing_orderbill_view { get; set; }//见证任务单视图
 
+        public DbSet<sli_unconformify_view> Sli_unconformify_view { get; set; }//不合格处理单
+        public DbSet<sli_unconformify> Sli_unconformify { get; set; }//不合格处理单
+
 
 
 

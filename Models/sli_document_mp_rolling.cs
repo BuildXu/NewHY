@@ -31,7 +31,7 @@ namespace WebApi_SY.Models
         // 内径余量
         public decimal Fsliallowanceid { get; set; }
         // 高度余量
-        public decimal fsliallowanceh { get; set; }
+        public decimal Fsliallowanceh { get; set; }
         // 下料重量
         public decimal Fsliweightmaterial { get; set; }
         // 锻件重量

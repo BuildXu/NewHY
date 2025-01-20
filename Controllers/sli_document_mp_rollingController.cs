@@ -43,7 +43,7 @@ namespace WebApi_SY.Controllers
                     Fslihight = rolling.Fslihight,
                     Fsliallowanceod = rolling.Fsliallowanceod,
                     Fsliallowanceid = rolling.Fsliallowanceid,
-                    fsliallowanceh = rolling.fsliallowanceh,
+                    Fsliallowanceh = rolling.Fsliallowanceh,
                     Fsliweightmaterial = rolling.Fsliweightmaterial,
                     Fsliweightforging = rolling.Fsliweightforging,
                     Fsliweightgoods = rolling.Fsliweightgoods,
@@ -59,7 +59,7 @@ namespace WebApi_SY.Controllers
                 {
                     code = 200,
                     msg = "Success",
-                    Date = rolling.ToString() + "保存成功"
+                    Date = rolling.Id.ToString() + "保存成功"
                 };
                 return datas;
             }
@@ -82,7 +82,7 @@ namespace WebApi_SY.Controllers
             try
             {
                 var context = new YourDbContext();
-                var entity = await context.sli_document_mp_rolling.FindAsync(objct);
+                var entity = await context.sli_document_mp_rolling.FindAsync(objct.Id);
                 if (entity == null)
                 {
                     var dataNull = new
@@ -101,13 +101,13 @@ namespace WebApi_SY.Controllers
                     //var Sli_plan_modelEntrys = _context.Sli_plan_modelEntry.Where(p => p.fmodelID == model.Id).ToList();
 
 
+                    sli_document_mp_rolling.Fsliouterdiameter = objct.Fsliouterdiameter;
+                    sli_document_mp_rolling.Fsliinnerdiameter = objct.Fsliinnerdiameter;
+                    sli_document_mp_rolling.Fslihight = objct.Fslihight;
+                    sli_document_mp_rolling.Fsliallowanceod = objct.Fsliallowanceod;
                     sli_document_mp_rolling.Fsliallowanceid = objct.Fsliallowanceid;
-                    //sli_document_mp_rolling.Fsliallowanceod = object.Fsliallowanceod;
-                    //sli_document_mp_rolling.fsliallowanceh = object.fsliallowanceh;
-                    //sli_document_mp_rolling.fstatus = option.fstatus;
-                    //sli_document_mp_rolling.fused = option.fused;
-                    //sli_document_mp_rolling.fcreateDate = option.fcreateDate;
-                    ////Sli_bd_tech_options.fnote = model.fnote;
+                    sli_document_mp_rolling.Fsliallowanceh = objct.Fsliallowanceh;
+                    //Sli_bd_tech_options.fnote = model.fnote;
 
                     await context.SaveChangesAsync();
 
@@ -140,25 +140,20 @@ namespace WebApi_SY.Controllers
             try
             {
                 var context = new YourDbContext();
-                foreach (var deleteid in id)
+                var headersToDelete = context.sli_document_mp_rolling.Where(h => id.Contains(h.Id)).ToList();
+                if (headersToDelete == null)
                 {
-
-                    var entity = await context.sli_document_mp_rolling.FindAsync(deleteid);
-                    if (entity == null)
+                    var dataNull = new
                     {
-                        var dataNull = new
-                        {
-                            code = 200,
-                            msg = "ok",
-                            Id = id.ToString(),
-                            date = id.ToString() + "不存在"
-                        };
-                        return dataNull;
-                    }
-                    context.sli_document_mp_rolling.RemoveRange();
-
-
+                        code = 200,
+                        msg = "ok",
+                        orderId = id.ToString(),
+                        date = id.ToString() + "不存在"
+                    };
+                    //string json = JsonConvert.SerializeObject(data);
+                    return dataNull;
                 }
+                context.sli_document_mp_rolling.RemoveRange(headersToDelete);
                 await context.SaveChangesAsync();
                 var data = new
                 {
