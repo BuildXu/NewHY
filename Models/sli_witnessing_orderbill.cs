@@ -13,7 +13,7 @@ namespace WebApi_SY.Models
         [Key]
         public int Id { get; set; }
         // 日期
-        public DateTime Fdate { get; set; }
+        public DateTime ? Fdate { get; set; }
         // 备注
         public string Fnote { get; set; }
         // 状态
