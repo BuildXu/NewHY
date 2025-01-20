@@ -27,6 +27,10 @@ namespace WebApi_SY.Controllers
 {
     public class sli_intpo_ImportController : ApiController
     {
+        public sli_intpo_ImportController()
+        {
+            // _context = context;
+        }
         [System.Web.Mvc.HttpPost]
         public IHttpActionResult ImportExcel()
         {
