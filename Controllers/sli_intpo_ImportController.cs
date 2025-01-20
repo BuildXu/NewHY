@@ -22,6 +22,9 @@ using NPOI.HSSF.Record;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.ToolTip;
 using System.Data.Entity.Core.Metadata.Edm;
 using System.Runtime.Remoting.Metadata.W3cXsd2001;
+using Microsoft.Ajax.Utilities;
+using NPOI.SS.Formula.PTG;
+using System.Diagnostics.Eventing.Reader;
 
 namespace WebApi_SY.Controllers
 {
@@ -129,179 +132,321 @@ namespace WebApi_SY.Controllers
                         dbContext.SaveChanges();
                         headerid = header.FID;
 
-
+                        var Sli_intpo_Import = new List<sli_intpo_Import>();
                         //循环插入表体
                         for (int rowIndex = 1; rowIndex <= sheet.LastRowNum; rowIndex++)
                         {
                             var row = sheet.GetRow(rowIndex);
                             if (row != null)
                             {
-                                var fname = row.GetCell(columnIndices["名称"]).CellType != CellType.Blank ? row.GetCell(columnIndices["名称"]).ToString() : "";
-                                var fdescription = row.GetCell(columnIndices["规格"]).CellType != CellType.Blank ? row.GetCell(columnIndices["规格"]).ToString() : "";
-                                var fsliMetal = row.GetCell(columnIndices["材质"]).CellType != CellType.Blank ? row.GetCell(columnIndices["材质"]).ToString() : "";
-                                var fsliDrawingNo = row.GetCell(columnIndices["图纸号"]).CellType != CellType.Blank ? row.GetCell(columnIndices["图纸号"]).ToString() : "";
-                                var result = dbContext.Sli_bd_materials_view
-                                .Where(item => item.Fname == fname && item.Fdescription == fdescription && item.FsliMetal == fsliMetal && item.FsliDrawingNo == fsliDrawingNo)
-                                .Select(item => item.Fnumber)
-                                .FirstOrDefault();
-
-                                var dataItem = new sli_intpo_Import
+                                //var fname = row.GetCell(columnIndices["名称"]).CellType != CellType.Blank ? row.GetCell(columnIndices["名称"]).ToString() : "";
+                                //var fdescription = row.GetCell(columnIndices["规格"]).CellType != CellType.Blank ? row.GetCell(columnIndices["规格"]).ToString() : "";
+                                //var fsliMetal = row.GetCell(columnIndices["材质"]).CellType != CellType.Blank ? row.GetCell(columnIndices["材质"]).ToString() : "";
+                                //var fsliDrawingNo = row.GetCell(columnIndices["图纸号"]).CellType != CellType.Blank ? row.GetCell(columnIndices["图纸号"]).ToString() : "";
+                                //var result = dbContext.Sli_bd_materials_view
+                                //.Where(item => item.Fname == fname && item.Fdescription == fdescription && item.FsliMetal == fsliMetal && item.FsliDrawingNo == fsliDrawingNo)
+                                //.Select(item => item.Fnumber)
+                                //.FirstOrDefault();
+                                var my_document_no = row.GetCell(columnIndices["我方文号"]).CellType != CellType.Blank ? row.GetCell(columnIndices["我方文号"]).ToString() : "";
+                                var case_name = row.GetCell(columnIndices["案件名称"]).CellType != CellType.Blank ? row.GetCell(columnIndices["案件名称"]).ToString() : "";
+                                var case_status = row.GetCell(columnIndices["案件状态"]).CellType != CellType.Blank ? row.GetCell(columnIndices["案件状态"]).ToString() : "";
+                                var case_type = row.GetCell(columnIndices["案件类型"]).CellType != CellType.Blank ? row.GetCell(columnIndices["案件类型"]).ToString() : "";
+                                var customer_document_no = row.GetCell(columnIndices["客户文号"]).CellType != CellType.Blank ? row.GetCell(columnIndices["客户文号"]).ToString() : "";
+                                var customer_name = row.GetCell(columnIndices["客户名称"]).CellType != CellType.Blank ? row.GetCell(columnIndices["客户名称"]).ToString() : "";
+                                var customer_no = row.GetCell(columnIndices["客户代码"]).CellType != CellType.Blank ? row.GetCell(columnIndices["客户代码"]).ToString() : "";
+                                var product_type =Convert.ToString( row.GetCell(columnIndices["产品类别"]));
+                                var case_user = Convert.ToString(row.GetCell(columnIndices["案件处理人"]));// row.GetCell(columnIndices["案件处理人"]).CellType != CellType.Blank ? row.GetCell(columnIndices["案件处理人"]).ToString() : "";
+                                var date_apply = Convert.ToString(row.GetCell(columnIndices["同日申请"]));// row.GetCell(columnIndices["同日申请"]).CellType != CellType.Blank ? row.GetCell(columnIndices["同日申请"]).ToString() : "";
+                                var date_submit = Convert.ToString(row.GetCell(columnIndices["同日递交"])); //row.GetCell(columnIndices["同日递交"]).CellType != CellType.Blank ? row.GetCell(columnIndices["同日递交"]).ToString() : "";
+                                var is_date_submit = Convert.ToString(row.GetCell(columnIndices["是否同时提实审"]));// row.GetCell(columnIndices["是否同时提实审"]).CellType != CellType.Blank ? row.GetCell(columnIndices["是否同时提实审"]).ToString() : "";
+                                var is_publish = Convert.ToString(row.GetCell(columnIndices["是否提前公布"]));// row.GetCell(columnIndices["是否提前公布"]).CellType != CellType.Blank ? row.GetCell(columnIndices["是否提前公布"]).ToString() : "";
+                                var is_reduce = Convert.ToString(row.GetCell(columnIndices["是否请求费用减缓"]));// row.GetCell(columnIndices["是否请求费用减缓"]).CellType != CellType.Blank ? row.GetCell(columnIndices["是否请求费用减缓"]).ToString() : "";
+                                var is_first = Convert.ToString(row.GetCell(columnIndices["是否优先审查"]));// row.GetCell(columnIndices["是否优先审查"]).CellType != CellType.Blank ? row.GetCell(columnIndices["是否优先审查"]).ToString() : "";
+                                var is_das = Convert.ToString(row.GetCell(columnIndices["是否同时请求DAS码"]));//row.GetCell(columnIndices["是否同时请求DAS码"]).CellType != CellType.Blank ? row.GetCell(columnIndices["是否同时请求DAS码"]).ToString() : "";
+                                var is_preview = Convert.ToString(row.GetCell(columnIndices["是否预审案件"]));//row.GetCell(columnIndices["是否预审案件"]).CellType != CellType.Blank ? row.GetCell(columnIndices["是否预审案件"]).ToString() : "";
+                                var is_fast_case = Convert.ToString(row.GetCell(columnIndices["是否是快维案件"]));//row.GetCell(columnIndices["是否是快维案件"]).CellType != CellType.Blank ? row.GetCell(columnIndices["是否是快维案件"]).ToString() : "";
+                                var business_user = Convert.ToString(row.GetCell(columnIndices["业务人员"]));// row.GetCell(columnIndices["业务人员"]).CellType != CellType.Blank ? row.GetCell(columnIndices["业务人员"]).ToString() : "";
+                                var business_deputy = Convert.ToString(row.GetCell(columnIndices["业务助理"]));//  row.GetCell(columnIndices["业务助理"]).CellType != CellType.Blank ? row.GetCell(columnIndices["业务助理"]).ToString() : "";
+                                var business_deptment = Convert.ToString(row.GetCell(columnIndices["业务部门"]));//row.GetCell(columnIndices["业务部门"]).CellType != CellType.Blank ? row.GetCell(columnIndices["业务部门"]).ToString() : "";
+                                var open_date = Convert.ToString(row.GetCell(columnIndices["开卷日期"]));//row.GetCell(columnIndices["开卷日期"]).CellType != CellType.Blank ? row.GetCell(columnIndices["开卷日期"]).ToString() : "";
+                                var commission_case = Convert.ToString(row.GetCell(columnIndices["委案日期"])); //row.GetCell(columnIndices["委案日期"]).CellType != CellType.Blank ? row.GetCell(columnIndices["委案日期"]).ToString() : "";
+                                var area = Convert.ToString(row.GetCell(columnIndices["国家(地区)"])); // row.GetCell(columnIndices["国家(地区)"]).CellType != CellType.Blank ? row.GetCell(columnIndices["国家(地区)"]).ToString() : "";
+                                var receipt = Convert.ToString(row.GetCell(columnIndices["收据号"])); //row.GetCell(columnIndices["收据号"]).CellType != CellType.Blank ? row.GetCell(columnIndices["收据号"]).ToString() : "";
+                                var contract_no = Convert.ToString(row.GetCell(columnIndices["合同号"])); // row.GetCell(columnIndices["合同号"]).CellType != CellType.Blank ? row.GetCell(columnIndices["合同号"]).ToString() : "";
+                                var case_customer_user = Convert.ToString(row.GetCell(columnIndices["案件客户联系人"])); // row.GetCell(columnIndices["案件客户联系人"]).CellType != CellType.Blank ? row.GetCell(columnIndices["案件客户联系人"]).ToString() : "";
+                                var case_user_phone = Convert.ToString(row.GetCell(columnIndices["案件客户联系人电话"])); //  row.GetCell(columnIndices["案件客户联系人"]).CellType != CellType.Blank ? row.GetCell(columnIndices["案件客户联系人电话"]).ToString() : "";
+                                var case_user_email = Convert.ToString(row.GetCell(columnIndices["案件客户联系人邮箱"])); // row.GetCell(columnIndices["案件客户联系人邮箱"]).CellType != CellType.Blank ? row.GetCell(columnIndices["案件客户联系人邮箱"]).ToString() : "";
+                                var assist_house_no = Convert.ToString(row.GetCell(columnIndices["协办所案号"])); //  row.GetCell(columnIndices["协办所案号"]).CellType != CellType.Blank ? row.GetCell(columnIndices["协办所案号"]).ToString() : "";
+                                var register_no = Convert.ToString(row.GetCell(columnIndices["注册号"])); // row.GetCell(columnIndices["注册号"]).CellType != CellType.Blank ? row.GetCell(columnIndices["注册号"]).ToString() : "";
+                                var brand_category = Convert.ToString(row.GetCell(columnIndices["商标类别"]));// row.GetCell(columnIndices["商标类别"]).CellType != CellType.Blank ? row.GetCell(columnIndices["商标类别"]).ToString() : "";
+                                var case_handle_dept = Convert.ToString(row.GetCell(columnIndices["案件承办部门"]));// row.GetCell(columnIndices["案件承办部门"]).CellType != CellType.Blank ? row.GetCell(columnIndices["案件承办部门"]).ToString() : "";
+                                var belong_branch = Convert.ToString(row.GetCell(columnIndices["所属分部"]));//row.GetCell(columnIndices["所属分部"]).CellType != CellType.Blank ? row.GetCell(columnIndices["所属分部"]).ToString() : "";
+                                var work_type = Convert.ToString(row.GetCell(columnIndices["业务类型"]));// row.GetCell(columnIndices["业务类型"]).CellType != CellType.Blank ? row.GetCell(columnIndices["业务类型"]).ToString() : "";
+                                var case_direction = Convert.ToString(row.GetCell(columnIndices["案件流向"])); //row.GetCell(columnIndices["案件流向"]).CellType != CellType.Blank ? row.GetCell(columnIndices["案件流向"]).ToString() : "";
+                                var case_user_deptment = Convert.ToString(row.GetCell(columnIndices["案件处理人部门"])); // row.GetCell(columnIndices["案件处理人部门"]).CellType != CellType.Blank ? row.GetCell(columnIndices["案件处理人部门"]).ToString() : "";
+                                var apply_tpye = Convert.ToString(row.GetCell(columnIndices["申请类型"])); //  row.GetCell(columnIndices["申请类型"]).CellType != CellType.Blank ? row.GetCell(columnIndices["申请类型"]).ToString() : "";
+                                var apply_no = Convert.ToString(row.GetCell(columnIndices["申请号"])); // row.GetCell(columnIndices["申请号"]).CellType != CellType.Blank ? row.GetCell(columnIndices["申请号"]).ToString() : "";
+                                var apply_date = Convert.ToString(row.GetCell(columnIndices["申请日"])); // row.GetCell(columnIndices["申请日"]).CellType != CellType.Blank ? row.GetCell(columnIndices["申请日"]).ToString() : "";
+                                var registration_no = Convert.ToString(row.GetCell(columnIndices["注册号"])); // row.GetCell(columnIndices["注册号"]).CellType != CellType.Blank ? row.GetCell(columnIndices["注册号"]).ToString() : "";
+                                var announcement_date = Convert.ToString(row.GetCell(columnIndices["公告日"])); // row.GetCell(columnIndices["公告日"]).CellType != CellType.Blank ? row.GetCell(columnIndices["公告日"]).ToString() : "";
+                                var new_submit_date = Convert.ToString(row.GetCell(columnIndices["新申请递交日"])); // row.GetCell(columnIndices["新申请递交日"]).CellType != CellType.Blank ? row.GetCell(columnIndices["新申请递交日"]).ToString() : "";
+                                var case_remark = Convert.ToString(row.GetCell(columnIndices["案件备注"])); // row.GetCell(columnIndices["案件备注"]).CellType != CellType.Blank ? row.GetCell(columnIndices["案件备注"]).ToString() : "";
+                                var is_advance = Convert.ToString(row.GetCell(columnIndices["是否提前公开"])); //row.GetCell(columnIndices["是否提前公开"]).CellType != CellType.Blank ? row.GetCell(columnIndices["是否提前公开"]).ToString() : "";
+                                var reduce_proportion = Convert.ToString(row.GetCell(columnIndices["费减比例"])); // row.GetCell(columnIndices["费减比例"]).CellType != CellType.Blank ? row.GetCell(columnIndices["费减比例"]).ToString() : "";
+                                var pay_no = Convert.ToString(row.GetCell(columnIndices["缴费单号"])); //row.GetCell(columnIndices["缴费单号"]).CellType != CellType.Blank ? row.GetCell(columnIndices["缴费单号"]).ToString() : "";
+                                var pct_apply_no = Convert.ToString(row.GetCell(columnIndices["PCT申请号"])); //row.GetCell(columnIndices["PCT申请号"]).CellType != CellType.Blank ? row.GetCell(columnIndices["PCT申请号"]).ToString() : "";
+                                var pct_apply_date = Convert.ToString(row.GetCell(columnIndices["PCT申请日"])); //row.GetCell(columnIndices["PCT申请日"]).CellType != CellType.Blank ? row.GetCell(columnIndices["PCT申请日"]).ToString() : "";
+                                var priority_date = Convert.ToString(row.GetCell(columnIndices["优先权日"])); //row.GetCell(columnIndices["优先权日"]).CellType != CellType.Blank ? row.GetCell(columnIndices["优先权日"]).ToString() : "";
+                                var customer_category = Convert.ToString(row.GetCell(columnIndices["客户类别"])); //row.GetCell(columnIndices["客户类别"]).CellType != CellType.Blank ? row.GetCell(columnIndices["客户类别"]).ToString() : "";
+                                var handle_event = Convert.ToString(row.GetCell(columnIndices["处理事项"])); //row.GetCell(columnIndices["处理事项"]).CellType != CellType.Blank ? row.GetCell(columnIndices["处理事项"]).ToString() : "";
+                                var handle_event_stage = Convert.ToString(row.GetCell(columnIndices["处理事项(含阶段)"])); // row.GetCell(columnIndices["处理事项(含阶段)"]).CellType != CellType.Blank ? row.GetCell(columnIndices["处理事项(含阶段)"]).ToString() : "";
+                                var handle_event_user = Convert.ToString(row.GetCell(columnIndices["处理事项处理人"])); // row.GetCell(columnIndices["处理事项处理人"]).CellType != CellType.Blank ? row.GetCell(columnIndices["处理事项处理人"]).ToString() : "";
+                                var handle_event_deptment = Convert.ToString(row.GetCell(columnIndices["处理事项处理人部门"])); //row.GetCell(columnIndices["处理事项处理人部门"]).CellType != CellType.Blank ? row.GetCell(columnIndices["处理事项处理人部门"]).ToString() : "";
+                                var event_remark = Convert.ToString(row.GetCell(columnIndices["事项备注"])); //row.GetCell(columnIndices["事项备注"]).CellType != CellType.Blank ? row.GetCell(columnIndices["事项备注"]).ToString() : "";
+                                var handle_event_date = Convert.ToString(row.GetCell(columnIndices["处理事项完成日"])); //row.GetCell(columnIndices["处理事项完成日"]).CellType != CellType.Blank ? row.GetCell(columnIndices["处理事项完成日"]).ToString() : "";
+                                var first_draft_date = Convert.ToString(row.GetCell(columnIndices["初稿日"])); //row.GetCell(columnIndices["初稿日"]).CellType != CellType.Blank ? row.GetCell(columnIndices["初稿日"]).ToString() : "";
+                                var inside_draft_date = Convert.ToString(row.GetCell(columnIndices["内部定稿日"])); // row.GetCell(columnIndices["内部定稿日"]).CellType != CellType.Blank ? row.GetCell(columnIndices["内部定稿日"]).ToString() : "";
+                                var return_draft_date = Convert.ToString(row.GetCell(columnIndices["返稿日"])); //row.GetCell(columnIndices["返稿日"]).CellType != CellType.Blank ? row.GetCell(columnIndices["返稿日"]).ToString() : "";
+                                var draft_date = Convert.ToString(row.GetCell(columnIndices["定稿日"])); // row.GetCell(columnIndices["定稿日"]).CellType != CellType.Blank ? row.GetCell(columnIndices["定稿日"]).ToString() : "";
+                                var give_cooperate_date = Convert.ToString(row.GetCell(columnIndices["送合作所日"])); // row.GetCell(columnIndices["送合作所日"]).CellType != CellType.Blank ? row.GetCell(columnIndices["送合作所日"]).ToString() : "";
+                                var submit_date = "";
+                                var handle_event_status = Convert.ToString(row.GetCell(columnIndices["处理事项状态"])); // row.GetCell(columnIndices["处理事项状态"]).CellType != CellType.Blank ? row.GetCell(columnIndices["处理事项状态"]).ToString() : "";
+                                var official_date = Convert.ToString(row.GetCell(columnIndices["官方期限"])); //row.GetCell(columnIndices["官方期限"]).CellType != CellType.Blank ? row.GetCell(columnIndices["官方期限"]).ToString() : "";
+                                var inside_draft_date_two = Convert.ToString(row.GetCell(columnIndices["内部定稿日"])); //row.GetCell(columnIndices["内部定稿日"]).CellType != CellType.Blank ? row.GetCell(columnIndices["内部定稿日"]).ToString() : "";
+                                var customer_date = Convert.ToString(row.GetCell(columnIndices["客户期限"])); //row.GetCell(columnIndices["客户期限"]).CellType != CellType.Blank ? row.GetCell(columnIndices["客户期限"]).ToString() : "";
+                                var apply_user = Convert.ToString(row.GetCell(columnIndices["申请人"])); //row.GetCell(columnIndices["申请人"]).CellType != CellType.Blank ? row.GetCell(columnIndices["申请人"]).ToString() : "";
+                                var agent_mechanism = Convert.ToString(row.GetCell(columnIndices["代理机构"])); // row.GetCell(columnIndices["代理机构"]).CellType != CellType.Blank ? row.GetCell(columnIndices["代理机构"]).ToString() : "";
+                                var invention_user = Convert.ToString(row.GetCell(columnIndices["发明人"])); //row.GetCell(columnIndices["发明人"]).CellType != CellType.Blank ? row.GetCell(columnIndices["发明人"]).ToString() : "";
+                                var money_type = Convert.ToString(row.GetCell(columnIndices["费用类型"])); // row.GetCell(columnIndices["费用类型"]).CellType != CellType.Blank ? row.GetCell(columnIndices["费用类型"]).ToString() : "";
+                                var money_name = Convert.ToString(row.GetCell(columnIndices["费用名称"])); //row.GetCell(columnIndices["费用名称"]).CellType != CellType.Blank ? row.GetCell(columnIndices["费用名称"]).ToString() : "";
+                                var money_description = Convert.ToString(row.GetCell(columnIndices["费用描述"]));// row.GetCell(columnIndices["费用描述"]).CellType != CellType.Blank ? row.GetCell(columnIndices["费用描述"]).ToString() : "";
+                                var money_english = Convert.ToString(row.GetCell(columnIndices["费用描述英文"]));//row.GetCell(columnIndices["费用描述英文"]).CellType != CellType.Blank ? row.GetCell(columnIndices["费用描述英文"]).ToString() : "";
+                                var price = Convert.ToString(row.GetCell(columnIndices["金额"]));// row.GetCell(columnIndices["金额"]).CellType != CellType.Blank ? row.GetCell(columnIndices["金额"]).ToString() : "";
+                                var currency = Convert.ToString(row.GetCell(columnIndices["币别"]));//row.GetCell(columnIndices["币别"]).CellType != CellType.Blank ? row.GetCell(columnIndices["币别"]).ToString() : "";
+                                var change_currency = Convert.ToString(row.GetCell(columnIndices["换算后币别"])); //row.GetCell(columnIndices["换算后币别"]).CellType != CellType.Blank ? row.GetCell(columnIndices["换算后币别"]).ToString() : "";
+                                var change_money = Convert.ToString(row.GetCell(columnIndices["换算后金额"])); //row.GetCell(columnIndices["换算后金额"]).CellType != CellType.Blank ? row.GetCell(columnIndices["换算后金额"]).ToString() : "";
+                                var receivable_date = Convert.ToString(row.GetCell(columnIndices["应收日期"])); // row.GetCell(columnIndices["应收日期"]).CellType != CellType.Blank ? row.GetCell(columnIndices["应收日期"]).ToString() : "";
+                                var request_date = Convert.ToString(row.GetCell(columnIndices["请款日期"])); //row.GetCell(columnIndices["请款日期"]).CellType != CellType.Blank ? row.GetCell(columnIndices["请款日期"]).ToString() : "";
+                                var actual_date = Convert.ToString(row.GetCell(columnIndices["实收日期"])); //row.GetCell(columnIndices["实收日期"]).CellType != CellType.Blank ? row.GetCell(columnIndices["实收日期"]).ToString() : "";
+                                var actual_get_money = Convert.ToString(row.GetCell(columnIndices["实收/实付金额"])); //row.GetCell(columnIndices["实收/实付金额"]).CellType != CellType.Blank ? row.GetCell(columnIndices["实收/实付金额"]).ToString() : "";
+                                var actual_currency = Convert.ToString(row.GetCell(columnIndices["实收币别"])); // row.GetCell(columnIndices["实收币别"]).CellType != CellType.Blank ? row.GetCell(columnIndices["实收币别"]).ToString() : "";
+                                var pay_date = Convert.ToString(row.GetCell(columnIndices["缴费期限"])); //row.GetCell(columnIndices["缴费期限"]).CellType != CellType.Blank ? row.GetCell(columnIndices["缴费期限"]).ToString() : "";
+                                var pay_head = Convert.ToString(row.GetCell(columnIndices["缴费抬头"])); // row.GetCell(columnIndices["缴费抬头"]).CellType != CellType.Blank ? row.GetCell(columnIndices["缴费抬头"]).ToString() : "";
+                                var actual_pay_date = Convert.ToString(row.GetCell(columnIndices["实付日期"])); //row.GetCell(columnIndices["实付日期"]).CellType != CellType.Blank ? row.GetCell(columnIndices["实付日期"]).ToString() : "";
+                                var request_money_no = Convert.ToString(row.GetCell(columnIndices["请款单号"]));// row.GetCell(columnIndices["请款单号"]).CellType != CellType.Blank ? row.GetCell(columnIndices["请款单号"]).ToString() : "";
+                                var pay_year_stage = Convert.ToString(row.GetCell(columnIndices["缴年费阶段"]));//row.GetCell(columnIndices["缴年费阶段"]).CellType != CellType.Blank ? row.GetCell(columnIndices["缴年费阶段"]).ToString() : "";
+                                var pay_type = Convert.ToString(row.GetCell(columnIndices["缴费类型"]));// row.GetCell(columnIndices["缴费类型"]).CellType != CellType.Blank ? row.GetCell(columnIndices["缴费类型"]).ToString() : "";
+                                var exchange_rate = Convert.ToString(row.GetCell(columnIndices["汇率"]));// row.GetCell(columnIndices["汇率"]).CellType != CellType.Blank ? row.GetCell(columnIndices["汇率"]).ToString() : "";
+                                var money_remark = Convert.ToString(row.GetCell(columnIndices["费用备注"]));//row.GetCell(columnIndices["费用备注"]).CellType != CellType.Blank ? row.GetCell(columnIndices["费用备注"]).ToString() : "";
+                                var update_record = Convert.ToString(row.GetCell(columnIndices["修改记录"]));// row.GetCell(columnIndices["修改记录"]).CellType != CellType.Blank ? row.GetCell(columnIndices["修改记录"]).ToString() : "";
+                                var collection_account = Convert.ToString(row.GetCell(columnIndices["收款公司账号"]));// row.GetCell(columnIndices["收款公司账号"]).CellType != CellType.Blank ? row.GetCell(columnIndices["收款公司账号"]).ToString() : "";
+                                var bill_no = Convert.ToString(row.GetCell(columnIndices["外方账单号"]));//row.GetCell(columnIndices["外方账单号"]).CellType != CellType.Blank ? row.GetCell(columnIndices["外方账单号"]).ToString() : "";
+                                var money_create_date = Convert.ToString(row.GetCell(columnIndices["费用创建日期"]));//row.GetCell(columnIndices["费用创建日期"]).CellType != CellType.Blank ? row.GetCell(columnIndices["费用创建日期"]).ToString() : "";
+                                var invoice_no = Convert.ToString(row.GetCell(columnIndices["发票号"]));//row.GetCell(columnIndices["发票号"]).CellType != CellType.Blank ? row.GetCell(columnIndices["发票号"]).ToString() : "";
+                                var create_invoice_date = Convert.ToString(row.GetCell(columnIndices["开票日期"]));// row.GetCell(columnIndices["开票日期"]).CellType != CellType.Blank ? row.GetCell(columnIndices["开票日期"]).ToString() : "";
+                                var cost_agent = Convert.ToString(row.GetCell(columnIndices["费用合作所代理机构"]));// row.GetCell(columnIndices["费用合作所代理机构"]).CellType != CellType.Blank ? row.GetCell(columnIndices["费用合作所代理机构"]).ToString() : "";
+                                var collection_status = Convert.ToString(row.GetCell(columnIndices["收款状态"]));//row.GetCell(columnIndices["收款状态"]).CellType != CellType.Blank ? row.GetCell(columnIndices["收款状态"]).ToString() : "";
+                                var pay_status = Convert.ToString(row.GetCell(columnIndices["缴费状态"]));//row.GetCell(columnIndices["缴费状态"]).CellType != CellType.Blank ? row.GetCell(columnIndices["缴费状态"]).ToString() : "";
+                                var out_account_date = Convert.ToString(row.GetCell(columnIndices["销账日期"]));// row.GetCell(columnIndices["销账日期"]).CellType != CellType.Blank ? row.GetCell(columnIndices["销账日期"]).ToString() : "";
+                                var power_ask_num = Convert.ToString(row.GetCell(columnIndices["权利要求项数"]));//row.GetCell(columnIndices["权利要求项数"]).CellType != CellType.Blank ? row.GetCell(columnIndices["权利要求项数"]).ToString() : "";
+                                var instructions_num = Convert.ToString(row.GetCell(columnIndices["说明书页数"]));//row.GetCell(columnIndices["说明书页数"]).CellType != CellType.Blank ? row.GetCell(columnIndices["说明书页数"]).ToString() : "";
+                                var technical_field = Convert.ToString(row.GetCell(columnIndices["技术领域"]));//row.GetCell(columnIndices["技术领域"]).CellType != CellType.Blank ? row.GetCell(columnIndices["技术领域"]).ToString() : "";
+                                // 根据 Excel 中的列和你的数据模型进行映射
+                                var outside_user = Convert.ToString(row.GetCell(columnIndices["外部案源人"]));// row.GetCell(columnIndices["外部案源人"]).CellType != CellType.Blank ? row.GetCell(columnIndices["外部案源人"]).ToString() : "";
+                                var inside_user = Convert.ToString(row.GetCell(columnIndices["内部案源人"]));//row.GetCell(columnIndices["内部案源人"]).CellType != CellType.Blank ? row.GetCell(columnIndices["内部案源人"]).ToString() : "";
+                                var patent_label = Convert.ToString(row.GetCell(columnIndices["专利标签"]));//row.GetCell(columnIndices["专利标签"]).CellType != CellType.Blank ? row.GetCell(columnIndices["专利标签"]).ToString() : "";
+                                var proposal_no = Convert.ToString(row.GetCell(columnIndices["提案编号"]));// row.GetCell(columnIndices["提案编号"]).CellType != CellType.Blank ? row.GetCell(columnIndices["提案编号"]).ToString() : "";
+                                var proxy_user = Convert.ToString(row.GetCell(columnIndices["代理人"]));//row.GetCell(columnIndices["代理人"]).CellType != CellType.Blank ? row.GetCell(columnIndices["代理人"]).ToString() : "";
+                                var custom_one = Convert.ToString(row.GetCell(columnIndices["自定义栏位3"]));//row.GetCell(columnIndices["自定义栏位3"]).CellType != CellType.Blank ? row.GetCell(columnIndices["自定义栏位3"]).ToString() : "";
+                                var custom_two = Convert.ToString(row.GetCell(columnIndices["自定义栏位4"]));//row.GetCell(columnIndices["自定义栏位4"]).CellType != CellType.Blank ? row.GetCell(columnIndices["自定义栏位4"]).ToString() : "";
+                                var custom_three = Convert.ToString(row.GetCell(columnIndices["自定义栏位5"]));//row.GetCell(columnIndices["自定义栏位5"]).CellType != CellType.Blank ? row.GetCell(columnIndices["自定义栏位5"]).ToString() : "";
+                                var text1 = Convert.ToString(row.GetCell(columnIndices["文本1"]));//row.GetCell(columnIndices["文本1"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本1"]).ToString() : "";
+                                var text2 = Convert.ToString(row.GetCell(columnIndices["文本2"]));//row.GetCell(columnIndices["文本2"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本2"]).ToString() : "";
+                                var text3 = Convert.ToString(row.GetCell(columnIndices["文本3"]));//row.GetCell(columnIndices["文本3"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本3"]).ToString() : "";
+                                var text4 = Convert.ToString(row.GetCell(columnIndices["文本4"]));//row.GetCell(columnIndices["文本4"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本4"]).ToString() : "";
+                                var text5 = Convert.ToString(row.GetCell(columnIndices["文本5"]));//row.GetCell(columnIndices["文本5"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本5"]).ToString() : "";
+                                var text6 = Convert.ToString(row.GetCell(columnIndices["文本6"]));//row.GetCell(columnIndices["文本6"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本6"]).ToString() : "";
+                                var text7 = Convert.ToString(row.GetCell(columnIndices["文本7"]));// Convert.ToString(row.GetCell(columnIndices["请款单号"]));//row.GetCell(columnIndices["文本7"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本7"]).ToString() : "";
+                                var text8 = Convert.ToString(row.GetCell(columnIndices["文本8"]));//row.GetCell(columnIndices["文本8"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本8"]).ToString() : "";
+                                var text9 = Convert.ToString(row.GetCell(columnIndices["文本9"]));//row.GetCell(columnIndices["文本9"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本9"]).ToString() : "";
+                                var text10 = Convert.ToString(row.GetCell(columnIndices["文本10"]));//row.GetCell(columnIndices["文本10"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本10"]).ToString() : "";
+                                var text11 = Convert.ToString(row.GetCell(columnIndices["文本11"]));//row.GetCell(columnIndices["文本11"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本11"]).ToString() : "";
+                                var text12 = Convert.ToString(row.GetCell(columnIndices["文本12"]));//row.GetCell(columnIndices["文本12"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本12"]).ToString() : "";
+                                var text13 = Convert.ToString(row.GetCell(columnIndices["文本13"]));//row.GetCell(columnIndices["文本13"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本13"]).ToString() : "";
+                                var text14 = Convert.ToString(row.GetCell(columnIndices["文本14"]));//row.GetCell(columnIndices["文本14"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本14"]).ToString() : "";
+                                var text15 = Convert.ToString(row.GetCell(columnIndices["文本15"]));// Convert.ToString(row.GetCell(columnIndices["请款单号"]));//row.GetCell(columnIndices["文本15"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本15"]).ToString() : "";
+                                var text16 = Convert.ToString(row.GetCell(columnIndices["文本16"]));//row.GetCell(columnIndices["文本16"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本16"]).ToString() : "";
+                                var text17 = Convert.ToString(row.GetCell(columnIndices["文本17"]));//row.GetCell(columnIndices["文本17"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本17"]).ToString() : "";
+                                var text18 = Convert.ToString(row.GetCell(columnIndices["文本18"]));//row.GetCell(columnIndices["文本18"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本18"]).ToString() : "";
+                                var text19 = Convert.ToString(row.GetCell(columnIndices["文本19"]));//row.GetCell(columnIndices["文本19"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本19"]).ToString() : "";
+                                var text20 = Convert.ToString(row.GetCell(columnIndices["文本20"]));//row.GetCell(columnIndices["文本20"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本20"]).ToString() : "";
+                                var text21 = Convert.ToString(row.GetCell(columnIndices["文本21"]));//row.GetCell(columnIndices["文本21"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本21"]).ToString() : "";
+                                var text22 = Convert.ToString(row.GetCell(columnIndices["文本22"]));//row.GetCell(columnIndices["文本22"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本22"]).ToString() : "";
+                                var text23 = Convert.ToString(row.GetCell(columnIndices["文本23"]));// row.GetCell(columnIndices["文本23"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本23"]).ToString() : "";
+                                var text24 = Convert.ToString(row.GetCell(columnIndices["文本24"]));//row.GetCell(columnIndices["文本24"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本24"]).ToString() : "";
+                                var text25 = Convert.ToString(row.GetCell(columnIndices["文本25"]));//row.GetCell(columnIndices["文本25"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本25"]).ToString() : "";
+                                var text26 = Convert.ToString(row.GetCell(columnIndices["文本26"]));//row.GetCell(columnIndices["文本26"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本26"]).ToString() : "";
+                                var text27 = Convert.ToString(row.GetCell(columnIndices["文本27"]));//row.GetCell(columnIndices["文本27"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本27"]).ToString() : "";
+                                var text28 = Convert.ToString(row.GetCell(columnIndices["文本28"]));//row.GetCell(columnIndices["文本28"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本28"]).ToString() : "";
+                                var text29 = Convert.ToString(row.GetCell(columnIndices["文本29"]));//row.GetCell(columnIndices["文本29"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本29"]).ToString() : "";
+                                var text30 = Convert.ToString(row.GetCell(columnIndices["文本30"]));//row.GetCell(columnIndices["文本30"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本30"]).ToString() : "";
+                                Sli_intpo_Import.Add ( new sli_intpo_Import
                                 {
                                     // 根据 Excel 中的列和你的数据模型进行映射
-                                    my_document_no = row.GetCell(columnIndices["我方文号"]).CellType != CellType.Blank ? row.GetCell(columnIndices["我方文号"]).ToString() : "",
-                                    case_name = row.GetCell(columnIndices["案件名称"]).CellType != CellType.Blank ? row.GetCell(columnIndices["案件名称"]).ToString() : "",
-                                    case_status = row.GetCell(columnIndices["案件状态"]).CellType != CellType.Blank ? row.GetCell(columnIndices["案件状态"]).ToString() : "",
-                                    case_type = row.GetCell(columnIndices["案件类型"]).CellType != CellType.Blank ? row.GetCell(columnIndices["案件类型"]).ToString() : "",
-                                    customer_document_no = row.GetCell(columnIndices["客户文号"]).CellType != CellType.Blank ? row.GetCell(columnIndices["客户文号"]).ToString() : "",
-                                    customer_name = row.GetCell(columnIndices["客户名称"]).CellType != CellType.Blank ? row.GetCell(columnIndices["客户名称"]).ToString() : "",
-                                    customer_no = row.GetCell(columnIndices["客户代码"]).CellType != CellType.Blank ? row.GetCell(columnIndices["客户代码"]).ToString() : "",
-                                    product_type = row.GetCell(columnIndices["产品类别"]).CellType != CellType.Blank ? row.GetCell(columnIndices["产品类别"]).ToString() : "",
-                                    case_user = row.GetCell(columnIndices["案件处理人"]).CellType != CellType.Blank ? row.GetCell(columnIndices["案件处理人"]).ToString() : "",
-                                    date_apply = row.GetCell(columnIndices["同日申请"]).CellType != CellType.Blank ? row.GetCell(columnIndices["同日申请"]).ToString() : "",
-                                    date_submit = row.GetCell(columnIndices["同日递交"]).CellType != CellType.Blank ? row.GetCell(columnIndices["同日递交"]).ToString() : "",
-                                    is_date_submit = row.GetCell(columnIndices["是否同时提实审"]).CellType != CellType.Blank ? row.GetCell(columnIndices["是否同时提实审"]).ToString() : "",
-                                    is_publish = row.GetCell(columnIndices["是否提前公布"]).CellType != CellType.Blank ? row.GetCell(columnIndices["是否提前公布"]).ToString() : "",
-                                    is_reduce = row.GetCell(columnIndices["是否请求费用减缓"]).CellType != CellType.Blank ? row.GetCell(columnIndices["是否请求费用减缓"]).ToString() : "",
-                                    is_first = row.GetCell(columnIndices["是否优先审查"]).CellType != CellType.Blank ? row.GetCell(columnIndices["是否优先审查"]).ToString() : "",
-                                    is_das = row.GetCell(columnIndices["是否同时请求DAS码"]).CellType != CellType.Blank ? row.GetCell(columnIndices["是否同时请求DAS码"]).ToString() : "",
-                                    is_preview = row.GetCell(columnIndices["是否预审案件"]).CellType != CellType.Blank ? row.GetCell(columnIndices["是否预审案件"]).ToString() : "",
-                                    is_fast_case = row.GetCell(columnIndices["是否是快维案件"]).CellType != CellType.Blank ? row.GetCell(columnIndices["是否是快维案件"]).ToString() : "",
-                                    business_user = row.GetCell(columnIndices["业务人员"]).CellType != CellType.Blank ? row.GetCell(columnIndices["业务人员"]).ToString() : "",
-                                    business_deputy = row.GetCell(columnIndices["业务助理"]).CellType != CellType.Blank ? row.GetCell(columnIndices["业务助理"]).ToString() : "",
-                                    business_deptment = row.GetCell(columnIndices["业务部门"]).CellType != CellType.Blank ? row.GetCell(columnIndices["业务部门"]).ToString() : "",
-                                    open_date = row.GetCell(columnIndices["开卷日期"]).CellType != CellType.Blank ? row.GetCell(columnIndices["开卷日期"]).ToString() : "",
-                                    commission_case = row.GetCell(columnIndices["委案日期"]).CellType != CellType.Blank ? row.GetCell(columnIndices["委案日期"]).ToString() : "",
-                                    area = row.GetCell(columnIndices["国家(地区)"]).CellType != CellType.Blank ? row.GetCell(columnIndices["国家(地区)"]).ToString() : "",
-                                    receipt = row.GetCell(columnIndices["收据号"]).CellType != CellType.Blank ? row.GetCell(columnIndices["收据号"]).ToString() : "",
-                                    contract_no = row.GetCell(columnIndices["合同号"]).CellType != CellType.Blank ? row.GetCell(columnIndices["合同号"]).ToString() : "",
-                                    case_customer_user = row.GetCell(columnIndices["案件客户联系人"]).CellType != CellType.Blank ? row.GetCell(columnIndices["案件客户联系人"]).ToString() : "",
-                                    case_user_phone = row.GetCell(columnIndices["案件客户联系人电话"]).CellType != CellType.Blank ? row.GetCell(columnIndices["案件客户联系人电话"]).ToString() : "",
-                                    case_user_email = row.GetCell(columnIndices["案件客户联系人邮箱"]).CellType != CellType.Blank ? row.GetCell(columnIndices["案件客户联系人邮箱"]).ToString() : "",
-                                    assist_house_no = row.GetCell(columnIndices["协办所案号"]).CellType != CellType.Blank ? row.GetCell(columnIndices["协办所案号"]).ToString() : "",
-                                    register_no = row.GetCell(columnIndices["注册号"]).CellType != CellType.Blank ? row.GetCell(columnIndices["注册号"]).ToString() : "",
-                                    brand_category = row.GetCell(columnIndices["商标类别"]).CellType != CellType.Blank ? row.GetCell(columnIndices["商标类别"]).ToString() : "",
-                                    case_handle_dept = row.GetCell(columnIndices["案件承办部门"]).CellType != CellType.Blank ? row.GetCell(columnIndices["案件承办部门"]).ToString() : "",
-                                    belong_branch = row.GetCell(columnIndices["所属分部"]).CellType != CellType.Blank ? row.GetCell(columnIndices["所属分部"]).ToString() : "",
-                                    work_type = row.GetCell(columnIndices["业务类型"]).CellType != CellType.Blank ? row.GetCell(columnIndices["业务类型"]).ToString() : "",
-                                    case_direction = row.GetCell(columnIndices["案件流向"]).CellType != CellType.Blank ? row.GetCell(columnIndices["案件流向"]).ToString() : "",
-                                    case_user_deptment = row.GetCell(columnIndices["案件处理人部门"]).CellType != CellType.Blank ? row.GetCell(columnIndices["案件处理人部门"]).ToString() : "",
-                                    apply_tpye = row.GetCell(columnIndices["申请类型"]).CellType != CellType.Blank ? row.GetCell(columnIndices["申请类型"]).ToString() : "",
-                                    apply_no = row.GetCell(columnIndices["申请号"]).CellType != CellType.Blank ? row.GetCell(columnIndices["申请号"]).ToString() : "",
-                                    apply_date = row.GetCell(columnIndices["申请日"]).CellType != CellType.Blank ? row.GetCell(columnIndices["申请日"]).ToString() : "",
-                                    registration_no = row.GetCell(columnIndices["注册号"]).CellType != CellType.Blank ? row.GetCell(columnIndices["注册号"]).ToString() : "",
-                                    announcement_date = row.GetCell(columnIndices["公告日"]).CellType != CellType.Blank ? row.GetCell(columnIndices["公告日"]).ToString() : "",
-                                    new_submit_date = row.GetCell(columnIndices["新申请递交日"]).CellType != CellType.Blank ? row.GetCell(columnIndices["新申请递交日"]).ToString() : "",
-                                    case_remark = row.GetCell(columnIndices["案件备注"]).CellType != CellType.Blank ? row.GetCell(columnIndices["案件备注"]).ToString() : "",
-                                    is_advance = row.GetCell(columnIndices["是否提前公开"]).CellType != CellType.Blank ? row.GetCell(columnIndices["是否提前公开"]).ToString() : "",
-                                    reduce_proportion = row.GetCell(columnIndices["费减比例"]).CellType != CellType.Blank ? row.GetCell(columnIndices["费减比例"]).ToString() : "",
-                                    pay_no = row.GetCell(columnIndices["缴费单号"]).CellType != CellType.Blank ? row.GetCell(columnIndices["缴费单号"]).ToString() : "",
-                                    pct_apply_no = row.GetCell(columnIndices["PCT申请号"]).CellType != CellType.Blank ? row.GetCell(columnIndices["PCT申请号"]).ToString() : "",
-                                    pct_apply_date = row.GetCell(columnIndices["PCT申请日"]).CellType != CellType.Blank ? row.GetCell(columnIndices["PCT申请日"]).ToString() : "",
-                                    priority_date = row.GetCell(columnIndices["优先权日"]).CellType != CellType.Blank ? row.GetCell(columnIndices["优先权日"]).ToString() : "",
-                                    customer_category = row.GetCell(columnIndices["客户类别"]).CellType != CellType.Blank ? row.GetCell(columnIndices["客户类别"]).ToString() : "",
-                                    handle_event = row.GetCell(columnIndices["处理事项"]).CellType != CellType.Blank ? row.GetCell(columnIndices["处理事项"]).ToString() : "",
-                                    handle_event_stage = row.GetCell(columnIndices["处理事项(含阶段)"]).CellType != CellType.Blank ? row.GetCell(columnIndices["处理事项(含阶段)"]).ToString() : "",
-                                    handle_event_user = row.GetCell(columnIndices["处理事项处理人"]).CellType != CellType.Blank ? row.GetCell(columnIndices["处理事项处理人"]).ToString() : "",
-                                    handle_event_deptment = row.GetCell(columnIndices["处理事项处理人部门"]).CellType != CellType.Blank ? row.GetCell(columnIndices["处理事项处理人部门"]).ToString() : "",
-                                    event_remark = row.GetCell(columnIndices["事项备注"]).CellType != CellType.Blank ? row.GetCell(columnIndices["事项备注"]).ToString() : "",
-                                    handle_event_date = row.GetCell(columnIndices["处理事项完成日"]).CellType != CellType.Blank ? row.GetCell(columnIndices["处理事项完成日"]).ToString() : "",
-                                    first_draft_date = row.GetCell(columnIndices["初稿日"]).CellType != CellType.Blank ? row.GetCell(columnIndices["初稿日"]).ToString() : "",
-                                    inside_draft_date = row.GetCell(columnIndices["内部定稿日"]).CellType != CellType.Blank ? row.GetCell(columnIndices["内部定稿日"]).ToString() : "",
-                                    return_draft_date = row.GetCell(columnIndices["返稿日"]).CellType != CellType.Blank ? row.GetCell(columnIndices["返稿日"]).ToString() : "",
-                                    draft_date = row.GetCell(columnIndices["定稿日"]).CellType != CellType.Blank ? row.GetCell(columnIndices["定稿日"]).ToString() : "",
-                                    give_cooperate_date = row.GetCell(columnIndices["送合作所日"]).CellType != CellType.Blank ? row.GetCell(columnIndices["送合作所日"]).ToString() : "",
-                                    submit_date = row.GetCell(columnIndices[""]).CellType != CellType.Blank ? row.GetCell(columnIndices[""]).ToString() : "",
-                                    handle_event_status = row.GetCell(columnIndices["处理事项状态"]).CellType != CellType.Blank ? row.GetCell(columnIndices["处理事项状态"]).ToString() : "",
-                                    official_date = row.GetCell(columnIndices["官方期限"]).CellType != CellType.Blank ? row.GetCell(columnIndices["官方期限"]).ToString() : "",
-                                    inside_draft_date_two = row.GetCell(columnIndices["内部定稿日"]).CellType != CellType.Blank ? row.GetCell(columnIndices["内部定稿日"]).ToString() : "",
-                                    customer_date = row.GetCell(columnIndices["客户期限"]).CellType != CellType.Blank ? row.GetCell(columnIndices["客户期限"]).ToString() : "",
-                                    apply_user = row.GetCell(columnIndices["申请人"]).CellType != CellType.Blank ? row.GetCell(columnIndices["申请人"]).ToString() : "",
-                                    agent_mechanism = row.GetCell(columnIndices["代理机构"]).CellType != CellType.Blank ? row.GetCell(columnIndices["代理机构"]).ToString() : "",
-                                    invention_user = row.GetCell(columnIndices["发明人"]).CellType != CellType.Blank ? row.GetCell(columnIndices["发明人"]).ToString() : "",
-                                    money_type = row.GetCell(columnIndices["费用类型"]).CellType != CellType.Blank ? row.GetCell(columnIndices["费用类型"]).ToString() : "",
-                                    money_name = row.GetCell(columnIndices["费用名称"]).CellType != CellType.Blank ? row.GetCell(columnIndices["费用名称"]).ToString() : "",
-                                    money_description = row.GetCell(columnIndices["费用描述"]).CellType != CellType.Blank ? row.GetCell(columnIndices["费用描述"]).ToString() : "",
-                                    money_english = row.GetCell(columnIndices["费用描述英文"]).CellType != CellType.Blank ? row.GetCell(columnIndices["费用描述英文"]).ToString() : "",
-                                    price = row.GetCell(columnIndices["金额"]).CellType != CellType.Blank ? row.GetCell(columnIndices["金额"]).ToString() : "",
-                                    currency = row.GetCell(columnIndices["币别"]).CellType != CellType.Blank ? row.GetCell(columnIndices["币别"]).ToString() : "",
-                                    change_currency = row.GetCell(columnIndices["换算后币别"]).CellType != CellType.Blank ? row.GetCell(columnIndices["换算后币别"]).ToString() : "",
-                                    change_money = row.GetCell(columnIndices["换算后金额"]).CellType != CellType.Blank ? row.GetCell(columnIndices["换算后金额"]).ToString() : "",
-                                    receivable_date = row.GetCell(columnIndices["应收日期"]).CellType != CellType.Blank ? row.GetCell(columnIndices["应收日期"]).ToString() : "",
-                                    request_date = row.GetCell(columnIndices["请款日期"]).CellType != CellType.Blank ? row.GetCell(columnIndices["请款日期"]).ToString() : "",
-                                    actual_date = row.GetCell(columnIndices["实收日期"]).CellType != CellType.Blank ? row.GetCell(columnIndices["实收日期"]).ToString() : "",
-                                    actual_get_money = row.GetCell(columnIndices["实收/实付金额"]).CellType != CellType.Blank ? row.GetCell(columnIndices["实收/实付金额"]).ToString() : "",
-                                    actual_currency = row.GetCell(columnIndices["实收币别"]).CellType != CellType.Blank ? row.GetCell(columnIndices["实收币别"]).ToString() : "",
-                                    pay_date = row.GetCell(columnIndices["缴费期限"]).CellType != CellType.Blank ? row.GetCell(columnIndices["缴费期限"]).ToString() : "",
-                                    pay_head = row.GetCell(columnIndices["缴费抬头"]).CellType != CellType.Blank ? row.GetCell(columnIndices["缴费抬头"]).ToString() : "",
-                                    actual_pay_date = row.GetCell(columnIndices["实付日期"]).CellType != CellType.Blank ? row.GetCell(columnIndices["实付日期"]).ToString() : "",
-                                    request_money_no = row.GetCell(columnIndices["请款单号"]).CellType != CellType.Blank ? row.GetCell(columnIndices["请款单号"]).ToString() : "",
-                                    pay_year_stage = row.GetCell(columnIndices["缴年费阶段"]).CellType != CellType.Blank ? row.GetCell(columnIndices["缴年费阶段"]).ToString() : "",
-                                    pay_type = row.GetCell(columnIndices["缴费类型"]).CellType != CellType.Blank ? row.GetCell(columnIndices["缴费类型"]).ToString() : "",
-                                    exchange_rate = row.GetCell(columnIndices["汇率"]).CellType != CellType.Blank ? row.GetCell(columnIndices["汇率"]).ToString() : "",
-                                    money_remark = row.GetCell(columnIndices["费用备注"]).CellType != CellType.Blank ? row.GetCell(columnIndices["费用备注"]).ToString() : "",
-                                    update_record = row.GetCell(columnIndices["修改记录"]).CellType != CellType.Blank ? row.GetCell(columnIndices["修改记录"]).ToString() : "",
-                                    collection_account = row.GetCell(columnIndices["收款公司账号"]).CellType != CellType.Blank ? row.GetCell(columnIndices["收款公司账号"]).ToString() : "",
-                                    bill_no = row.GetCell(columnIndices["外方账单号"]).CellType != CellType.Blank ? row.GetCell(columnIndices["外方账单号"]).ToString() : "",
-                                    money_create_date = row.GetCell(columnIndices["费用创建日期"]).CellType != CellType.Blank ? row.GetCell(columnIndices["费用创建日期"]).ToString() : "",
-                                    invoice_no = row.GetCell(columnIndices["发票号"]).CellType != CellType.Blank ? row.GetCell(columnIndices["发票号"]).ToString() : "",
-                                    create_invoice_date = row.GetCell(columnIndices["开票日期"]).CellType != CellType.Blank ? row.GetCell(columnIndices["开票日期"]).ToString() : "",
-                                    cost_agent = row.GetCell(columnIndices["费用合作所代理机构"]).CellType != CellType.Blank ? row.GetCell(columnIndices["费用合作所代理机构"]).ToString() : "",
-                                    collection_status = row.GetCell(columnIndices["收款状态"]).CellType != CellType.Blank ? row.GetCell(columnIndices["收款状态"]).ToString() : "",
-                                    pay_status = row.GetCell(columnIndices["缴费状态"]).CellType != CellType.Blank ? row.GetCell(columnIndices["缴费状态"]).ToString() : "",
-                                    out_account_date = row.GetCell(columnIndices["销账日期"]).CellType != CellType.Blank ? row.GetCell(columnIndices["销账日期"]).ToString() : "",
-                                    power_ask_num = row.GetCell(columnIndices["权利要求项数"]).CellType != CellType.Blank ? row.GetCell(columnIndices["权利要求项数"]).ToString() : "",
-                                    instructions_num = row.GetCell(columnIndices["说明书页数"]).CellType != CellType.Blank ? row.GetCell(columnIndices["说明书页数"]).ToString() : "",
-                                    technical_field = row.GetCell(columnIndices["技术领域"]).CellType != CellType.Blank ? row.GetCell(columnIndices["技术领域"]).ToString() : "",
+                                    my_document_no = my_document_no,// row.GetCell(columnIndices["我方文号"]).CellType != CellType.Blank ? row.GetCell(columnIndices["我方文号"]).ToString() : "",
+                                    case_name = case_name,// row.GetCell(columnIndices["案件名称"]).CellType != CellType.Blank ? row.GetCell(columnIndices["案件名称"]).ToString() : "",
+                                    case_status = case_status,// row.GetCell(columnIndices["案件状态"]).CellType != CellType.Blank ? row.GetCell(columnIndices["案件状态"]).ToString() : "",
+                                    case_type = case_type,// row.GetCell(columnIndices["案件类型"]).CellType != CellType.Blank ? row.GetCell(columnIndices["案件类型"]).ToString() : "",
+                                    customer_document_no = customer_document_no,//row.GetCell(columnIndices["客户文号"]).CellType != CellType.Blank ? row.GetCell(columnIndices["客户文号"]).ToString() : "",
+                                    customer_name = customer_name,// row.GetCell(columnIndices["客户名称"]).CellType != CellType.Blank ? row.GetCell(columnIndices["客户名称"]).ToString() : "",
+                                    customer_no = customer_no,// row.GetCell(columnIndices["客户代码"]).CellType != CellType.Blank ? row.GetCell(columnIndices["客户代码"]).ToString() : "",
+                                    product_type = product_type,// row.GetCell(columnIndices["产品类别"]).CellType != CellType.Blank ? row.GetCell(columnIndices["产品类别"]).ToString() : "",
+                                    case_user = case_user,// row.GetCell(columnIndices["案件处理人"]).CellType != CellType.Blank ? row.GetCell(columnIndices["案件处理人"]).ToString() : "",
+                                    date_apply = date_apply,// row.GetCell(columnIndices["同日申请"]).CellType != CellType.Blank ? row.GetCell(columnIndices["同日申请"]).ToString() : "",
+                                    date_submit = date_submit,// row.GetCell(columnIndices["同日递交"]).CellType != CellType.Blank ? row.GetCell(columnIndices["同日递交"]).ToString() : "",
+                                    is_date_submit = is_date_submit,// row.GetCell(columnIndices["是否同时提实审"]).CellType != CellType.Blank ? row.GetCell(columnIndices["是否同时提实审"]).ToString() : "",
+                                    is_publish = is_publish,// row.GetCell(columnIndices["是否提前公布"]).CellType != CellType.Blank ? row.GetCell(columnIndices["是否提前公布"]).ToString() : "",
+                                    is_reduce = is_reduce,// row.GetCell(columnIndices["是否请求费用减缓"]).CellType != CellType.Blank ? row.GetCell(columnIndices["是否请求费用减缓"]).ToString() : "",
+                                    is_first = is_first,// row.GetCell(columnIndices["是否优先审查"]).CellType != CellType.Blank ? row.GetCell(columnIndices["是否优先审查"]).ToString() : "",
+                                    is_das = is_das,// row.GetCell(columnIndices["是否同时请求DAS码"]).CellType != CellType.Blank ? row.GetCell(columnIndices["是否同时请求DAS码"]).ToString() : "",
+                                    is_preview = is_preview,// row.GetCell(columnIndices["是否预审案件"]).CellType != CellType.Blank ? row.GetCell(columnIndices["是否预审案件"]).ToString() : "",
+                                    is_fast_case = is_fast_case,// row.GetCell(columnIndices["是否是快维案件"]).CellType != CellType.Blank ? row.GetCell(columnIndices["是否是快维案件"]).ToString() : "",
+                                    business_user = business_user,//row.GetCell(columnIndices["业务人员"]).CellType != CellType.Blank ? row.GetCell(columnIndices["业务人员"]).ToString() : "",
+                                    business_deputy = business_deputy,// row.GetCell(columnIndices["业务助理"]).CellType != CellType.Blank ? row.GetCell(columnIndices["业务助理"]).ToString() : "",
+                                    business_deptment = business_deptment,// row.GetCell(columnIndices["业务部门"]).CellType != CellType.Blank ? row.GetCell(columnIndices["业务部门"]).ToString() : "",
+                                    open_date = open_date,// row.GetCell(columnIndices["开卷日期"]).CellType != CellType.Blank ? row.GetCell(columnIndices["开卷日期"]).ToString() : "",
+                                    commission_case = commission_case,//row.GetCell(columnIndices["委案日期"]).CellType != CellType.Blank ? row.GetCell(columnIndices["委案日期"]).ToString() : "",
+                                    area = area,// row.GetCell(columnIndices["国家(地区)"]).CellType != CellType.Blank ? row.GetCell(columnIndices["国家(地区)"]).ToString() : "",
+                                    receipt = receipt,//row.GetCell(columnIndices["收据号"]).CellType != CellType.Blank ? row.GetCell(columnIndices["收据号"]).ToString() : "",
+                                    contract_no = contract_no,// row.GetCell(columnIndices["合同号"]).CellType != CellType.Blank ? row.GetCell(columnIndices["合同号"]).ToString() : "",
+                                    case_customer_user = case_customer_user,// row.GetCell(columnIndices["案件客户联系人"]).CellType != CellType.Blank ? row.GetCell(columnIndices["案件客户联系人"]).ToString() : "",
+                                    case_user_phone = case_user_phone,// row.GetCell(columnIndices["案件客户联系人电话"]).CellType != CellType.Blank ? row.GetCell(columnIndices["案件客户联系人电话"]).ToString() : "",
+                                    case_user_email = case_user_email,// row.GetCell(columnIndices["案件客户联系人邮箱"]).CellType != CellType.Blank ? row.GetCell(columnIndices["案件客户联系人邮箱"]).ToString() : "",
+                                    assist_house_no = assist_house_no,// row.GetCell(columnIndices["协办所案号"]).CellType != CellType.Blank ? row.GetCell(columnIndices["协办所案号"]).ToString() : "",
+                                    register_no = register_no,// row.GetCell(columnIndices["注册号"]).CellType != CellType.Blank ? row.GetCell(columnIndices["注册号"]).ToString() : "",
+                                    brand_category = brand_category,// row.GetCell(columnIndices["商标类别"]).CellType != CellType.Blank ? row.GetCell(columnIndices["商标类别"]).ToString() : "",
+                                    case_handle_dept = case_handle_dept,// row.GetCell(columnIndices["案件承办部门"]).CellType != CellType.Blank ? row.GetCell(columnIndices["案件承办部门"]).ToString() : "",
+                                    belong_branch = belong_branch,// row.GetCell(columnIndices["所属分部"]).CellType != CellType.Blank ? row.GetCell(columnIndices["所属分部"]).ToString() : "",
+                                    work_type = work_type,// row.GetCell(columnIndices["业务类型"]).CellType != CellType.Blank ? row.GetCell(columnIndices["业务类型"]).ToString() : "",
+                                    case_direction = case_direction,// row.GetCell(columnIndices["案件流向"]).CellType != CellType.Blank ? row.GetCell(columnIndices["案件流向"]).ToString() : "",
+                                    case_user_deptment = case_user_deptment,// row.GetCell(columnIndices["案件处理人部门"]).CellType != CellType.Blank ? row.GetCell(columnIndices["案件处理人部门"]).ToString() : "",
+                                    apply_tpye = apply_tpye,//row.GetCell(columnIndices["申请类型"]).CellType != CellType.Blank ? row.GetCell(columnIndices["申请类型"]).ToString() : "",
+                                    apply_no = apply_no,// row.GetCell(columnIndices["申请号"]).CellType != CellType.Blank ? row.GetCell(columnIndices["申请号"]).ToString() : "",
+                                    apply_date = apply_date,// row.GetCell(columnIndices["申请日"]).CellType != CellType.Blank ? row.GetCell(columnIndices["申请日"]).ToString() : "",
+                                    registration_no = registration_no,// row.GetCell(columnIndices["注册号"]).CellType != CellType.Blank ? row.GetCell(columnIndices["注册号"]).ToString() : "",
+                                    announcement_date = announcement_date,// row.GetCell(columnIndices["公告日"]).CellType != CellType.Blank ? row.GetCell(columnIndices["公告日"]).ToString() : "",
+                                    new_submit_date = new_submit_date,// row.GetCell(columnIndices["新申请递交日"]).CellType != CellType.Blank ? row.GetCell(columnIndices["新申请递交日"]).ToString() : "",
+                                    case_remark = case_remark,// row.GetCell(columnIndices["案件备注"]).CellType != CellType.Blank ? row.GetCell(columnIndices["案件备注"]).ToString() : "",
+                                    is_advance = is_advance,// row.GetCell(columnIndices["是否提前公开"]).CellType != CellType.Blank ? row.GetCell(columnIndices["是否提前公开"]).ToString() : "",
+                                    reduce_proportion = reduce_proportion,// row.GetCell(columnIndices["费减比例"]).CellType != CellType.Blank ? row.GetCell(columnIndices["费减比例"]).ToString() : "",
+                                    pay_no = pay_no,// row.GetCell(columnIndices["缴费单号"]).CellType != CellType.Blank ? row.GetCell(columnIndices["缴费单号"]).ToString() : "",
+                                    pct_apply_no = pct_apply_no,// row.GetCell(columnIndices["PCT申请号"]).CellType != CellType.Blank ? row.GetCell(columnIndices["PCT申请号"]).ToString() : "",
+                                    pct_apply_date = pct_apply_date,// row.GetCell(columnIndices["PCT申请日"]).CellType != CellType.Blank ? row.GetCell(columnIndices["PCT申请日"]).ToString() : "",
+                                    priority_date = priority_date,// row.GetCell(columnIndices["优先权日"]).CellType != CellType.Blank ? row.GetCell(columnIndices["优先权日"]).ToString() : "",
+                                    customer_category = customer_category,// row.GetCell(columnIndices["客户类别"]).CellType != CellType.Blank ? row.GetCell(columnIndices["客户类别"]).ToString() : "",
+                                    handle_event = handle_event,// row.GetCell(columnIndices["处理事项"]).CellType != CellType.Blank ? row.GetCell(columnIndices["处理事项"]).ToString() : "",
+                                    handle_event_stage = handle_event_stage,// row.GetCell(columnIndices["处理事项(含阶段)"]).CellType != CellType.Blank ? row.GetCell(columnIndices["处理事项(含阶段)"]).ToString() : "",
+                                    handle_event_user = handle_event_user,// row.GetCell(columnIndices["处理事项处理人"]).CellType != CellType.Blank ? row.GetCell(columnIndices["处理事项处理人"]).ToString() : "",
+                                    handle_event_deptment = handle_event_deptment,// row.GetCell(columnIndices["处理事项处理人部门"]).CellType != CellType.Blank ? row.GetCell(columnIndices["处理事项处理人部门"]).ToString() : "",
+                                    event_remark = event_remark,// row.GetCell(columnIndices["事项备注"]).CellType != CellType.Blank ? row.GetCell(columnIndices["事项备注"]).ToString() : "",
+                                    handle_event_date = handle_event_date,// row.GetCell(columnIndices["处理事项完成日"]).CellType != CellType.Blank ? row.GetCell(columnIndices["处理事项完成日"]).ToString() : "",
+                                    first_draft_date = first_draft_date,// row.GetCell(columnIndices["初稿日"]).CellType != CellType.Blank ? row.GetCell(columnIndices["初稿日"]).ToString() : "",
+                                    inside_draft_date = inside_draft_date,// row.GetCell(columnIndices["内部定稿日"]).CellType != CellType.Blank ? row.GetCell(columnIndices["内部定稿日"]).ToString() : "",
+                                    return_draft_date = return_draft_date,//row.GetCell(columnIndices["返稿日"]).CellType != CellType.Blank ? row.GetCell(columnIndices["返稿日"]).ToString() : "",
+                                    draft_date = draft_date,// row.GetCell(columnIndices["定稿日"]).CellType != CellType.Blank ? row.GetCell(columnIndices["定稿日"]).ToString() : "",
+                                    give_cooperate_date = give_cooperate_date,// row.GetCell(columnIndices["送合作所日"]).CellType != CellType.Blank ? row.GetCell(columnIndices["送合作所日"]).ToString() : "",
+                                    submit_date = submit_date,// row.GetCell(columnIndices[""]).CellType != CellType.Blank ? row.GetCell(columnIndices[""]).ToString() : "",
+                                    handle_event_status = handle_event_status,// row.GetCell(columnIndices["处理事项状态"]).CellType != CellType.Blank ? row.GetCell(columnIndices["处理事项状态"]).ToString() : "",
+                                    official_date = official_date,// row.GetCell(columnIndices["官方期限"]).CellType != CellType.Blank ? row.GetCell(columnIndices["官方期限"]).ToString() : "",
+                                    inside_draft_date_two = inside_draft_date_two,// row.GetCell(columnIndices["内部定稿日"]).CellType != CellType.Blank ? row.GetCell(columnIndices["内部定稿日"]).ToString() : "",
+                                    customer_date = customer_date,// row.GetCell(columnIndices["客户期限"]).CellType != CellType.Blank ? row.GetCell(columnIndices["客户期限"]).ToString() : "",
+                                    apply_user = apply_user,//row.GetCell(columnIndices["申请人"]).CellType != CellType.Blank ? row.GetCell(columnIndices["申请人"]).ToString() : "",
+                                    agent_mechanism = agent_mechanism,// row.GetCell(columnIndices["代理机构"]).CellType != CellType.Blank ? row.GetCell(columnIndices["代理机构"]).ToString() : "",
+                                    invention_user = invention_user,// row.GetCell(columnIndices["发明人"]).CellType != CellType.Blank ? row.GetCell(columnIndices["发明人"]).ToString() : "",
+                                    money_type = money_type,// row.GetCell(columnIndices["费用类型"]).CellType != CellType.Blank ? row.GetCell(columnIndices["费用类型"]).ToString() : "",
+                                    money_name = money_name,// row.GetCell(columnIndices["费用名称"]).CellType != CellType.Blank ? row.GetCell(columnIndices["费用名称"]).ToString() : "",
+                                    money_description = money_description,//row.GetCell(columnIndices["费用描述"]).CellType != CellType.Blank ? row.GetCell(columnIndices["费用描述"]).ToString() : "",
+                                    money_english = money_english,// row.GetCell(columnIndices["费用描述英文"]).CellType != CellType.Blank ? row.GetCell(columnIndices["费用描述英文"]).ToString() : "",
+                                    price = price,// row.GetCell(columnIndices["金额"]).CellType != CellType.Blank ? row.GetCell(columnIndices["金额"]).ToString() : "",
+                                    currency = currency,//row.GetCell(columnIndices["币别"]).CellType != CellType.Blank ? row.GetCell(columnIndices["币别"]).ToString() : "",
+                                    change_currency = change_currency,// row.GetCell(columnIndices["换算后币别"]).CellType != CellType.Blank ? row.GetCell(columnIndices["换算后币别"]).ToString() : "",
+                                    change_money = change_money,//row.GetCell(columnIndices["换算后金额"]).CellType != CellType.Blank ? row.GetCell(columnIndices["换算后金额"]).ToString() : "",
+                                    receivable_date = receivable_date,// row.GetCell(columnIndices["应收日期"]).CellType != CellType.Blank ? row.GetCell(columnIndices["应收日期"]).ToString() : "",
+                                    request_date = request_date,// row.GetCell(columnIndices["请款日期"]).CellType != CellType.Blank ? row.GetCell(columnIndices["请款日期"]).ToString() : "",
+                                    actual_date = actual_date,//row.GetCell(columnIndices["实收日期"]).CellType != CellType.Blank ? row.GetCell(columnIndices["实收日期"]).ToString() : "",
+                                    actual_get_money = actual_get_money,// row.GetCell(columnIndices["实收/实付金额"]).CellType != CellType.Blank ? row.GetCell(columnIndices["实收/实付金额"]).ToString() : "",
+                                    actual_currency = actual_currency,// row.GetCell(columnIndices["实收币别"]).CellType != CellType.Blank ? row.GetCell(columnIndices["实收币别"]).ToString() : "",
+                                    pay_date = pay_date,// row.GetCell(columnIndices["缴费期限"]).CellType != CellType.Blank ? row.GetCell(columnIndices["缴费期限"]).ToString() : "",
+                                    pay_head = pay_head,// row.GetCell(columnIndices["缴费抬头"]).CellType != CellType.Blank ? row.GetCell(columnIndices["缴费抬头"]).ToString() : "",
+                                    actual_pay_date = actual_pay_date,// row.GetCell(columnIndices["实付日期"]).CellType != CellType.Blank ? row.GetCell(columnIndices["实付日期"]).ToString() : "",
+                                    request_money_no = request_money_no,// row.GetCell(columnIndices["请款单号"]).CellType != CellType.Blank ? row.GetCell(columnIndices["请款单号"]).ToString() : "",
+                                    pay_year_stage = pay_year_stage,// row.GetCell(columnIndices["缴年费阶段"]).CellType != CellType.Blank ? row.GetCell(columnIndices["缴年费阶段"]).ToString() : "",
+                                    pay_type = pay_type,// row.GetCell(columnIndices["缴费类型"]).CellType != CellType.Blank ? row.GetCell(columnIndices["缴费类型"]).ToString() : "",
+                                    exchange_rate = exchange_rate,// row.GetCell(columnIndices["汇率"]).CellType != CellType.Blank ? row.GetCell(columnIndices["汇率"]).ToString() : "",
+                                    money_remark = money_remark,// row.GetCell(columnIndices["费用备注"]).CellType != CellType.Blank ? row.GetCell(columnIndices["费用备注"]).ToString() : "",
+                                    update_record = update_record,// row.GetCell(columnIndices["修改记录"]).CellType != CellType.Blank ? row.GetCell(columnIndices["修改记录"]).ToString() : "",
+                                    collection_account = collection_account,// row.GetCell(columnIndices["收款公司账号"]).CellType != CellType.Blank ? row.GetCell(columnIndices["收款公司账号"]).ToString() : "",
+                                    bill_no = bill_no,// row.GetCell(columnIndices["外方账单号"]).CellType != CellType.Blank ? row.GetCell(columnIndices["外方账单号"]).ToString() : "",
+                                    money_create_date = money_create_date,// row.GetCell(columnIndices["费用创建日期"]).CellType != CellType.Blank ? row.GetCell(columnIndices["费用创建日期"]).ToString() : "",
+                                    invoice_no = invoice_no,// row.GetCell(columnIndices["发票号"]).CellType != CellType.Blank ? row.GetCell(columnIndices["发票号"]).ToString() : "",
+                                    create_invoice_date = create_invoice_date,// row.GetCell(columnIndices["开票日期"]).CellType != CellType.Blank ? row.GetCell(columnIndices["开票日期"]).ToString() : "",
+                                    cost_agent = cost_agent,// row.GetCell(columnIndices["费用合作所代理机构"]).CellType != CellType.Blank ? row.GetCell(columnIndices["费用合作所代理机构"]).ToString() : "",
+                                    collection_status = collection_status,// row.GetCell(columnIndices["收款状态"]).CellType != CellType.Blank ? row.GetCell(columnIndices["收款状态"]).ToString() : "",
+                                    pay_status = pay_status,// row.GetCell(columnIndices["缴费状态"]).CellType != CellType.Blank ? row.GetCell(columnIndices["缴费状态"]).ToString() : "",
+                                    out_account_date = out_account_date,// row.GetCell(columnIndices["销账日期"]).CellType != CellType.Blank ? row.GetCell(columnIndices["销账日期"]).ToString() : "",
+                                    power_ask_num = power_ask_num,// row.GetCell(columnIndices["权利要求项数"]).CellType != CellType.Blank ? row.GetCell(columnIndices["权利要求项数"]).ToString() : "",
+                                    instructions_num = instructions_num,// row.GetCell(columnIndices["说明书页数"]).CellType != CellType.Blank ? row.GetCell(columnIndices["说明书页数"]).ToString() : "",
+                                    technical_field = technical_field,// row.GetCell(columnIndices["技术领域"]).CellType != CellType.Blank ? row.GetCell(columnIndices["技术领域"]).ToString() : "",
                                     // 根据 Excel 中的列和你的数据模型进行映射
-                                    outside_user = row.GetCell(columnIndices["外部案源人"]).CellType != CellType.Blank ? row.GetCell(columnIndices["外部案源人"]).ToString() : "",
-                                    inside_user = row.GetCell(columnIndices["内部案源人"]).CellType != CellType.Blank ? row.GetCell(columnIndices["内部案源人"]).ToString() : "",
-                                    patent_label = row.GetCell(columnIndices["专利标签"]).CellType != CellType.Blank ? row.GetCell(columnIndices["专利标签"]).ToString() : "",
-                                    proposal_no = row.GetCell(columnIndices["提案编号"]).CellType != CellType.Blank ? row.GetCell(columnIndices["提案编号"]).ToString() : "",
-                                    proxy_user = row.GetCell(columnIndices["代理人"]).CellType != CellType.Blank ? row.GetCell(columnIndices["代理人"]).ToString() : "",
-                                    custom_one = row.GetCell(columnIndices["自定义栏位3"]).CellType != CellType.Blank ? row.GetCell(columnIndices["自定义栏位3"]).ToString() : "",
-                                    custom_two = row.GetCell(columnIndices["自定义栏位4"]).CellType != CellType.Blank ? row.GetCell(columnIndices["自定义栏位4"]).ToString() : "",
-                                    custom_three = row.GetCell(columnIndices["自定义栏位5"]).CellType != CellType.Blank ? row.GetCell(columnIndices["自定义栏位5"]).ToString() : "",
-                                    text1 = row.GetCell(columnIndices["文本1"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本1"]).ToString() : "",
-                                    text2 = row.GetCell(columnIndices["文本2"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本2"]).ToString() : "",
-                                    text3 = row.GetCell(columnIndices["文本3"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本3"]).ToString() : "",
-                                    text4 = row.GetCell(columnIndices["文本4"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本4"]).ToString() : "",
-                                    text5 = row.GetCell(columnIndices["文本5"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本5"]).ToString() : "",
-                                    text6 = row.GetCell(columnIndices["文本6"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本6"]).ToString() : "",
-                                    text7 = row.GetCell(columnIndices["文本7"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本7"]).ToString() : "",
-                                    text8 = row.GetCell(columnIndices["文本8"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本8"]).ToString() : "",
-                                    text9 = row.GetCell(columnIndices["文本9"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本9"]).ToString() : "",
-                                    text10 = row.GetCell(columnIndices["文本10"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本10"]).ToString() : "",
-                                    text11 = row.GetCell(columnIndices["文本11"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本11"]).ToString() : "",
-                                    text12 = row.GetCell(columnIndices["文本12"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本12"]).ToString() : "",
-                                    text13 = row.GetCell(columnIndices["文本13"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本13"]).ToString() : "",
-                                    text14 = row.GetCell(columnIndices["文本14"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本14"]).ToString() : "",
-                                    text15 = row.GetCell(columnIndices["文本15"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本15"]).ToString() : "",
-                                    text16 = row.GetCell(columnIndices["文本16"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本16"]).ToString() : "",
-                                    text17 = row.GetCell(columnIndices["文本17"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本17"]).ToString() : "",
-                                    text18 = row.GetCell(columnIndices["文本18"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本18"]).ToString() : "",
-                                    text19 = row.GetCell(columnIndices["文本19"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本19"]).ToString() : "",
-                                    text20 = row.GetCell(columnIndices["文本20"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本20"]).ToString() : "",
-                                    text21 = row.GetCell(columnIndices["文本21"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本21"]).ToString() : "",
-                                    text22 = row.GetCell(columnIndices["文本22"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本22"]).ToString() : "",
-                                    text23 = row.GetCell(columnIndices["文本23"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本23"]).ToString() : "",
-                                    text24 = row.GetCell(columnIndices["文本24"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本24"]).ToString() : "",
-                                    text25 = row.GetCell(columnIndices["文本25"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本25"]).ToString() : "",
-                                    text26 = row.GetCell(columnIndices["文本26"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本26"]).ToString() : "",
-                                    text27 = row.GetCell(columnIndices["文本27"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本27"]).ToString() : "",
-                                    text28 = row.GetCell(columnIndices["文本28"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本28"]).ToString() : "",
-                                    text29 = row.GetCell(columnIndices["文本29"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本29"]).ToString() : "",
-                                    text30 = row.GetCell(columnIndices["文本30"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本30"]).ToString() : ""
+                                    outside_user = outside_user,// row.GetCell(columnIndices["外部案源人"]).CellType != CellType.Blank ? row.GetCell(columnIndices["外部案源人"]).ToString() : "",
+                                    inside_user = inside_user,// row.GetCell(columnIndices["内部案源人"]).CellType != CellType.Blank ? row.GetCell(columnIndices["内部案源人"]).ToString() : "",
+                                    patent_label = patent_label,// row.GetCell(columnIndices["专利标签"]).CellType != CellType.Blank ? row.GetCell(columnIndices["专利标签"]).ToString() : "",
+                                    proposal_no = proposal_no,// row.GetCell(columnIndices["提案编号"]).CellType != CellType.Blank ? row.GetCell(columnIndices["提案编号"]).ToString() : "",
+                                    proxy_user = proxy_user,//row.GetCell(columnIndices["代理人"]).CellType != CellType.Blank ? row.GetCell(columnIndices["代理人"]).ToString() : "",
+                                    custom_one = custom_one,// row.GetCell(columnIndices["自定义栏位3"]).CellType != CellType.Blank ? row.GetCell(columnIndices["自定义栏位3"]).ToString() : "",
+                                    custom_two = custom_two,// row.GetCell(columnIndices["自定义栏位4"]).CellType != CellType.Blank ? row.GetCell(columnIndices["自定义栏位4"]).ToString() : "",
+                                    custom_three = custom_three,// row.GetCell(columnIndices["自定义栏位5"]).CellType != CellType.Blank ? row.GetCell(columnIndices["自定义栏位5"]).ToString() : "",
+                                    text1 = text1,// row.GetCell(columnIndices["文本1"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本1"]).ToString() : "",
+                                    text2 = text2,//row.GetCell(columnIndices["文本2"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本2"]).ToString() : "",
+                                    text3 = text3,// row.GetCell(columnIndices["文本3"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本3"]).ToString() : "",
+                                    text4 = text4,// row.GetCell(columnIndices["文本4"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本4"]).ToString() : "",
+                                    text5 = text5,// row.GetCell(columnIndices["文本5"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本5"]).ToString() : "",
+                                    text6 = text6,// row.GetCell(columnIndices["文本6"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本6"]).ToString() : "",
+                                    text7 = text7,//row.GetCell(columnIndices["文本7"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本7"]).ToString() : "",
+                                    text8 = text8,// row.GetCell(columnIndices["文本8"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本8"]).ToString() : "",
+                                    text9 = text9,// row.GetCell(columnIndices["文本9"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本9"]).ToString() : "",
+                                    text10 = text10,// row.GetCell(columnIndices["文本10"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本10"]).ToString() : "",
+                                    text11 = text11,//row.GetCell(columnIndices["文本11"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本11"]).ToString() : "",
+                                    text12 = text12,// row.GetCell(columnIndices["文本12"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本12"]).ToString() : "",
+                                    text13 = text13,// row.GetCell(columnIndices["文本13"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本13"]).ToString() : "",
+                                    text14 = text14,//row.GetCell(columnIndices["文本14"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本14"]).ToString() : "",
+                                    text15 = text15,// row.GetCell(columnIndices["文本15"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本15"]).ToString() : "",
+                                    text16 = text16,// row.GetCell(columnIndices["文本16"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本16"]).ToString() : "",
+                                    text17 = text17,//row.GetCell(columnIndices["文本17"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本17"]).ToString() : "",
+                                    text18 = text18,// row.GetCell(columnIndices["文本18"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本18"]).ToString() : "",
+                                    text19 = text19,// row.GetCell(columnIndices["文本19"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本19"]).ToString() : "",
+                                    text20 = text20,// row.GetCell(columnIndices["文本20"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本20"]).ToString() : "",
+                                    text21 = text21,// row.GetCell(columnIndices["文本21"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本21"]).ToString() : "",
+                                    text22 = text22,// row.GetCell(columnIndices["文本22"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本22"]).ToString() : "",
+                                    text23 = text23,//row.GetCell(columnIndices["文本23"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本23"]).ToString() : "",
+                                    text24 = text24,//row.GetCell(columnIndices["文本24"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本24"]).ToString() : "",
+                                    text25 = text25,//row.GetCell(columnIndices["文本25"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本25"]).ToString() : "",
+                                    text26 = text26,//row.GetCell(columnIndices["文本26"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本26"]).ToString() : "",
+                                    text27 = text27,// row.GetCell(columnIndices["文本27"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本27"]).ToString() : "",
+                                    text28 = text28,//row.GetCell(columnIndices["文本28"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本28"]).ToString() : "",
+                                    text29 = text29,//row.GetCell(columnIndices["文本29"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本29"]).ToString() : "",
+                                    text30 = text30//row.GetCell(columnIndices["文本30"]).CellType != CellType.Blank ? row.GetCell(columnIndices["文本30"]).ToString() : ""
 
                                     //fmaterialNumber = result == null ? "" : result
                                     //...
-                                };
+                                });;
                                 //dataList.Add(dataItem);
                             }
                         }
 
                         // 将数据保存到数据库
 
-                        dbContext.sli_intpo_Import.AddRange(dataList);
+                        dbContext.sli_intpo_Import.AddRange(Sli_intpo_Import);
                         dbContext.SaveChanges();
                     }
                 }
