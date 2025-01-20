@@ -68,5 +68,7 @@ namespace WebApi_SY.Controllers
                 return JsonConvert.SerializeObject(ex.ToString());
             }
         }
+
+
     }
 }
