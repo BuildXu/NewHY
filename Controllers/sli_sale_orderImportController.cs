@@ -235,7 +235,7 @@ namespace WebApi_SY.Controllers
 
             var totalCount = query.Count(); //记录数
             var totalPages = (int)Math.Ceiling((double)totalCount / pageSize); // 页数
-            var paginatedQuery = query.OrderByDescending(b => b.id).Skip((page - 1) * pageSize).Take(pageSize); //  某页记录
+            var paginatedQuery = query.OrderByDescending(b => b.fseq).Skip((page - 1) * pageSize).Take(pageSize); //  某页记录
             //var datas = query.ToList();
             var response = new    // 定义 前端返回数据  总记录，总页，当前页 ，size,返回记录
             {

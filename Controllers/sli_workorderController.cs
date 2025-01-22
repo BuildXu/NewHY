@@ -37,6 +37,7 @@ namespace WebApi_SY.Controllers
                     Fplanstart = model.Fplanstart,
                     Fplanend = model.Fplanend,
                     Fordertype = model.Fordertype,
+                    
                     sli_work_orderEntry = model.sli_work_orderEntry.Select(d => new sli_work_orderEntry
                     {
                         Id = model.Id,
@@ -178,10 +179,10 @@ namespace WebApi_SY.Controllers
                 Fwoplanstart = a.Fwoplanstart,
                 Fwoplanend = a.Fwoplanend,
                 Fwoordertype = a.Fwoordertype,
-                Fwoentryqty = a.Fwoentryqty,
-                Fwoecommitqty = a.Fwoecommitqty,
-                Fwoestatus = a.Fwoestatus,
-                Fwoeclosed = a.Fwoeclosed,
+                Fwoentryqty = a.Fwoentryqty ?? 0,
+                Fwoecommitqty = a.Fwoecommitqty ?? 0,
+                Fwoestatus = a.Fwoestatus ?? 0,
+                Fwoeclosed = a.Fwoeclosed ?? 0,
                 Fworkordlistid = a.Fworkordlistid,
                 Fworkqty = a.Fworkqty,
                 Fworkweight = a.Fworkweight,

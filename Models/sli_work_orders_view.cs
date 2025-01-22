@@ -140,13 +140,13 @@ namespace WebApi_SY.Models
 
         public string Fwoordertype { get; set; }
 
-        public int Fwoentryqty { get; set; }
+        public int ? Fwoentryqty { get; set; }
 
-        public int Fwoecommitqty { get; set; }
+        public int ? Fwoecommitqty { get; set; }
 
-        public int Fwoestatus { get; set; }
+        public int ? Fwoestatus { get; set; }
 
-        public int Fwoeclosed { get; set; }
+        public int ? Fwoeclosed { get; set; }
 
         public int Fworkordlistid { get; set; }
 
