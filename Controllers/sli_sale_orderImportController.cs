@@ -27,6 +27,7 @@ namespace WebApi_SY.Controllers
 {
     public class sli_sale_orderImportController : ApiController
     {
+
         [System.Web.Mvc.HttpPost]
         public IHttpActionResult ImportExcel()
         {
@@ -363,141 +364,7 @@ namespace WebApi_SY.Controllers
                 bool bLogin = client.Login(dbId, "Administrator", "kingdee123*", 2052);
                 if (bLogin)
                 {
-                    //string jsonData = "";
-                    //string sJson = {\"NeedUpDateFields\":[],\"NeedReturnFields\":[],\"IsDeleteEntry\":\"true\",\"SubSystemId\":\"\",\"IsVerifyBaseDataField\":\"false\",
-                    //\"IsEntryBatchFill\":\"true\",\"ValidateFlag\":\"true\",\"NumberSearch\":\"true\",\"IsAutoAdjustField\":\"true\",\"InterationFlags\":\"\",
-                    //\"IgnoreInterationFlag\":\"\",\"IsControlPrecision\":\"false\",\"ValidateRepeatJson\":\"false\",
-                    //\"Model\":{
-                    //\"FID\":0,\"FBillTypeID\":{\"FNUMBER\":\"XSDD01_SYS\"},\"FDate\":\"2024-11-12 00:00:00\",\"FSaleOrgId\":{\"FNumber\":\"100\"},
-                    //\"FCustId\":{\"FNumber\":\"CUST0001\"},\"FReceiveId\":{\"FNumber\":\"CUST0001\"},\"FSaleDeptId\":{\"FNumber\":\"BM000001\"},
-                    //\"FSalerId\":{\"FNumber\":\"001_001_1\"},\"FSettleId\":{\"FNumber\":\"CUST0001\"},\"FChargeId\":{\"FNumber\":\"CUST0001\"},
-                    //\"FNetOrderBillId\":0,\"FOppID\":0,\"FISINIT\":false,\"FIsMobile\":false,\"FContractId\":0,\"FIsUseOEMBomPush\":false,
-                    //\"FXPKID_H\":0,\"FIsUseDrpSalePOPush\":false,\"FIsCreateStraightOutIN\":false,
-                    //\"FSaleOrderFinance\":{\"FSettleCurrId\":{\"FNumber\":\"PRE001\"},\"FIsIncludedTax\":true,\"FIsPriceExcludeTax\":true,
-                    //\"FExchangeTypeId\":{\"FNumber\":\"HLTX01_SYS\"},\"FOverOrgTransDirect\":false},\"FSalOrderRec\":{},
-                    //\"FSaleOrderEntry\":[{\"FRowType\":\"Standard\",\"FMaterialId\":{\"FNumber\":\"T000001\"},\"FUnitID\":{\"FNumber\":\"Pcs\"},
-                    //\"FInventoryQty\":0.0,\"FCurrentInventory\":0.0,\"FAwaitQty\":0.0,\"FAvailableQty\":0.0,\"FQty\":100.0,
-                    //\"FPriceUnitId\":{\"FNumber\":\"Pcs\"},\"FIsFree\":false,\"FEntryTaxRate\":13.00,\"FDeliveryDate\":\"2024-11-12 11:01:22\",
-                    //\"FStockOrgId\":{\"FNumber\":\"100\"},\"FSettleOrgIds\":{\"FNumber\":\"100\"},\"FSupplyOrgId\":{\"FNumber\":\"100\"},
-                    //\"FOwnerTypeId\":\"BD_OwnerOrg\",\"FOwnerId\":{\"FNumber\":\"100\"},\"FEntryNote\":\"备注\",\"FSrcType\":\"\",
-                    //\"FSrcBillNo\":\"\",\"FReserveType\":\"1\",\"FPriority\":0,\"FNetOrderEntryId\":0,\"FPriceBaseQty\":100.0,
-                    //\"FStockUnitID\":{\"FNumber\":\"Pcs\"},\"FStockQty\":100.0,\"FStockBaseQty\":100.0,\"FPurQty\":0.0,\"FPurBaseQty\":0.0,
-                    //\"FOUTLMTUNIT\":\"SAL\",\"FOutLmtUnitID\":{\"FNumber\":\"Pcs\"},\"FISMRPCAL\":false,\"FBOMEntryId\":0,\"FAllAmountExceptDisCount\":1000.0,
-                    //\"FXPKID\":0,\"FThirdPartyEntrySeq\":0,\"FsliHeatTreatment\":\"毛坯热处理\",\"FsliTestBarQty\":10,\"FsliMetel\":{\"FNUMBER\":\"35#\"},
-                    //\"FsliExplanation\":\"附注\",\"FsliNotice\":\"备注\",\"FsliWorkOrder\":\"生产号\",\"FsliSaleOrder\":\"客户订单号\",
-                    //\"FsliQuotationNo\":\"未\",\"FsliStockNo\":\"测试\",\"FsliStockLocation\":\"仓库位置\",\"FsliBlank\":\"毛坯图号\",\"FsliDrawingNo\":\"图号\"}]}}
-
-
-
-                    #region
-                    //StringBuilder Str = new StringBuilder();
-                    //Str.Append("{");
-                    //Str.Append("\"NeedUpDateFields\":[],");
-                    //Str.Append("\"NeedReturnFields\":[FBillNo],");
-                    //Str.Append("\"IsDeleteEntry\":\"true\",");
-                    //Str.Append("\"SubSystemId\":\"\",");
-                    //Str.Append("\"IsVerifyBaseDataField\":\"false\",");
-                    //Str.Append("\"IsEntryBatchFill\":\"true\",");
-                    //Str.Append("\"ValidateFlag\":\"true\",");
-                    //Str.Append("\"NumberSearch\":\"true\",");
-                    //Str.Append("\"IsAutoAdjustField\":\"true\",");
-                    //Str.Append("\"InterationFlags\":\"\",");
-                    //Str.Append("\"IsControlPrecision\":\"false\",");
-                    //Str.Append("\"ValidateRepeatJson\":\"false\",");
-                    //Str.Append("\"Model\":{");
-                    //Str.Append("\"FID\":0,");
-                    //Str.Append("\"FBillTypeID\":{\"FNUMBER\":\"XSDD01_SYS\"},");
-                    //Str.Append("\"FDate\":\"" + DateTime.Now + "\",");
-                    //Str.Append("\"FSaleOrgId\":{\"FNumber\":\"100\"},");
-                    //Str.Append("\"FCustId\":{\"FNumber\":\"" + FcustomerNumer.FNUMBER + "\"},");
-                    //Str.Append("\"FReceiveId\":{\"FNumber\":\"" + FcustomerNumer.FNUMBER + "\"},");
-                    //Str.Append("\"FSaleDeptId\":{\"FNumber\":\"BM000001\"},");    //部门
-                    //Str.Append("\"FSalerId\":{\"FNumber\":\"001_001_1\"},");     //销售员
-                    //Str.Append("\"FSettleId\":{\"FNumber\":\"" + FcustomerNumer.FNUMBER + "\"},");
-                    //Str.Append("\"FChargeId\":{\"FNumber\":\"" + FcustomerNumer.FNUMBER + "\"},");
-                    //Str.Append("\"FNetOrderBillId\":0,");
-                    //Str.Append("\"FOppID\":0,");
-                    //Str.Append("\"FISINIT\":false,");
-                    //Str.Append("\"FIsMobile\":false,");
-                    //Str.Append("\"FContractId\":0,");
-                    //Str.Append("\"FIsUseOEMBomPush\":false,");
-                    //Str.Append("\"FXPKID_H\":0,");
-                    //Str.Append("\"FIsUseDrpSalePOPush\":false,");
-                    //Str.Append("\"FIsCreateStraightOutIN\":false,");
-                    //Str.Append("\"FSaleOrderFinance\":{");
-                    //Str.Append("\"FSettleCurrId\":{\"FNumber\":\"PRE001\"},");
-                    //Str.Append("\"FIsIncludedTax\":true,");
-                    //Str.Append("\"FIsPriceExcludeTax\":true,");
-                    //Str.Append("\"FExchangeTypeId\":{\"FNumber\":\"HLTX01_SYS\"},");
-                    //Str.Append("\"FMarginLevel\":0.0,");
-                    //Str.Append("\"FMargin\":0.0,");
-                    //Str.Append("\"FOverOrgTransDirect\":false,");
-                    //Str.Append("\"FAllDisCount\":0.0,");
-                    //Str.Append("\"FXPKID_F\":0},");
-                    //Str.Append("\"FSalOrderRec\":{},");
-                    //Str.Append("\"FSaleOrderEntry\":[");
-
-                    //foreach (var entitydata in entityList)
-                    //{
-                    //    bool isLastItem = index == entity.Count() - 1;
-                    //    Str.Append("{\"FRowType\":\"Standard\",");
-                    //    //Str.Append("\"FMaterialId\":{\"FNumber\":\""+ entitydata.fmaterialNumber + "\"},");
-                    //    Str.Append("\"FMaterialId\":{\"FNumber\":\"T000001\"},");
-                    //    Str.Append("\"FUnitID\":{\"FNumber\":\"Pcs\"},");
-                    //    Str.Append("\"FInventoryQty\":0.0,");
-                    //    Str.Append("\"FCurrentInventory\":0.0,");
-                    //    Str.Append("\"FAwaitQty\":0.0,");
-                    //    Str.Append("\"FAvailableQty\":0.0,");
-                    //    Str.Append("\"FQty\":"+ entitydata.fqty+ ",");
-                    //    Str.Append("\"FPriceUnitId\":{\"FNumber\":\"Pcs\"},");
-                    //    Str.Append("\"FOldQty\":0.0,");
-                    //    Str.Append("\"FPrice\":0.0,");
-                    //    Str.Append("\"FTaxPrice\":0.0,");
-                    //    Str.Append("\"FIsFree\":false,");
-                    //    Str.Append("\"FEntryTaxRate\":13.00,");
-                    //    //Str.Append("\"FExpPeriod\":0,");
-                    //    //Str.Append("\"FDiscountRate\":0.0,");
-                    //    //Str.Append("\"FPriceDiscount\":0.0,");
-                    //    Str.Append("\"FDeliveryDate\":\""+ entitydata.fdeliveryDate+ "\",");
-                    //    Str.Append("\"FStockOrgId\":{\"FNumber\":\"100\"},");
-                    //    Str.Append("\"FSettleOrgIds\":{\"FNumber\":\"100\"},");
-                    //    Str.Append("\"FSupplyOrgId\":{\"FNumber\":\"100\"},");
-                    //    Str.Append("\"FOwnerTypeId\":\"BD_OwnerOrg\",");
-                    //    Str.Append("\"FOwnerId\":{\"FNumber\":\"100\"},");
-                    //    Str.Append("\"FSrcType\":\"\",");
-                    //    Str.Append("\"FReserveType\":\"1\",");
-                    //    Str.Append("\"FPriceBaseQty\":"+ entitydata.fqty+ ",");
-                    //    Str.Append("\"FStockUnitID\":{\"FNumber\":\"Pcs\"},");
-                    //    Str.Append("\"FStockQty\":"+ entitydata.fqty+ ",");
-                    //    Str.Append("\"FStockBaseQty\":" + entitydata.fqty + ",");
-                    //    Str.Append("\"FOUTLMTUNIT\":\"SAL\",");
-                    //    Str.Append("\"FOutLmtUnitID\":{\"FNumber\":\"Pcs\"},");
-                    //    Str.Append("\"FISMRP\":false,");
-                    //    Str.Append("\"FISMRPCAL\":false,");
-                    //    Str.Append("\"FAllAmountExceptDisCount\":0.0,");
-                    //    Str.Append("\"FsliHeatTreatment\":\""+ entitydata .fsliHeatTreatment+ "\",");
-                    //    Str.Append("\"FsliTestBarQty\":\"" + entitydata.fsliTestBarQty + "\",");
-                    //    Str.Append("\"FsliMetel\":{\"FNUMBER\":\""+ entitydata.fsliMetal + "\"},");
-                    //    Str.Append("\"FsliExplanation\":\"" + entitydata.fsliExplanation + "\",");
-                    //    Str.Append("\"FsliNotice\":\"" + entitydata.fsliNotice + "\",");
-                    //    Str.Append("\"FsliWorkOrder\":\"" + entitydata.fsliWorkOrder + "\",");
-                    //    Str.Append("\"FsliSaleOrder\":\"" + entitydata.fsliSaleOrder + "\",");
-                    //    Str.Append("\"FsliQuotationNo\":\"" + entitydata.fsliQuotationNo + "\",");
-                    //    Str.Append("\"FsliStockNo\":\"" + entitydata.fsliStockNo + "\",");
-                    //    Str.Append("\"FsliBlank\":\"" + entitydata.fsliBlank + "\",");
-                    //    Str.Append("\"FsliDrawingNo\":\"" + entitydata.fsliDrawingNo + "\"");
-                    //    if (index == entity.Count() - 1)
-                    //    {
-                    //        Str.Append("}");
-                    //    }
-                    //    else
-                    //    {
-                    //        Str.Append("},");
-                    //    }
-                    //    index++;
-                    //}
-                    //Str.Append("]}}");
-                    #endregion
+                    
                     var heard = context.Sli_sale_orderImport.FirstOrDefault(p => p.FID == id);   //获取表头单行数据
                     var FcustomerNumer = context.Sli_bd_customer_view.FirstOrDefault(p => p.FNAME == heard.FCustomerName); //根据客户名称查询客户代码
                     var entity = context.Sli_sale_orderImportentry.Where(p => p.fid == id);   //获取表体多行数据
@@ -564,6 +431,7 @@ namespace WebApi_SY.Controllers
                         rootObject.Model.FSaleOrderEntry.Add(newEntry);
                     }
                     string newJson = JsonConvert.SerializeObject(rootObject);
+                    System.Diagnostics.Debug.WriteLine(newJson);
                     //sJson = "{\"CreateOrgId\":0,\"Numbers\":[\"" + FPrdModel + "\"]}";
                     //string jsonData = "{\"NeedUpDateFields\": [],\"NeedReturnFields\": [],\"IsDeleteEntry\": \"true\",\"SubSystemId\": \"\",\"IsVerifyBaseDataField\": \"False\",\"IsEntryBatchFill\": \"true\",\"ValidateFlag\": \"true\",\"NumberSearch\": \"true\",\"IsAutoAdjustField\": \"False\",\"InterationFlags\": \"\",\"IgnoreInterationFlag\": \"\",\"IsControlPrecision\": \"False\",\"Model\": {\"FBillTypeID\": {\"FNUMBER\": \"XSDD01_SYS\"},\"FDate\": \"2022-04-27 00:00:00\",\"FSaleOrgId\": {\"FNumber\": \"100\"},\"FCustId\": {\"FNumber\": \"SCMKH100001\"},\"FReceiveId\": {\"FNumber\": \"SCMKH100001\"},\"FSaleDeptId\": {\"FNumber\": \"SCMBM000001\"},\"FSalerId\": {\"FNumber\": \"SCMYG000001_SCMGW000001_1\"},\"FSettleId\": {\"FNumber\": \"SCMKH100001\"},\"FChargeId\": {\"FNumber\": \"SCMKH100001\"},\"FSaleOrderFinance\": {\"FSettleCurrId\": {\"FNumber\": \"PRE001\"},\"FIsPriceExcludeTax\": 'true',\"FIsIncludedTax\": 'true',\"FExchangeTypeId\": {\"FNumber\": \"HLTX01_SYS\"}},\"FSaleOrderEntry\": [{\"FRowType\": \"Standard\",\"FMaterialId\": {\"FNumber\": \"SCMWL100002\"},\"FUnitID\": {\"FNumber\": \"Pcs\"},\"FQty\": 10,\"FPriceUnitId\": {\"FNumber\": \"Pcs\"},\"FPrice\": 8.849558,\"FTaxPrice\": 10,\"FEntryTaxRate\": 13,\"FDeliveryDate\": \"2022-04-27 15:15:54\",\"FStockOrgId\": {\"FNumber\": \"100\"},\"FSettleOrgIds\": {\"FNumber\": \"100\"},\"FSupplyOrgId\": {\"FNumber\": \"100\"},\"FOwnerTypeId\": \"BD_OwnerOrg\",\"FOwnerId\": {\"FNumber\": \"100\"},\"FReserveType\": \"1\",\"FPriceBaseQty\": 10,\"FStockUnitID\": {\"FNumber\": \"Pcs\"},\"FStockQty\": 10,\"FStockBaseQty\": 10,\"FOUTLMTUNIT\": \"SAL\",\"FOutLmtUnitID\": {\"FNumber\": \"Pcs\"},\"FAllAmountExceptDisCount\": 100,\"FOrderEntryPlan\": [{\"FPlanDate\": \"2022-04-27 15:15:54\",\"FPlanQty\": 10}]}],\"FSaleOrderPlan\": [{\"FRecAdvanceRate\": 100,\"FRecAdvanceAmount\": 100}],\"FBillNo\":" + "\"" + Number + "\"" + ",}}";
                     var result = client.Execute<string>("Kingdee.BOS.WebApi.ServicesStub.DynamicFormService.Save",
