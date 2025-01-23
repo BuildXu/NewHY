@@ -556,6 +556,7 @@
     <Compile Include="Models\sli_witnessing_orderbill_view.cs" />
     <Compile Include="Models\sli_workorder.cs" />
     <Compile Include="Models\sli_document_process_view.cs" />
+    <Compile Include="Models\sli_witnessing_orderbill_view.cs" />
     <Compile Include="Models\sli_workOrderList_view.cs" />
     <Compile Include="Models\sli_work_orders_view.cs" />
     <Compile Include="Models\sli_workOrderList.cs" />

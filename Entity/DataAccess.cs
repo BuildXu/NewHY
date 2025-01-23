@@ -151,6 +151,8 @@ namespace WebApi_SY.Entity
         public DbSet<sli_unconformify_view> Sli_unconformify_view { get; set; }//不合格处理单
         public DbSet<sli_unconformify> Sli_unconformify { get; set; }//不合格处理单
 
+        public DbSet<sli_witnessing_order> sli_witnessing_order { get; set; }//见证任务表头
+        public DbSet<sli_witnessing_orderbill> sli_witnessing_orderbill { get; set; }//见证任务表体
 
 
 
