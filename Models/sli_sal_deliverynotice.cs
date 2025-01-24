@@ -9,23 +9,46 @@ namespace WebApi_SY.Models
     public class sli_sal_deliverynotice
     {
         [Key]
-        public int FId { get; set; }
-        public string FBillNo { get; set; }
-        public string FNumber { get; set; }
-        public string FShortName { get; set; }
-        public string FAddress { get; set; }
-        public string FOrderNo { get; set; }
+        public int Fid { get; set; }
+        public string Fbillno { get; set; }//通知单号
+        public string Fnumber { get; set; }// 客户代码
+        public string Fshortname { get; set; }// 客户简称
+        public string  Faddress { get; set; }//地址
+        public string  ForderNo { get; set; }// 订单号
+        public virtual ICollection<sli_sal_deliverynoticeentry> sli_sal_deliverynoticeentry { get; set; }
+
     }
     public class sli_sal_deliverynoticeentry
     {
         
-        public int FId { get; set; }
-        public int FSeq { get; set; }
-        public string FNumber { get; set; }
-        public decimal FQty { get; set; }
-        public bool FIsVmiBusiness { get; set; }
+        public int Fid { get; set; }   //关联表头ID
+        public int Fseq { get; set; }  // 订单行号
+        public string Fnumber { get; set; } //物料代码
+        public decimal Fqty { get; set; }// 发货数量
+        public string Fisvmibusiness { get; set; }// 不要显示
         [Key]
-        public int FEntryId { get; set; }
-        public DateTime FDeliveryDate { get; set; }
+        public int Fentryid { get; set; }//发货通知行Fentryid
+        public DateTime Fdeliverydate { get; set; }// 发货日期
+        public virtual sli_sal_deliverynotice sli_sal_deliverynotice { get; set; }
+    }
+
+
+    public class sli_sal_deliverynotice_view
+    {
+        
+        public int Fid { get; set; }
+        public string Fbillno { get; set; }//通知单号
+        public string FcustNumber { get; set; }// 客户代码
+        public string Fshortname { get; set; }// 客户简称
+        public string Faddress { get; set; }//地址
+        public string ForderNo { get; set; }// 订单号
+        public int Fseq { get; set; }  // 订单行号
+        public string Fnumber { get; set; } //物料代码
+        public decimal Fqty { get; set; }// 发货数量
+        public string Fisvmibusiness { get; set; }// 不要显示
+        [Key]
+        public int Fentryid { get; set; }//发货通知行Fentryid
+        public DateTime Fdeliverydate { get; set; }// 发货日期
+
     }
 }

@@ -154,6 +154,11 @@ namespace WebApi_SY.Entity
         public DbSet<sli_witnessing_order> sli_witnessing_order { get; set; }//见证任务表头
         public DbSet<sli_witnessing_orderbill> sli_witnessing_orderbill { get; set; }//见证任务表体
 
+        public DbSet<sli_sal_deliverynotice> Sli_sal_deliverynotice { get; set; }//发货通知单视图
+        public DbSet<sli_sal_deliverynoticeentry> Sli_sal_deliverynoticeentry { get; set; }//发货通知单表体视图
+
+        public DbSet<sli_sal_deliverynotice_view> Sli_sal_deliverynotice_view { get; set; }//发货通知单表头、体视图
+
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -355,6 +360,10 @@ namespace WebApi_SY.Entity
              .WithMany(d => d.sli_witnessing_orderbill)
              .HasForeignKey(d => d.Id);
 
+            modelBuilder.Entity<sli_sal_deliverynoticeentry>()
+             .HasOne(h => h.sli_sal_deliverynotice)
+             .WithMany(d => d.sli_sal_deliverynoticeentry)
+             .HasForeignKey(d => d.Fid);
         }
 
     }
