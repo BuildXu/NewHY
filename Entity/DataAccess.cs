@@ -158,7 +158,9 @@ namespace WebApi_SY.Entity
         public DbSet<sli_sal_deliverynoticeentry> Sli_sal_deliverynoticeentry { get; set; }//发货通知单表体视图
 
         public DbSet<sli_sal_deliverynotice_view> Sli_sal_deliverynotice_view { get; set; }//发货通知单表头、体视图
+        public DbSet<sli_sal_deliverynotice_view> sli_sal_deliverynoticentry_view { get; set; }//发货通知单表头、体视图   sli_sal_deliverynotice_update
 
+        public DbSet<T_SAL_DELIVERYNOTICE> T_SAL_DELIVERYNOTICE { get; set; }//发货通知单表头、体视图   更新
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -363,6 +365,11 @@ namespace WebApi_SY.Entity
             modelBuilder.Entity<sli_sal_deliverynoticeentry>()
              .HasOne(h => h.sli_sal_deliverynotice)
              .WithMany(d => d.sli_sal_deliverynoticeentry)
+             .HasForeignKey(d => d.Fid);
+
+            modelBuilder.Entity<sli_sal_deliverynoticentry_view>()
+             .HasOne(h => h.sli_sal_deliverynotice_view)
+             .WithMany(d => d.sli_sal_deliverynoticentry_view)
              .HasForeignKey(d => d.Fid);
         }
 
