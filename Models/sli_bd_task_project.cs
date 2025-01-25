@@ -35,4 +35,76 @@ namespace WebApi_SY.Models
         // 创建日期
         public string FCreateDate { get; set; }
     }
-}
+
+    public class sli_bd_task_step
+    {
+        // 自增主键
+        public int Id { get; set; }
+
+        // 编号
+        public string FNumber { get; set; }
+
+        // 名称
+        public string FName { get; set; }
+
+        // 备注
+        public string FNote { get; set; }
+
+        // 状态
+        public int? FStatus { get; set; }
+
+        // 使用状态
+        public int? FUsed { get; set; }
+
+        // 创建日期
+        public string FCreateDate { get; set; }
+    }
+    public class sli_bd_task_type
+    {
+        // 自增主键
+        public int Id { get; set; }
+
+        // 编号
+        public string FNumber { get; set; }
+
+        // 名称
+        public string FName { get; set; }
+
+        // 备注
+        public string FNote { get; set; }
+
+        // 状态
+        public int? FStatus { get; set; }
+
+        // 使用状态
+        public int? FUsed { get; set; }
+
+        // 创建日期
+        public string FCreateDate { get; set; }
+    }
+
+  
+        public class sli_bd_task_status
+        {
+            // 自增主键
+            public int Id { get; set; }
+
+            // 编号
+            public string FNumber { get; set; }
+
+            // 名称
+            public string FName { get; set; }
+
+            // 备注
+            public string FNote { get; set; }
+
+            // 状态
+            public int? FStatus { get; set; }
+
+            // 使用状态
+            public int? FUsed { get; set; }
+
+            // 创建日期
+            public string FCreateDate { get; set; }
+        }
+    }
