@@ -57,9 +57,9 @@ namespace WebApi_SY.Models
         public bool FIsIncludedTax { get; set; }
         public Numberdelivery FLocalCurrID { get; set; }
         public Numberdelivery FExchangeTypeID { get; set; }
-        public double FExchangeRate { get; set; }
+        public decimal FExchangeRate { get; set; }
         public bool FIsPriceExcludeTax { get; set; }
-        public double FAllDisCount { get; set; }
+        public decimal FAllDisCount { get; set; }
     }
 
     public class FEntity
@@ -67,41 +67,41 @@ namespace WebApi_SY.Models
         public string FRowType { get; set; }
         public Numberdelivery FMaterialID { get; set; }
         public Numberdelivery FUnitID { get; set; }
-        public double FInventoryQty { get; set; }
-        public double FRealQty { get; set; }
-        public double FDisPriceQty { get; set; }
-        public double FPrice { get; set; }
-        public double FTaxPrice { get; set; }
+        public decimal FInventoryQty { get; set; }
+        public decimal FRealQty { get; set; }
+        public decimal FDisPriceQty { get; set; }
+        public decimal FPrice { get; set; }
+        public decimal FTaxPrice { get; set; }
         public bool FIsFree { get; set; }
         public string FOwnerTypeID { get; set; }
         public Numberdelivery FOwnerID { get; set; }
         public Numberdelivery FLot { get; set; }
-        public double FEntryTaxRate { get; set; }
-        public double FAuxUnitQty { get; set; }
+        public decimal FEntryTaxRate { get; set; }
+        public decimal FAuxUnitQty { get; set; }
         public Numberdelivery FExtAuxUnitId { get; set; }
-        public double FExtAuxUnitQty { get; set; }
+        public decimal FExtAuxUnitQty { get; set; }
         public Numberdelivery FStockID { get; set; }
         public Numberdelivery FStockStatusID { get; set; }
         public string FSrcType { get; set; }
         public string FSrcBillNo { get; set; }
-        public double FDiscountRate { get; set; }
-        public double FPriceDiscount { get; set; }
-        public double FActQty { get; set; }
+        public decimal FDiscountRate { get; set; }
+        public decimal FPriceDiscount { get; set; }
+        public decimal FActQty { get; set; }
         public Numberdelivery FSalUnitID { get; set; }
-        public double FSALUNITQTY { get; set; }
-        public double FSALBASEQTY { get; set; }
-        public double FPRICEBASEQTY { get; set; }
+        public decimal FSALUNITQTY { get; set; }
+        public decimal FSALBASEQTY { get; set; }
+        public decimal FPRICEBASEQTY { get; set; }
         public bool FOUTCONTROL { get; set; }
-        public double FRepairQty { get; set; }
+        public decimal FRepairQty { get; set; }
         public bool FIsOverLegalOrg { get; set; }
-        public double FARNOTJOINQTY { get; set; }
+        public decimal FARNOTJOINQTY { get; set; }
         public int FQmEntryID { get; set; }
         public int FConvertEntryID { get; set; }
         public int FSOEntryId { get; set; }
-        public double FBeforeDisPriceQty { get; set; }
-        public double FSignQty { get; set; }
+        public decimal FBeforeDisPriceQty { get; set; }
+        public decimal FSignQty { get; set; }
         public bool FCheckDelivery { get; set; }
-        public double FAllAmountExceptDisCount { get; set; }
+        public decimal FAllAmountExceptDisCount { get; set; }
         public bool FSettleBySon { get; set; }
         public int FBOMEntryId { get; set; }
         public Numberdelivery FMaterialID_Sal { get; set; }

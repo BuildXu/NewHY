@@ -563,6 +563,7 @@
     <Compile Include="Models\sli_workOrderList.cs" />
     <Compile Include="Models\sli_work_processBill.cs" />
     <Compile Include="Models\t_sal_orderEntry.cs" />
+    <Compile Include="Models\sli_bd_task_project.cs" />
     <Compile Include="Models\t_stock.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
