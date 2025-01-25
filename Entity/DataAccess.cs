@@ -162,6 +162,11 @@ namespace WebApi_SY.Entity
 
         public DbSet<T_SAL_DELIVERYNOTICE> T_SAL_DELIVERYNOTICE { get; set; }//发货通知单表头、体视图   更新
 
+        public DbSet<sli_bd_task_project> sli_bd_task_project { get; set; }//  任务基础资料:项目号
+        public DbSet<sli_bd_task_type> sli_bd_task_type { get; set; }//  任务基础资料:step
+        public DbSet<sli_bd_task_step> sli_bd_task_step { get; set; }//  任务基础资料:step
+        public DbSet<sli_bd_task_status> sli_bd_task_status { get; set; }//  任务基础资料:状态
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
