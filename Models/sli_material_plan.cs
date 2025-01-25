@@ -39,7 +39,7 @@ namespace WebApi_SY.Models
         // 实际下料重量                                 后期 领料单返写   控制()                             
         public decimal Fweightactul { get; set; }
         // 状态                                             
-        public decimal Fstatus { get; set; }
+        public int Fstatus { get; set; }
 
 
     }

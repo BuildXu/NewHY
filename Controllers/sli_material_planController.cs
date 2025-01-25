@@ -208,7 +208,7 @@ namespace WebApi_SY.Controllers
                 Id = a.Id,
                 // 物料 ID
                 Fmaterialid = a.Fmaterialid,
-                // 批号 来自即时库存
+                //批号 来自即时库存
                 Flotno = a.Flotno ?? string.Empty,
                 // 仓库 ID 来自即时库存
                 Fstockid = a.Fstockid,
