@@ -238,6 +238,9 @@ namespace WebApi_SY.Controllers
             var paginatedQuery = query.OrderByDescending(b => b.Id).Skip((page - 1) * pageSize).Take(pageSize); //  某页记录
             var result = paginatedQuery.Select(a => new
             {
+                // 自增主键
+                Id = a.Id,
+                // 编号
                 FNumber = a.FNumber,
                 // 名称
                 FName = a.FName,
@@ -252,7 +255,7 @@ namespace WebApi_SY.Controllers
                 // 使用状态
                 FUsed = a.FUsed,
                 // 创建日期
-                FCreateDate = a.FCreateDate 
+                FCreateDate = a.FCreateDate
 
 
             });
