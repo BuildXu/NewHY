@@ -165,74 +165,9 @@ namespace WebApi_SY.Controllers
         public IHttpActionResult GetTableBysli_bd_task_project(int page = 1, int pageSize = 10)
         {
 
-            //int? Id = null,
-            //int? Fsourceid = null,
-            //int? Fworkorderlistid = null,
-            //int? Fprocessoption = null,
-            //DateTime? Fstartdate = null,
-            //DateTime? Fenddate = null,
-            //int? Fdeptid = null,
-            //int? Fstatus = null,
-            //string Foptionno = null,
-            //string Foptionname = null,
-            //string Fcustno = null,
-            //string Fcustname = null,
-            //string Fname = null
             var context = new YourDbContext();
             IQueryable<sli_bd_task_project> query = context.sli_bd_task_project;
 
-            //if (Id.HasValue)
-            //{
-            //    query = query.Where(q => q.Id == Id);
-            //}
-            //if (Fsourceid.HasValue)
-            //{
-            //    query = query.Where(q => q.Fsourceid == Fsourceid);
-            //}
-            //if (Fworkorderlistid.HasValue)
-            //{
-            //    query = query.Where(q => q.Fworkorderlistid == Fworkorderlistid);
-            //}
-            //if (Fprocessoption.HasValue)
-            //{
-            //    query = query.Where(q => q.Fprocessoption == Fprocessoption);
-            //}
-            //if (Fstartdate.HasValue)
-            //{
-            //    query = query.Where(q => q.Fstartdate == Fstartdate);
-            //}
-            //if (Fenddate.HasValue)
-            //{
-            //    query = query.Where(q => q.Fenddate == Fenddate);
-            //}
-            //if (Fdeptid.HasValue)
-            //{
-            //    query = query.Where(q => q.Fdeptid == Fdeptid);
-            //}
-            //if (Fstatus.HasValue)
-            //{
-            //    query = query.Where(q => q.Fstatus == Fstatus);
-            //}
-            //if (!string.IsNullOrEmpty(Foptionno))
-            //{
-            //    query = query.Where(q => q.Foptionno == Foptionno);
-            //}
-            //if (!string.IsNullOrEmpty(Foptionname))
-            //{
-            //    query = query.Where(q => q.Foptionname == Foptionname);
-            //}
-            //if (!string.IsNullOrEmpty(Fcustno))
-            //{
-            //    query = query.Where(q => q.Fcustno == Fcustno);
-            //}
-            //if (!string.IsNullOrEmpty(Fcustname))
-            //{
-            //    query = query.Where(q => q.Fcustname == Fcustname);
-            //}
-            //if (!string.IsNullOrEmpty(Fname))
-            //{
-            //    query = query.Where(q => q.Fname == Fname);
-            //}
             var totalCount = query.Count(); //记录数
             var totalPages = (int)Math.Ceiling((double)totalCount / pageSize); // 页数
             var paginatedQuery = query.OrderByDescending(b => b.Id).Skip((page - 1) * pageSize).Take(pageSize); //  某页记录
