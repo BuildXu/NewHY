@@ -455,6 +455,7 @@
     <Compile Include="Controllers\PlanController.cs" />
     <Compile Include="Controllers\sli_mes_furnace.cs" />
     <Compile Include="Controllers\sli_intpo_ImportController.cs" />
+    <Compile Include="Controllers\sli_bd_task_projectController.cs" />
     <Compile Include="Controllers\sli_quality_reportController.cs" />
     <Compile Include="Controllers\sli_quality_requestController.cs" />
     <Compile Include="Controllers\sli_sal_deliverynoticeController.cs" />
