@@ -453,12 +453,19 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MyController.cs" />
     <Compile Include="Controllers\PlanController.cs" />
+    <Compile Include="Controllers\sli_material_planController.cs" />
+    <Compile Include="Controllers\sli_task_reportController.cs" />
+    <Compile Include="Controllers\sli_task_orderController.cs" />
+    <Compile Include="Controllers\sli_bd_task_stepController.cs" />
+    <Compile Include="Controllers\sli_bd_task_statusController.cs" />
+    <Compile Include="Controllers\sli_bd_task_typeController.cs" />
     <Compile Include="Controllers\sli_mech_listController.cs" />
     <Compile Include="Controllers\sli_mes_furnace.cs" />
     <Compile Include="Controllers\sli_intpo_ImportController.cs" />
     <Compile Include="Controllers\sli_mould_listController.cs" />
     <Compile Include="Controllers\sli_mould_maintain_orderController.cs" />
     <Compile Include="Controllers\sli_mould_maintain_reportController.cs" />
+    <Compile Include="Controllers\sli_bd_task_projectController.cs" />
     <Compile Include="Controllers\sli_quality_reportController.cs" />
     <Compile Include="Controllers\sli_quality_requestController.cs" />
     <Compile Include="Controllers\sli_sal_deliverynoticeController.cs" />
@@ -566,11 +573,13 @@
     <Compile Include="Models\sli_workorder.cs" />
     <Compile Include="Models\sli_document_process_view.cs" />
     <Compile Include="Models\sli_witnessing_orderbill_view.cs" />
+    <Compile Include="Models\sli_material_plan.cs" />
     <Compile Include="Models\sli_workOrderList_view.cs" />
     <Compile Include="Models\sli_work_orders_view.cs" />
     <Compile Include="Models\sli_workOrderList.cs" />
     <Compile Include="Models\sli_work_processBill.cs" />
     <Compile Include="Models\t_sal_orderEntry.cs" />
+    <Compile Include="Models\sli_bd_task_project.cs" />
     <Compile Include="Models\t_stock.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

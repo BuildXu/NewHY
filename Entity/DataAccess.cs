@@ -168,6 +168,16 @@ namespace WebApi_SY.Entity
         public DbSet<sli_mould_maintain_report> Sli_mould_maintain_report { get; set; }//模具报修单报告
         public DbSet<sli_mould_maintain_report_view> Sli_mould_maintain_report_view { get; set; }//模具报修单报告视图
 
+        public DbSet<sli_bd_task_project> sli_bd_task_project { get; set; }//  任务基础资料:项目号
+        public DbSet<sli_bd_task_type> sli_bd_task_type { get; set; }//  任务基础资料:step
+        public DbSet<sli_bd_task_step> sli_bd_task_step { get; set; }//  任务基础资料:step
+        public DbSet<sli_bd_task_status> sli_bd_task_status { get; set; }//  任务基础资料:状态
+        public DbSet<sli_task_report> sli_task_report { get; set; }//  任务基础资料:step
+        public DbSet<sli_task_order> sli_task_order { get; set; }//  任务基础资料:状态
+
+
+        public DbSet<sli_material_plan> sli_material_plan { get; set; }//  用料计划
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
