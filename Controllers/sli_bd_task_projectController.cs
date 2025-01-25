@@ -252,7 +252,7 @@ namespace WebApi_SY.Controllers
                 // 使用状态
                 FUsed = a.FUsed,
                 // 创建日期
-                FCreateDate = a.FCreateDate ?? string.Empty
+                FCreateDate = a.FCreateDate 
 
 
             });

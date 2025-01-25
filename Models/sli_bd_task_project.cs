@@ -33,7 +33,7 @@ namespace WebApi_SY.Models
         public int? FUsed { get; set; }
 
         // 创建日期
-        public string FCreateDate { get; set; }
+        public DateTime FCreateDate { get; set; }
     }
 
     public class sli_bd_task_step
