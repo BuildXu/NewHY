@@ -453,6 +453,8 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MyController.cs" />
     <Compile Include="Controllers\PlanController.cs" />
+    <Compile Include="Controllers\sli_task_reportController.cs" />
+    <Compile Include="Controllers\sli_task_orderController.cs" />
     <Compile Include="Controllers\sli_bd_task_stepController.cs" />
     <Compile Include="Controllers\sli_bd_task_statusController.cs" />
     <Compile Include="Controllers\sli_bd_task_typeController.cs" />
