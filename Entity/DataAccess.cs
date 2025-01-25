@@ -161,6 +161,12 @@ namespace WebApi_SY.Entity
         public DbSet<sli_sal_deliverynotice_view> sli_sal_deliverynoticentry_view { get; set; }//发货通知单表头、体视图   sli_sal_deliverynotice_update
 
         public DbSet<T_SAL_DELIVERYNOTICE> T_SAL_DELIVERYNOTICE { get; set; }//发货通知单表头、体视图   更新
+        public DbSet<sli_mech_list> Sli_mech_list { get; set; }//设备档案
+        public DbSet<sli_mould_list> Sli_mould_list { get; set; }//模具档案
+        public DbSet<sli_mould_maintain_order> Sli_mould_maintain_order { get; set; }//模具报修单
+        public DbSet<sli_mould_maintain_order_view> Sli_mould_maintain_order_view { get; set; }//模具报修单视图
+        public DbSet<sli_mould_maintain_report> Sli_mould_maintain_report { get; set; }//模具报修单报告
+        public DbSet<sli_mould_maintain_report_view> Sli_mould_maintain_report_view { get; set; }//模具报修单报告视图
 
         public DbSet<sli_bd_task_project> sli_bd_task_project { get; set; }//  任务基础资料:项目号
         public DbSet<sli_bd_task_type> sli_bd_task_type { get; set; }//  任务基础资料:step
