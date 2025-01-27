@@ -267,6 +267,8 @@ namespace WebApi_SY.Controllers
             {
                 query = query.Where(q => q.fname.Contains(FName));
             }
+            // 按 FNumber 正序排序
+            query = query.OrderBy(q => q.fnumber);
             var totalCount = query.Count(); //记录数
             var totalPages = (int)Math.Ceiling((double)totalCount / pageSize); // 页数
             var paginatedQuery = query.OrderByDescending(b => b.id).Skip((page - 1) * pageSize).Take(pageSize); //  某页记录
