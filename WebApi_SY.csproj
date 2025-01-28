@@ -504,6 +504,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Utils.cs" />
     <Compile Include="Models\DataTableToList.cs" />
     <Compile Include="Models\InsertDataToTables.cs" />
     <Compile Include="Models\IOrderStorage.cs" />
@@ -518,6 +519,7 @@
     <Compile Include="Models\sli_quality_report.cs" />
     <Compile Include="Models\sli_quality_requestion_view.cs" />
     <Compile Include="Models\sli_intpo_Import.cs" />
+    <Compile Include="Models\sli_pur_instockImport .cs" />
     <Compile Include="Models\sli_sal_delivery.cs" />
     <Compile Include="Models\sli_sal_deliverynotice.cs" />
     <Compile Include="Models\sli_unconformify.cs" />
