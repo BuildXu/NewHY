@@ -456,6 +456,7 @@
     <Compile Include="Controllers\sli_material_planController.cs" />
     <Compile Include="Controllers\sli_mech_maintain_orderController.cs" />
     <Compile Include="Controllers\sli_mech_maintain_reportController.cs" />
+    <Compile Include="Controllers\sli_pur_instockImportController.cs" />
     <Compile Include="Controllers\sli_task_reportController.cs" />
     <Compile Include="Controllers\sli_task_orderController.cs" />
     <Compile Include="Controllers\sli_bd_task_stepController.cs" />

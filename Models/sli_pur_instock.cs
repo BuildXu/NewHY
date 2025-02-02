@@ -75,7 +75,7 @@ namespace WebApi_SY.Models
     }
 
     // 对应JSON中的 "FSaleOrderEntry" 部分的类
-    public class instockEntry
+    public class sli_pur_instockentry
     {
         public string FRowType { get; set; }
         public OrgIdpur FMaterialId { get; set; }
