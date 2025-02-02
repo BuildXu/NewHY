@@ -29,13 +29,13 @@ namespace WebApi_SY.Models
         public int? FID { get; set; }
         public BillTypeIDpur FBillTypeID { get; set; }
         public DateTime? FDate { get; set; }
-        public OrgIdpur FSaleOrgId { get; set; }
-        public OrgIdpur FCustId { get; set; }
-        public OrgIdpur FReceiveId { get; set; }
-        public OrgIdpur FSaleDeptId { get; set; }
-        public OrgIdpur FSalerId { get; set; }
-        public OrgIdpur FSettleId { get; set; }
-        public OrgIdpur FChargeId { get; set; }
+        public Child FSaleOrgId { get; set; }
+        public Child FCustId { get; set; }
+        public Child FReceiveId { get; set; }
+        public Child FSaleDeptId { get; set; }
+        public Child FSalerId { get; set; }
+        public Child FSettleId { get; set; }
+        public Child FChargeId { get; set; }
         public int? FNetOrderBillId { get; set; }
         public int? FOppID { get; set; }
         public bool? FISINIT { get; set; }
@@ -57,7 +57,7 @@ namespace WebApi_SY.Models
     }
 
     // 对应JSON中的 "FSaleOrgId" 等类似结构的类
-    public class OrgIdpur
+    public class Child
     {
         public string FNumber { get; set; }
     }
@@ -65,10 +65,10 @@ namespace WebApi_SY.Models
     // 对应JSON中的 "FSaleOrderFinance" 部分的类
     public class purFinance
     {
-        public OrgIdpur FSettleCurrId { get; set; }
+        public Child FSettleCurrId { get; set; }
         public bool? FIsIncludedTax { get; set; }
         public bool? FIsPriceExcludeTax { get; set; }
-        public OrgIdpur FExchangeTypeId { get; set; }
+        public Child FExchangeTypeId { get; set; }
         public double? FMarginLevel { get; set; }
         public double? FMargin { get; set; }
         public bool? FOverOrgTransDirect { get; set; }
@@ -80,39 +80,39 @@ namespace WebApi_SY.Models
     public class sli_pur_instockentry
     {
         public string FRowType { get; set; }
-        public OrgIdpur FMaterialId { get; set; }
-        public OrgIdpur FUnitID { get; set; }
+        public Child FMaterialId { get; set; }
+        public Child FUnitID { get; set; }
         public double? FInventoryQty { get; set; }
         public double? FCurrentInventory { get; set; }
         public double? FAwaitQty { get; set; }
         public double? FAvailableQty { get; set; }
         public double? FQty { get; set; }
-        public OrgIdpur FPriceUnitId { get; set; }
+        public Child FPriceUnitId { get; set; }
         public double? FOldQty { get; set; }
         public double? FPrice { get; set; }
         public double? FTaxPrice { get; set; }
         public bool? FIsFree { get; set; }
         public double? FEntryTaxRate { get; set; }
         public string FDeliveryDate { get; set; }
-        public OrgIdpur FStockOrgId { get; set; }
-        public OrgIdpur FSettleOrgId { get; set; }
-        public OrgIdpur FSupplyOrgId { get; set; }
+        public Child FStockOrgId { get; set; }
+        public Child FSettleOrgId { get; set; }
+        public Child FSupplyOrgId { get; set; }
         public string FOwnerTypeId { get; set; }
-        public OrgIdpur FOwnerId { get; set; }
+        public Child FOwnerId { get; set; }
         public string FSrcType { get; set; }
         public string FReserveType { get; set; }
         public double? FPriceBaseQty { get; set; }
-        public OrgIdpur FStockUnitID { get; set; }
+        public Child FStockUnitID { get; set; }
         public double? FStockQty { get; set; }
         public double? FStockBaseQty { get; set; }
         public string FOUTLMTUNIT { get; set; }
-        public OrgIdpur FOutLmtUnitID { get; set; }
+        public Child FOutLmtUnitID { get; set; }
         public bool? FISMRP { get; set; }
         public bool? FISMRPCAL { get; set; }
         public double? FAllAmountExceptDisCount { get; set; }
         public string FsliHeatTreatment { get; set; }
         public int? FsliTestBarQty { get; set; }
-        public OrgIdpur FsliMetel { get; set; }
+        public Child FsliMetel { get; set; }
         public string FsliExplanation { get; set; }
         public string FsliNotice { get; set; }
         public string FsliWorkOrder { get; set; }
