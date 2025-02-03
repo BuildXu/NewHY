@@ -21,6 +21,11 @@ namespace WebApi_SY.Models
         public string InterationFlags { get; set; }
         public string IsControlPrecision { get; set; }
         public string ValidateRepeatJson { get; set; }
+        public int Flag { get; set; }
+        public string FParameter { get; set; }
+        public string FReason { get; set; }
+        public int FID { get; set; }
+        public double? fqty { get; set; }
         public Modelpur Modelpur { get; set; }
     }
 
@@ -80,9 +85,13 @@ namespace WebApi_SY.Models
     public class sli_pur_instockentry
     {
         public string FRowType { get; set; }
+        public Child fmaterialNumber { get; set; }
+        
         public Child FMaterialId { get; set; }
         public Child FUnitID { get; set; }
         public double? FInventoryQty { get; set; }
+
+        //public double? fqty { get; set; }
         public double? FCurrentInventory { get; set; }
         public double? FAwaitQty { get; set; }
         public double? FAvailableQty { get; set; }
