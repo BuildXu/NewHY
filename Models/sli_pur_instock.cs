@@ -52,7 +52,7 @@ namespace WebApi_SY.Models
         public bool? FIsCreateStraightOutIN { get; set; }
         public purFinance FSaleOrderFinance { get; set; }
         public object FSalOrderRec { get; set; }
-        public List<sli_pur_instockentry> FSaleOrderEntry { get; set; }
+        public List<sli_pur_instockentry> sli_pur_instockentry { get; set; }
     }
 
     // 对应JSON中的 "FBillTypeID" 等类似结构的类
@@ -84,6 +84,7 @@ namespace WebApi_SY.Models
     // 对应JSON中的 "FSaleOrderEntry" 部分的类
     public class sli_pur_instockentry
     {
+        public int? FID { get; set; }
         public string FRowType { get; set; }
         public Child fmaterialNumber { get; set; }
         
