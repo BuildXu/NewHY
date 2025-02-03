@@ -120,16 +120,16 @@ namespace WebApi_SY.Models
         public bool? FISMRP { get; set; }
         public bool? FISMRPCAL { get; set; }
         public double? FAllAmountExceptDisCount { get; set; }
-        public string FsliHeatTreatment { get; set; }
-        public int? FsliTestBarQty { get; set; }
-        public Child FsliMetel { get; set; }
-        public string FsliExplanation { get; set; }
-        public string FsliNotice { get; set; }
-        public string FsliWorkOrder { get; set; }
-        public string FsliSaleOrder { get; set; }
-        public string FsliQuotationNo { get; set; }
-        public string FsliStockNo { get; set; }
-        public string FsliBlank { get; set; }
-        public string FsliDrawingNo { get; set; }
+        //public string FsliHeatTreatment { get; set; }
+        //public int? FsliTestBarQty { get; set; }
+        //public Child FsliMetel { get; set; }
+        //public string FsliExplanation { get; set; }
+        //public string FsliNotice { get; set; }
+        //public string FsliWorkOrder { get; set; }
+        //public string FsliSaleOrder { get; set; }
+        //public string FsliQuotationNo { get; set; }
+        //public string FsliStockNo { get; set; }
+        //public string FsliBlank { get; set; }
+        //public string FsliDrawingNo { get; set; }
     }
 }
