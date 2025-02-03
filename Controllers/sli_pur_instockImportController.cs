@@ -48,7 +48,7 @@ namespace WebApi_SY.Controllers
                 {
                     
                     var heard = context.sli_pur_instock.FirstOrDefault(p => p.FID== id);   //获取表头单行数据
-                   // var FcustomerNumer = context.Sli_bd_customer_view.FirstOrDefault(p => p.FNAME == heard.FCustomerName); //根据客户名称查询客户代码
+                    //var FSupplierNumer = context.sli_pur_instock.FirstOrDefault(p => p. == heard.FCustomerName); //根据客户名称查询客户代码
                     var entity = context.sli_pur_instockentry.Where(p => p.FID == id);   //获取表体多行数据
                     var entityList = entity.ToList();
                     //var index = 0;
@@ -58,10 +58,10 @@ namespace WebApi_SY.Controllers
                     sli_pur_instock rootObject = JsonConvert.DeserializeObject<sli_pur_instock>(json);
                     rootObject.Modelpur.sli_pur_instockentry.Clear();
                     rootObject.Modelpur.FDate = DateTime.Now;
-                    //rootObject.Model.FCustId.FNumber = FcustomerNumer.FNUMBER;
-                    //rootObject.Model.FReceiveId.FNumber = FcustomerNumer.FNUMBER;
-                    //rootObject.Model.FSettleId.FNumber = FcustomerNumer.FNUMBER;
-                    //rootObject.Model.FChargeId.FNumber = FcustomerNumer.FNUMBER;
+                    rootObject.Modelpur.FSupplierId.FNumber = heard.FNumber;
+                    rootObject.Modelpur.FReceiveId.FNumber = heard.FNumber;
+                    rootObject.Modelpur.FSettleId.FNumber = heard.FNumber;
+                    rootObject.Modelpur.FChargeId.FNumber = heard.FNumber;
 
                     foreach (var entitydata in entityList)
                     {
@@ -109,7 +109,7 @@ namespace WebApi_SY.Controllers
                     //sJson = "{\"CreateChild\":0,\"Numbers\":[\"" + FPrdModel + "\"]}";
                     //string jsonData = "{\"NeedUpDateFields\": [],\"NeedReturnFields\": [],\"IsDeleteEntry\": \"true\",\"SubSystemId\": \"\",\"IsVerifyBaseDataField\": \"False\",\"IsEntryBatchFill\": \"true\",\"ValidateFlag\": \"true\",\"NumberSearch\": \"true\",\"IsAutoAdjustField\": \"False\",\"InterationFlags\": \"\",\"IgnoreInterationFlag\": \"\",\"IsControlPrecision\": \"False\",\"Model\": {\"FBillTypeID\": {\"FNUMBER\": \"XSDD01_SYS\"},\"FDate\": \"2022-04-27 00:00:00\",\"FSaleChild\": {\"FNumber\": \"100\"},\"FCustId\": {\"FNumber\": \"SCMKH100001\"},\"FReceiveId\": {\"FNumber\": \"SCMKH100001\"},\"FSaleDeptId\": {\"FNumber\": \"SCMBM000001\"},\"FSalerId\": {\"FNumber\": \"SCMYG000001_SCMGW000001_1\"},\"FSettleId\": {\"FNumber\": \"SCMKH100001\"},\"FChargeId\": {\"FNumber\": \"SCMKH100001\"},\"FSaleOrderFinance\": {\"FSettleCurrId\": {\"FNumber\": \"PRE001\"},\"FIsPriceExcludeTax\": 'true',\"FIsIncludedTax\": 'true',\"FExchangeTypeId\": {\"FNumber\": \"HLTX01_SYS\"}},\"FSaleOrderEntry\": [{\"FRowType\": \"Standard\",\"FMaterialId\": {\"FNumber\": \"SCMWL100002\"},\"FUnitID\": {\"FNumber\": \"Pcs\"},\"FQty\": 10,\"FPriceUnitId\": {\"FNumber\": \"Pcs\"},\"FPrice\": 8.849558,\"FTaxPrice\": 10,\"FEntryTaxRate\": 13,\"FDeliveryDate\": \"2022-04-27 15:15:54\",\"FStockChild\": {\"FNumber\": \"100\"},\"FSettleChilds\": {\"FNumber\": \"100\"},\"FSupplyChild\": {\"FNumber\": \"100\"},\"FOwnerTypeId\": \"BD_OwnerOrg\",\"FOwnerId\": {\"FNumber\": \"100\"},\"FReserveType\": \"1\",\"FPriceBaseQty\": 10,\"FStockUnitID\": {\"FNumber\": \"Pcs\"},\"FStockQty\": 10,\"FStockBaseQty\": 10,\"FOUTLMTUNIT\": \"SAL\",\"FOutLmtUnitID\": {\"FNumber\": \"Pcs\"},\"FAllAmountExceptDisCount\": 100,\"FOrderEntryPlan\": [{\"FPlanDate\": \"2022-04-27 15:15:54\",\"FPlanQty\": 10}]}],\"FSaleOrderPlan\": [{\"FRecAdvanceRate\": 100,\"FRecAdvanceAmount\": 100}],\"FBillNo\":" + "\"" + Number + "\"" + ",}}";
                     var result = client.Execute<string>("Kingdee.BOS.WebApi.ServicesStub.DynamicFormService.Save",
-                    new object[] { "SAL_SaleOrder", newJson });
+                    new object[] { "STK_InStock", newJson });
 
                     ResultData resultdata = JsonConvert.DeserializeObject<ResultData>(result);
                     if (resultdata.Result.ResponseStatus.IsSuccess)

@@ -9,8 +9,8 @@ namespace WebApi_SY.Models
 {
     public class sli_pur_instock    // 解析导入星空销售订单json
     {
-        public List<string> NeedUpDateFields { get; set; }
-        public List<string> NeedReturnFields { get; set; }
+        //public List<string> NeedUpDateFields { get; set; }
+        //public List<string> NeedReturnFields { get; set; }
         public string IsDeleteEntry { get; set; }
         public string SubSystemId { get; set; }
         public string IsVerifyBaseDataField { get; set; }
@@ -25,13 +25,14 @@ namespace WebApi_SY.Models
         public string FParameter { get; set; }
         public string FReason { get; set; }
         public int FID { get; set; }
-        public double? fqty { get; set; }
+        public string FNumber { get; set; }
         public Modelpur Modelpur { get; set; }
     }
 
     public class Modelpur
     {
-        public int? FID { get; set; }
+        public int FID { get; set; }
+        public Child FSupplierId { get; set; }
         public BillTypeIDpur FBillTypeID { get; set; }
         public DateTime? FDate { get; set; }
         public Child FSaleOrgId { get; set; }
@@ -51,7 +52,7 @@ namespace WebApi_SY.Models
         public bool? FIsUseDrpSalePOPush { get; set; }
         public bool? FIsCreateStraightOutIN { get; set; }
         public purFinance FSaleOrderFinance { get; set; }
-        public object FSalOrderRec { get; set; }
+        //public object FSalOrderRec { get; set; }
         public List<sli_pur_instockentry> sli_pur_instockentry { get; set; }
     }
 
@@ -86,7 +87,7 @@ namespace WebApi_SY.Models
     {
         public int? FID { get; set; }
         public string FRowType { get; set; }
-        public Child fmaterialNumber { get; set; }
+        public string fmaterialNumber { get; set; }
         
         public Child FMaterialId { get; set; }
         public Child FUnitID { get; set; }
