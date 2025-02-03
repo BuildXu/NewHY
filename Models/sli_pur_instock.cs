@@ -124,7 +124,7 @@ namespace WebApi_SY.Models
         //public string FsliHeatTreatment { get; set; }
         //public int? FsliTestBarQty { get; set; }
         //public Child FsliMetel { get; set; }
-        //public string FsliExplanation { get; set; }
+        //public string FsliExplanation { get; set; }                                                                                                                                                                                                                                                           
         //public string FsliNotice { get; set; }
         //public string FsliWorkOrder { get; set; }
         //public string FsliSaleOrder { get; set; }
