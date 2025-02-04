@@ -453,6 +453,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MyController.cs" />
     <Compile Include="Controllers\PlanController.cs" />
+    <Compile Include="Controllers\sli_bd_mould_breakController.cs" />
     <Compile Include="Controllers\sli_material_planController.cs" />
     <Compile Include="Controllers\sli_mech_maintain_orderController.cs" />
     <Compile Include="Controllers\sli_mech_maintain_reportController.cs" />
@@ -506,6 +507,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\JsonTemplateUtils.cs" />
+    <Compile Include="Models\sli_bd_mould_break.cs" />
     <Compile Include="Models\sli_pur_instock.cs" />
     <Compile Include="Models\Utils.cs" />
     <Compile Include="Models\DataTableToList.cs" />
