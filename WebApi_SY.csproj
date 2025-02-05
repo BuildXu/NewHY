@@ -509,6 +509,7 @@
     <Compile Include="Models\IOrderStorage.cs" />
     <Compile Include="Models\JsonToDataTable.cs" />
     <Compile Include="Models\maxfproductNumber.cs" />
+    <Compile Include="Models\sli_bd_material.cs" />
     <Compile Include="Models\sli_mech_list.cs" />
     <Compile Include="Models\sli_mech_maintain_order.cs" />
     <Compile Include="Models\sli_mech_maintain_report.cs" />
