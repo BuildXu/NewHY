@@ -192,11 +192,11 @@ namespace WebApi_SY.Entity
 
         //  public DbSet<sli_pur_instock> sli_pur_instock { get; set; }//  收料通知单  查询
 
-        public DbSet<sli_pur_instock> sli_pur_instock { get; set; }//  采购入库单表头
+        //public DbSet<sli_pur_instock> sli_pur_instock { get; set; }//  采购入库单表头
 
 
 
-        public DbSet<sli_pur_instockentry> sli_pur_instockentry { get; set; }//  采购入库单表体
+        //public DbSet<sli_pur_instockentry> sli_pur_instockentry { get; set; }//  采购入库单表体
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
