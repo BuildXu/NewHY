@@ -453,6 +453,8 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MyController.cs" />
     <Compile Include="Controllers\PlanController.cs" />
+    <Compile Include="Controllers\sli_bd_mech_breakController.cs" />
+    <Compile Include="Controllers\sli_bd_mould_breakController.cs" />
     <Compile Include="Controllers\sli_material_planController.cs" />
     <Compile Include="Controllers\sli_mech_maintain_orderController.cs" />
     <Compile Include="Controllers\sli_mech_maintain_reportController.cs" />
@@ -511,6 +513,8 @@
     <Compile Include="Models\JsonToDataTable.cs" />
     <Compile Include="Models\maxfproductNumber.cs" />
     <Compile Include="Models\sli_bd_material.cs" />
+    <Compile Include="Models\sli_bd_mech_break.cs" />
+    <Compile Include="Models\sli_bd_mould_break.cs" />
     <Compile Include="Models\sli_mech_list.cs" />
     <Compile Include="Models\sli_mech_maintain_order.cs" />
     <Compile Include="Models\sli_mech_maintain_report.cs" />
