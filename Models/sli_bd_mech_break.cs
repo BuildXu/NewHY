@@ -5,7 +5,7 @@ using System.Web;
 
 namespace WebApi_SY.Models
 {
-    public class sli_bd_mould_break
+    public class sli_bd_mech_break
     {
         /// <summary>
         /// 主键ID

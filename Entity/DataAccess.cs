@@ -61,7 +61,7 @@ namespace WebApi_SY.Entity
         public DbSet<sli_bd_process_option> Sli_bd_process_option { get; set; }   //工艺流程选项
         public DbSet<sli_bd_process_object> Sli_bd_process_object { get; set; }   //工艺流程参数
         public DbSet<sli_bd_mould_break> sli_bd_mould_break { get; set; }   //工装模具故障类型
-        
+        public DbSet<sli_bd_mech_break> sli_bd_mech_break { get; set; }   //设备故障类型
 
         public DbSet<sli_document_tech_sale_view> Sli_document_tech_sale_view { get; set; }//产品技术档案表头视图
         public DbSet<sli_document_tech_saleBill_view> Sli_document_tech_saleBill_view { get; set; }//产品技术档案表头视图
