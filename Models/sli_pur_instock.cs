@@ -40,7 +40,7 @@ namespace WebApi_SY.Models
         [Key]
         public int FID { get; set; }
         public Child FSupplierId { get; set; }
-        public Child FBillTypeID { get; set; }
+        public BillTypeIDpur FBillTypeID { get; set; }
         public DateTime? FDate { get; set; }
         public Child FSaleOrgId { get; set; }
         public Child FCustId { get; set; }
@@ -63,10 +63,17 @@ namespace WebApi_SY.Models
         public List<sli_pur_instockentry> sli_pur_instockentry { get; set; }
     }
 
-
+    // 对应JSON中的 "FBillTypeID" 等类似结构的类
+    public class BillTypeIDpur
+    {
+        public string FNUMBER { get; set; }
+    }
 
     // 对应JSON中的 "FSaleOrgId" 等类似结构的类
-    
+    public class Child
+    {
+        public string FNumber { get; set; }
+    }
 
     // 对应JSON中的 "FSaleOrderFinance" 部分的类
     public class purFinance
@@ -124,7 +131,7 @@ namespace WebApi_SY.Models
         //public string FsliHeatTreatment { get; set; }
         //public int? FsliTestBarQty { get; set; }
         //public Child FsliMetel { get; set; }
-        //public string FsliExplanation { get; set; }
+        //public string FsliExplanation { get; set; }                                                                                                                                                                                                                                                           
         //public string FsliNotice { get; set; }
         //public string FsliWorkOrder { get; set; }
         //public string FsliSaleOrder { get; set; }

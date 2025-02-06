@@ -507,6 +507,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\JsonTemplateUtils.cs" />
+    <Compile Include="Models\sli_bd_mech_break.cs" />
+    <Compile Include="Models\sli_bd_mould_break.cs" />
+    <Compile Include="Models\sli_pur_instock.cs" />
+    <Compile Include="Models\Utils.cs" />
     <Compile Include="Models\DataTableToList.cs" />
     <Compile Include="Models\InsertDataToTables.cs" />
     <Compile Include="Models\IOrderStorage.cs" />

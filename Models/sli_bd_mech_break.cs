@@ -35,7 +35,7 @@ namespace WebApi_SY.Models
         /// <summary>
         /// 是否使用
         /// </summary>
-        public int Fused { get; set; }
+        public bool Fused { get; set; }
 
         /// <summary>
         /// 创建日期

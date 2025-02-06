@@ -34,6 +34,7 @@ namespace WebApi_SY.Controllers
                 };
                 context.Sli_bd_mech_break.Add(header);
                 await context.SaveChangesAsync();
+                await context.SaveChangesAsync();
                 var datas = new
                 {
                     code = 200,
