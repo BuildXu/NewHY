@@ -10,7 +10,7 @@ namespace WebApi_SY.Models
         /// <summary>
         /// 主键ID
         /// </summary>
-        public int Id { get; set; }
+        public long Id { get; set; }
 
         /// <summary>
         /// 编号
@@ -35,7 +35,7 @@ namespace WebApi_SY.Models
         /// <summary>
         /// 是否使用
         /// </summary>
-        public int Fused { get; set; }
+        public bool Fused { get; set; }
 
         /// <summary>
         /// 创建日期

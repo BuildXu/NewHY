@@ -147,13 +147,21 @@ namespace WebApi_SY.Controllers
                                 //.Where(item => item.Fname == fname && item.Fdescription == fdescription && item.FsliMetal == fsliMetal && item.FsliDrawingNo == fsliDrawingNo)
                                 //.Select(item => item.Fnumber)
                                 //.FirstOrDefault();
-                                var my_document_no = row.GetCell(columnIndices["我方文号"]).CellType != CellType.Blank ? row.GetCell(columnIndices["我方文号"]).ToString() : "";
-                                var case_name = row.GetCell(columnIndices["案件名称"]).CellType != CellType.Blank ? row.GetCell(columnIndices["案件名称"]).ToString() : "";
-                                var case_status = row.GetCell(columnIndices["案件状态"]).CellType != CellType.Blank ? row.GetCell(columnIndices["案件状态"]).ToString() : "";
-                                var case_type = row.GetCell(columnIndices["案件类型"]).CellType != CellType.Blank ? row.GetCell(columnIndices["案件类型"]).ToString() : "";
-                                var customer_document_no = row.GetCell(columnIndices["客户文号"]).CellType != CellType.Blank ? row.GetCell(columnIndices["客户文号"]).ToString() : "";
-                                var customer_name = row.GetCell(columnIndices["客户名称"]).CellType != CellType.Blank ? row.GetCell(columnIndices["客户名称"]).ToString() : "";
-                                var customer_no = row.GetCell(columnIndices["客户代码"]).CellType != CellType.Blank ? row.GetCell(columnIndices["客户代码"]).ToString() : "";
+                                //var my_document_no = row.GetCell(columnIndices["我方文号"]).CellType != CellType.Blank ? row.GetCell(columnIndices["我方文号"]).ToString() : "";
+                                //var case_name = row.GetCell(columnIndices["案件名称"]).CellType != CellType.Blank ? row.GetCell(columnIndices["案件名称"]).ToString() : "";
+                                //var case_status = row.GetCell(columnIndices["案件状态"]).CellType != CellType.Blank ? row.GetCell(columnIndices["案件状态"]).ToString() : "";
+                                //var case_type = row.GetCell(columnIndices["案件类型"]).CellType != CellType.Blank ? row.GetCell(columnIndices["案件类型"]).ToString() : "";
+                                //var customer_document_no = row.GetCell(columnIndices["客户文号"]).CellType != CellType.Blank ? row.GetCell(columnIndices["客户文号"]).ToString() : "";
+                                //var customer_name = row.GetCell(columnIndices["客户名称"]).CellType != CellType.Blank ? row.GetCell(columnIndices["客户名称"]).ToString() : "";
+                                //var customer_no = row.GetCell(columnIndices["客户代码"]).CellType != CellType.Blank ? row.GetCell(columnIndices["客户代码"]).ToString() : "";
+
+                                var my_document_no = Convert.ToString(row.GetCell(columnIndices["我方文号"])) ?? "";
+                                var case_name = Convert.ToString(row.GetCell(columnIndices["案件名称"])) ?? "";
+                                var case_status = Convert.ToString(row.GetCell(columnIndices["案件状态"])) ?? "";
+                                var case_type = Convert.ToString(row.GetCell(columnIndices["案件类型"])) ?? "";
+                                var customer_document_no = Convert.ToString(row.GetCell(columnIndices["客户文号"])) ?? "";
+                                var customer_name = Convert.ToString(row.GetCell(columnIndices["客户名称"])) ?? "";
+                                var customer_no = Convert.ToString(row.GetCell(columnIndices["客户代码"])) ?? "";
                                 var product_type =Convert.ToString( row.GetCell(columnIndices["产品类别"]));
                                 var case_user = Convert.ToString(row.GetCell(columnIndices["案件处理人"]));// row.GetCell(columnIndices["案件处理人"]).CellType != CellType.Blank ? row.GetCell(columnIndices["案件处理人"]).ToString() : "";
                                 var date_apply = Convert.ToString(row.GetCell(columnIndices["同日申请"]));// row.GetCell(columnIndices["同日申请"]).CellType != CellType.Blank ? row.GetCell(columnIndices["同日申请"]).ToString() : "";
@@ -168,8 +176,241 @@ namespace WebApi_SY.Controllers
                                 var business_user = Convert.ToString(row.GetCell(columnIndices["业务人员"]));// row.GetCell(columnIndices["业务人员"]).CellType != CellType.Blank ? row.GetCell(columnIndices["业务人员"]).ToString() : "";
                                 var business_deputy = Convert.ToString(row.GetCell(columnIndices["业务助理"]));//  row.GetCell(columnIndices["业务助理"]).CellType != CellType.Blank ? row.GetCell(columnIndices["业务助理"]).ToString() : "";
                                 var business_deptment = Convert.ToString(row.GetCell(columnIndices["业务部门"]));//row.GetCell(columnIndices["业务部门"]).CellType != CellType.Blank ? row.GetCell(columnIndices["业务部门"]).ToString() : "";
-                                var open_date = Convert.ToString(row.GetCell(columnIndices["开卷日期"]));//row.GetCell(columnIndices["开卷日期"]).CellType != CellType.Blank ? row.GetCell(columnIndices["开卷日期"]).ToString() : "";
-                                var commission_case = Convert.ToString(row.GetCell(columnIndices["委案日期"])); //row.GetCell(columnIndices["委案日期"]).CellType != CellType.Blank ? row.GetCell(columnIndices["委案日期"]).ToString() : "";
+                                                                                                             // open_date
+                                var openDateCell = row.GetCell(columnIndices["开卷日期"]);
+                                DateTime? openDate = null;
+
+                                if (openDateCell != null && openDateCell.CellType == CellType.Numeric && DateUtil.IsCellDateFormatted(openDateCell))
+                                {
+                                    openDate = openDateCell.DateCellValue;
+                                }
+                                else if (openDateCell != null && DateTime.TryParse(Convert.ToString(openDateCell), out var parsedOpenDate))
+                                {
+                                    openDate = parsedOpenDate;
+                                }
+                                var open_date = openDate?.ToString("yyyy-MM-dd") ?? "";
+
+                                // commission_case
+                                var commissionCaseCell = row.GetCell(columnIndices["委案日期"]);
+                                DateTime? commissionCaseDate = null;
+
+                                if (commissionCaseCell != null && commissionCaseCell.CellType == CellType.Numeric && DateUtil.IsCellDateFormatted(commissionCaseCell))
+                                {
+                                    commissionCaseDate = commissionCaseCell.DateCellValue;
+                                }
+                                else if (commissionCaseCell != null && DateTime.TryParse(Convert.ToString(commissionCaseCell), out var parsedCommissionCaseDate))
+                                {
+                                    commissionCaseDate = parsedCommissionCaseDate;
+                                }
+                                var commission_case = commissionCaseDate?.ToString("yyyy-MM-dd") ?? "";
+
+                                // handle_event_date
+                                var handleEventDateCell = row.GetCell(columnIndices["处理事项完成日"]);
+                                DateTime? handleEventDate = null;
+
+                                if (handleEventDateCell != null && handleEventDateCell.CellType == CellType.Numeric && DateUtil.IsCellDateFormatted(handleEventDateCell))
+                                {
+                                    handleEventDate = handleEventDateCell.DateCellValue;
+                                }
+                                else if (handleEventDateCell != null && DateTime.TryParse(Convert.ToString(handleEventDateCell), out var parsedHandleEventDate))
+                                {
+                                    handleEventDate = parsedHandleEventDate;
+                                }
+                                var handle_event_date = handleEventDate?.ToString("yyyy-MM-dd") ?? "";
+
+                                // official_date
+                                var officialDateCell = row.GetCell(columnIndices["官方期限"]);
+                                DateTime? officialDate = null;
+
+                                if (officialDateCell != null && officialDateCell.CellType == CellType.Numeric && DateUtil.IsCellDateFormatted(officialDateCell))
+                                {
+                                    officialDate = officialDateCell.DateCellValue;
+                                }
+                                else if (officialDateCell != null && DateTime.TryParse(Convert.ToString(officialDateCell), out var parsedOfficialDate))
+                                {
+                                    officialDate = parsedOfficialDate;
+                                }
+                                var official_date = officialDate?.ToString("yyyy-MM-dd") ?? "";
+
+                                // customer_date
+                                var customerDateCell = row.GetCell(columnIndices["客户期限"]);
+                                DateTime? customerDate = null;
+
+                                if (customerDateCell != null && customerDateCell.CellType == CellType.Numeric && DateUtil.IsCellDateFormatted(customerDateCell))
+                                {
+                                    customerDate = customerDateCell.DateCellValue;
+                                }
+                                else if (customerDateCell != null && DateTime.TryParse(Convert.ToString(customerDateCell), out var parsedCustomerDate))
+                                {
+                                    customerDate = parsedCustomerDate;
+                                }
+                                var customer_date = customerDate?.ToString("yyyy-MM-dd") ?? "";
+
+                                // request_date
+                                var requestDateCell = row.GetCell(columnIndices["请款日期"]);
+                                DateTime? requestDate = null;
+
+                                if (requestDateCell != null && requestDateCell.CellType == CellType.Numeric && DateUtil.IsCellDateFormatted(requestDateCell))
+                                {
+                                    requestDate = requestDateCell.DateCellValue;
+                                }
+                                else if (requestDateCell != null && DateTime.TryParse(Convert.ToString(requestDateCell), out var parsedRequestDate))
+                                {
+                                    requestDate = parsedRequestDate;
+                                }
+                                var request_date = requestDate?.ToString("yyyy-MM-dd") ?? "";
+
+                                // actual_date
+                                var actualDateCell = row.GetCell(columnIndices["实收日期"]);
+                                DateTime? actualDate = null;
+
+                                if (actualDateCell != null && actualDateCell.CellType == CellType.Numeric && DateUtil.IsCellDateFormatted(actualDateCell))
+                                {
+                                    actualDate = actualDateCell.DateCellValue;
+                                }
+                                else if (actualDateCell != null && DateTime.TryParse(Convert.ToString(actualDateCell), out var parsedActualDate))
+                                {
+                                    actualDate = parsedActualDate;
+                                }
+                                var actual_date = actualDate?.ToString("yyyy-MM-dd") ?? "";
+
+                                // money_create_date
+                                var moneyCreateDateCell = row.GetCell(columnIndices["费用创建日期"]);
+                                DateTime? moneyCreateDate = null;
+
+                                if (moneyCreateDateCell != null && moneyCreateDateCell.CellType == CellType.Numeric && DateUtil.IsCellDateFormatted(moneyCreateDateCell))
+                                {
+                                    moneyCreateDate = moneyCreateDateCell.DateCellValue;
+                                }
+                                else if (moneyCreateDateCell != null && DateTime.TryParse(Convert.ToString(moneyCreateDateCell), out var parsedMoneyCreateDate))
+                                {
+                                    moneyCreateDate = parsedMoneyCreateDate;
+                                }
+                                var money_create_date = moneyCreateDate?.ToString("yyyy-MM-dd") ?? "";
+
+                                // create_invoice_date
+                                var createInvoiceDateCell = row.GetCell(columnIndices["开票日期"]);
+                                DateTime? createInvoiceDate = null;
+
+                                if (createInvoiceDateCell != null && createInvoiceDateCell.CellType == CellType.Numeric && DateUtil.IsCellDateFormatted(createInvoiceDateCell))
+                                {
+                                    createInvoiceDate = createInvoiceDateCell.DateCellValue;
+                                }
+                                else if (createInvoiceDateCell != null && DateTime.TryParse(Convert.ToString(createInvoiceDateCell), out var parsedCreateInvoiceDate))
+                                {
+                                    createInvoiceDate = parsedCreateInvoiceDate;
+                                }
+                                var create_invoice_date = createInvoiceDate?.ToString("yyyy-MM-dd") ?? "";
+
+                                // out_account_date
+                                var outAccountDateCell = row.GetCell(columnIndices["销账日期"]);
+                                DateTime? outAccountDate = null;
+
+                                if (outAccountDateCell != null && outAccountDateCell.CellType == CellType.Numeric && DateUtil.IsCellDateFormatted(outAccountDateCell))
+                                {
+                                    outAccountDate = outAccountDateCell.DateCellValue;
+                                }
+                                else if (outAccountDateCell != null && DateTime.TryParse(Convert.ToString(outAccountDateCell), out var parsedOutAccountDate))
+                                {
+                                    outAccountDate = parsedOutAccountDate;
+                                }
+                                var out_account_date = outAccountDate?.ToString("yyyy-MM-dd") ?? "";
+
+                                // apply_date
+                                var applyDateCell = row.GetCell(columnIndices["申请日"]);
+                                DateTime? applyDate = null;
+
+                                if (applyDateCell != null && applyDateCell.CellType == CellType.Numeric && DateUtil.IsCellDateFormatted(applyDateCell))
+                                {
+                                    applyDate = applyDateCell.DateCellValue;
+                                }
+                                else if (applyDateCell != null && DateTime.TryParse(Convert.ToString(applyDateCell), out var parsedApplyDate))
+                                {
+                                    applyDate = parsedApplyDate;
+                                }
+                                var apply_date = applyDate?.ToString("yyyy-MM-dd") ?? "";
+
+                                // first_draft_date
+                                var firstDraftDateCell = row.GetCell(columnIndices["初稿日"]);
+                                DateTime? firstDraftDate = null;
+
+                                if (firstDraftDateCell != null && firstDraftDateCell.CellType == CellType.Numeric && DateUtil.IsCellDateFormatted(firstDraftDateCell))
+                                {
+                                    firstDraftDate = firstDraftDateCell.DateCellValue;
+                                }
+                                else if (firstDraftDateCell != null && DateTime.TryParse(Convert.ToString(firstDraftDateCell), out var parsedFirstDraftDate))
+                                {
+                                    firstDraftDate = parsedFirstDraftDate;
+                                }
+                                var first_draft_date = firstDraftDate?.ToString("yyyy-MM-dd") ?? "";
+
+                                // inside_draft_date
+                                var insideDraftDateCell = row.GetCell(columnIndices["内部定稿日"]);
+                                DateTime? insideDraftDate = null;
+
+                                if (insideDraftDateCell != null && insideDraftDateCell.CellType == CellType.Numeric && DateUtil.IsCellDateFormatted(insideDraftDateCell))
+                                {
+                                    insideDraftDate = insideDraftDateCell.DateCellValue;
+                                }
+                                else if (insideDraftDateCell != null && DateTime.TryParse(Convert.ToString(insideDraftDateCell), out var parsedInsideDraftDate))
+                                {
+                                    insideDraftDate = parsedInsideDraftDate;
+                                }
+                                var inside_draft_date = insideDraftDate?.ToString("yyyy-MM-dd") ?? "";
+
+                                // return_draft_date
+                                var returnDraftDateCell = row.GetCell(columnIndices["返稿日"]);
+                                DateTime? returnDraftDate = null;
+
+                                if (returnDraftDateCell != null && returnDraftDateCell.CellType == CellType.Numeric && DateUtil.IsCellDateFormatted(returnDraftDateCell))
+                                {
+                                    returnDraftDate = returnDraftDateCell.DateCellValue;
+                                }
+                                else if (returnDraftDateCell != null && DateTime.TryParse(Convert.ToString(returnDraftDateCell), out var parsedReturnDraftDate))
+                                {
+                                    returnDraftDate = parsedReturnDraftDate;
+                                }
+                                var return_draft_date = returnDraftDate?.ToString("yyyy-MM-dd") ?? "";
+
+                                // draft_date
+                                var draftDateCell = row.GetCell(columnIndices["定稿日"]);
+                                DateTime? draftDate = null;
+
+                                if (draftDateCell != null && draftDateCell.CellType == CellType.Numeric && DateUtil.IsCellDateFormatted(draftDateCell))
+                                {
+                                    draftDate = draftDateCell.DateCellValue;
+                                }
+                                else if (draftDateCell != null && DateTime.TryParse(Convert.ToString(draftDateCell), out var parsedDraftDate))
+                                {
+                                    draftDate = parsedDraftDate;
+                                }
+                                var draft_date = draftDate?.ToString("yyyy-MM-dd") ?? "";
+
+                                // give_cooperate_date
+                                var giveCooperateDateCell = row.GetCell(columnIndices["送合作所日"]);
+                                DateTime? giveCooperateDate = null;
+
+                                if (giveCooperateDateCell != null && giveCooperateDateCell.CellType == CellType.Numeric && DateUtil.IsCellDateFormatted(giveCooperateDateCell))
+                                {
+                                    giveCooperateDate = giveCooperateDateCell.DateCellValue;
+                                }
+                                else if (giveCooperateDateCell != null && DateTime.TryParse(Convert.ToString(giveCooperateDateCell), out var parsedGiveCooperateDate))
+                                {
+                                    giveCooperateDate = parsedGiveCooperateDate;
+                                }
+                                var give_cooperate_date = giveCooperateDate?.ToString("yyyy-MM-dd") ?? "";
+
+
+                                // submit_date
+                                var submit_date = ""; // 根据需求处理
+
+
+
+
+
+
+                                // var open_date = Convert.ToString(row.GetCell(columnIndices["开卷日期"]));//row.GetCell(columnIndices["开卷日期"]).CellType != CellType.Blank ? row.GetCell(columnIndices["开卷日期"]).ToString() : "";
+                                //var commission_case = Convert.ToString(row.GetCell(columnIndices["委案日期"])); //row.GetCell(columnIndices["委案日期"]).CellType != CellType.Blank ? row.GetCell(columnIndices["委案日期"]).ToString() : "";
                                 var area = Convert.ToString(row.GetCell(columnIndices["国家(地区)"])); // row.GetCell(columnIndices["国家(地区)"]).CellType != CellType.Blank ? row.GetCell(columnIndices["国家(地区)"]).ToString() : "";
                                 var receipt = Convert.ToString(row.GetCell(columnIndices["收据号"])); //row.GetCell(columnIndices["收据号"]).CellType != CellType.Blank ? row.GetCell(columnIndices["收据号"]).ToString() : "";
                                 var contract_no = Convert.ToString(row.GetCell(columnIndices["合同号"])); // row.GetCell(columnIndices["合同号"]).CellType != CellType.Blank ? row.GetCell(columnIndices["合同号"]).ToString() : "";
@@ -186,7 +427,7 @@ namespace WebApi_SY.Controllers
                                 var case_user_deptment = Convert.ToString(row.GetCell(columnIndices["案件处理人部门"])); // row.GetCell(columnIndices["案件处理人部门"]).CellType != CellType.Blank ? row.GetCell(columnIndices["案件处理人部门"]).ToString() : "";
                                 var apply_tpye = Convert.ToString(row.GetCell(columnIndices["申请类型"])); //  row.GetCell(columnIndices["申请类型"]).CellType != CellType.Blank ? row.GetCell(columnIndices["申请类型"]).ToString() : "";
                                 var apply_no = Convert.ToString(row.GetCell(columnIndices["申请号"])); // row.GetCell(columnIndices["申请号"]).CellType != CellType.Blank ? row.GetCell(columnIndices["申请号"]).ToString() : "";
-                                var apply_date = Convert.ToString(row.GetCell(columnIndices["申请日"])); // row.GetCell(columnIndices["申请日"]).CellType != CellType.Blank ? row.GetCell(columnIndices["申请日"]).ToString() : "";
+                                //var apply_date = Convert.ToString(row.GetCell(columnIndices["申请日"])); // row.GetCell(columnIndices["申请日"]).CellType != CellType.Blank ? row.GetCell(columnIndices["申请日"]).ToString() : "";
                                 var registration_no = Convert.ToString(row.GetCell(columnIndices["注册号"])); // row.GetCell(columnIndices["注册号"]).CellType != CellType.Blank ? row.GetCell(columnIndices["注册号"]).ToString() : "";
                                 var announcement_date = Convert.ToString(row.GetCell(columnIndices["公告日"])); // row.GetCell(columnIndices["公告日"]).CellType != CellType.Blank ? row.GetCell(columnIndices["公告日"]).ToString() : "";
                                 var new_submit_date = Convert.ToString(row.GetCell(columnIndices["新申请递交日"])); // row.GetCell(columnIndices["新申请递交日"]).CellType != CellType.Blank ? row.GetCell(columnIndices["新申请递交日"]).ToString() : "";
@@ -203,17 +444,17 @@ namespace WebApi_SY.Controllers
                                 var handle_event_user = Convert.ToString(row.GetCell(columnIndices["处理事项处理人"])); // row.GetCell(columnIndices["处理事项处理人"]).CellType != CellType.Blank ? row.GetCell(columnIndices["处理事项处理人"]).ToString() : "";
                                 var handle_event_deptment = Convert.ToString(row.GetCell(columnIndices["处理事项处理人部门"])); //row.GetCell(columnIndices["处理事项处理人部门"]).CellType != CellType.Blank ? row.GetCell(columnIndices["处理事项处理人部门"]).ToString() : "";
                                 var event_remark = Convert.ToString(row.GetCell(columnIndices["事项备注"])); //row.GetCell(columnIndices["事项备注"]).CellType != CellType.Blank ? row.GetCell(columnIndices["事项备注"]).ToString() : "";
-                                var handle_event_date = Convert.ToString(row.GetCell(columnIndices["处理事项完成日"])); //row.GetCell(columnIndices["处理事项完成日"]).CellType != CellType.Blank ? row.GetCell(columnIndices["处理事项完成日"]).ToString() : "";
-                                var first_draft_date = Convert.ToString(row.GetCell(columnIndices["初稿日"])); //row.GetCell(columnIndices["初稿日"]).CellType != CellType.Blank ? row.GetCell(columnIndices["初稿日"]).ToString() : "";
-                                var inside_draft_date = Convert.ToString(row.GetCell(columnIndices["内部定稿日"])); // row.GetCell(columnIndices["内部定稿日"]).CellType != CellType.Blank ? row.GetCell(columnIndices["内部定稿日"]).ToString() : "";
-                                var return_draft_date = Convert.ToString(row.GetCell(columnIndices["返稿日"])); //row.GetCell(columnIndices["返稿日"]).CellType != CellType.Blank ? row.GetCell(columnIndices["返稿日"]).ToString() : "";
-                                var draft_date = Convert.ToString(row.GetCell(columnIndices["定稿日"])); // row.GetCell(columnIndices["定稿日"]).CellType != CellType.Blank ? row.GetCell(columnIndices["定稿日"]).ToString() : "";
-                                var give_cooperate_date = Convert.ToString(row.GetCell(columnIndices["送合作所日"])); // row.GetCell(columnIndices["送合作所日"]).CellType != CellType.Blank ? row.GetCell(columnIndices["送合作所日"]).ToString() : "";
-                                var submit_date = "";
+                                //var handle_event_date = Convert.ToString(row.GetCell(columnIndices["处理事项完成日"])); //row.GetCell(columnIndices["处理事项完成日"]).CellType != CellType.Blank ? row.GetCell(columnIndices["处理事项完成日"]).ToString() : "";
+                                //var first_draft_date = Convert.ToString(row.GetCell(columnIndices["初稿日"])); //row.GetCell(columnIndices["初稿日"]).CellType != CellType.Blank ? row.GetCell(columnIndices["初稿日"]).ToString() : "";
+                                //var inside_draft_date = Convert.ToString(row.GetCell(columnIndices["内部定稿日"])); // row.GetCell(columnIndices["内部定稿日"]).CellType != CellType.Blank ? row.GetCell(columnIndices["内部定稿日"]).ToString() : "";
+                                //var return_draft_date = Convert.ToString(row.GetCell(columnIndices["返稿日"])); //row.GetCell(columnIndices["返稿日"]).CellType != CellType.Blank ? row.GetCell(columnIndices["返稿日"]).ToString() : "";
+                                //var draft_date = Convert.ToString(row.GetCell(columnIndices["定稿日"])); // row.GetCell(columnIndices["定稿日"]).CellType != CellType.Blank ? row.GetCell(columnIndices["定稿日"]).ToString() : "";
+                                //var give_cooperate_date = Convert.ToString(row.GetCell(columnIndices["送合作所日"])); // row.GetCell(columnIndices["送合作所日"]).CellType != CellType.Blank ? row.GetCell(columnIndices["送合作所日"]).ToString() : "";
+                                //var submit_date = "";
                                 var handle_event_status = Convert.ToString(row.GetCell(columnIndices["处理事项状态"])); // row.GetCell(columnIndices["处理事项状态"]).CellType != CellType.Blank ? row.GetCell(columnIndices["处理事项状态"]).ToString() : "";
-                                var official_date = Convert.ToString(row.GetCell(columnIndices["官方期限"])); //row.GetCell(columnIndices["官方期限"]).CellType != CellType.Blank ? row.GetCell(columnIndices["官方期限"]).ToString() : "";
+                                //var official_date = Convert.ToString(row.GetCell(columnIndices["官方期限"])); //row.GetCell(columnIndices["官方期限"]).CellType != CellType.Blank ? row.GetCell(columnIndices["官方期限"]).ToString() : "";
                                 var inside_draft_date_two = Convert.ToString(row.GetCell(columnIndices["内部定稿日"])); //row.GetCell(columnIndices["内部定稿日"]).CellType != CellType.Blank ? row.GetCell(columnIndices["内部定稿日"]).ToString() : "";
-                                var customer_date = Convert.ToString(row.GetCell(columnIndices["客户期限"])); //row.GetCell(columnIndices["客户期限"]).CellType != CellType.Blank ? row.GetCell(columnIndices["客户期限"]).ToString() : "";
+                                //var customer_date = Convert.ToString(row.GetCell(columnIndices["客户期限"])); //row.GetCell(columnIndices["客户期限"]).CellType != CellType.Blank ? row.GetCell(columnIndices["客户期限"]).ToString() : "";
                                 var apply_user = Convert.ToString(row.GetCell(columnIndices["申请人"])); //row.GetCell(columnIndices["申请人"]).CellType != CellType.Blank ? row.GetCell(columnIndices["申请人"]).ToString() : "";
                                 var agent_mechanism = Convert.ToString(row.GetCell(columnIndices["代理机构"])); // row.GetCell(columnIndices["代理机构"]).CellType != CellType.Blank ? row.GetCell(columnIndices["代理机构"]).ToString() : "";
                                 var invention_user = Convert.ToString(row.GetCell(columnIndices["发明人"])); //row.GetCell(columnIndices["发明人"]).CellType != CellType.Blank ? row.GetCell(columnIndices["发明人"]).ToString() : "";
@@ -226,8 +467,8 @@ namespace WebApi_SY.Controllers
                                 var change_currency = Convert.ToString(row.GetCell(columnIndices["换算后币别"])); //row.GetCell(columnIndices["换算后币别"]).CellType != CellType.Blank ? row.GetCell(columnIndices["换算后币别"]).ToString() : "";
                                 var change_money = Convert.ToString(row.GetCell(columnIndices["换算后金额"])); //row.GetCell(columnIndices["换算后金额"]).CellType != CellType.Blank ? row.GetCell(columnIndices["换算后金额"]).ToString() : "";
                                 var receivable_date = Convert.ToString(row.GetCell(columnIndices["应收日期"])); // row.GetCell(columnIndices["应收日期"]).CellType != CellType.Blank ? row.GetCell(columnIndices["应收日期"]).ToString() : "";
-                                var request_date = Convert.ToString(row.GetCell(columnIndices["请款日期"])); //row.GetCell(columnIndices["请款日期"]).CellType != CellType.Blank ? row.GetCell(columnIndices["请款日期"]).ToString() : "";
-                                var actual_date = Convert.ToString(row.GetCell(columnIndices["实收日期"])); //row.GetCell(columnIndices["实收日期"]).CellType != CellType.Blank ? row.GetCell(columnIndices["实收日期"]).ToString() : "";
+                                //var request_date = Convert.ToString(row.GetCell(columnIndices["请款日期"])); //row.GetCell(columnIndices["请款日期"]).CellType != CellType.Blank ? row.GetCell(columnIndices["请款日期"]).ToString() : "";
+                                //var actual_date = Convert.ToString(row.GetCell(columnIndices["实收日期"])); //row.GetCell(columnIndices["实收日期"]).CellType != CellType.Blank ? row.GetCell(columnIndices["实收日期"]).ToString() : "";
                                 var actual_get_money = Convert.ToString(row.GetCell(columnIndices["实收/实付金额"])); //row.GetCell(columnIndices["实收/实付金额"]).CellType != CellType.Blank ? row.GetCell(columnIndices["实收/实付金额"]).ToString() : "";
                                 var actual_currency = Convert.ToString(row.GetCell(columnIndices["实收币别"])); // row.GetCell(columnIndices["实收币别"]).CellType != CellType.Blank ? row.GetCell(columnIndices["实收币别"]).ToString() : "";
                                 var pay_date = Convert.ToString(row.GetCell(columnIndices["缴费期限"])); //row.GetCell(columnIndices["缴费期限"]).CellType != CellType.Blank ? row.GetCell(columnIndices["缴费期限"]).ToString() : "";
@@ -241,13 +482,13 @@ namespace WebApi_SY.Controllers
                                 var update_record = Convert.ToString(row.GetCell(columnIndices["修改记录"]));// row.GetCell(columnIndices["修改记录"]).CellType != CellType.Blank ? row.GetCell(columnIndices["修改记录"]).ToString() : "";
                                 var collection_account = Convert.ToString(row.GetCell(columnIndices["收款公司账号"]));// row.GetCell(columnIndices["收款公司账号"]).CellType != CellType.Blank ? row.GetCell(columnIndices["收款公司账号"]).ToString() : "";
                                 var bill_no = Convert.ToString(row.GetCell(columnIndices["外方账单号"]));//row.GetCell(columnIndices["外方账单号"]).CellType != CellType.Blank ? row.GetCell(columnIndices["外方账单号"]).ToString() : "";
-                                var money_create_date = Convert.ToString(row.GetCell(columnIndices["费用创建日期"]));//row.GetCell(columnIndices["费用创建日期"]).CellType != CellType.Blank ? row.GetCell(columnIndices["费用创建日期"]).ToString() : "";
+                                //var money_create_date = Convert.ToString(row.GetCell(columnIndices["费用创建日期"]));//row.GetCell(columnIndices["费用创建日期"]).CellType != CellType.Blank ? row.GetCell(columnIndices["费用创建日期"]).ToString() : "";
                                 var invoice_no = Convert.ToString(row.GetCell(columnIndices["发票号"]));//row.GetCell(columnIndices["发票号"]).CellType != CellType.Blank ? row.GetCell(columnIndices["发票号"]).ToString() : "";
-                                var create_invoice_date = Convert.ToString(row.GetCell(columnIndices["开票日期"]));// row.GetCell(columnIndices["开票日期"]).CellType != CellType.Blank ? row.GetCell(columnIndices["开票日期"]).ToString() : "";
+                                //var create_invoice_date = Convert.ToString(row.GetCell(columnIndices["开票日期"]));// row.GetCell(columnIndices["开票日期"]).CellType != CellType.Blank ? row.GetCell(columnIndices["开票日期"]).ToString() : "";
                                 var cost_agent = Convert.ToString(row.GetCell(columnIndices["费用合作所代理机构"]));// row.GetCell(columnIndices["费用合作所代理机构"]).CellType != CellType.Blank ? row.GetCell(columnIndices["费用合作所代理机构"]).ToString() : "";
                                 var collection_status = Convert.ToString(row.GetCell(columnIndices["收款状态"]));//row.GetCell(columnIndices["收款状态"]).CellType != CellType.Blank ? row.GetCell(columnIndices["收款状态"]).ToString() : "";
                                 var pay_status = Convert.ToString(row.GetCell(columnIndices["缴费状态"]));//row.GetCell(columnIndices["缴费状态"]).CellType != CellType.Blank ? row.GetCell(columnIndices["缴费状态"]).ToString() : "";
-                                var out_account_date = Convert.ToString(row.GetCell(columnIndices["销账日期"]));// row.GetCell(columnIndices["销账日期"]).CellType != CellType.Blank ? row.GetCell(columnIndices["销账日期"]).ToString() : "";
+                                //var out_account_date = Convert.ToString(row.GetCell(columnIndices["销账日期"]));// row.GetCell(columnIndices["销账日期"]).CellType != CellType.Blank ? row.GetCell(columnIndices["销账日期"]).ToString() : "";
                                 var power_ask_num = Convert.ToString(row.GetCell(columnIndices["权利要求项数"]));//row.GetCell(columnIndices["权利要求项数"]).CellType != CellType.Blank ? row.GetCell(columnIndices["权利要求项数"]).ToString() : "";
                                 var instructions_num = Convert.ToString(row.GetCell(columnIndices["说明书页数"]));//row.GetCell(columnIndices["说明书页数"]).CellType != CellType.Blank ? row.GetCell(columnIndices["说明书页数"]).ToString() : "";
                                 var technical_field = Convert.ToString(row.GetCell(columnIndices["技术领域"]));//row.GetCell(columnIndices["技术领域"]).CellType != CellType.Blank ? row.GetCell(columnIndices["技术领域"]).ToString() : "";
