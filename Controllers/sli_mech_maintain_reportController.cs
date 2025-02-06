@@ -26,7 +26,7 @@ namespace WebApi_SY.Controllers
                 {
                     Fnumber = options.Fnumber,
                     Fsourceid = options.Fsourceid,
-                    mould = options.mould,
+                    Fmechine = options.Fmechine,
                     Fdate = options.Fdate,
                     Fempid = options.Fempid,
                     Fnote = options.Fnote,
@@ -167,13 +167,14 @@ namespace WebApi_SY.Controllers
                 Id = a.Id,
                 Fnumber = a.Fnumber,
                 Fsourceid = a.Fsourceid,
-                mould = a.mould,
+                Fmechine = a.Fmechine,
                 Fdate = a.Fdate,
                 Fempid = a.Fempid,
                 Fnote = a.Fnote,
                 Fstatus = a.Fstatus,
-                Fmouldnumber = a.Fmouldnumber,
+                Fmouldnumber = a.Fmechnumber,
                 Fname = a.Fname,
+                Fbreak = a.Fbreak,
                 FempName = a.FempName
             });
             var response = new    // 定义 前端返回数据  总记录，总页，当前页 ，size,返回记录

@@ -174,6 +174,7 @@ namespace WebApi_SY.Controllers
                 Fstatus = a.Fstatus,
                 Fmouldnumber = a.Fmouldnumber,
                 Fname = a.Fname,
+                Fbreak = a.Fbreak,
                 FempName = a.FempName
             });
             var response = new    // 定义 前端返回数据  总记录，总页，当前页 ，size,返回记录

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -7,9 +8,10 @@ namespace WebApi_SY.Models
 {
     public class sli_mech_maintain_order
     {
+        [Key]
         public int Id { get; set; }
         public string Fnumber { get; set; } // 报修单号
-        public int Fmechine { get; set; }// 模具Id
+        public int Fmechine { get; set; }// 设备Id
         public DateTime Fdate { get; set; }// 报修日期
         public string Fnote { get; set; } // 报修说明 
         public int Fstatus { get; set; }
@@ -17,9 +19,10 @@ namespace WebApi_SY.Models
 
     public class sli_mech_maintain_order_view  //报修单
     {
+        [Key]
         public int Id { get; set; }
         public string Fnumber { get; set; } // 报修单号
-        public int Fmechine { get; set; }// 模具Id
+        public int Fmechine { get; set; }// 设备Id
         public DateTime Fdate { get; set; }// 报修日期
         public string Fnote { get; set; } // 报修说明 
         public int Fstatus { get; set; }

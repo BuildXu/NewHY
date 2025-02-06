@@ -180,6 +180,8 @@ namespace WebApi_SY.Entity
         public DbSet<sli_task_report> sli_task_report { get; set; }//  任务基础资料:step
         public DbSet<sli_task_order> sli_task_order { get; set; }//  任务基础资料:状态
 
+        //public DbSet<sli_pur_instock> Sli_pur_instock { get; set; }//  采购入库
+
 
         public DbSet<sli_material_plan> sli_material_plan { get; set; }//  用料计划
 

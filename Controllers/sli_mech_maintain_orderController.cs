@@ -12,7 +12,7 @@ namespace WebApi_SY.Controllers
 {
     public class sli_mech_maintain_orderController : ApiController
     {
-        public sli_mech_maintain_orderController()   //模具档案
+        public sli_mech_maintain_orderController()   //设备档案
         {
 
         }

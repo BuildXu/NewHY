@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -7,6 +8,7 @@ namespace WebApi_SY.Models
 {
     public class sli_mould_maintain_report
     {
+        [Key]
         public int Id { get; set; }
         public int Fsourceid { get; set; }  //报修单id	
         public int mould { get; set; }//模具 Id
@@ -19,6 +21,7 @@ namespace WebApi_SY.Models
     }
     public class sli_mould_maintain_report_view
     {
+        [Key]
         public int Id { get; set; }
         public int Fsourceid { get; set; }  //报修单id	
         public int mould { get; set; }//模具 Id

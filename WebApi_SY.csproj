@@ -456,6 +456,7 @@
     <Compile Include="Controllers\sli_material_planController.cs" />
     <Compile Include="Controllers\sli_mech_maintain_orderController.cs" />
     <Compile Include="Controllers\sli_mech_maintain_reportController.cs" />
+    <Compile Include="Controllers\sli_pur_instockImportController.cs" />
     <Compile Include="Controllers\sli_task_reportController.cs" />
     <Compile Include="Controllers\sli_task_orderController.cs" />
     <Compile Include="Controllers\sli_bd_task_stepController.cs" />
@@ -516,6 +517,7 @@
     <Compile Include="Models\sli_mould_list.cs" />
     <Compile Include="Models\sli_mould_maintain_order.cs" />
     <Compile Include="Models\sli_mould_maintain_report.cs" />
+    <Compile Include="Models\sli_pur_instock.cs" />
     <Compile Include="Models\sli_quality_report.cs" />
     <Compile Include="Models\sli_quality_requestion_view.cs" />
     <Compile Include="Models\sli_intpo_Import.cs" />
