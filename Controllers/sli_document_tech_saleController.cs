@@ -40,7 +40,7 @@ namespace WebApi_SY.Controllers
         [HttpPost]
          //public async Task<object> InsertData()
 
-        public IHttpActionResult   InsertData()
+        public async Task<IHttpActionResult>   InsertData()
       {
             try
             {
@@ -61,8 +61,8 @@ namespace WebApi_SY.Controllers
                 {
                     var provider = new MultipartMemoryStreamProvider();
                     var task = Request.Content.ReadAsMultipartAsync(provider);
-                    task.Wait();
-                    //await task;
+                    //task.Wait();
+                    await task;
                     foreach (var content in provider.Contents)
                     {
                         var contentDisposition = content.Headers.ContentDisposition;

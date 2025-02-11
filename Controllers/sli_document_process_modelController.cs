@@ -34,7 +34,7 @@ namespace WebApi_SY.Controllers
             // _context = context;
 
         }
-        public IHttpActionResult InsertData()
+        public async Task<IHttpActionResult> InsertData()
         {
 
             try
@@ -193,7 +193,7 @@ namespace WebApi_SY.Controllers
                 MultipartMemoryStreamProvider provider = new MultipartMemoryStreamProvider();
                 try
                 {
-                    Request.Content.ReadAsMultipartAsync(provider);
+                    await Request.Content.ReadAsMultipartAsync(provider);
                 }
                 catch (Exception ex)
                 {
@@ -210,7 +210,7 @@ namespace WebApi_SY.Controllers
                 {
                     using (MemoryStream ms = new MemoryStream())
                     {
-                        salePart.CopyToAsync(ms);
+                        await salePart.CopyToAsync(ms);
                         ms.Seek(0, SeekOrigin.Begin);
                         saleJson = new StreamReader(ms).ReadToEnd();
                     }
@@ -227,7 +227,7 @@ namespace WebApi_SY.Controllers
                 {
                     using (MemoryStream ms = new MemoryStream())
                     {
-                        billPart.CopyToAsync(ms);
+                        await billPart.CopyToAsync(ms);
                         ms.Seek(0, SeekOrigin.Begin);
                         billJson = new StreamReader(ms).ReadToEnd();
                     }
@@ -266,7 +266,7 @@ namespace WebApi_SY.Controllers
                         string fileName = filePart.Headers.ContentDisposition.FileName.Trim('"');
                         using (MemoryStream fileMs = new MemoryStream())
                         {
-                            filePart.CopyToAsync(fileMs);
+                            await filePart.CopyToAsync(fileMs);
                             fileMs.Seek(0, SeekOrigin.Begin);
                             byte[] fileBytes = fileMs.ToArray();
                             var attachment = new sli_document_process_modelAttachment_view
@@ -310,7 +310,7 @@ namespace WebApi_SY.Controllers
             
         }
 
-        public IHttpActionResult UpdateData(int id)
+        public async Task<IHttpActionResult> UpdateData(int id)
         {
             if (!Request.Content.IsMimeMultipartContent())
             {
@@ -339,7 +339,7 @@ namespace WebApi_SY.Controllers
                 var provider = new MultipartMemoryStreamProvider();
                 var task = Request.Content.ReadAsMultipartAsync(provider);
                 //task.Wait();
-                //await task;
+                await task;
                 foreach (var content in provider.Contents)
                 {
                     var contentDisposition = content.Headers.ContentDisposition;
@@ -415,7 +415,7 @@ namespace WebApi_SY.Controllers
                 {
                     using (MemoryStream ms = new MemoryStream())
                     {
-                        billPart.CopyToAsync(ms);
+                        await billPart.CopyToAsync(ms);
                         ms.Seek(0, SeekOrigin.Begin);
                         billJson = new StreamReader(ms).ReadToEnd();
                     }
