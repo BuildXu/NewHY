@@ -14,7 +14,7 @@ namespace WebApi_SY.Models
         public DateTime FDate { get; set; }
         public string FCustNmae { get; set; }
         public string FCustSum { get; set; }
-        public DateTime FApproveDate { get; set; }
+        public DateTime ? FApproveDate { get; set; }
     }
 
     public class sli_sal_orderentry    //销售订单表体

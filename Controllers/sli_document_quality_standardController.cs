@@ -55,7 +55,7 @@ namespace WebApi_SY.Controllers
                                 standard.Fnumber = sale1.Fnumber;
                                 standard.Fname = sale1.Fname;
                                 standard.Fdate = sale1.Fdate;
-                                if (sale1.FmaterialID is null)
+                                if (Convert.ToString( sale1.FmaterialID) =="")
                                 {
                                     standard.FmaterialID = 0;
                                 }
@@ -85,7 +85,7 @@ namespace WebApi_SY.Controllers
                                 {
                                     var ftechOptionID1 = 0;
 
-                                    if (billItem.fqualityOptionID == "")
+                                    if (Convert.ToString( billItem.fqualityOptionID) == "")
                                     {
                                         ftechOptionID1 = 0;
                                     }
@@ -120,7 +120,7 @@ namespace WebApi_SY.Controllers
                                 {
                                     var ftechObjectID1 = 0;
 
-                                    if (entryItem.fqualityObjectID == "")
+                                    if (Convert.ToString(entryItem.fqualityObjectID) == "")
                                     {
                                         ftechObjectID1 = 0;
                                     }

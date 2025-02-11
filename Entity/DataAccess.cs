@@ -191,7 +191,7 @@ namespace WebApi_SY.Entity
         {
             //ConnectionStrings 19vs7gv47690.vicp.fun,46716
             //optionsBuilder.UseSqlServer("Data Source=61.174.243.28,45047;Initial Catalog=AIS20241011165800;User ID=sa;Password=pct258258!;TrustServerCertificate=True;");
-            optionsBuilder.UseSqlServer("Data Source=19vs7gv47690.vicp.fun,16819;Initial Catalog=AIS20241011165800;User ID=sa;Password=kingdee123*;TrustServerCertificate=True;");
+            optionsBuilder.UseSqlServer("Data Source=19vs7gv47690.vicp.fun,16819;Initial Catalog=AIS20241011165800;User ID=sa;Password=kingdee123*;TrustServerCertificate=True; Command Timeout=3600");
             //optionsBuilder.UseSqlServer("ConnectionStrings");
             //1111111
 

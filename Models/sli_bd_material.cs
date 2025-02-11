@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Kingdee.BOS.WebApi.DataEntities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -20,16 +21,22 @@ namespace WebApi_SY.Models
         public string IgnoreInterationFlag { get; set; }
         public string IsControlPrecision { get; set; }
         public string ValidateRepeatJson { get; set; }
-        public MATERIAL_Model Model { get; set; }
+        public MaterialModel Model { get; set; }
+    }
+    public class MaterialOrgId
+    {
+        public string FNumber { get; set; }
     }
 
-    // 主模型中的子模型
-    public class MATERIAL_Model
+    public class MaterialModel
     {
         public int FMATERIALID { get; set; }
-        public OrgId FCreateOrgId { get; set; }
-        public OrgId FUseOrgId { get; set; }
+        public MaterialOrgId FCreateOrgId { get; set; }
+        public MaterialOrgId FUseOrgId { get; set; }
+        public string FNumber { get; set; }
         public string FName { get; set; }
+        public string FSpecification { get; set; }
+        public MaterialOrgId FMaterialGroup { get; set; }
         public bool FDSMatchByLot { get; set; }
         public string FImgStorageType { get; set; }
         public bool FIsSalseByNet { get; set; }
@@ -43,28 +50,24 @@ namespace WebApi_SY.Models
         public double FsliWeightMaterial { get; set; }
         public double FsliWeightForging { get; set; }
         public double FsliWeightGoods { get; set; }
+        public string FsliDrawingNo { get; set; }
+        public MaterialOrgId FsliMetal { get; set; }
         public int FsliTemperatureBegin { get; set; }
         public int FsliTempratureEnd { get; set; }
         public int FsliHeatingTimes { get; set; }
-        public MATERIALSubHeadEntity FSubHeadEntity { get; set; }
-        public SubHeadEntity1 FSubHeadEntity1 { get; set; }
-        public SubHeadEntity2 FSubHeadEntity2 { get; set; }
-        public SubHeadEntity3 FSubHeadEntity3 { get; set; }
-        public SubHeadEntity4 FSubHeadEntity4 { get; set; }
-        public SubHeadEntity5 FSubHeadEntity5 { get; set; }
-        public SubHeadEntity6 FSubHeadEntity6 { get; set; }
-        public SubHeadEntity7 FSubHeadEntity7 { get; set; }
-        public List<EntityInvPty> FEntityInvPty { get; set; }
+        public FSubHeadEntity FSubHeadEntity { get; set; }
+        public SubHeadEntityMaterial SubHeadEntity { get; set; }
+        public SubHeadEntity1 SubHeadEntity1 { get; set; }
+        public SubHeadEntity2 SubHeadEntity2 { get; set; }
+        public SubHeadEntity3 SubHeadEntity3 { get; set; }
+        public SubHeadEntity4 SubHeadEntity4 { get; set; }
+        public SubHeadEntity5 SubHeadEntity5 { get; set; }
+        public SubHeadEntity6 SubHeadEntity6 { get; set; }
+        public SubHeadEntity7 SubHeadEntity7 { get; set; }
+        public List<FEntityInvPty> FEntityInvPty { get; set; }
     }
 
-    // 组织 ID 模型
-    public class MATERIALOrgId
-    {
-        public string FNumber { get; set; }
-    }
-
-    // 子头实体模型 1
-    public class MATERIALSubHeadEntity
+    public class FSubHeadEntity
     {
         public bool FIsControlSal { get; set; }
         public double FLowerPercent { get; set; }
@@ -89,12 +92,15 @@ namespace WebApi_SY.Models
         public bool FIsPrinttAg { get; set; }
         public bool FIsAccessory { get; set; }
         public bool FUploadSkuImage { get; set; }
+    }
+    public class SubHeadEntityMaterial
+    {
         public string FErpClsID { get; set; }
         public string FFeatureItem { get; set; }
-        public MATERIALOrgId FCategoryID { get; set; }
-        public MATERIALOrgId FTaxType { get; set; }
-        public MATERIALOrgId FTaxRateId { get; set; }
-        public MATERIALOrgId FBaseUnitId { get; set; }
+        public MaterialOrgId FCategoryID { get; set; }
+        public MaterialOrgId FTaxType { get; set; }
+        public MaterialOrgId FTaxRateId { get; set; }
+        public MaterialOrgId FBaseUnitId { get; set; }
         public bool FIsPurchase { get; set; }
         public bool FIsInventory { get; set; }
         public bool FIsSubContract { get; set; }
@@ -103,20 +109,18 @@ namespace WebApi_SY.Models
         public bool FIsAsset { get; set; }
         public double FGROSSWEIGHT { get; set; }
         public double FNETWEIGHT { get; set; }
-        public MATERIALOrgId FWEIGHTUNITID { get; set; }
+        public MaterialOrgId FWEIGHTUNITID { get; set; }
         public double FLENGTH { get; set; }
         public double FWIDTH { get; set; }
         public double FHEIGHT { get; set; }
         public double FVOLUME { get; set; }
-        public MATERIALOrgId FVOLUMEUNITID { get; set; }
+        public MaterialOrgId FVOLUMEUNITID { get; set; }
         public string FSuite { get; set; }
         public double FCostPriceRate { get; set; }
     }
-
-    // 子头实体模型 2
     public class SubHeadEntity1
     {
-        public MATERIALOrgId FStoreUnitID { get; set; }
+        public MaterialOrgId FStoreUnitID { get; set; }
         public string FUnitConvertDir { get; set; }
         public bool FIsLockStock { get; set; }
         public bool FIsCycleCounting { get; set; }
@@ -129,7 +133,7 @@ namespace WebApi_SY.Models
         public int FExpPeriod { get; set; }
         public int FOnlineLife { get; set; }
         public double FRefCost { get; set; }
-        public MATERIALOrgId FCurrencyId { get; set; }
+        public CurrencyId FCurrencyId { get; set; }
         public bool FIsEnableMinStock { get; set; }
         public bool FIsEnableMaxStock { get; set; }
         public bool FIsEnableSafeStock { get; set; }
@@ -146,11 +150,15 @@ namespace WebApi_SY.Models
         public double FBoxStandardQty { get; set; }
     }
 
-    // 子头实体模型 3
+    public class CurrencyId
+    {
+        public string FNumber { get; set; }
+    }
+
     public class SubHeadEntity2
     {
-        public MATERIALOrgId FSaleUnitId { get; set; }
-        public MATERIALOrgId FSalePriceUnitId { get; set; }
+        public MaterialOrgId FSaleUnitId { get; set; }
+        public MaterialOrgId FSalePriceUnitId { get; set; }
         public double FOrderQty { get; set; }
         public double FMinQty { get; set; }
         public double FMaxQty { get; set; }
@@ -173,13 +181,12 @@ namespace WebApi_SY.Models
         public bool FUnValidateExpQty { get; set; }
     }
 
-    // 子头实体模型 4
     public class SubHeadEntity3
     {
         public double FBaseMinSplitQty { get; set; }
-        public MATERIALOrgId FPurchaseUnitId { get; set; }
-        public MATERIALOrgId FPurchasePriceUnitId { get; set; }
-        public MATERIALOrgId FPurchaseOrgId { get; set; }
+        public MaterialOrgId FPurchaseUnitId { get; set; }
+        public MaterialOrgId FPurchasePriceUnitId { get; set; }
+        public MaterialOrgId FPurchaseOrgId { get; set; }
         public bool FIsQuota { get; set; }
         public string FQuotaType { get; set; }
         public double FMinSplitQty { get; set; }
@@ -192,7 +199,7 @@ namespace WebApi_SY.Models
         public double FReceiveMinScale { get; set; }
         public int FReceiveAdvanceDays { get; set; }
         public int FReceiveDelayDays { get; set; }
-        public MATERIALOrgId FPOBillTypeId { get; set; }
+        public MaterialOrgId FOBillTypeId { get; set; }
         public double FAgentPurPlusRate { get; set; }
         public int FPrintCount { get; set; }
         public double FMinPackCount { get; set; }
@@ -200,13 +207,12 @@ namespace WebApi_SY.Models
         public bool FIsEnableScheduleSub { get; set; }
     }
 
-    // 子头实体模型 5
     public class SubHeadEntity4
     {
         public string FPlanMode { get; set; }
         public double FBaseVarLeadTimeLotSize { get; set; }
         public string FPlanningStrategy { get; set; }
-        public MATERIALOrgId FMfgPolicyId { get; set; }
+        public MaterialOrgId FMfgPolicyId { get; set; }
         public string FOrderPolicy { get; set; }
         public int FFixLeadTime { get; set; }
         public string FFixLeadTimeType { get; set; }
@@ -241,17 +247,16 @@ namespace WebApi_SY.Models
         public double FDailyOutQty { get; set; }
     }
 
-    // 子头实体模型 6
     public class SubHeadEntity5
     {
-        public MATERIALOrgId FProduceUnitId { get; set; }
+        public MaterialOrgId FProduceUnitId { get; set; }
         public double FFinishReceiptOverRate { get; set; }
         public double FFinishReceiptShortRate { get; set; }
-        public MATERIALOrgId FProduceBillType { get; set; }
-        public MATERIALOrgId FOrgTrustBillType { get; set; }
+        public MaterialOrgId FProduceBillType { get; set; }
+        public MaterialOrgId FOrgTrustBillType { get; set; }
         public bool FIsProductLine { get; set; }
         public bool FIsSNCarryToParent { get; set; }
-        public MATERIALOrgId FBOMUnitId { get; set; }
+        public MaterialOrgId FBOMUnitId { get; set; }
         public double FConsumVolatility { get; set; }
         public double FLOSSPERCENT { get; set; }
         public bool FIsMainPrd { get; set; }
@@ -267,14 +272,13 @@ namespace WebApi_SY.Models
         public double FStdLaborProcessTime { get; set; }
         public double FStdMachinePrepareTime { get; set; }
         public double FStdMachineProcessTime { get; set; }
-        public MATERIALOrgId FMinIssueUnitId { get; set; }
+        public MaterialOrgId FMinIssueUnitId { get; set; }
         public string FStandHourUnitId { get; set; }
         public string FBackFlushType { get; set; }
         public double FFIXLOSS { get; set; }
         public bool FIsEnableSchedule { get; set; }
     }
 
-    // 子头实体模型 7
     public class SubHeadEntity6
     {
         public bool FCheckIncoming { get; set; }
@@ -294,21 +298,24 @@ namespace WebApi_SY.Models
         public string FFirstQCControlType { get; set; }
     }
 
-    // 子头实体模型 8
     public class SubHeadEntity7
     {
-        public MATERIALOrgId FSubconUnitId { get; set; }
-        public MATERIALOrgId FSubconPriceUnitId { get; set; }
-        public MATERIALOrgId FSubBillType { get; set; }
+        public MaterialOrgId FSubconUnitId { get; set; }
+        public MaterialOrgId FSubconPriceUnitId { get; set; }
+        public MaterialOrgId FSubBillType { get; set; }
     }
 
-    // 库存属性实体模型
-    public class EntityInvPty
+    public class FEntityInvPty
     {
-        public MATERIALOrgId FInvPtyId { get; set; }
+        public InvPtyId FInvPtyId { get; set; }
         public bool FIsEnable { get; set; }
         public bool FIsAffectPrice { get; set; }
         public bool FIsAffectPlan { get; set; }
         public bool FIsAffectCost { get; set; }
+    }
+
+    public class InvPtyId
+    {
+        public string FNumber { get; set; }
     }
 }

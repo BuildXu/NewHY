@@ -41,7 +41,15 @@ namespace WebApi_SY.Controllers
                 var totalCount = query.Count(); //记录数
                 var totalPages = (int)Math.Ceiling((double)totalCount / pageSize); // 页数
                 var paginatedQuery = query.Skip((page - 1) * pageSize).Take(pageSize); //  某页记录
-                                                                                       //var datas = query.ToList();
+                //var result = paginatedQuery.Select(a => new
+                //{
+                //    FID = a.FID,
+                //    FBillno = a.FBillno,
+                //    FDate = a.FDate,
+                //    FCustNmae = a.FCustNmae,
+                //    FCustSum = a.FCustSum,
+                //    FApproveDate = a.FApproveDate ?? string.Empty
+                //});//var datas = query.ToList();
                 var response = new    // 定义 前端返回数据  总记录，总页，当前页 ，size,返回记录
                 {
                     code = 200,

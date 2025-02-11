@@ -12,7 +12,7 @@ namespace WebApi_SY.Models
         public int Id { get; set; }
         public string Fnumber { get; set; }
         public string Fname { get; set; }
-        public DateTime Fdate { get; set; }
+        public string Fdate { get; set; }
         public int FbillerID { get; set; }
         public string Fstatus { get; set; }
         public int FcustomerID { get; set; }
