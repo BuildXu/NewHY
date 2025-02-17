@@ -36,7 +36,7 @@ namespace WebApi_SY.Controllers
                 if (bLogin)
                 {
 
-                    var heard = context.Sli_sale_orderImport.FirstOrDefault(p => p.FID == id);   //获取表头单行数据
+                    //var heard = context.Sli_sale_orderImport.FirstOrDefault(p => p.FID == id);   //获取表头单行数据
                     //var FcustomerNumer = context.Sli_bd_customer_view.FirstOrDefault(p => p.FNAME == heard.FCustomerName); //根据客户名称查询客户代码
                     var entity = context.Sli_sale_orderImportentry.Where(p => p.fid == id && p.fmaterialNumber=="").GroupBy(o => new { o.fname,o.fdescription, o.fsliDrawingNo, o.fsliMetal })
                                                                   .Select(g => new sli_sale_orderImportentry
@@ -66,6 +66,7 @@ namespace WebApi_SY.Controllers
                     foreach (var entitydata in entityList)
                     {
                         //SaleOrderEntry newEntry = new SaleOrderEntry();
+                        rootObject.IsAutoSubmitAndAudit = "True";
                         rootObject.Model.FName=entitydata.fname;
                         rootObject.Model.FNumber = "SY-CP-01-"+ entitydata.id;
                         rootObject.Model.FSpecification = entitydata.fdescription;
@@ -82,7 +83,7 @@ namespace WebApi_SY.Controllers
                         ResultData resultdata = JsonConvert.DeserializeObject<ResultData>(result);
                         if (resultdata.Result.ResponseStatus.IsSuccess)
                         {
-                            var products = context.Sli_sale_orderImportentry.Where(  p =>p.fsliMetal== entitydata.fsliMetal && p.fsliDrawingNo == entitydata.fsliDrawingNo && p.fdescription == entitydata.fdescription && p.id == entitydata.id).ToList();
+                            var products = context.Sli_sale_orderImportentry.Where(  p =>p.fsliMetal== entitydata.fsliMetal && p.fsliDrawingNo == entitydata.fsliDrawingNo && p.fdescription == entitydata.fdescription && p.fid == id).ToList();
 
                             //var entity1 = context.Sli_sale_orderImportentry.Where(p => p.fid == id).ToList();
 

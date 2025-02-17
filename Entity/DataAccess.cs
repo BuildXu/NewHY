@@ -187,6 +187,7 @@ namespace WebApi_SY.Entity
 
 
         public DbSet<sli_material_plan> sli_material_plan { get; set; }//  用料计划
+        public DbSet<sli_doc_sales> Sli_doc_sales { get; set; }//  订单技术要求
 
 
 

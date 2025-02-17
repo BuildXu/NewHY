@@ -15,6 +15,9 @@ namespace WebApi_SY.Models
         public int Flag { get; set; }
         public string FParameter { get; set; }
         public string FReason { get; set; }
+        public string FBillNo { get; set; }
+        public int FSaleId { get; set; }
+        public string FContractNo { get; set; }
         public virtual ICollection<sli_sale_orderImportentry> sli_sale_orderImportentry { get; set; }
     }
     public class sli_sale_orderImportentry  //excle导入销售订单表体

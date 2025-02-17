@@ -159,8 +159,10 @@ namespace WebApi_SY.Controllers
                 query = query.Where(q => q.Id==id);
 
             }
-            
-            
+
+            var paginatedQuery = query.OrderByDescending(b => b.Id);
+
+
             var result = query.Select(a => new
             {
                 Id = a.Id,

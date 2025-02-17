@@ -27,7 +27,7 @@ namespace WebApi_SY.Models
         public int Fseq { get; set; } //行号
         public decimal Fqty { get; set; }//数量
         public string Fnote { get; set; }//备注
-        public string  Fplandeliverydate { get; set; }//交货日期
+        public DateTime ? Fplandeliverydate { get; set; }//交货日期
         public decimal fstockqty { get; set; } //库存数量
         public int FmaterialID { get; set; }//物料ID
         public string Fnumber { get; set; }//物料代码
@@ -49,8 +49,8 @@ namespace WebApi_SY.Models
         public string Fslidelivery { get; set; }
         public string Fsliblankmodel { get; set; }
         public string FsliPunching { get; set; }
-        public decimal FsliTemperatureBegin { get; set; }
-        public decimal FsliTempratureEnd { get; set; }
+        public int FsliTemperatureBegin { get; set; }
+        public int FsliTempratureEnd { get; set; }
         public string Fslimould { get; set; }
         public string Fsliroller { get; set; }
         public int FsliHeatingTimes { get; set; }
@@ -59,6 +59,8 @@ namespace WebApi_SY.Models
 
         public int FworkOrderListQty { get; set; }
         public int FworkOrderListRemain { get; set; }
+        public string FslisaleTechNo { get; set; }
+        public string FslitechNo { get; set; }
         public virtual sli_sal_order_view sli_sal_order_view { get; set; }
     }
 }

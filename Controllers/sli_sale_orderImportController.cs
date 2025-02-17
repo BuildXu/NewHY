@@ -287,6 +287,9 @@ namespace WebApi_SY.Controllers
 
                     orderImport.FCustomerName = import.FCustomerName;
                     orderImport.FCustomerID = import.FCustomerID;
+                    orderImport.FBillNo = import.FBillNo;
+                    orderImport.FSaleId = import.FSaleId;
+                    orderImport.FContractNo = import.FContractNo;
 
                     //context.Sli_sale_orderImportentry.RemoveRange(orderImportentry);
                     await context.SaveChangesAsync();

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 using WebApi_SY.Entity;
 using WebApi_SY.Models;
@@ -12,6 +13,42 @@ namespace WebApi_SY.Controllers
 {
     public class sli_sal_order_bussController : ApiController
     {
+        public sli_sal_order_bussController()
+        {
+            // _context = context;
+
+        }
+
+        public async Task<IHttpActionResult> UpdateData(int id=0,int Fdocid=0)
+        {
+            try
+            {
+                var context = new YourDbContext();
+                var sli_doc_sales = context.Sli_doc_sales.FirstOrDefault(p => p.Id == id);
+                sli_doc_sales.Fdocid = Fdocid;
+
+                //sli_doc_sales.Fdocno = "";
+                await context.SaveChangesAsync();
+                var datas = new
+                {
+                    code = 200,
+                    msg = "ok",
+                    date = id + "更新成功！"
+                };
+                return Ok(datas);
+
+            }
+            catch (Exception ex)
+            {
+                var datas = new
+                {
+                    code = 200,
+                    msg = ex.ToString(),
+                    date = id + "更新成功！"
+                };
+                return Ok(datas);
+            }
+        }
         [System.Web.Http.HttpGet]
         public IHttpActionResult GetTableBysale_order_buss_view(int page = 1, int pageSize = 10, string FCustSum = null, DateTime? FBeginTime = null, DateTime? FEndTime = null)
         {
@@ -80,23 +117,59 @@ namespace WebApi_SY.Controllers
             try
             {
                 var context = new YourDbContext();
-                IQueryable<sli_sal_orderDocument> query = context.Sli_sal_orderDocument;
+                //IQueryable<sli_doc_sales> query = context.Sli_doc_sales;
 
+                var Sli_doc_sales = context.Sli_doc_sales.FirstOrDefault(p => p.Fid == fid);
 
-
-                if (fid.HasValue)
-                {
-                    query = query.Where(t => t.fid == fid.Value);
-                }
                 
-                                                                                       //var datas = query.ToList();
+                
+                 //var datas = query.ToList();
                 var response = new    // 定义 前端返回数据  总记录，总页，当前页 ，size,返回记录
                 {
                     code = 200,
                     msg = "OK",
                     data = new
                     {
-                        
+                        data = 111
+                    }
+
+
+                };
+
+                return Json(response);
+            }
+            catch (Exception ex)
+            {
+                return Json(ex.ToString());
+            }
+        }
+
+
+        public IHttpActionResult GetTableBysal_orderentry(int? fid = null)
+        {
+            try
+            {
+                var context = new YourDbContext();
+                IQueryable<sli_sal_orderEntry_view> query = context.Sli_sal_orderEntry_view;
+
+
+
+                if (fid.HasValue)
+                {
+                    query = query.Where(t => t.Fid == fid.Value);
+                }
+                //if (!string.IsNullOrEmpty(FsliMetal))
+                //{
+                //    query = query.Where(q => q.FsliMetal.Contains(FsliMetal));
+                //}
+
+                //var datas = query.ToList();
+                var response = new    // 定义 前端返回数据  总记录，总页，当前页 ，size,返回记录
+                {
+                    code = 200,
+                    msg = "OK",
+                    data = new
+                    {
                         data = query
                     }
 

@@ -21,6 +21,7 @@ namespace WebApi_SY.Models
         public string IgnoreInterationFlag { get; set; }
         public string IsControlPrecision { get; set; }
         public string ValidateRepeatJson { get; set; }
+        public string IsAutoSubmitAndAudit { get; set; }
         public MaterialModel Model { get; set; }
     }
     public class MaterialOrgId
