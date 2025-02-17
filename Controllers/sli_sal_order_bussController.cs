@@ -19,21 +19,46 @@ namespace WebApi_SY.Controllers
 
         }
 
-        public async Task<IHttpActionResult> UpdateData(int id=0,int Fdocid=0)
+        public class UpdateRequest
+        {
+            public int Id { get; set; }
+            public int Fdocid { get; set; }
+            public string Fnumber { get; set; }
+            public int Fid { get; set; }
+            public string Fslimetal { get; set; }
+        }
+        [System.Web.Http.HttpPost]
+        public IHttpActionResult UpdateData([FromBody] UpdateRequest request)
         {
             try
             {
                 var context = new YourDbContext();
-                var sli_doc_sales = context.Sli_doc_sales.FirstOrDefault(p => p.Id == id);
-                sli_doc_sales.Fdocid = Fdocid;
+                var sli_doc_sales = context.Sli_doc_sales.FirstOrDefault(p => p.Id == request.Id);
+                sli_doc_sales.Fdocid = request.Fdocid;
+                sli_doc_sales.Fdocno = request.Fnumber;
+                context.SaveChanges();
+                //var FSLIMETEL= context.T_BAS_PREBDONE.Where(p => p.FNUMBER == request.Fslimetal).Select(p => p.FID);
+                var result = context.T_BAS_PREBDONE .Where(p => p.FNUMBER == request.Fslimetal).Select(p => p.FID).FirstOrDefault();
+                System.Diagnostics.Debug.WriteLine(result);
+                System.Diagnostics.Debug.WriteLine(request.Fid);
+                var products = context.T_sal_orderEntry.Where(p => p.FSLIMETEL == result && p.FID == request.Fid).ToList();
 
+                foreach (var product in products)
+                {
+                    product.FSLISALETECHNO =Convert.ToString( request.Fnumber);
+                    //var result1 = context.T_sal_orderEntry.Where(p => p.FENTRYID == product.FENTRYID).FirstOrDefault();
+                    //result1.FSLISALETECHNO = Convert.ToString(request.Fnumber);
+                    // product.fmaterialNumber = resultdata.Result.Number;
+                }
+                //
+                context.SaveChanges();
                 //sli_doc_sales.Fdocno = "";
-                await context.SaveChangesAsync();
+
                 var datas = new
                 {
                     code = 200,
                     msg = "ok",
-                    date = id + "更新成功！"
+                    date = request.Id + "更新成功！"
                 };
                 return Ok(datas);
 
@@ -42,9 +67,56 @@ namespace WebApi_SY.Controllers
             {
                 var datas = new
                 {
-                    code = 200,
+                    code = 400,
                     msg = ex.ToString(),
-                    date = id + "更新成功！"
+                    date = request.Id + "更新失败！"
+                };
+                return Ok(datas);
+            }
+        }
+
+        public IHttpActionResult UpdateDataEntry([FromBody] UpdateRequest request)
+        {
+            try
+            {
+                var context = new YourDbContext();
+                var sli_doc_sales = context.Sli_doc_sales.FirstOrDefault(p => p.Id == request.Id);
+                sli_doc_sales.Fdocid = request.Fdocid;
+                sli_doc_sales.Fdocno = request.Fnumber;
+                context.SaveChanges();
+                //var FSLIMETEL= context.T_BAS_PREBDONE.Where(p => p.FNUMBER == request.Fslimetal).Select(p => p.FID);
+                var result = context.T_BAS_PREBDONE.Where(p => p.FNUMBER == request.Fslimetal).Select(p => p.FID).FirstOrDefault();
+                System.Diagnostics.Debug.WriteLine(result);
+                System.Diagnostics.Debug.WriteLine(request.Fid);
+                var products = context.T_sal_orderEntry.Where(p => p.FSLIMETEL == result && p.FID == request.Fid).ToList();
+
+                foreach (var product in products)
+                {
+                    product.FSLISALETECHNO = Convert.ToString(request.Fnumber);
+                    //var result1 = context.T_sal_orderEntry.Where(p => p.FENTRYID == product.FENTRYID).FirstOrDefault();
+                    //result1.FSLISALETECHNO = Convert.ToString(request.Fnumber);
+                    // product.fmaterialNumber = resultdata.Result.Number;
+                }
+                //
+                context.SaveChanges();
+                //sli_doc_sales.Fdocno = "";
+
+                var datas = new
+                {
+                    code = 200,
+                    msg = "ok",
+                    date = request.Id + "更新成功！"
+                };
+                return Ok(datas);
+
+            }
+            catch (Exception ex)
+            {
+                var datas = new
+                {
+                    code = 400,
+                    msg = ex.ToString(),
+                    date = request.Id + "更新失败！"
                 };
                 return Ok(datas);
             }
@@ -117,20 +189,23 @@ namespace WebApi_SY.Controllers
             try
             {
                 var context = new YourDbContext();
-                //IQueryable<sli_doc_sales> query = context.Sli_doc_sales;
+                IQueryable<sli_doc_sales> query = context.Sli_doc_sales;
 
-                var Sli_doc_sales = context.Sli_doc_sales.FirstOrDefault(p => p.Fid == fid);
+                //var Sli_doc_sales = context.Sli_doc_sales.FirstOrDefault(p => p.Fid == fid);
+                if (fid.HasValue)
+                {
+                    query = query.Where(t => t.Fid == fid.Value);
+                }
 
-                
-                
-                 //var datas = query.ToList();
+
+                //var datas = query.ToList();
                 var response = new    // 定义 前端返回数据  总记录，总页，当前页 ，size,返回记录
                 {
                     code = 200,
                     msg = "OK",
                     data = new
                     {
-                        data = 111
+                        data = query
                     }
 
 

@@ -21,6 +21,7 @@ namespace WebApi_SY.Entity
         public DbSet<sli_intpo_Import> sli_intpo_Import { get; set; }// **************
         public DbSet<sli_workorderlist_view> sli_workorderlist_view { get; set; }
         public DbSet<t_sal_orderEntry> T_sal_orderEntry { get; set; }
+        public DbSet<T_BAS_PREBDONE> T_BAS_PREBDONE { get; set; }  //材质基础表
 
         public DbSet<sli_plan_bill> Sli_plan_bill { get; set; }                 // 交付计划 Plan  交付计划
         public DbSet<sli_plan_billEntry> Sli_plan_billEntry { get; set; }
@@ -204,7 +205,7 @@ namespace WebApi_SY.Entity
         {
             //ConnectionStrings 19vs7gv47690.vicp.fun,46716
             //optionsBuilder.UseSqlServer("Data Source=61.174.243.28,45047;Initial Catalog=AIS20241011165800;User ID=sa;Password=pct258258!;TrustServerCertificate=True;");
-            optionsBuilder.UseSqlServer("Data Source=19vs7gv47690.vicp.fun,16819;Initial Catalog=AIS20241011165800;User ID=sa;Password=kingdee123*;TrustServerCertificate=True; Command Timeout=3600");
+            optionsBuilder.UseSqlServer("Data Source=19vs7gv47690.vicp.fun,16819;Initial Catalog=AIS20250217085617;User ID=sa;Password=kingdee123*;TrustServerCertificate=True; Command Timeout=3600");
             //optionsBuilder.UseSqlServer("ConnectionStrings");
             //1111111
 

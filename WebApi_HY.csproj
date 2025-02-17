@@ -513,6 +513,7 @@
     <Compile Include="Models\sli_bd_mould_break.cs" />
     <Compile Include="Models\sli_doc_sales.cs" />
     <Compile Include="Models\sli_pur_instock.cs" />
+    <Compile Include="Models\T_BAS_PREBDONE.cs" />
     <Compile Include="Models\Utils.cs" />
     <Compile Include="Models\DataTableToList.cs" />
     <Compile Include="Models\InsertDataToTables.cs" />
