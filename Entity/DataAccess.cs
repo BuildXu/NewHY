@@ -106,7 +106,9 @@ namespace WebApi_SY.Entity
 
         public DbSet<sli_sale_orderImportentry> Sli_sale_orderImportentry { get; set; }//销售订单导入表体
         public DbSet<sli_sale_orderImport> Sli_sale_orderImport { get; set; }//销售订单导入表头
-        public DbSet<sli_sale_orderImport_view> Sli_sale_orderImport_view { get; set; }//销售订单导入视图
+        public DbSet<sli_sale_orderImport_view> Sli_sale_orderImport_view { get; set; }//销售订单导入视图 sli_sale_orderImport_view1
+
+        public DbSet<sli_sale_orderImport_view1> Sli_sale_orderImport_view1 { get; set; }//销售订单表头查询
 
         public DbSet<sli_sal_order_buss_view> Sli_sal_order_buss_view { get; set; }//销售订单关联客户视图
 
@@ -274,7 +276,7 @@ namespace WebApi_SY.Entity
             modelBuilder.Entity<sli_sale_orderImportentry>()
                .HasOne(h => h.sli_sale_orderImport)
                .WithMany(d => d.sli_sale_orderImportentry)
-               .HasForeignKey(d => d.fid);
+               .HasForeignKey(d => d.Fid);
 
 
             //技术档案视图查询

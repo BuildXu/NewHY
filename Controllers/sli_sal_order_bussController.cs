@@ -74,25 +74,24 @@ namespace WebApi_SY.Controllers
                 return Ok(datas);
             }
         }
-
-        public IHttpActionResult UpdateDataEntry([FromBody] UpdateRequest request)
+        public class UpdateRequestEntry
+        {
+            public int FentryId { get; set; }
+            public string Fnumber { get; set; }
+        }
+        public IHttpActionResult UpdateDataEntry([FromBody] UpdateRequestEntry request)
         {
             try
             {
                 var context = new YourDbContext();
-                var sli_doc_sales = context.Sli_doc_sales.FirstOrDefault(p => p.Id == request.Id);
-                sli_doc_sales.Fdocid = request.Fdocid;
-                sli_doc_sales.Fdocno = request.Fnumber;
-                context.SaveChanges();
+                
                 //var FSLIMETEL= context.T_BAS_PREBDONE.Where(p => p.FNUMBER == request.Fslimetal).Select(p => p.FID);
-                var result = context.T_BAS_PREBDONE.Where(p => p.FNUMBER == request.Fslimetal).Select(p => p.FID).FirstOrDefault();
-                System.Diagnostics.Debug.WriteLine(result);
-                System.Diagnostics.Debug.WriteLine(request.Fid);
-                var products = context.T_sal_orderEntry.Where(p => p.FSLIMETEL == result && p.FID == request.Fid).ToList();
+               
+                var products = context.T_sal_orderEntry.Where(p => p.FENTRYID == request.FentryId).ToList();
 
                 foreach (var product in products)
                 {
-                    product.FSLISALETECHNO = Convert.ToString(request.Fnumber);
+                    product.FSLITECHNO = Convert.ToString(request.Fnumber);
                     //var result1 = context.T_sal_orderEntry.Where(p => p.FENTRYID == product.FENTRYID).FirstOrDefault();
                     //result1.FSLISALETECHNO = Convert.ToString(request.Fnumber);
                     // product.fmaterialNumber = resultdata.Result.Number;
@@ -105,7 +104,7 @@ namespace WebApi_SY.Controllers
                 {
                     code = 200,
                     msg = "ok",
-                    date = request.Id + "更新成功！"
+                    date = request.FentryId + "更新成功！"
                 };
                 return Ok(datas);
 
@@ -116,7 +115,7 @@ namespace WebApi_SY.Controllers
                 {
                     code = 400,
                     msg = ex.ToString(),
-                    date = request.Id + "更新失败！"
+                    date = request.FentryId + "更新失败！"
                 };
                 return Ok(datas);
             }
@@ -149,7 +148,7 @@ namespace WebApi_SY.Controllers
                 //}
                 var totalCount = query.Count(); //记录数
                 var totalPages = (int)Math.Ceiling((double)totalCount / pageSize); // 页数
-                var paginatedQuery = query.Skip((page - 1) * pageSize).Take(pageSize); //  某页记录
+                var paginatedQuery = query.OrderByDescending(b => b.FID).Skip((page - 1) * pageSize).Take(pageSize); //  某页记录
                 //var result = paginatedQuery.Select(a => new
                 //{
                 //    FID = a.FID,

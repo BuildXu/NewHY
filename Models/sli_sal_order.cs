@@ -26,7 +26,8 @@ namespace WebApi_SY.Models
     {
         public int FID { get; set; }
         public BillTypeID FBillTypeID { get; set; }
-        public DateTime FDate { get; set; }
+        public DateTime FDate { get; set; }   //
+        public string FBillNo { get; set; }
         public OrgId FSaleOrgId { get; set; }
         public OrgId FCustId { get; set; }
         public OrgId FReceiveId { get; set; }

@@ -1034,7 +1034,7 @@ namespace WebApi_SY.Controllers
                     #endregion
                     var heard = context.Sli_sale_orderImport.FirstOrDefault(p => p.FID == id);   //获取表头单行数据
                     var FcustomerNumer = context.Sli_bd_customer_view.FirstOrDefault(p => p.FNAME == heard.FCustomerName); //根据客户名称查询客户代码
-                    var entity = context.Sli_sale_orderImportentry.Where(p => p.fid == id);   //获取表体多行数据
+                    var entity = context.Sli_sale_orderImportentry.Where(p => p.Fid == id);   //获取表体多行数据
                     var entityList = entity.ToList();
                     //var index = 0;
                     string json = "{\"NeedUpDateFields\":[],\"NeedReturnFields\":[\"FBillNo\"],\"IsDeleteEntry\":\"true\",\"SubSystemId\":\"\",\"IsVerifyBaseDataField\":\"false\",\"IsEntryBatchFill\":\"true\",\"ValidateFlag\":\"true\",\"NumberSearch\":\"true\",\"IsAutoAdjustField\":\"true\",\"InterationFlags\":\"\",\"IsControlPrecision\":\"false\",\"ValidateRepeatJson\":\"false\",\"Model\":{\"FID\":0,\"FBillTypeID\":{\"FNUMBER\":\"XSDD01_SYS\"},\"FDate\":\"2024-11-12 11:38:54\",\"FSaleOrgId\":{\"FNumber\":\"100\"},\"FCustId\":{\"FNumber\":\"CUST0001\"},\"FReceiveId\":{\"FNumber\":\"CUST0001\"},\"FSaleDeptId\":{\"FNumber\":\"BM000001\"},\"FSalerId\":{\"FNumber\":\"001_001_1\"},\"FSettleId\":{\"FNumber\":\"CUST0001\"},\"FChargeId\":{\"FNumber\":\"CUST0001\"},\"FNetOrderBillId\":0,\"FOppID\":0,\"FISINIT\":false,\"FIsMobile\":false,\"FContractId\":0,\"FIsUseOEMBomPush\":false,\"FXPKID_H\":0,\"FIsUseDrpSalePOPush\":false,\"FIsCreateStraightOutIN\":false,\"FSaleOrderFinance\":{\"FSettleCurrId\":{\"FNumber\":\"PRE001\"},\"FIsIncludedTax\":true,\"FIsPriceExcludeTax\":true,\"FExchangeTypeId\":{\"FNumber\":\"HLTX01_SYS\"},\"FMarginLevel\":0.0,\"FMargin\":0.0,\"FOverOrgTransDirect\":false,\"FAllDisCount\":0.0,\"FXPKID_F\":0},\"FSalOrderRec\":{},\"FSaleOrderEntry\":[{\"FRowType\":\"Standard\",\"FMaterialId\":{\"FNumber\":\"T000001\"},\"FUnitID\":{\"FNumber\":\"Pcs\"},\"FInventoryQty\":0.0,\"FCurrentInventory\":0.0,\"FAwaitQty\":0.0,\"FAvailableQty\":0.0,\"FQty\":1,\"FPriceUnitId\":{\"FNumber\":\"Pcs\"},\"FOldQty\":0.0,\"FPrice\":0.0,\"FTaxPrice\":0.0,\"FIsFree\":false,\"FEntryTaxRate\":13.00,\"FDeliveryDate\":\"2024-11-30 00:00:00\",\"FStockOrgId\":{\"FNumber\":\"100\"},\"FSettleOrgIds\":{\"FNumber\":\"100\"},\"FSupplyOrgId\":{\"FNumber\":\"100\"},\"FOwnerTypeId\":\"BD_OwnerOrg\",\"FOwnerId\":{\"FNumber\":\"100\"},\"FSrcType\":\"\",\"FReserveType\":\"1\",\"FPriceBaseQty\":1,\"FStockUnitID\":{\"FNumber\":\"Pcs\"},\"FStockQty\":1,\"FStockBaseQty\":1,\"FOUTLMTUNIT\":\"SAL\",\"FOutLmtUnitID\":{\"FNumber\":\"Pcs\"},\"FISMRP\":false,\"FISMRPCAL\":false,\"FAllAmountExceptDisCount\":0.0,\"FsliHeatTreatment\":\"毛坯热处理\",\"FsliTestBarQty\":\"1\",\"FsliMetel\":{\"FNUMBER\":\"35\"},\"FsliExplanation\":\"测试\",\"FsliNotice\":\"测试\",\"FsliWorkOrder\":\"生产号\",\"FsliSaleOrder\":\"S241015-230745\",\"FsliQuotationNo\":\"未报价\",\"FsliStockNo\":\"科技1A毛坯库\",\"FsliBlank\":\"毛坯图号\",\"FsliDrawingNo\":\"图纸号\"},{\"FRowType\":\"Standard\",\"FMaterialId\":{\"FNumber\":\"T000001\"},\"FUnitID\":{\"FNumber\":\"Pcs\"},\"FInventoryQty\":0.0,\"FCurrentInventory\":0.0,\"FAwaitQty\":0.0,\"FAvailableQty\":0.0,\"FQty\":1,\"FPriceUnitId\":{\"FNumber\":\"Pcs\"},\"FOldQty\":0.0,\"FPrice\":0.0,\"FTaxPrice\":0.0,\"FIsFree\":false,\"FEntryTaxRate\":13.00,\"FDeliveryDate\":\"2024-11-21 00:00:00\",\"FStockOrgId\":{\"FNumber\":\"100\"},\"FSettleOrgIds\":{\"FNumber\":\"100\"},\"FSupplyOrgId\":{\"FNumber\":\"100\"},\"FOwnerTypeId\":\"BD_OwnerOrg\",\"FOwnerId\":{\"FNumber\":\"100\"},\"FSrcType\":\"\",\"FReserveType\":\"1\",\"FPriceBaseQty\":1,\"FStockUnitID\":{\"FNumber\":\"Pcs\"},\"FStockQty\":1,\"FStockBaseQty\":1,\"FOUTLMTUNIT\":\"SAL\",\"FOutLmtUnitID\":{\"FNumber\":\"Pcs\"},\"FISMRP\":false,\"FISMRPCAL\":false,\"FAllAmountExceptDisCount\":0.0,\"FsliHeatTreatment\":\"\",\"FsliTestBarQty\":\"0\",\"FsliMetel\":{\"FNUMBER\":\"35\"},\"FsliExplanation\":\"\",\"FsliNotice\":\"\",\"FsliWorkOrder\":\"\",\"FsliSaleOrder\":\"S241015-230701\",\"FsliQuotationNo\":\"未报价\",\"FsliStockNo\":\"科技1A毛坯库\",\"FsliBlank\":\"\",\"FsliDrawingNo\":\"\"},{\"FRowType\":\"Standard\",\"FMaterialId\":{\"FNumber\":\"T000001\"},\"FUnitID\":{\"FNumber\":\"Pcs\"},\"FInventoryQty\":0.0,\"FCurrentInventory\":0.0,\"FAwaitQty\":0.0,\"FAvailableQty\":0.0,\"FQty\":1,\"FPriceUnitId\":{\"FNumber\":\"Pcs\"},\"FOldQty\":0.0,\"FPrice\":0.0,\"FTaxPrice\":0.0,\"FIsFree\":false,\"FEntryTaxRate\":13.00,\"FDeliveryDate\":\"2024-11-21 00:00:00\",\"FStockOrgId\":{\"FNumber\":\"100\"},\"FSettleOrgIds\":{\"FNumber\":\"100\"},\"FSupplyOrgId\":{\"FNumber\":\"100\"},\"FOwnerTypeId\":\"BD_OwnerOrg\",\"FOwnerId\":{\"FNumber\":\"100\"},\"FSrcType\":\"\",\"FReserveType\":\"1\",\"FPriceBaseQty\":1,\"FStockUnitID\":{\"FNumber\":\"Pcs\"},\"FStockQty\":1,\"FStockBaseQty\":1,\"FOUTLMTUNIT\":\"SAL\",\"FOutLmtUnitID\":{\"FNumber\":\"Pcs\"},\"FISMRP\":false,\"FISMRPCAL\":false,\"FAllAmountExceptDisCount\":0.0,\"FsliHeatTreatment\":\"\",\"FsliTestBarQty\":\"0\",\"FsliMetel\":{\"FNUMBER\":\"35\"},\"FsliExplanation\":\"\",\"FsliNotice\":\"\",\"FsliWorkOrder\":\"\",\"FsliSaleOrder\":\"S241015-230702\",\"FsliQuotationNo\":\"未报价\",\"FsliStockNo\":\"科技1A毛坯库\",\"FsliBlank\":\"\",\"FsliDrawingNo\":\"\"}]}}";
@@ -1052,20 +1052,20 @@ namespace WebApi_SY.Controllers
 
                         
                         newEntry.FRowType = "Standard";
-                        newEntry.FMaterialId = new OrgId { FNumber = entitydata.fmaterialNumber };
+                        newEntry.FMaterialId = new OrgId { FNumber = entitydata.FmaterialNumber };
                         newEntry.FUnitID = new OrgId { FNumber = "Pcs" };
                         newEntry.FInventoryQty = 0.0;
                         newEntry.FCurrentInventory = 0.0;
                         newEntry.FAwaitQty = 0.0;
                         newEntry.FAvailableQty = 0.0;
-                        newEntry.FQty = entitydata.fqty;
+                        newEntry.FQty = entitydata.Fqty;
                         newEntry.FPriceUnitId = new OrgId { FNumber = "Pcs" };
                         newEntry.FOldQty = 0.0;
                         newEntry.FPrice = 0.0;
                         newEntry.FTaxPrice = 0.0;
                         newEntry.FIsFree = false;
                         newEntry.FEntryTaxRate = 13.00;
-                        newEntry.FDeliveryDate = entitydata.fdeliveryDate;
+                        newEntry.FDeliveryDate = entitydata.FdeliveryDate;
                         newEntry.FStockOrgId = new OrgId { FNumber = "100" };
                         newEntry.FSettleOrgIds = new OrgId { FNumber = "100" };
                         newEntry.FSupplyOrgId = new OrgId { FNumber = "100" };
@@ -1073,26 +1073,26 @@ namespace WebApi_SY.Controllers
                         newEntry.FOwnerId = new OrgId { FNumber = "100" };
                         newEntry.FSrcType = "";
                         newEntry.FReserveType = "1";
-                        newEntry.FPriceBaseQty = entitydata.fqty;
+                        newEntry.FPriceBaseQty = entitydata.Fqty;
                         newEntry.FStockUnitID = new OrgId { FNumber = "Pcs" };
-                        newEntry.FStockQty = entitydata.fqty;
-                        newEntry.FStockBaseQty = entitydata.fqty;
+                        newEntry.FStockQty = entitydata.Fqty;
+                        newEntry.FStockBaseQty = entitydata.Fqty;
                         newEntry.FOUTLMTUNIT = "SAL";
                         newEntry.FOutLmtUnitID = new OrgId { FNumber = "Pcs" };
                         newEntry.FISMRP = false;
                         newEntry.FISMRPCAL = false;
                         newEntry.FAllAmountExceptDisCount = 0.0;
-                        newEntry.FsliHeatTreatment = entitydata.fsliHeatTreatment;
-                        newEntry.FsliTestBarQty = entitydata.fsliTestBarQty;
-                        newEntry.FsliMetel = new OrgId { FNumber = entitydata.fsliMetal };
-                        newEntry.FsliExplanation = entitydata.fsliExplanation;
-                        newEntry.FsliNotice = entitydata.fsliNotice;
-                        newEntry.FsliWorkOrder = entitydata.fsliWorkOrder;
-                        newEntry.FsliSaleOrder = entitydata.fsliSaleOrder;
-                        newEntry.FsliQuotationNo = entitydata.fsliQuotationNo;
-                        newEntry.FsliStockNo = entitydata.fsliStockNo;
-                        newEntry.FsliBlank = entitydata.fsliBlank;
-                        newEntry.FsliDrawingNo = entitydata.fsliDrawingNo;
+                        //newEntry.FsliHeatTreatment = entitydata.fsliHeatTreatment;
+                        //newEntry.FsliTestBarQty = entitydata.fsliTestBarQty;
+                        //newEntry.FsliMetel = new OrgId { FNumber = entitydata.fsliMetal };
+                        //newEntry.FsliExplanation = entitydata.fsliExplanation;
+                        //newEntry.FsliNotice = entitydata.fsliNotice;
+                        //newEntry.FsliWorkOrder = entitydata.fsliWorkOrder;
+                        //newEntry.FsliSaleOrder = entitydata.fsliSaleOrder;
+                        //newEntry.FsliQuotationNo = entitydata.fsliQuotationNo;
+                        //newEntry.FsliStockNo = entitydata.fsliStockNo;
+                        //newEntry.FsliBlank = entitydata.fsliBlank;
+                        //newEntry.FsliDrawingNo = entitydata.fsliDrawingNo;
 
                         // 将新创建的实例添加到FSaleOrderEntry列表中
                         rootObject.Model.FSaleOrderEntry.Add(newEntry);

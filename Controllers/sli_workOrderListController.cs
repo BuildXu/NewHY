@@ -487,7 +487,7 @@ namespace WebApi_SY.Controllers
             var totalCount = query.Count();
             var totalPages = (int)Math.Ceiling((double)totalCount / PageSize);
             var paginatedQuery = query.Skip((Page - 1) * PageSize).Take(PageSize);
-            var result = paginatedQuery.Select(a => new
+             var result = paginatedQuery.Select(a => new
             {
                 //Fid = a.Fid,
                 Fbillno = a.Fbillno,
