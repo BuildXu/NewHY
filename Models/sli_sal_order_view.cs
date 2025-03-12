@@ -61,7 +61,8 @@ namespace WebApi_SY.Models
         public int FworkOrderListRemain { get; set; }
         public string FslisaleTechNo { get; set; }
         public string FslitechNo { get; set; }  //Fslimetel
-        public string Fslimetel { get; set; }  //Fslimetel
+        public string Fslimetel { get; set; }  //Fslimetel FSERIALNO
+        public string FSerialNo { get; set; }  //Fslimetel FSERIALNO
         public virtual sli_sal_order_view sli_sal_order_view { get; set; }
     }
 }

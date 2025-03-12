@@ -625,8 +625,8 @@ namespace WebApi_SY.Controllers
                         newEntry.FISMRPCAL = false;
                         newEntry.FAllAmountExceptDisCount = 0.0;
                         //newEntry.FsliHeatTreatment = entitydata.fsliHeatTreatment;
-                        //newEntry.FsliTestBarQty = entitydata.fsliTestBarQty;
-                        //newEntry.FsliMetel = new OrgId { FNumber = entitydata.fsliMetal };
+                        newEntry.FSerialNo = entitydata.FSerialNo;
+                        newEntry.FsliMetel = new OrgId { FNumber = entitydata.FsliMetal };
                         //newEntry.FsliExplanation = entitydata.fsliExplanation;
                         //newEntry.FsliNotice = entitydata.fsliNotice;
                         //newEntry.FsliWorkOrder = entitydata.fsliWorkOrder;

@@ -15,6 +15,8 @@ namespace WebApi_SY.Models
         public string FCustNmae { get; set; }
         public string FCustSum { get; set; }
         public DateTime ? FApproveDate { get; set; }
+        public string FCustNumber { get; set; }   //技术方案选择，显示客户代码，不显示客户名称
+
     }
 
     public class sli_sal_orderentry    //销售订单表体

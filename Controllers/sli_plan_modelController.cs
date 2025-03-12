@@ -160,7 +160,7 @@ namespace WebApi_SY.Controllers
 
             }
 
-            var paginatedQuery = query.OrderByDescending(b => b.Id);
+            //var paginatedQuery = query.OrderByDescending(b => b.Id);
 
 
             var result = query.Select(a => new
@@ -172,14 +172,14 @@ namespace WebApi_SY.Controllers
                 Fplanenddate = a.Fplanenddate,
                 Fdays = a.Fdays,
                 Fnote = a.Fnote,
-                Sli_plan_modelEntry = a.Sli_plan_modelEntry.Select(b => new
+                Sli_plan_modelEntry = a.Sli_plan_modelEntry.OrderByDescending(b => b.Fplanoptionid).Select(b => new
                 {
                     id = b.Id,
                     Fmodelid = b.Fmodelid,
                     Fplanoptionid = b.Fplanoptionid,
                     Fdays = b.Fdays,
                     Fdepartid = b.Fdepartid,
-                    Fempid = b.Fdepartid
+                    Fempid = b.Fempid
 
                 })
 

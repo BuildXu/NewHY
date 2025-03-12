@@ -120,5 +120,6 @@ namespace WebApi_SY.Models
         public string FsliStockNo { get; set; }
         public string FsliBlank { get; set; }
         public string FsliDrawingNo { get; set; }
+        public string FSerialNo { get; set; } //序号
     }
 }

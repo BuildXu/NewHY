@@ -76,7 +76,7 @@ namespace WebApi_SY.Controllers
         }
         public class UpdateRequestEntry
         {
-            public int FentryId { get; set; }
+            public List<int> FentryIds { get; set; }
             public string Fnumber { get; set; }
         }
         public IHttpActionResult UpdateDataEntry([FromBody] UpdateRequestEntry request)
@@ -87,7 +87,7 @@ namespace WebApi_SY.Controllers
                 
                 //var FSLIMETEL= context.T_BAS_PREBDONE.Where(p => p.FNUMBER == request.Fslimetal).Select(p => p.FID);
                
-                var products = context.T_sal_orderEntry.Where(p => p.FENTRYID == request.FentryId).ToList();
+                var products = context.T_sal_orderEntry.Where(p => request.FentryIds.Contains(p.FENTRYID)).ToList();
 
                 foreach (var product in products)
                 {
@@ -104,7 +104,7 @@ namespace WebApi_SY.Controllers
                 {
                     code = 200,
                     msg = "ok",
-                    date = request.FentryId + "更新成功！"
+                    date = string.Join(", ", request.FentryIds) + "更新成功！"
                 };
                 return Ok(datas);
 
@@ -115,13 +115,13 @@ namespace WebApi_SY.Controllers
                 {
                     code = 400,
                     msg = ex.ToString(),
-                    date = request.FentryId + "更新失败！"
+                    date = string.Join(", ", request.FentryIds) + "更新失败！"
                 };
                 return Ok(datas);
             }
         }
         [System.Web.Http.HttpGet]
-        public IHttpActionResult GetTableBysale_order_buss_view(int page = 1, int pageSize = 10, string FCustSum = null, DateTime? FBeginTime = null, DateTime? FEndTime = null)
+        public IHttpActionResult GetTableBysale_order_buss_view(int page = 1, int pageSize = 10, string FBillNo=null,string FCustSum = null, DateTime? FBeginTime = null, DateTime? FEndTime = null)
         {
             try
             {
@@ -131,6 +131,10 @@ namespace WebApi_SY.Controllers
                 if (!string.IsNullOrEmpty(FCustSum))
                 {
                     query = query.Where(q => q.FCustSum.Contains(FCustSum));
+                }
+                if (!string.IsNullOrEmpty(FBillNo))
+                {
+                    query = query.Where(q => q.FBillno.Contains(FBillNo));
                 }
 
                 if (FBeginTime.HasValue)
