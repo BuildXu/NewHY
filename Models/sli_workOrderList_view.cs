@@ -127,7 +127,7 @@ namespace WebApi_SY.Models
 
         //public int Fcancel { get; set; } // 取消   --- 0  / 1
 
-        
+
         public int Fworkorderlistid { get; set; }
         [Key]
         public int Id { get; set; }
@@ -148,11 +148,11 @@ namespace WebApi_SY.Models
         public decimal Fqty { get; set; }
         public string Fnote { get; set; }
         public DateTime? Fplandeliverydate { get; set; }
-        public int Fmaterialid { get; set; }
-        public string Fnumber { get; set; }
+        public string Fmaterialid { get; set; }
+        public int Fnumber { get; set; }
         public string Fname { get; set; }
         public string Fdescription { get; set; }
-        public decimal Fsliouterdiameter { get; set; }
+        public string Fsliouterdiameter { get; set; }
         public decimal Fsliinnerdiameter { get; set; }
         public decimal Fslihight { get; set; }
         public decimal Fsliallowanceod { get; set; }
@@ -161,19 +161,19 @@ namespace WebApi_SY.Models
         public decimal Fsliweightmaterial { get; set; }
         public decimal Fsliweightforging { get; set; }
         public decimal Fsliweightgoods { get; set; }
-        public string Fslidrawingno { get; set; }
+        public decimal Fslidrawingno { get; set; }
         public string Fslimetal { get; set; }
         public string Fsligoodsstatus { get; set; }
         public string Fsliprocessing { get; set; }
         public string Fslidelivery { get; set; }
         public string Fsliblankmodel { get; set; }
         public string Fslipunching { get; set; }
-        public int Fslitemperaturebegin { get; set; }
+        public string Fslitemperaturebegin { get; set; }
         public int Fslitempratureend { get; set; }
-        public string Fslimould { get; set; }
+        public int Fslimould { get; set; }
         public string Fsliroller { get; set; }
-        public int Fsliheatingtimes { get; set; }
-        public string Fsligrade { get; set; }
+        public string Fsliheatingtimes { get; set; }
+        public int Fsligrade { get; set; }
         public string Fsumnumber { get; set; }
         public string Fsplittype { get; set; }
         public int? Fsoqty { get; set; }

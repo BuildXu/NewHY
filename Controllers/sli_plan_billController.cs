@@ -1,8 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.SqlClient;
+
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -387,6 +390,116 @@ namespace WebApi_SY.Controllers
             return Json(response);
 
         }
+
+
+        [Microsoft.AspNetCore.Mvc.HttpGet]
+        //[Microsoft.AspNetCore.Mvc.Route("api/user/GetTableByUsername/{username}")]
+        public IHttpActionResult GetPro(int FID = 1)
+        {
+            try
+            {
+                using (var context = new YourDbContext())
+                {
+                    // 调用存储过程（无返回数据）
+                    var fidParam = new Microsoft.Data.SqlClient.SqlParameter("@FID", FID);
+
+                    // 执行存储过程（示例名称为 usp_YourProcedureName）
+                    context.Database.ExecuteSqlCommand("EXEC UpdatePlanDates @FID", fidParam);
+
+                    var response = new
+                    {
+                        code = 200,
+                        msg = "OK",
+                        data = (object)null  // 明确表示无返回数据
+                    };
+                    return Json(response);
+                }
+            }
+            catch (Exception ex)
+            {
+                var errorResponse = new
+                {
+                    code = 500,
+                    msg = "Error: " + ex.Message
+                };
+                return Json(errorResponse);
+            }
+
+        }
+
+
+        [Microsoft.AspNetCore.Mvc.HttpGet]
+        //[Microsoft.AspNetCore.Mvc.Route("api/user/GetTableByUsername/{username}")]
+        public IHttpActionResult GetProstart(int FID = 1,DateTime ? start_date=null)
+        {
+            try
+            {
+                using (var context = new YourDbContext())
+                {
+                    // 调用存储过程（无返回数据）
+                    var fidParam = new Microsoft.Data.SqlClient.SqlParameter("@FID", FID);
+                    var start_dateParam = new Microsoft.Data.SqlClient.SqlParameter("@start_date", start_date);
+
+                    // 执行存储过程（示例名称为 usp_YourProcedureName）
+                    context.Database.ExecuteSqlCommand("EXEC UpdatePlanDate @FID,@start_date", fidParam, start_dateParam);
+
+                    var response = new
+                    {
+                        code = 200,
+                        msg = "OK",
+                        data = (object)null  // 明确表示无返回数据
+                    };
+                    return Json(response);
+                }
+            }
+            catch (Exception ex)
+            {
+                var errorResponse = new
+                {
+                    code = 500,
+                    msg = "Error: " + ex.Message
+                };
+                return Json(errorResponse);
+            }
+
+        }
+
+        [Microsoft.AspNetCore.Mvc.HttpGet]
+        //[Microsoft.AspNetCore.Mvc.Route("api/user/GetTableByUsername/{username}")]
+        public IHttpActionResult GetProdeadline(int FID = 1, DateTime? deadline = null)
+        {
+            try
+            {
+                using (var context = new YourDbContext())
+                {
+                    // 调用存储过程（无返回数据）
+                    var fidParam = new Microsoft.Data.SqlClient.SqlParameter("@FID", FID);
+                    var deadlineParam = new Microsoft.Data.SqlClient.SqlParameter("@deadline", deadline);
+
+                    // 执行存储过程（示例名称为 usp_YourProcedureName）
+                    context.Database.ExecuteSqlCommand("EXEC UpdatePlanDatesd @FID,@deadline", fidParam, deadlineParam);
+
+                    var response = new
+                    {
+                        code = 200,
+                        msg = "OK",
+                        data = (object)null  // 明确表示无返回数据
+                    };
+                    return Json(response);
+                }
+            }
+            catch (Exception ex)
+            {
+                var errorResponse = new
+                {
+                    code = 500,
+                    msg = "Error: " + ex.Message
+                };
+                return Json(errorResponse);
+            }
+
+        }
+
 
     }
 

@@ -125,42 +125,23 @@ namespace WebApi_SY.Models
 
         [Key]
         public int Fwoid { get; set; }
-
         public string Fwobillno { get; set; }
-
-        public DateTime Fwodate { get; set; }
-
-        public decimal Fqty { get; set; }
-
-        public decimal Fwoweight { get; set; }
-
-        public DateTime Fwoplanstart { get; set; }
-
-        public DateTime Fwoplanend { get; set; }
-
+        public DateTime? Fwodate { get; set; }
+        public decimal? Fqty { get; set; }
+        public decimal? Fwoweight { get; set; }
+        public DateTime? Fwoplanstart { get; set; }
+        public DateTime? Fwoplanend { get; set; }
         public string Fwoordertype { get; set; }
-
-        public int ? Fwoentryqty { get; set; }
-
-        public int ? Fwoecommitqty { get; set; }
-
-        public int ? Fwoestatus { get; set; }
-
-        public int ? Fwoeclosed { get; set; }
-
+        public int? Fwoentryqty { get; set; }
+        public int? Fwoecommitqty { get; set; }
+        public int? Fwoestatus { get; set; }
+        public int? Fwoeclosed { get; set; }
         public int Fworkordlistid { get; set; }
-
         public string Fproductno { get; set; }
-
-        public decimal Fworkqty { get; set; }
-
-        public decimal Fworkweight { get; set; }
-
-
+        public decimal? Fworkqty { get; set; }
+        public decimal? Fworkweight { get; set; }
         public string Forderbillno { get; set; }
-
         public string Fplandeleliverydate { get; set; }
-
         public string Fslitemperatureend { get; set; }
         public int Fcustid { get; set; }
         public string Fcustno { get; set; }
@@ -168,19 +149,15 @@ namespace WebApi_SY.Models
         public string Fcustomer { get; set; }
         public int Fid { get; set; }
         public int Fentryid { get; set; }
-
         public int Fseq { get; set; }
         public decimal Forderqty { get; set; }
         public string Fnote { get; set; }
-
-        public DateTime Fplandeliverydate { get; set; }
-        public int Fmaterialid { get; set; }
-        public string Fnumber { get; set; }
-
+        public DateTime? Fplandeliverydate { get; set; }
+        public string Fmaterialid { get; set; }
+        public int Fnumber { get; set; }
         public string Fname { get; set; }
-
         public string Fdescription { get; set; }
-        public decimal Fsliouterdiameter { get; set; }
+        public string Fsliouterdiameter { get; set; }
         public decimal Fsliinnerdiameter { get; set; }
         public decimal Fslihight { get; set; }
         public decimal Fsliallowanceod { get; set; }
@@ -189,18 +166,18 @@ namespace WebApi_SY.Models
         public decimal Fsliweightmaterial { get; set; }
         public decimal Fsliweightforging { get; set; }
         public decimal Fsliweightgoods { get; set; }
-        public string Fslidrawingno { get; set; }
+        public decimal Fslidrawingno { get; set; }
         public string Fslimetal { get; set; }
         public string Fsligoodsstatus { get; set; }
         public string Fsliprocessing { get; set; }
         public string Fslidelivery { get; set; }
         public string Fsliblankmodel { get; set; }
         public string Fslipunching { get; set; }
-        public int Fslitemperaturebegin { get; set; }
-        public string Fslimould { get; set; }
+        public string Fslitemperaturebegin { get; set; }
+        public int Fslimould { get; set; }
         public string Fsliroller { get; set; }
-        public int Fsliheatingtimes { get; set; }
-        public string Fsligrade { get; set; }
+        public string Fsliheatingtimes { get; set; }
+        public int Fsligrade { get; set; }
         public string Fsumnumber { get; set; }
         public int Fsoqty { get; set; }
         public int Fwoqty { get; set; }

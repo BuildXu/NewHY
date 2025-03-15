@@ -453,17 +453,17 @@ namespace WebApi_SY.Controllers
 
             if (!string.IsNullOrEmpty(Fbillno))
             {
-                query = query.Where(q => q.Fbillno.Contains(Fbillno));
+                query = query.Where(q => q.FBillNo.Contains(Fbillno));
             }
 
             if (!string.IsNullOrEmpty(Fcustno))
             {
-                query = query.Where(q => q.Fcustno.Contains(Fcustno));
+                query = query.Where(q => q.FCustNo.Contains(Fcustno));
             }
 
             if (!string.IsNullOrEmpty(Fcustname))
             {
-                query = query.Where(q => q.Fcustname.Contains(Fcustname));
+                query = query.Where(q => q.FCustName.Contains(Fcustname));
             }
 
             if (!string.IsNullOrEmpty(Fproductname))
@@ -477,11 +477,11 @@ namespace WebApi_SY.Controllers
             //}
             else if (Fstartdate.HasValue)
             {
-                query = query.Where(q => q.Fdate >= Fstartdate.Value);
+                query = query.Where(q => q.FDate >= Fstartdate.Value);
             }
             else if (Fenddate.HasValue)
             {
-                query = query.Where(q => q.Fdate <= Fenddate.Value);
+                query = query.Where(q => q.FDate <= Fenddate.Value);
             }
 
             var totalCount = query.Count();
@@ -490,17 +490,17 @@ namespace WebApi_SY.Controllers
              var result = paginatedQuery.Select(a => new
             {
                 //Fid = a.Fid,
-                Fbillno = a.Fbillno,
+                Fbillno = a.FBillNo,
                 Forderid = a.Forderid,
-                Fdate = a.Fdate,
-                Fcustid = a.Fcustid,
-                Fcustname = a.Fcustname,
-                Fcustno = a.Fcustno,
+                Fdate = a.FDate,
+                Fcustid = a.FCustId,
+                Fcustname = a.FCustName,
+                Fcustno = a.FCustNo,
                 Fcustomer = a.Fcustomer,
-                Fentryid = a.Fentryid,
-                Fseq = a.Fseq,
-                Fqty = a.Fqty,
-                Fnote = a.Fnote,
+                Fentryid = a.FEntryId,
+                Fseq = a.FSeq,
+                Fqty = a.FQty,
+                Fnote = a.FNote,
                 Fplandeliverydate = a.Fplandeliverydate,
                 Fstockqty = a.Fstockqty,
                 Fmaterialid = a.Fmaterialid,
