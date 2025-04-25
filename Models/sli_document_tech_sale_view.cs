@@ -24,6 +24,7 @@ namespace WebApi_SY.Models
         public string FmaterialName { get; set; }
         public string FcustomerName { get; set; }
         public string FSumNumber { get; set; }
+        public int Ftype { get; set; }   //317新增区分商务、技术方案(0-商务，1-技术)
         public virtual ICollection<sli_document_tech_saleBill_view> sli_document_tech_saleBill_view { get; set; }
         public virtual ICollection<sli_document_tech_saleBillEntry_view> sli_document_tech_saleBillEntry_view { get; set; }
         public virtual ICollection<sli_document_tech_saleAttachment_view> sli_document_tech_saleAttachment_view { get; set; }

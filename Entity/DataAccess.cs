@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using WebApi_SY.Models;
+using static WebApi_SY.Models.sli_work_orders_view;
 
 
 
@@ -189,15 +190,17 @@ namespace WebApi_SY.Entity
         public DbSet<sli_bd_mech_break> Sli_bd_mech_break { get; set; }//  设备维修
 
 
-        public DbSet<sli_material_plan> sli_material_plan { get; set; }//  用料计划
+        public DbSet<sli_material_plan> Sli_material_plan { get; set; }//  用料计划
         public DbSet<sli_doc_sales> Sli_doc_sales { get; set; }//  订单技术要求
 
 
-
+        public DbSet<sli_stk_inventorys> Sli_stk_inventorys { get; set; }//  即时库存
         //  public DbSet<sli_pur_instock> sli_pur_instock { get; set; }//  收料通知单  查询
 
-        //public DbSet<sli_pur_instock> sli_pur_instock { get; set; }//  采购入库单表头
+        public DbSet<sli_work_orderprocess_view> Sli_work_orderprocess_view { get; set; }//  查询工序列表
 
+        public DbSet<sli_quality_techmetal_view> Sli_quality_techmetal_view { get; set; }//  销售订单技术方案-化学成分视图
+        public DbSet<sli_quality_pur_view> Sli_quality_pur_view { get; set; }//  原材料-化学成分视图
 
 
         //public DbSet<sli_pur_instockentry> sli_pur_instockentry { get; set; }//  采购入库单表体
@@ -207,7 +210,7 @@ namespace WebApi_SY.Entity
         {
             //ConnectionStrings 19vs7gv47690.vicp.fun,46716
             //optionsBuilder.UseSqlServer("Data Source=61.174.243.28,45047;Initial Catalog=AIS20241011165800;User ID=sa;Password=pct258258!;TrustServerCertificate=True;");
-            optionsBuilder.UseSqlServer("Data Source=19vs7gv47690.vicp.fun,16819;Initial Catalog=AIS20250217085617;User ID=sa;Password=kingdee123*;TrustServerCertificate=True; Command Timeout=3600");
+            optionsBuilder.UseSqlServer("Data Source=36.151.103.130,16818;Initial Catalog=AIS20250217085617;User ID=sa;Password=kingdee123*;TrustServerCertificate=True; Command Timeout=3600");
             //optionsBuilder.UseSqlServer("ConnectionStrings");
             //1111111
 

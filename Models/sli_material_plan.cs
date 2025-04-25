@@ -11,7 +11,8 @@ namespace WebApi_SY.Models
 
         // 物料 ID
         public int Fmaterialid { get; set; }
-         // 批号                                     来自即时库存
+        public string Fmaterialnum { get; set; }
+        // 批号                                     来自即时库存
         public string Flotno { get; set; }
         // 仓库 ID                                 来自即时库存
         public int Fstockid { get; set; }

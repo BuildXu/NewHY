@@ -75,9 +75,8 @@
     <Reference Include="ICSharpCode.SharpZipLib, Version=1.4.2.13, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
       <HintPath>packages\SharpZipLib.1.4.2\lib\netstandard2.0\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
-    <Reference Include="Kingdee.BOS.WebApi.Client, Version=8.2.886.8, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\Administrator\Desktop\NetSDK_V8.1.0（老用户升级使用）\.net4.0_sdk_v8.1.0\Kingdee.BOS.WebApi.Client.dll</HintPath>
+    <Reference Include="Kingdee.BOS.WebApi.Client">
+      <HintPath>..\..\..\..\备份\备份250411\NetSDK_V8.1.0（老用户升级使用）\.net4.0_sdk_v8.1.0\Kingdee.BOS.WebApi.Client.dll</HintPath>
     </Reference>
     <Reference Include="MathNet.Numerics, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cd8b63ad3d691a37, processorArchitecture=MSIL">
       <HintPath>packages\MathNet.Numerics.Signed.5.0.0\lib\net461\MathNet.Numerics.dll</HintPath>
@@ -515,6 +514,7 @@
     <Compile Include="Models\sli_bd_mould_break.cs" />
     <Compile Include="Models\sli_doc_sales.cs" />
     <Compile Include="Models\sli_pur_instock.cs" />
+    <Compile Include="Models\stk_inventory.cs" />
     <Compile Include="Models\T_BAS_PREBDONE.cs" />
     <Compile Include="Models\Utils.cs" />
     <Compile Include="Models\DataTableToList.cs" />

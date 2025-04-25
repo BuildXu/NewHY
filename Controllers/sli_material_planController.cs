@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -10,236 +11,113 @@ using WebApi_SY.Models;
 
 namespace WebApi_SY.Controllers
 {
+    //配料计算
     public class sli_material_planController : ApiController
     {
         public sli_material_planController()
         {
             // _context = context;
+
         }
 
+        /// <summary>
+        /// 插入配料表数据0320
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [System.Web.Http.HttpPost]
-        public async Task<object> sli_material_plan_Insert([Microsoft.AspNetCore.Mvc.FromBody] sli_material_plan[] options)
+        public async Task<object> Insert(List<sli_material_plan> model)
         {
-            var context = new YourDbContext();
             try
             {
-                foreach (var option in options)
+                var context = new YourDbContext();
+                foreach (var WList in model)
                 {
-
                     var header = new sli_material_plan
                     {
-                        // 物料 ID
-                        Fmaterialid = option.Fmaterialid,
-                        // 批号 来自即时库存
-                        Flotno = option.Flotno,
-                        // 仓库 ID 来自即时库存
-                        Fstockid = option.Fstockid,
-                        // 库位 ID 来自即时库存
-                        Fstocklocid = option.Fstocklocid,
-                        // 库存数量 来自即时库存
-                        Fqtystock = option.Fqtystock,
-                        // 库存重量 来自即时库存
-                        Fweightstock = option.Fweightstock,
-                        // 已使用数量 来自即时库存
-                        Fqtyused = option.Fqtyused,
-                        // 已使用重量 来自即时库存
-                        Fweightused = option.Fweightused,
-                        // 工单列表 ID 来自工件视图
-                        Fworkorderlistid = option.Fworkorderlistid,
-                        // 产品编号 来自工件视图
-                        Fproductno = option.Fproductno,
-                        // 数量 引用 工件视图, 可手工修改
-                        Fqty = option.Fqty,
-                        // 重量 引用 工件视图, 可手工修改
-                        Fweight = option.Fweight,
-                        // 实际数量 后期 领料单返写 控制()
-                        Fqtyactul = option.Fqtyactul,
-                        // 实际下料重量 后期 领料单返写 控制()
-                        Fweightactul = option.Fweightactul,
-                        // 状态
-                        Fstatus = option.Fstatus
+                        Fmaterialid = WList.Fmaterialid,
+                        Fmaterialnum = WList.Fmaterialnum,
+                        Flotno = WList.Flotno,
+                        Fstockid = WList.Fstockid,
+                        Fstocklocid = WList.Fstocklocid,
+                        Fqtystock = WList.Fqtystock,
+                        Fweightstock = WList.Fweightstock,
+                        Fqtyused = WList.Fqtyused,
+                        Fweightused = WList.Fweightused,
+                        Fworkorderlistid = WList.Fworkorderlistid,
+                        Fproductno = WList.Fproductno,
+                        Fqty = WList.Fqty,
+                        Fweight = WList.Fweight,
+                        Fqtyactul = WList.Fqtyactul,
+                        Fweightactul = WList.Fweightactul,
+                        Fstatus = WList.Fstatus
                     };
-                    context.sli_material_plan.Add(header);
-                }
-                
-
-                await context.SaveChangesAsync();
-                var datas = new
-                {
-                    code = 200,
-                    msg = "Success",
-                    Date =  "保存成功"
-                };
-                return datas;
-            }
-            catch (Exception ex)
-            {
-                var dataerr = new
-                {
-                    code = 500,
-                    msg = "失败",
-                    Date = ex.ToString()
-                };
-                return dataerr;
-            }
-        }
-
-        [System.Web.Http.HttpPost]
-        public async Task<object> sli_material_plan_Update([Microsoft.AspNetCore.Mvc.FromBody] sli_material_plan option)
-        {
-            try
-            {
-                var context = new YourDbContext();
-                var entity = await context.sli_material_plan.FindAsync(option.Id);
-                if (entity == null)
-                {
-                    var dataNull = new
-                    {
-                        code = 200,
-                        msg = "ok",
-                        date = "修改记录不存在"
-                    };
-                    //string json = JsonConvert.SerializeObject(data);
-                    return dataNull;
-                }
-                else
-                {
-                    var sli_material_plans = context.sli_material_plan.FirstOrDefault(p => p.Id == option.Id);
-                    //var Sli_plan_modelEntrys = _context.Sli_plan_modelEntry.Where(p => p.fmodelID == model.Id).ToList();
 
 
 
-                    sli_material_plans.Id = option.Id;
-                    sli_material_plans.Fmaterialid = option.Fmaterialid;
-                    sli_material_plans.Flotno = option.Flotno;
-                    sli_material_plans.Fstockid = option.Fstockid;
-                    sli_material_plans.Fstocklocid = option.Fstocklocid;
-                    sli_material_plans.Fqtystock = option.Fqtystock;
-                    sli_material_plans.Fweightstock = option.Fweightstock;
-                    sli_material_plans.Fqtyused = option.Fqtyused;
-                    sli_material_plans.Fweightused = option.Fweightused;
-                    sli_material_plans.Fworkorderlistid = option.Fworkorderlistid;
-                    sli_material_plans.Fproductno = option.Fproductno;
-                    sli_material_plans.Fqty = option.Fqty;
-                    sli_material_plans.Fweight = option.Fweight;
-                    sli_material_plans.Fqtyactul = option.Fqtyactul;
-                    sli_material_plans.Fweightactul = option.Fweightactul;
-                    sli_material_plans.Fstatus = option.Fstatus;
+                    context.Sli_material_plan.Add(header);
 
                     await context.SaveChangesAsync();
-
-                    var datas = new
-                    {
-                        code = 200,
-                        msg = "ok",
-                        date = "修改成功！"
-                    };
-                    return Ok(datas);
                 }
-            }
-            catch (Exception ex)
-            {
-                var datas = new
-                {
-                    code = 400,
-                    msg = "失败",
-                    date = ex.ToString()
-                };
-                return Ok(datas);
-            }
-        }
-
-        [System.Web.Http.HttpPost]
-        public async Task<object> sli_material_plans_Delete(List<int> id)
-        {
-            try
-            {
-                var context = new YourDbContext();
-                foreach (var deleteid in id)
-                {
-                    var entity = await context.sli_material_plan.FindAsync(deleteid);
-                    if (entity == null)
-                    {
-                        var dataNull = new
-                        {
-                            code = 200,
-                            msg = "ok",
-                            Id = id.ToString(),
-                            date = id.ToString() + "不存在"
-                        };
-                        return dataNull;
-                    }
-                    context.sli_material_plan.RemoveRange(entity);
-                }
-                await context.SaveChangesAsync();
-                var data = new
+                var dataNull = new
                 {
                     code = 200,
                     msg = "Success",
-                    date = "删除成功"
+                    //modelid = header.Id,
+                    Date = "保存成功"
+
                 };
-                return data;
+                return dataNull;
             }
             catch (Exception ex)
             {
-                var data = new
-                {
-                    code = 400,
-                    msg = "失败",
-                    date = ex.ToString()
-                };
-                return data;
+                return JsonConvert.SerializeObject(ex.ToString());
             }
+
+
         }
+
+        /// <summary>
+        /// 获取即时库存信息
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
         [System.Web.Http.HttpGet]
-        public IHttpActionResult GetTableBysli_material_plan(int page = 1, int pageSize = 10)
+        public IHttpActionResult GetInventorys(int page = 1, int pageSize = 10, string Fnumber=null,string Flot=null)
         {
-
             var context = new YourDbContext();
-            IQueryable<sli_material_plan> query = context.sli_material_plan;
+            IQueryable<sli_stk_inventorys> query = context.Sli_stk_inventorys;
 
-            
-            var totalCount = query.Count(); //记录数
-            var totalPages = (int)Math.Ceiling((double)totalCount / pageSize); // 页数
-            var paginatedQuery = query.OrderByDescending(b => b.Id).Skip((page - 1) * pageSize).Take(pageSize); //  某页记录
+            if (!string.IsNullOrEmpty(Fnumber))
+            {
+                query = query.Where(q => q.Fmaterialnum.Contains(Fnumber));
+            }
+            if (!string.IsNullOrEmpty(Flot))
+            {
+                query = query.Where(q => q.Flot.Contains(Flot));
+            }
+            query = query.Where(q => q.Fstatus== "可用");
+            //query = query.Where(q => q.Fstatus == "可用");
+            var totalCount = query.Count();
+            var totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
+            var paginatedQuery = query.OrderByDescending(b => b.Fmaterialid).Skip((page - 1) * pageSize).Take(pageSize);
             var result = paginatedQuery.Select(a => new
             {
-                // 自增主键
-                Id = a.Id,
-                // 物料 ID
+                //id = a.Id,
                 Fmaterialid = a.Fmaterialid,
-                //批号 来自即时库存
-                Flotno = a.Flotno ?? string.Empty,
-                // 仓库 ID 来自即时库存
-                Fstockid = a.Fstockid,
-                // 库位 ID 来自即时库存
+                Fmaterialnum = a.Fmaterialnum,
+                FstockNum = a.FstockNum,
+                FstockName = a.FstockName,
                 Fstocklocid = a.Fstocklocid,
-                // 库存数量 来自即时库存
-                Fqtystock = a.Fqtystock,
-                // 库存重量 来自即时库存
-                Fweightstock = a.Fweightstock,
-                // 已使用数量 来自即时库存
-                Fqtyused = a.Fqtyused,
-                // 已使用重量 来自即时库存
-                Fweightused = a.Fweightused,
-                // 工单列表 ID 来自工件视图
-                Fworkorderlistid = a.Fworkorderlistid,
-                // 产品编号 来自工件视图
-                Fproductno = a.Fproductno ?? string.Empty,
-                // 数量 引用 工件视图, 可手工修改
                 Fqty = a.Fqty,
-                // 重量 引用 工件视图, 可手工修改
-                Fweight = a.Fweight,
-                // 实际数量 后期 领料单返写 控制()
-                Fqtyactul = a.Fqtyactul,
-                // 实际下料重量 后期 领料单返写 控制()
-                Fweightactul = a.Fweightactul,
-                // 状态
-                Fstatus = a.Fstatus
+                Fsecqty = a.Fsecqty,
+                Fmetal = a.Fmetal,
+                Flength = a.Flength,
+                Flot = a.Flot
 
 
             });
-            //var datas = query.ToList();
             var response = new    // 定义 前端返回数据  总记录，总页，当前页 ，size,返回记录
             {
                 code = 200,
@@ -250,11 +128,14 @@ namespace WebApi_SY.Controllers
                     totalPagess = totalPages,
                     currentPages = page,
                     pageSizes = pageSize,
-                    data = query
+                    data = result
                 }
+
+
             };
 
-            return Json(response);
+            return Ok(response);
         }
+
     }
 }

@@ -160,9 +160,11 @@ namespace WebApi_SY.Models
     {
         [Key]
         public int? FID { get; set; }  
-        public int? FCustomerID { get; set; }  //客户ID
+        public int? FCustomerID { get; set; }  //客户ID  FNumber
+        public string FNumber { get; set; } //客户编码
         public string FCustomerName { get; set; } //客户名称
         public string FBillNo { get; set; }//单据编号
+
         public int ? FSaleId { get; set; } //业务员ID
         public string empName { get; set; } //业务员名称
         public string FContractNo1 { get; set; }//合同号

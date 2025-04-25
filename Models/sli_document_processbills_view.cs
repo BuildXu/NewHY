@@ -42,6 +42,11 @@ namespace WebApi_SY.Models
         [Key]
         public int Fbillid { get; set; }
 
+        public string Forderno { get; set; }//销售单号
+        public string Fproductno { get; set; }//工件号
+        public string Fpname { get; set; }//产品名称
+        public string Fdescription { get; set; }//产品规格
+
         // 可选：重写ToString方法以便于调试
         //public override string ToString()
         //{
