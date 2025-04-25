@@ -550,5 +550,87 @@ namespace WebApi_SY.Controllers
 
             return Ok(response);
         }
+        
+
+        [Microsoft.AspNetCore.Mvc.HttpGet]
+        public IHttpActionResult GetTableOrder(int Page = 1, int PageSize = 10, string FContractNo1 = null)
+        /// 用于销售订单列表查询---》workorderlist
+        {
+            var context = new YourDbContext();
+            var query = from p in context.Sli_sal_orders_view
+                        select p;
+
+            if (!string.IsNullOrEmpty(FContractNo1))
+            {
+                query = query.Where(q => q.FBillNo.Contains(FContractNo1));
+            }
+
+            var totalCount = query.Count();
+            var totalPages = (int)Math.Ceiling((double)totalCount / PageSize);
+            var paginatedQuery = query.Skip((Page - 1) * PageSize).Take(PageSize);
+            var result = paginatedQuery.Select(a => new
+            {
+                //Fid = a.Fid,
+                Fbillno = a.FBillNo,
+                Forderid = a.Forderid,
+                Fdate = a.FDate,
+                Fcustid = a.FCustId,
+                Fcustname = a.FCustName,
+                Fcustno = a.FCustNo,
+                Fcustomer = a.Fcustomer,
+                Fentryid = a.FEntryId,
+                Fseq = a.FSeq,
+                Fqty = a.FQty,
+                Fnote = a.FNote,
+                Fplandeliverydate = a.Fplandeliverydate,
+                Fstockqty = a.Fstockqty,
+                Fmaterialid = a.Fmaterialid,
+                Fnumber = a.Fnumber,
+                Fname = a.Fname,
+                Fdescription = a.Fdescription,
+                Fsliouterdiameter = a.Fsliouterdiameter,
+                Fsliinnerdiameter = a.Fsliinnerdiameter,
+                Fslihight = a.Fslihight,
+                Fsliallowanceod = a.Fsliallowanceod,
+                Fsliallowanceid = a.Fsliallowanceid,
+                Fsliallowanceh = a.Fsliallowanceh,
+                Fsliweightmaterial = a.Fsliweightmaterial,
+                Fsliweightforging = a.Fsliweightforging,
+                Fsliweightgoods = a.Fsliweightgoods,
+                Fslirawingno = a.Fslidrawingno,
+                Fslimetal = a.Fslimetal,
+                Fsligoodsstatus = a.Fsligoodsstatus,
+                Fsliprocessing = a.Fsliprocessing,
+                Fsliedelivery = a.Fslidelivery,
+                Fsliblankmodel = a.Fsliblankmodel,
+                Fslipunching = a.Fslipunching,
+                Fslitemperaturebegin = a.Fslimould,
+                Fslitempratureend = a.Fsliroller,
+                Fslimould = a.Fslimould,
+                Fsliroller = a.Fsliroller,
+                Fsliheatingtimes = a.Fsliheatingtimes,
+                Fsligrade = a.Fsligrade,
+                Fsumnumber = a.Fsumnumber,
+                Fworkorderlistqty = a.Fworkorderlistqty,
+                Fworkorderlistremain = a.Fworkorderlistremain,
+                Fworkorderliststatus = a.Fworkorderliststatus
+            }).ToArray();
+
+            var response = new
+            {
+                code = 200,
+                msg = "操作成功",
+                data = new
+                {
+                    data = result,
+                    current = Page,
+                    pageSize = PageSize,
+                    totalCounts = totalCount
+
+                }
+            };
+
+            return Ok(response);
+        }
     }
 }

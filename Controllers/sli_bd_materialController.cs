@@ -30,7 +30,7 @@ namespace WebApi_SY.Controllers
             {
                 var context = new YourDbContext();
                 //Assert.IsTrue((bool)isSuccess, resultJson);
-                ApiClient client = new ApiClient("http://19vs7gv47690.vicp.fun/K3cloud/");
+                ApiClient client = new ApiClient("http://127.0.0.1/k3cloud/");
                 string dbId = "67b289c33bafdd"; //账套ID   67b289c33bafdd
                 bool bLogin = client.Login(dbId, "Administrator", "kingdee123*", 2052);
                 if (bLogin)

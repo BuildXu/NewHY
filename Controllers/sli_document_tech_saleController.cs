@@ -631,7 +631,7 @@ namespace WebApi_SY.Controllers
 
 
         [HttpGet]
-        public IHttpActionResult GetTableBydocument_tech_sale(int page = 1, int pageSize = 10, string fnumber = null, string fname = null)
+        public IHttpActionResult GetTableBydocument_tech_sale(int page = 1, int pageSize = 10, string fnumber = null, string fname = null,int Ftype=0)
         {
             try
             {
@@ -647,6 +647,9 @@ namespace WebApi_SY.Controllers
                 {
                     query = query.Where(q => q.Fname.Contains(fname));
                 }
+               
+                query = query.Where(q => q.Ftype== Ftype);
+
                 var totalCount = query.Count(); //记录数
                 var totalPages = (int)Math.Ceiling((double)totalCount / pageSize); // 页数
                 var paginatedQuery = query.OrderByDescending(b => b.Id).Skip((page - 1) * pageSize).Take(pageSize); //  某页记录

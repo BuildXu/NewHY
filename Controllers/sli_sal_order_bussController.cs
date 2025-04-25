@@ -223,7 +223,7 @@ namespace WebApi_SY.Controllers
         }
 
 
-        public IHttpActionResult GetTableBysal_orderentry(int? fid = null)
+        public IHttpActionResult GetTableBysal_orderentry(int? fid = null,string Fslimetel=null)
         {
             try
             {
@@ -231,7 +231,10 @@ namespace WebApi_SY.Controllers
                 IQueryable<sli_sal_orderEntry_view> query = context.Sli_sal_orderEntry_view;
 
 
-
+                if (!string.IsNullOrEmpty(Fslimetel))
+                {
+                    query = query.Where(q => q.Fslimetel.Contains(Fslimetel));
+                }
                 if (fid.HasValue)
                 {
                     query = query.Where(t => t.Fid == fid.Value);

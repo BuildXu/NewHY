@@ -42,8 +42,8 @@ namespace WebApi_SY.Controllers
                         Fplanoptionid = d.Fplanoptionid,
                         Fdays = d.Fdays,
                         Fdepartid = d.Fdepartid,
-                        Fempid = d.Fempid
-                    
+                        Fempid = d.Fempid,
+                        Fseq=d.Fseq
 
                 }).ToList()
                 };
@@ -118,7 +118,8 @@ namespace WebApi_SY.Controllers
                     Fplanoptionid = b.Fplanoptionid,
                     Fdays = b.Fdays,
                     Fdepartid = b.Fdepartid,
-                    Fempid = b.Fempid
+                    Fempid = b.Fempid,
+                    Fseq=b.Fseq
                 })
 
             });
@@ -172,15 +173,15 @@ namespace WebApi_SY.Controllers
                 Fplanenddate = a.Fplanenddate,
                 Fdays = a.Fdays,
                 Fnote = a.Fnote,
-                Sli_plan_modelEntry = a.Sli_plan_modelEntry.OrderByDescending(b => b.Fplanoptionid).Select(b => new
+                Sli_plan_modelEntry = a.Sli_plan_modelEntry.OrderBy(b => b.Fseq).Select(b => new
                 {
                     id = b.Id,
                     Fmodelid = b.Fmodelid,
                     Fplanoptionid = b.Fplanoptionid,
                     Fdays = b.Fdays,
                     Fdepartid = b.Fdepartid,
-                    Fempid = b.Fempid
-
+                    Fempid = b.Fempid,
+                    Fseq = b.Fseq
                 })
 
             });
@@ -305,8 +306,8 @@ namespace WebApi_SY.Controllers
                             Fplanoptionid = childTableData.Fplanoptionid,
                             Fdays = childTableData.Fdays,
                             Fdepartid = childTableData.Fdepartid,
-                            Fempid = childTableData.Fempid
-
+                            Fempid = childTableData.Fempid,
+                            Fseq = childTableData.Fseq
                         };
                         context.Sli_plan_modelEntry.Add(entry);
                     }

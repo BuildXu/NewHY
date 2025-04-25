@@ -36,13 +36,14 @@ namespace WebApi_SY.Controllers
                 // 处理 Fworkordlistid 插入逻辑
                 if (root.Fworkordlistid != null)
                 {
-                    var seq = 1;
-                    var entryseq = 1;
+                   
+                    
 
                     foreach (var id in root.Fworkordlistid)
                     {
                         if (root.sli_workorderlist_view != null)
                         {
+                            var seq = 1;
                             foreach (var item in root.sli_workorderlist_view)
                             {
                                 // 先插入外层对象
@@ -63,6 +64,7 @@ namespace WebApi_SY.Controllers
                                 // 再插入内层对象
                                 if (item.sli_document_process_modelBillEntry_view != null)
                                 {
+                                    var entryseq = 1;
                                     foreach (var innerItem in item.sli_document_process_modelBillEntry_view)
                                     {
                                         var innerEntity = new sli_work_processBillEntry
@@ -74,15 +76,17 @@ namespace WebApi_SY.Controllers
                                             Fweight = id.Fweight,
                                             Fworkorderlistid = id.id
                                         };
-
+                                        
                                         context.Sli_work_processBillEntry.Add(innerEntity);
+                                        entryseq++;
                                     }
                                 }
                                 context.SaveChanges();
-                                entryseq++;
+                                seq++;
                             }
+                           
                         }
-                        seq++;
+                        
                     }
                 }
 
@@ -114,6 +118,99 @@ namespace WebApi_SY.Controllers
                 //return JsonConvert.SerializeObject(ex.ToString());
             }
 
+
+        }
+
+        [Microsoft.AspNetCore.Mvc.HttpPost]
+        public async Task<object> Update([Microsoft.AspNetCore.Mvc.FromBody] sli_work_processBill model)
+        {
+            try
+            {
+                var context = new YourDbContext();
+                var entity = await context.Sli_work_processBill.FindAsync(model.Id);
+                if (entity == null)
+                {
+                    var dataNull = new
+                    {
+                        code = 200,
+                        msg = "ok",
+                        date = "修改记录不存在"
+                    };
+                    //string json = JsonConvert.SerializeObject(data);
+                    return dataNull;
+                }
+                else
+                {
+
+
+                    var Sli_plan_models = context.Sli_work_processBill.FirstOrDefault(p => p.Id == model.Id);
+                    var Sli_plan_modelEntrys = context.Sli_work_processBillEntry.Where(p => p.Fbillid == model.Id).ToList();
+
+
+                    Sli_plan_models.Fseq = model.Fseq;
+                    Sli_plan_models.Fworkorderlistid = model.Fworkorderlistid;
+                    Sli_plan_models.Fprocessoption = model.Fprocessoption;
+                    //Sli_plan_models.Fstartdate = model.Fstartdate;
+                    //Sli_plan_models.Fenddate = model.Fenddate;
+                    if (model.Fstartdate != null)
+                    {
+                        Sli_plan_models.Fstartdate = model.Fstartdate.Value;
+                    }
+
+                    if (model.Fenddate != null)
+                    {
+                        Sli_plan_models.Fenddate = model.Fenddate.Value;
+                    }
+
+                    Sli_plan_models.Fqty = model.Fqty;
+                    Sli_plan_models.Fweight = model.Fweight;
+                    Sli_plan_models.Fcommitqty = model.Fcommitqty;
+                    Sli_plan_models.Fcommitweight = model.Fcommitweight;
+                    Sli_plan_models.Fstatus = model.Fstatus;
+                    context.Sli_work_processBillEntry.RemoveRange(Sli_plan_modelEntrys);
+
+                    foreach (var childTableData in model.sli_work_processBillEntry)
+                    {
+
+                        var entry = new sli_work_processBillEntry
+                        {
+                            Fbillid = model.Id,
+                            Fseq = childTableData.Fseq,
+                            Fworkorderlistid = childTableData.Fworkorderlistid,
+                            Fprocessobject = childTableData.Fprocessobject,
+                            Fqualityoption = childTableData.Fqualityoption,
+                            Fstartdate = childTableData.Fstartdate,
+                            Fenddate = childTableData.Fenddate,
+
+                            Fqty = childTableData.Fqty,
+                            Fweight = childTableData.Fweight,
+                            Fcommitqty = childTableData.Fcommitqty,
+                            Fcommitweight = childTableData.Fcommitweight,
+                            Fstatus = childTableData.Fstatus
+                        };
+                        context.Sli_work_processBillEntry.Add(entry);
+                    }
+                    await context.SaveChangesAsync();
+
+                    var datas = new
+                    {
+                        code = 200,
+                        msg = "ok",
+                        date = model
+                    };
+                    return Ok(datas);
+                }
+            }
+            catch (Exception ex)
+            {
+                var datas = new
+                {
+                    code = 400,
+                    msg = "失败",
+                    date = ex.ToString()
+                };
+                return Ok(datas); ;
+            }
 
         }
 
@@ -249,17 +346,17 @@ namespace WebApi_SY.Controllers
             //            };
             if (id.HasValue)
             {
-                query = query.Where(t => t.id == id.Value);
+                query = query.Where(t => t.Id == id.Value);
             }
 
             var result = query.Select(a => new
             {
-                id = a.id,
+                id = a.Id,
                 Fseq = a.Fseq,
                 Fworkorderlistid = a.Fworkorderlistid,
                 Fprocessoption = a.Fprocessoption,
                 Fname = a.Fname,
-                foptionname = a.foptionname,
+                foptionname = a.Foptionname,
                 Fstartdate = a.Fstartdate,
                 Fenddate = a.Fenddate,
                 Fqty = a.Fqty,
@@ -276,7 +373,7 @@ namespace WebApi_SY.Controllers
                     Fwobillid = b.Fwobillid ?? 0,// ********1.14 增加
                     Fworkorderlistid = a.Fworkorderlistid ,
                     Fproductno = b.Fproductno ?? string.Empty,  //Fmaterialname
-                    Fmaterialnumber = b.Fmaterialnumber ?? string.Empty,  //Fmaterialname
+                    Fmaterialnumber = b.Fmaterialnumber ,  //Fmaterialname
                     Fmaterialname = b.Fmaterialname ?? string.Empty,  //Fmaterialname
                     Fdescription = b.Fdescription ?? string.Empty,  //Fmaterialname
                     Fprocessobject = b.Fprocessobject,  //

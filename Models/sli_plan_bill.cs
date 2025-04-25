@@ -37,6 +37,7 @@ namespace WebApi_SY.Models
         public decimal Fcapacity { get; set; }
         public int Fdepartid { get; set; }
         public int Fempid { get; set; }
+        public int Fseq { get; set; }    //25-0316 新增序号
 
         public virtual sli_plan_bill sli_plan_bill { get; set; }
     }

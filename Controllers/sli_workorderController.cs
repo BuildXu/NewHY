@@ -28,6 +28,7 @@ namespace WebApi_SY.Controllers
             try
             {
                 var context = new YourDbContext();
+
                 var header = new sli_work_order
                 {
                     Fbillno = model.Fbillno,
@@ -70,6 +71,48 @@ namespace WebApi_SY.Controllers
 
 
         }
+        [System.Web.Http.HttpGet]
+        public IHttpActionResult GetHeaderWorkorder(int page = 1, int pageSize = 10)
+        {
+            var context = new YourDbContext();
+            var query = context.Sli_work_order;
+            var totalCount = query.Count();
+            var totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
+            var paginatedQuery = query.OrderByDescending(b => b.Id).Skip((page - 1) * pageSize).Take(pageSize);
+            var result = paginatedQuery.Select(a => new
+            {
+                id = a.Id,
+                Fbillno = a.Fbillno,
+                Fdate = a.Fdate,
+                Fqty = a.Fqty,
+                Fweight = a.Fweight,
+                Fplanstart = a.Fplanstart,
+                Fplanend = a.Fplanend,
+                Fordertype = a.Fordertype,
+                Fforgeqty = a.Fforgeqty,
+                Fforgeweight = a.Fforgeweight,
+
+
+            });
+            var response = new    // 定义 前端返回数据  总记录，总页，当前页 ，size,返回记录
+            {
+                code = 200,
+                msg = "OK",
+                data = new
+                {
+                    totalCounts = totalCount,
+                    totalPagess = totalPages,
+                    currentPages = page,
+                    pageSizes = pageSize,
+                    data = result
+                }
+
+
+            };
+
+            return Ok(response);
+        }
+
 
         public IHttpActionResult GetTableWorkorder(int page = 1, int pageSize = 10)
         {
@@ -131,13 +174,156 @@ namespace WebApi_SY.Controllers
             return Ok(response);
         }
 
-
-
-        public IHttpActionResult GetTableWorkorder_view(int page = 1, int pageSize = 10)
+        [Microsoft.AspNetCore.Mvc.HttpGet]
+        public IHttpActionResult GetTableprocess(int page = 1, int pageSize = 10, int? id = null)
         {
             var context = new YourDbContext();
 
-            var query = context.Sli_work_orders_view;
+            IQueryable<sli_work_orderprocess_view> query = context.Sli_work_orderprocess_view;
+            //var query = from p in context.Sli_work_order
+            //            join c in context.Sli_work_orderEntry on p.Id equals c.Id
+            //            select new
+            //            {
+            //                Sli_work_order = p,
+            //                Sli_work_orderEntry = c
+            //            };
+            if (id.HasValue)
+            {
+                query = query.Where(t => t.Id == id.Value);
+            }
+            var totalCount = query.Count();
+            var totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
+            var paginatedQuery = query.OrderByDescending(b => b.Id).Skip((page - 1) * pageSize).Take(pageSize);
+
+            var response = new    // 定义 前端返回数据  总记录，总页，当前页 ，size,返回记录
+            {
+                code = 200,
+                msg = "OK",
+                data = new
+                {
+                    totalCounts = totalCount,
+                    totalPagess = totalPages,
+                    currentPages = page,
+                    pageSizes = pageSize,
+                    data = paginatedQuery
+                }
+
+
+            };
+
+            return Ok(response);
+        }
+
+
+        [Microsoft.AspNetCore.Mvc.HttpGet]
+        public IHttpActionResult GetTablequality_pur(int page = 1, int pageSize = 10, string FBatchNo = null)
+        {
+            var context = new YourDbContext();
+
+            IQueryable<sli_quality_pur_view> query = context.Sli_quality_pur_view;
+            //var query = from p in context.Sli_work_order
+            //            join c in context.Sli_work_orderEntry on p.Id equals c.Id
+            //            select new
+            //            {
+            //                Sli_work_order = p,
+            //                Sli_work_orderEntry = c
+            //            };
+            if (!string.IsNullOrEmpty(FBatchNo))
+            {
+                query = query.Where(q => q.FBatchNo.Contains(FBatchNo));
+            }
+            var totalCount = query.Count();
+            var totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
+            var paginatedQuery = query.OrderByDescending(b => b.Id).Skip((page - 1) * pageSize).Take(pageSize);
+            var result = paginatedQuery.Select(a => new
+            {
+                a.Id,
+                a.Fheatnumber,
+                a.Fitems,
+                a.Fvalue,
+                a.FBatchNo,
+                a.Fsid
+            });
+            var response = new    // 定义 前端返回数据  总记录，总页，当前页 ，size,返回记录
+            {
+                code = 200,
+                msg = "OK",
+                data = new
+                {
+                    totalCounts = totalCount,
+                    totalPagess = totalPages,
+                    currentPages = page,
+                    pageSizes = pageSize,
+                    data = result
+                }
+
+
+            };
+
+            return Ok(response);
+        }
+
+        [Microsoft.AspNetCore.Mvc.HttpGet]
+        public IHttpActionResult GetTablequality_techmetal(int page = 1, int pageSize = 10, int? id = null)
+        {
+            var context = new YourDbContext();
+
+            IQueryable<sli_quality_techmetal_view> query = context.Sli_quality_techmetal_view;
+            //var query = from p in context.Sli_work_order
+            //            join c in context.Sli_work_orderEntry on p.Id equals c.Id
+            //            select new
+            //            {
+            //                Sli_work_order = p,
+            //                Sli_work_orderEntry = c
+            //            };
+            if (id.HasValue)
+            {
+                query = query.Where(t => t.FWorkOrderListId == id.Value);
+            }
+            var totalCount = query.Count();
+            var totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
+            var paginatedQuery = query.OrderByDescending(b => b.FEntryId).Skip((page - 1) * pageSize).Take(pageSize);
+            var result = paginatedQuery.Select(a => new
+            {
+                a.FWorkOrderListId,
+                a.FEntryId,
+                a.FNumber,
+                a.FName,
+                a.FMin,
+                 a.FMax,
+                 a.FTarget
+            });
+
+            var response = new    // 定义 前端返回数据  总记录，总页，当前页 ，size,返回记录
+            {
+                code = 200,
+                msg = "OK",
+                data = new
+                {
+                    totalCounts = totalCount,
+                    totalPagess = totalPages,
+                    currentPages = page,
+                    pageSizes = pageSize,
+                    data = result
+                }
+
+
+            };
+
+            return Ok(response);
+        }
+
+
+        public IHttpActionResult GetTableWorkorder_view(int page = 1, int pageSize = 10,string FBillno=null)
+        {
+            var context = new YourDbContext();
+
+            IQueryable<sli_work_orders_view> query = context.Sli_work_orders_view;
+
+            if (!string.IsNullOrEmpty(FBillno))
+            {
+                query = query.Where(q => q.Fwobillno.Contains(FBillno));
+            }
 
             var totalCount = query.Count();
             var totalPages = (int)Math.Ceiling((double)totalCount / pageSize);

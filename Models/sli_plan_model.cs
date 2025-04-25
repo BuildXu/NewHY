@@ -25,6 +25,7 @@ namespace WebApi_SY.Models
         public int Fplanoptionid { get; set; }
         public int Fdays { get; set; }
         public int Fdepartid { get; set; }
+        public int Fseq { get; set; }
         public string Fempid { get; set; }
         [JsonIgnore]
         public virtual Sli_plan_model Sli_plan_model { get; set; }

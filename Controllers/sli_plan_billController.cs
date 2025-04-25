@@ -59,7 +59,8 @@ namespace WebApi_SY.Controllers
                             Fplandays = d.Fplandays,
                             Fcapacity = d.Fcapacity,
                             Fdepartid = d.Fdepartid,
-                            Fempid = d.Fempid
+                            Fempid = d.Fempid,
+                            Fseq = d.Fseq
                         }).ToList(),
                         sli_plan_billorder = bill.sli_plan_billorder.Select(o => new sli_plan_billorder
                         {
@@ -230,7 +231,8 @@ namespace WebApi_SY.Controllers
                             Fplandays = d.Fplandays,
                             Fcapacity = d.Fcapacity,
                             Fdepartid = d.Fdepartid,
-                            Fempid = d.Fempid
+                            Fempid = d.Fempid,
+                            Fseq=d.Fseq
 
                         };
                         context.Sli_plan_billEntry.Add(entry);
@@ -313,7 +315,7 @@ namespace WebApi_SY.Controllers
                     Factualenddate = bill.Header.Factualenddate ?? "",
                     Fnote = bill.Header.Fnote ?? "",
                     Fdays = bill.Header.Fdays,
-                    sli_plan_billEntry = bill.Entries?.Select(entry => new
+                    sli_plan_billEntry = bill.Entries?.OrderBy(b => b.Fseq).Select(entry => new
                     {
                         Id = entry.Id,
                         Fplanbillid = entry.Fplanbillid,
@@ -327,7 +329,8 @@ namespace WebApi_SY.Controllers
                         Fplandays = entry.Fplandays,
                         Fcapacity = entry.Fcapacity,
                         Fdepartid = entry.Fdepartid,
-                        Fempid = entry.Fempid
+                        Fempid = entry.Fempid,
+                        Fseq = entry.Fseq
                     }),
                     sli_plan_billorder = bill.Orders?.Select(order => new
                     {
