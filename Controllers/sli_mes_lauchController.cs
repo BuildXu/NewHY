@@ -12,6 +12,8 @@ namespace WebApi_SY.Controllers
 {
     public class sli_mes_lauchController : ApiController
     {
+        //投产计划
+
         public sli_mes_lauchController()
         {
             // _context = context;
@@ -39,14 +41,14 @@ namespace WebApi_SY.Controllers
                     };
                     context.sli_mes_lauchbill.Add(header);
                 }
-                
+
 
                 await context.SaveChangesAsync();
                 var datas = new
                 {
                     code = 200,
                     msg = "Success",
-                    Date =  "保存成功"
+                    Date = "保存成功"
                 };
                 return datas;
             }
@@ -161,82 +163,72 @@ namespace WebApi_SY.Controllers
             }
         }
         [System.Web.Http.HttpGet]
-        public IHttpActionResult GetTableBySli_mes_lauch_view(int page = 1, int pageSize = 10)
+        public IHttpActionResult GetTableBySli_mes_lauch_view(
+        int page = 1,
+        int pageSize = 10,
+        string Fwobillno = null,
+        // 启用所有注释参数
+        int? Id = null,
+        int? Fsourceid = null,
+        int? Fworkorderlistid = null,
+        int? Fprocessoption = null,
+        DateTime? Fstartdate = null,
+        DateTime? Fenddate = null,
+        DateTime? FenddateStart = null, // 新增起始日期参数
+        DateTime? FenddateEnd = null,    // 新增结束日期参数
+        int? Fdeptid = null,
+        int? Fstatus = null,
+        string Foptionno = null,
+        string Foptionname = null,
+        string Fcustno = null,
+        string Fcustname = null,
+        string Fname = null
+    )
         {
-
-            //int? Id = null,
-            //int? Fsourceid = null,
-            //int? Fworkorderlistid = null,
-            //int? Fprocessoption = null,
-            //DateTime? Fstartdate = null,
-            //DateTime? Fenddate = null,
-            //int? Fdeptid = null,
-            //int? Fstatus = null,
-            //string Foptionno = null,
-            //string Foptionname = null,
-            //string Fcustno = null,
-            //string Fcustname = null,
-            //string Fname = null
             var context = new YourDbContext();
             IQueryable<sli_mes_lauchbill_view> query = context.sli_mes_lauchbill_view;
 
-            //if (Id.HasValue)
-            //{
-            //    query = query.Where(q => q.Id == Id);
-            //}
-            //if (Fsourceid.HasValue)
-            //{
-            //    query = query.Where(q => q.Fsourceid == Fsourceid);
-            //}
-            //if (Fworkorderlistid.HasValue)
-            //{
-            //    query = query.Where(q => q.Fworkorderlistid == Fworkorderlistid);
-            //}
-            //if (Fprocessoption.HasValue)
-            //{
-            //    query = query.Where(q => q.Fprocessoption == Fprocessoption);
-            //}
-            //if (Fstartdate.HasValue)
-            //{
-            //    query = query.Where(q => q.Fstartdate == Fstartdate);
-            //}
-            //if (Fenddate.HasValue)
-            //{
-            //    query = query.Where(q => q.Fenddate == Fenddate);
-            //}
-            //if (Fdeptid.HasValue)
-            //{
-            //    query = query.Where(q => q.Fdeptid == Fdeptid);
-            //}
-            //if (Fstatus.HasValue)
-            //{
-            //    query = query.Where(q => q.Fstatus == Fstatus);
-            //}
-            //if (!string.IsNullOrEmpty(Foptionno))
-            //{
-            //    query = query.Where(q => q.Foptionno == Foptionno);
-            //}
-            //if (!string.IsNullOrEmpty(Foptionname))
-            //{
-            //    query = query.Where(q => q.Foptionname == Foptionname);
-            //}
-            //if (!string.IsNullOrEmpty(Fcustno))
-            //{
-            //    query = query.Where(q => q.Fcustno == Fcustno);
-            //}
-            //if (!string.IsNullOrEmpty(Fcustname))
-            //{
-            //    query = query.Where(q => q.Fcustname == Fcustname);
-            //}
-            //if (!string.IsNullOrEmpty(Fname))
-            //{
-            //    query = query.Where(q => q.Fname == Fname);
-            //}
-            var totalCount = query.Count(); //记录数
-            var totalPages = (int)Math.Ceiling((double)totalCount / pageSize); // 页数
-            var paginatedQuery = query.OrderByDescending(b => b.Id).Skip((page - 1) * pageSize).Take(pageSize); //  某页记录
+            // 过滤条件（启用所有注释的逻辑）
+            // 修改Fenddate为日期区间查询
+            if (FenddateStart.HasValue)
+            {
+                query = query.Where(q => q.Fenddate >= FenddateStart.Value);
+            }
+            if (FenddateEnd.HasValue)
+            {
+                query = query.Where(q => q.Fenddate <= FenddateEnd.Value);
+            }
+            if (!string.IsNullOrEmpty(Fwobillno)) query = query.Where(q => q.Fwobillno == Fwobillno);
+            if (Id.HasValue) query = query.Where(q => q.Id == Id);
+            if (Fsourceid.HasValue) query = query.Where(q => q.Fsourceid == Fsourceid);
+            if (Fworkorderlistid.HasValue) query = query.Where(q => q.Fworkorderlistid == Fworkorderlistid);
+            if (Fprocessoption.HasValue) query = query.Where(q => q.Fprocessoption == Fprocessoption);
+            if (Fstartdate.HasValue) query = query.Where(q => q.Fstartdate == Fstartdate);
+            if (Fenddate.HasValue) query = query.Where(q => q.Fenddate == Fenddate);
+            if (Fdeptid.HasValue) query = query.Where(q => q.Fdeptid == Fdeptid);
+            if (Fstatus.HasValue) query = query.Where(q => q.Fstatus == Fstatus);
+            if (!string.IsNullOrEmpty(Foptionno)) query = query.Where(q => q.Foptionno == Foptionno);
+            if (!string.IsNullOrEmpty(Foptionname)) query = query.Where(q => q.Foptionname == Foptionname);
+            if (!string.IsNullOrEmpty(Fcustno)) query = query.Where(q => q.Fcustno == Fcustno);
+            if (!string.IsNullOrEmpty(Fcustname)) query = query.Where(q => q.Fcustname == Fcustname);
+            if (!string.IsNullOrEmpty(Fname)) query = query.Where(q => q.Fname == Fname);
+
+            // 分页逻辑
+            var totalCount = query.Count();
+            var totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
+            var paginatedQuery = query.OrderByDescending(b => b.Id)
+                                     .Skip((page - 1) * pageSize)
+                                     .Take(pageSize);
+
+            // 返回字段（已包含所有必要字段）
             var result = paginatedQuery.Select(a => new
             {
+                Fwobillno = a.Fwobillno,
+                Fslimetal = a.Fslimetal,
+                Fothers = a.Fothers,
+                Fqty = a.Fqty,
+                Fweight = a.Fweight,
+                Fweights = a.Fweights,
                 Fcustno = a.Fcustno,
                 Fcustname = a.Fcustname,
                 Fname = a.Fname,
@@ -251,12 +243,15 @@ namespace WebApi_SY.Controllers
                 Foptionno = a.Foptionno,
                 Foptionname = a.Foptionname,
                 Fdept_name = a.Fdept_name ?? string.Empty,
-                Fnumber = a.Fnumber
+                Fnumber = a.Fnumber,
+                Forderno = a.Forderno ?? string.Empty,
+                Fproductno = a.Fproductno ?? string.Empty,
+                Fpname = a.Fpname ?? string.Empty,
+                Fdescription = a.Fdescription ?? string.Empty
+            }).ToList();  // 执行查询
 
-
-            });
-            //var datas = query.ToList();
-            var response = new    // 定义 前端返回数据  总记录，总页，当前页 ，size,返回记录
+            // 响应数据（修正分页参数）
+            var response = new
             {
                 code = 200,
                 msg = "OK",
@@ -266,7 +261,7 @@ namespace WebApi_SY.Controllers
                     totalPagess = totalPages,
                     currentPages = page,
                     pageSizes = pageSize,
-                    data = query
+                    data = result  // 返回分页后的数据
                 }
             };
 

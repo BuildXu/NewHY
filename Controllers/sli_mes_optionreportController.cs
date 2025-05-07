@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DocumentFormat.OpenXml.Wordprocessing;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -9,7 +10,7 @@ using WebApi_SY.Entity;
 using WebApi_SY.Models;
 
 namespace WebApi_SY.Controllers
-{
+{//工序流转
     public class sli_mes_optionreportController : ApiController
     {
         public sli_mes_optionreportController()
@@ -38,7 +39,8 @@ namespace WebApi_SY.Controllers
                         Fempid = option.Fempid,
                         Fdeptid = option.Fdeptid,
                         Fbiller = option.Fbiller,
-                        Fdate = option.Fdate
+                        Fdate = option.Fdate,
+
                     };
                     context.sli_mes_optionreport.Add(header);
                 }
@@ -165,85 +167,72 @@ namespace WebApi_SY.Controllers
         }
 
         [System.Web.Http.HttpGet]
-        public IHttpActionResult GetTableBySli_mes_option(int page = 1, int pageSize = 10)
+        public IHttpActionResult GetTableBySli_mes_option_view(
+     // 原有参数
+     int page = 1,
+     int pageSize = 10,
+     int? Id = null,
+     int? Fsourceid = null,
+     int? Fprocessoption = null,
+     decimal? Fqty = null,
+     decimal? Fweight = null,
+     decimal? Fcommitqty = null,
+     decimal? Fpassqty = null,
+     int? Fempid = null,
+     int? Fdeptid = null,
+     int? Fbiller = null,
+     DateTime? Fdate = null,
+     string Fcustno = null,
+     string Fcustname = null,
+     string Fname = null,
+     int? Fworkorderlistid = null,
+     string Foptionno = null,
+     string Foptionname = null,
+     // 新增参数
+     string Fwobillno = null,    // 新增字符串参数
+     string Fnumber = null       // 新增字符串参数
+ )
         {
-            //int? Id = null, int? Fsourceid = null, int? Fprocessoption = null, decimal? Fqty = null, decimal? Fweight = null, decimal? Fcommitqty = null, decimal? Fpassqty = null, int? Fempid = null, int? Fdeptid = null, int? Fbiller = null, DateTime? Fdate = null
             var context = new YourDbContext();
             IQueryable<sli_mes_optionreport_view> query = context.sli_mes_optionreport_view;
 
-            //if (Id.HasValue)
-            //{
-            //    query = query.Where(q => q.Id == Id);
-            //}
-            //if (Fsourceid.HasValue)
-            //{
-            //    query = query.Where(q => q.Fsourceid == Fsourceid);
-            //}
-            //if (Fprocessoption.HasValue)
-            //{
-            //    query = query.Where(q => q.Fprocessoption == Fprocessoption);
-            //}
-            //if (Fqty.HasValue)
-            //{
-            //    query = query.Where(q => q.Fqty == Fqty);
-            //}
-            //if (Fweight.HasValue)
-            //{
-            //    query = query.Where(q => q.Fweight == Fweight);
-            //}
-            //if (Fcommitqty.HasValue)
-            //{
-            //    query = query.Where(q => q.Fcommitqty == Fcommitqty);
-            //}
-            //if (Fpassqty.HasValue)
-            //{
-            //    query = query.Where(q => q.Fpassqty == Fpassqty);
-            //}
-            //if (Fempid.HasValue)
-            //{
-            //    query = query.Where(q => q.Fempid == Fempid);
-            //}
-            //if (Fdeptid.HasValue)
-            //{
-            //    query = query.Where(q => q.Fdeptid == Fdeptid);
-            //}
-            //if (Fbiller.HasValue)
-            //{
-            //    query = query.Where(q => q.Fbiller == Fbiller);
-            //}
-            //if (Fdate.HasValue)
-            //{
-            //    query = query.Where(q => q.Fdate == Fdate);
-            //}
-            var totalCount = query.Count(); //记录数
-            var totalPages = (int)Math.Ceiling((double)totalCount / pageSize); // 页数
-            var paginatedQuery = query.OrderByDescending(b => b.Id).Skip((page - 1) * pageSize).Take(pageSize); //  某页记录
-            
-            var result = paginatedQuery.Select(a => new
-            {
-                Fcustno = a.Fcustno,
-                Fcustname = a.Fcustname,
-                Fname = a.Fname,
-                Id = a.Id,
-                Fworkorderlistid = a.Fworkorderlistid,
-                Fsourceid = a.Fsourceid,
-                Fprocessoption = a.Fprocessoption,
-                Fqty = a.Fqty,
-                Fweight = a.Fweight,
-                Fcommitqty = a.Fcommitqty,
-                Fpassqty = a.Fpassqty,
-                Fempid = a.Fempid,
-                Fdeptid = a.Fdeptid,
-                Fbiller = a.Fbiller,
-                Fdate = a.Fdate,
-                Foptionno = a.Foptionno,
-                Foptionname = a.Foptionname,
-                Fdept_name = a.Fdept_name ?? string.Empty,
-                Femp_name = a.Femp_name ?? string.Empty
+            // 原有过滤条件
+            if (Id.HasValue) query = query.Where(q => q.Id == Id);
+            if (Fsourceid.HasValue) query = query.Where(q => q.Fsourceid == Fsourceid);
+            if (Fprocessoption.HasValue) query = query.Where(q => q.Fprocessoption == Fprocessoption);
+            if (Fqty.HasValue) query = query.Where(q => q.Fqty == Fqty);
+            if (Fweight.HasValue) query = query.Where(q => q.Fweight == Fweight);
+            if (Fcommitqty.HasValue) query = query.Where(q => q.Fcommitqty == Fcommitqty);
+            if (Fpassqty.HasValue) query = query.Where(q => q.Fpassqty == Fpassqty);
+            if (Fempid.HasValue) query = query.Where(q => q.Fempid == Fempid);
+            if (Fdeptid.HasValue) query = query.Where(q => q.Fdeptid == Fdeptid);
+            if (Fbiller.HasValue) query = query.Where(q => q.Fbiller == Fbiller);
+            if (Fdate.HasValue) query = query.Where(q => q.Fdate == Fdate);
+            if (!string.IsNullOrEmpty(Fcustno)) query = query.Where(q => q.Fcustno == Fcustno);
+            if (!string.IsNullOrEmpty(Fcustname)) query = query.Where(q => q.Fcustname == Fcustname);
+            if (!string.IsNullOrEmpty(Fname)) query = query.Where(q => q.Fname == Fname);
+            if (Fworkorderlistid.HasValue) query = query.Where(q => q.Fworkorderlistid == Fworkorderlistid);
+            if (!string.IsNullOrEmpty(Foptionno)) query = query.Where(q => q.Foptionno == Foptionno);
+            if (!string.IsNullOrEmpty(Foptionname)) query = query.Where(q => q.Foptionname == Foptionname);
 
-            });
-            //var datas = query.ToList();
-            var response = new    // 定义 前端返回数据  总记录，总页，当前页 ，size,返回记录
+            // 新增过滤条件
+            if (!string.IsNullOrEmpty(Fwobillno))
+            {
+                query = query.Where(q => q.Fwobillno == Fwobillno);  // 精确匹配工单号
+            }
+            //if (!string.IsNullOrEmpty(Fnumber))
+            //{
+            //    query = query.Where(q => q.Fnumber == Fnumber);       // 精确匹配编号
+            //}
+
+            var totalCount = query.Count();
+            var totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
+            var paginatedQuery = query.OrderByDescending(b => b.Id)
+            .Skip((page - 1) * pageSize)
+                                     .Take(pageSize);
+
+            // 返回数据（直接返回 IQueryable，需确保实体可序列化）
+            var response = new
             {
                 code = 200,
                 msg = "OK",
@@ -253,118 +242,8 @@ namespace WebApi_SY.Controllers
                     totalPagess = totalPages,
                     currentPages = page,
                     pageSizes = pageSize,
-                    data = query
-                }
-            };
-
-            return Json(response);
-        }
-        [System.Web.Http.HttpGet]
-        public IHttpActionResult GetTableBySli_mes_option_view(
-    int? Id = null,
-    int? Fsourceid = null,
-    int? Fprocessoption = null,
-    decimal? Fqty = null,
-    decimal? Fweight = null,
-    decimal? Fcommitqty = null,
-    decimal? Fpassqty = null,
-    int? Fempid = null,
-    int? Fdeptid = null,
-    int? Fbiller = null,
-    DateTime? Fdate = null,
-    string Fcustno = null,
-    string Fcustname = null,
-    string Fname = null,
-    int? Fworkorderlistid = null,
-    string Foptionno = null,
-    string Foptionname = null)
-        {
-            var context = new YourDbContext();
-            IQueryable<sli_mes_optionreport_view> query = context.sli_mes_optionreport_view;
-
-            if (Id.HasValue)
-            {
-                query = query.Where(q => q.Id == Id);
-            }
-            if (Fsourceid.HasValue)
-            {
-                query = query.Where(q => q.Fsourceid == Fsourceid);
-            }
-            if (Fprocessoption.HasValue)
-            {
-                query = query.Where(q => q.Fprocessoption == Fprocessoption);
-            }
-            if (Fqty.HasValue)
-            {
-                query = query.Where(q => q.Fqty == Fqty);
-            }
-            if (Fweight.HasValue)
-            {
-                query = query.Where(q => q.Fweight == Fweight);
-            }
-            if (Fcommitqty.HasValue)
-            {
-                query = query.Where(q => q.Fcommitqty == Fcommitqty);
-            }
-            if (Fpassqty.HasValue)
-            {
-                query = query.Where(q => q.Fpassqty == Fpassqty);
-            }
-            if (Fempid.HasValue)
-            {
-                query = query.Where(q => q.Fempid == Fempid);
-            }
-            if (Fdeptid.HasValue)
-            {
-                query = query.Where(q => q.Fdeptid == Fdeptid);
-            }
-            if (Fbiller.HasValue)
-            {
-                query = query.Where(q => q.Fbiller == Fbiller);
-            }
-            if (Fdate.HasValue)
-            {
-                query = query.Where(q => q.Fdate == Fdate);
-            }
-            if (!string.IsNullOrEmpty(Fcustno))
-            {
-                query = query.Where(q => q.Fcustno == Fcustno);
-            }
-            if (!string.IsNullOrEmpty(Fcustname))
-            {
-                query = query.Where(q => q.Fcustname == Fcustname);
-            }
-            if (!string.IsNullOrEmpty(Fname))
-            {
-                query = query.Where(q => q.Fname == Fname);
-            }
-            if (Fworkorderlistid.HasValue)
-            {
-                query = query.Where(q => q.Fworkorderlistid == Fworkorderlistid);
-            }
-            if (!string.IsNullOrEmpty(Foptionno))
-            {
-                query = query.Where(q => q.Foptionno == Foptionno);
-            }
-            if (!string.IsNullOrEmpty(Foptionname))
-            {
-                query = query.Where(q => q.Foptionname == Foptionname);
-            }
-            //var totalCount = query.Count(); //记录数
-            //var totalPages = (int)Math.Ceiling((double)totalCount / pageSize); // 页数
-            //var paginatedQuery = query.OrderByDescending(b => b.Id).Skip((page - 1) * pageSize).Take(pageSize); //  某页记录
-            //var datas = query.ToList();
-            var response = new    // 定义 前端返回数据  总记录，总页，当前页 ，size,返回记录
-            {
-                code = 200,
-                msg = "OK",
-                data = new
-                {
-                    //totalCounts = totalCount,
-                    //totalPagess = totalPages,
-                    //currentPages = page,
-                    //pageSizes = pageSize,
-                    data = query
+                    //data = result  // 分页后的数据
+                    data = paginatedQuery // 执行查询并返回结果
                 }
             };
 

@@ -6,9 +6,10 @@ using System.Web;
 
 namespace WebApi_SY.Models
 {
- 
-        public class sli_mes_objectreport_view
+
+    public class sli_mes_objectreport_view
     {
+        public string Fwobillno { get; set; }
         // <summary>
         /// 客户编号，使用 nvarchar 类型存储
         /// </summary>

@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebApi_SY.Models
 {
@@ -92,34 +90,34 @@ namespace WebApi_SY.Models
         public int? Fcancel { get; set; }              // int改为可空
 
         public virtual sli_work_order sli_work_order { get; set; }
-
-
-        public class sli_work_orderprocess_view
-        {
-            [Key]
-            public long RowNum { get; set; }  // 主键
-
-            public int Id { get; set; }  // 主键
-
-            public int Fprocessoption { get; set; }  // 工序ID
-
-            public string Foptionname { get; set; }  // 工序选项名称
-
-            public int Fseq { get; set; }  // 工序顺序
-
-            public decimal Fqty { get; set; }  // 数量
-
-            public decimal Fweight { get; set; }  // 重量
-
-            public decimal Fcommitqty { get; set; }  // 提交数量
-
-            public decimal Fcommitweight { get; set; }  // 提交重量
-
-            // 外键关联到主表 sli_work_order_view
-            //public int WorkOrderId { get; set; }  // 外键字段
-
-            // 导航属性，表示与主表的关系
-            //public sli_work_order_view sli_work_order_view { get; set; }
-        }
     }
+
+
+    //public class sli_work_orderprocess_view
+    //{
+    //    [Key]
+    //    public long RowNum { get; set; }  // 主键
+
+    //    public int Id { get; set; }  // 主键
+
+    //    public int Fprocessoption { get; set; }  // 工序ID
+
+    //    public string Foptionname { get; set; }  // 工序选项名称
+
+    //    public int Fseq { get; set; }  // 工序顺序
+
+    //    public decimal Fqty { get; set; }  // 数量
+
+    //    public decimal Fweight { get; set; }  // 重量
+
+    //    public decimal Fcommitqty { get; set; }  // 提交数量
+
+    //    public decimal Fcommitweight { get; set; }  // 提交重量
+
+    //    // 外键关联到主表 sli_work_order_view
+    //    //public int WorkOrderId { get; set; }  // 外键字段
+
+    //    // 导航属性，表示与主表的关系
+    //    //public sli_work_order_view sli_work_order_view { get; set; }
+    //}
 }

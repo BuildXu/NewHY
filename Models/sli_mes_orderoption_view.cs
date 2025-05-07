@@ -6,9 +6,10 @@ using System.Web;
 
 namespace WebApi_SY.Models
 {
- 
-        public class sli_mes_orderoption_view
+
+    public class sli_mes_orderoption_view
     {
+        public string Fwobillno { get; set; }
         /// <summary>
         /// 客户编号，存储客户的唯一标识符，使用 nvarchar 类型
         /// </summary>
@@ -36,7 +37,7 @@ namespace WebApi_SY.Models
         public int Id { get; set; }
 
 
-        public int ? Fsourceid { get; set; }  // 源单id   (sli_work_processbilletnry  / id )
+        public int? Fsourceid { get; set; }  // 源单id   (sli_work_processbilletnry  / id )
         /// <summary>
         /// 工作订单列表 ID，存储工作订单列表的唯一标识，使用 int 类型
         /// </summary>
@@ -75,22 +76,22 @@ namespace WebApi_SY.Models
         /// <summary>
         /// 开始日期，存储业务开始的日期时间，使用 DateTime 类型
         /// </summary>
-        public DateTime  ? Fstartdate { get; set; }
+        public DateTime? Fstartdate { get; set; }
 
         /// <summary>
         /// 结束日期，存储业务结束的日期时间，使用 DateTime 类型
         /// </summary>
-        public DateTime ? Fenddate { get; set; }
+        public DateTime? Fenddate { get; set; }
 
         /// <summary>
         /// 员工 ID，存储员工的唯一标识，使用 int 类型
         /// </summary>
-        public int ? Fempid { get; set; }
+        public int? Fempid { get; set; }
 
         /// <summary>
         /// 部门 ID，存储部门的唯一标识，使用 int 类型
         /// </summary>
-        public int ? Fdeptid { get; set; }
+        public int? Fdeptid { get; set; }
 
         /// <summary>
         /// 日期，存储业务发生的日期时间，使用 DateTime 类型
@@ -114,6 +115,16 @@ namespace WebApi_SY.Models
         /// 职员
         /// </summary>
         public string Femp_name { get; set; }
+
+
+        public string Fslimetal { get; set; }
+        public decimal? Fsliweightmaterial { get; set; }
+        public string Fslipunching { get; set; }
+        public int? Fmaterialid { get; set; }
+        public decimal? Fsliallowancehf { get; set; }
+        public string Fproducttype { get; set; }
+
+
 
     }
 }

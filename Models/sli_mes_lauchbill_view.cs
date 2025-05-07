@@ -12,9 +12,17 @@ namespace WebApi_SY.Models
 
     public class sli_mes_lauchbill_view
     {
+        public string Fwobillno { get; set; }
         /// <summary>
         /// 客户编号，使用 nvarchar 存储
         /// </summary>
+        public string Fslimetal { get; set; }
+        public string Fothers { get; set; }
+
+        public Decimal? Fqty { get; set; }
+        public Decimal? Fweight { get; set; }
+        public Decimal? Fweights { get; set; }
+
         public string Fcustno { get; set; }
 
         /// <summary>
@@ -51,12 +59,12 @@ namespace WebApi_SY.Models
         /// <summary>
         /// 开始日期，使用 DateTime 存储
         /// </summary>
-        public DateTime ? Fstartdate { get; set; }
+        public DateTime? Fstartdate { get; set; }
 
         /// <summary>
         /// 结束日期，使用 DateTime 存储
         /// </summary>
-        public DateTime ? Fenddate { get; set; }
+        public DateTime? Fenddate { get; set; }
 
         /// <summary>
         /// 部门编号，使用 int 存储
@@ -82,6 +90,11 @@ namespace WebApi_SY.Models
         /// </summary>
         public string Fdept_name { get; set; }
         public string Fnumber { get; set; }
+
+        public string Forderno { get; set; }//销售单号
+        public string Fproductno { get; set; }//工件号
+        public string Fpname { get; set; }//产品名称
+        public string Fdescription { get; set; }//产品规格
 
     }
 }

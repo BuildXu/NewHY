@@ -10,6 +10,7 @@ using WebApi_SY.Models;
 
 namespace WebApi_SY.Controllers
 {
+    //工序派工
     public class sli_mes_orderoptionController : ApiController
     {
         public sli_mes_orderoptionController()
@@ -28,7 +29,7 @@ namespace WebApi_SY.Controllers
                     var header = new sli_mes_orderoption
                     {
                         Fnumber = option.Fnumber,
-                        Fsourceid= option.Fsourceid ?? 0,
+                        Fsourceid = option.Fsourceid ?? 0,
                         Fworkorderlistid = option.Fworkorderlistid,
                         Fprocessoption = option.Fprocessoption,
                         Fqty = option.Fqty,
@@ -166,27 +167,67 @@ namespace WebApi_SY.Controllers
                 return data;
             }
         }
-
         [System.Web.Http.HttpGet]
-        public IHttpActionResult GetTableBySli_mes_option(int page = 1, int pageSize = 10)
-           // int? Id = null, int? Fworkorderlistid = null, int? Fprocessoption = null, decimal? Fqty = null, decimal? Fweight = null, decimal? Fcommitqty = null, decimal? Fpassqty = null, int? Fbiller = null, DateTime? Fstartdate = null, DateTime? Fenddate = null, DateTime? Fdate = null
+        public IHttpActionResult GetTableBySli_mes_option(
+            int page = 1,
+            int pageSize = 10,
+            string Fwobillno = null,
+            string Fcustno = null,      // 新增参数
+            string Fcustname = null,    // 新增参数
+            string Fname = null,        // 新增参数
+            string Fnumber = null       // 新增参数
+        )
         {
             var context = new YourDbContext();
             IQueryable<sli_mes_orderoption_view> query = context.Sli_mes_orderoption_view;
 
-            
-            var totalCount = query.Count(); //记录数
-            var totalPages = (int)Math.Ceiling((double)totalCount / pageSize); // 页数
-            var paginatedQuery = query.OrderByDescending(b => b.Id).Skip((page - 1) * pageSize).Take(pageSize); //  某页记录
-            //var datas = query.ToList();
+            // 过滤条件：Fwobillno
+            if (!string.IsNullOrEmpty(Fwobillno))
+            {
+                query = query.Where(q => q.Fwobillno == Fwobillno);
+            }
+
+            // 新增过滤条件：Fcustno
+            if (!string.IsNullOrEmpty(Fcustno))
+            {
+                query = query.Where(q => q.Fcustno == Fcustno);
+            }
+
+            // 新增过滤条件：Fcustname
+            if (!string.IsNullOrEmpty(Fcustname))
+            {
+                query = query.Where(q => q.Fcustname == Fcustname);
+            }
+
+            // 新增过滤条件：Fname
+            if (!string.IsNullOrEmpty(Fname))
+            {
+                query = query.Where(q => q.Fname == Fname);
+            }
+
+            // 新增过滤条件：Fnumber
+            if (!string.IsNullOrEmpty(Fnumber))
+            {
+                query = query.Where(q => q.Fnumber == Fnumber);
+            }
+
+            // 分页逻辑
+            var totalCount = query.Count();
+            var totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
+            var paginatedQuery = query.OrderByDescending(b => b.Id)
+                                     .Skip((page - 1) * pageSize)
+                                     .Take(pageSize);
+
+            // 返回字段（已包含新增字段）
             var result = paginatedQuery.Select(a => new
             {
-                Fcustno = a.Fcustno,
-                Fcustname = a.Fcustname,
-                Fname = a.Fname,
-                Fnumber = a.Fnumber,
+                Fwobillno = a.Fwobillno,
+                Fcustno = a.Fcustno,          // 确保映射正确
+                Fcustname = a.Fcustname,       // 确保映射正确
+                Fname = a.Fname,               // 确保映射正确
+                Fnumber = a.Fnumber,           // 确保映射正确
                 Id = a.Id,
-                Fsourceid=a.Fsourceid ?? 0,
+                Fsourceid = a.Fsourceid ?? 0,
                 Fworkorderlistid = a.Fworkorderlistid,
                 Fprocessoption = a.Fprocessoption,
                 Fqty = a.Fqty,
@@ -195,17 +236,23 @@ namespace WebApi_SY.Controllers
                 Fpassqty = a.Fpassqty,
                 Fbiller = a.Fbiller,
                 Fstartdate = a.Fstartdate,
-                Fenddate = a.Fenddate ,
+                Fenddate = a.Fenddate,
                 Fempid = a.Fempid ?? 0,
                 Fdeptid = a.Fdeptid ?? 0,
                 Fdate = a.Fdate,
                 Foptionno = a.Foptionno,
                 Foptionname = a.Foptionname,
                 Fdept_name = a.Fdept_name ?? string.Empty,
-                Femp_name = a.Femp_name ?? string.Empty
-
+                Femp_name = a.Femp_name ?? string.Empty,
+                Fslimetal = a.Fslimetal ?? string.Empty,
+                Fsliweightmaterial = a.Fsliweightmaterial ?? 0,
+                Fslipunching = a.Fslipunching ?? string.Empty,
+                Fmaterialid = a.Fmaterialid ?? 0,
+                Fsliallowancehf = a.Fsliallowancehf ?? 0,
+                Fproducttype = a.Fproducttype ?? string.Empty
             });
-            var response = new    // 定义 前端返回数据  总记录，总页，当前页 ，size,返回记录
+
+            var response = new
             {
                 code = 200,
                 msg = "OK",
@@ -215,16 +262,17 @@ namespace WebApi_SY.Controllers
                     totalPagess = totalPages,
                     currentPages = page,
                     pageSizes = pageSize,
-                    data = result
+                    data = result.ToList()  // 确保返回分页数据
                 }
-
-
             };
 
             return Ok(response);
         }
+
+
         [System.Web.Http.HttpGet]
         public IHttpActionResult GetTableBySli_mes_option_view(
+    string Fwobillno,  // 增加 工作令号 查询
     int? Id = null,
     int? Fsourceid = null,
     int? Fworkorderlistid = null,
@@ -328,6 +376,10 @@ namespace WebApi_SY.Controllers
             if (!string.IsNullOrEmpty(Foptionname))
             {
                 query = query.Where(q => q.Foptionname == Foptionname);
+            }
+            if (!string.IsNullOrEmpty(Fwobillno))
+            {
+                query = query.Where(q => q.Fwobillno == Fwobillno);
             }
             //var totalCount = query.Count(); //记录数
             //var totalPages = (int)Math.Ceiling((double)totalCount / pageSize); // 页数
