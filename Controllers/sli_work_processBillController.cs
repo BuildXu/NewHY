@@ -1,4 +1,4 @@
-﻿using DocumentFormat.OpenXml.Presentation;
+﻿
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Newtonsoft.Json;
 using System;
@@ -653,138 +653,138 @@ namespace WebApi_SY.Controllers
             return Ok(response);
         }
 
-        public IHttpActionResult Getsli_wo_all(
-            int? Id = null,                     // 精确匹配 Id (数据库字段: Id)
-            string Fcustname = null,            // 模糊查询客户名 (数据库字段: Fcustname)
-            string Fbillno = null,              // 精确匹配单据号 (数据库字段: Fbillno)
-            string Forderno = null,             // 精确匹配订单号 (数据库字段: Forderno)
-            DateTime? FdateFrom = null,         // 日期范围过滤 (数据库字段: Fdate)
-            DateTime? FdateTo = null,
-            string Fordertype = null,           // 过滤订单类型 (数据库字段: Fordertype)
-            int? Fforgeqty = null,              // 过滤锻造数量 (数据库字段: Fforgeqty)
-            int page = 1,                       // 分页参数
-            int pageSize = 10)
-        {
-            try
-            {
-                // 参数校验
-                if (page < 1) page = 1;
-                if (pageSize < 1 || pageSize > 100) pageSize = 10;
+        //public IHttpActionResult Getsli_wo_all(
+        //    int? Id = null,                     // 精确匹配 Id (数据库字段: Id)
+        //    string Fcustname = null,            // 模糊查询客户名 (数据库字段: Fcustname)
+        //    string Fbillno = null,              // 精确匹配单据号 (数据库字段: Fbillno)
+        //    string Forderno = null,             // 精确匹配订单号 (数据库字段: Forderno)
+        //    DateTime? FdateFrom = null,         // 日期范围过滤 (数据库字段: Fdate)
+        //    DateTime? FdateTo = null,
+        //    string Fordertype = null,           // 过滤订单类型 (数据库字段: Fordertype)
+        //    int? Fforgeqty = null,              // 过滤锻造数量 (数据库字段: Fforgeqty)
+        //    int page = 1,                       // 分页参数
+        //    int pageSize = 10)
+        //{
+        //    try
+        //    {
+        //        // 参数校验
+        //        if (page < 1) page = 1;
+        //        if (pageSize < 1 || pageSize > 100) pageSize = 10;
 
-                using (var context = new YourDbContext())
-                {
-                    // 基础查询（按 Fdate 倒序）
-                    IQueryable<sli_wo_view> query = context.sli_wo_view
-                        .OrderByDescending(q => q.Fdate);
+        //        using (var context = new YourDbContext())
+        //        {
+        //            // 基础查询（按 Fdate 倒序）
+        //            IQueryable<sli_wo_view> query = context.Sli_wo_view
+        //                .OrderByDescending(q => q.Fdate);
 
-                    // 动态添加过滤条件（严格匹配实体属性名）
-                    if (Id.HasValue)
-                    {
-                        query = query.Where(q => q.Id == Id.Value);
-                    }
+        //            // 动态添加过滤条件（严格匹配实体属性名）
+        //            if (Id.HasValue)
+        //            {
+        //                query = query.Where(q => q.Id == Id.Value);
+        //            }
 
-                    if (!string.IsNullOrEmpty(Fcustname))  //  客户名称
-                    {
-                        query = query.Where(q => q.Fcustname.Contains(Fcustname)); // 模糊查询
-                    }
+        //            if (!string.IsNullOrEmpty(Fcustname))  //  客户名称
+        //            {
+        //                query = query.Where(q => q.Fcustname.Contains(Fcustname)); // 模糊查询
+        //            }
 
-                    if (!string.IsNullOrEmpty(Fbillno))
-                    {
-                        query = query.Where(q => q.Fbillno == Fbillno); // 精确匹配
-                    }
+        //            if (!string.IsNullOrEmpty(Fbillno))
+        //            {
+        //                query = query.Where(q => q.Fbillno == Fbillno); // 精确匹配
+        //            }
 
-                    if (!string.IsNullOrEmpty(Forderno))
-                    {
-                        query = query.Where(q => q.Forderno == Forderno);
-                    }
+        //            if (!string.IsNullOrEmpty(Forderno))
+        //            {
+        //                query = query.Where(q => q.Forderno == Forderno);
+        //            }
 
-                    if (FdateFrom.HasValue && FdateTo.HasValue)
-                    {
-                        query = query.Where(q => q.Fdate >= FdateFrom.Value && q.Fdate <= FdateTo.Value);
-                    }
+        //            if (FdateFrom.HasValue && FdateTo.HasValue)
+        //            {
+        //                query = query.Where(q => q.Fdate >= FdateFrom.Value && q.Fdate <= FdateTo.Value);
+        //            }
 
-                    if (!string.IsNullOrEmpty(Fordertype))
-                    {
-                        query = query.Where(q => q.Fordertype == Fordertype);
-                    }
+        //            if (!string.IsNullOrEmpty(Fordertype))
+        //            {
+        //                query = query.Where(q => q.Fordertype == Fordertype);
+        //            }
 
-                    if (Fforgeqty.HasValue)
-                    {
-                        query = query.Where(q => q.Fforgeqty == Fforgeqty.Value);
-                    }
+        //            if (Fforgeqty.HasValue)
+        //            {
+        //                query = query.Where(q => q.Fforgeqty == Fforgeqty.Value);
+        //            }
 
-                    // 计算总记录数
-                    int totalCount = query.Count();
+        //            // 计算总记录数
+        //            int totalCount = query.Count();
 
-                    // 分页处理
-                    int skip = (page - 1) * pageSize;
-                    var pagedData = query
-                        .Skip(skip)
-                        .Take(pageSize)
-                        .Select(a => new
-                        {
-                            // 严格映射实体属性名（完全匹配数据库字段）
-                            a.Id,
-                            Fcustname = a.Fcustname ?? string.Empty,  //客户
-                            Fbillno = a.Fbillno ?? string.Empty, // 工作令号
-                            Forderno = a.Forderno ?? string.Empty,  // 订单 号
-                            a.Fdate,     //  工作令日期
-                            Fqty = a.Fqty,        //  数量
-                            a.Fweight,    // 重量
-                            a.Fplanstart,    //  开始日期
-                            a.Fplanend,    //   交货日期
-                            Fordertype = a.Fordertype ?? string.Empty,   // 工作令类型
-                            a.Fforgeqty,  // 合锻数量
-                            a.Fforgeweight, // 合锻重量
-                            Fname = a.Fname ?? string.Empty,   //  产品名称
-                            Fslimetal = a.Fslimetal ?? string.Empty, // 材质
-                            Fdescription = a.Fdescription ?? string.Empty, // 规格
-                            Fslidrawingno = a.Fslidrawingno ?? string.Empty, // 图号
-                            Fsliheattreatment = a.Fsliheattreatment ?? string.Empty,//  热处理状态
-                            Fsliexplanation = a.Fsliexplanation ?? string.Empty,  //  项目号
-                                                                                  // P1-P8 参数组（严格匹配字段名）
-                            Fp1name = a.Fp1name ?? string.Empty,  //一,名称
-                            Fp1status = a.Fp1status ?? string.Empty, //，状态
-                            Fp2name = a.Fp2name ?? string.Empty,
-                            Fp2status = a.Fp2status ?? string.Empty, //  二名称，状态
-                            Fp3name = a.Fp3name ?? string.Empty,
-                            Fp3status = a.Fp3status ?? string.Empty,  //
-                            Fp4name = a.Fp4name ?? string.Empty,
-                            Fp4status = a.Fp4status ?? string.Empty, //
-                            Fp5name = a.Fp5name ?? string.Empty,
-                            Fp5status = a.Fp5status ?? string.Empty,  //
-                            Fp6name = a.Fp6name ?? string.Empty,  //
-                            Fp6status = a.Fp6status ?? string.Empty,  //
-                            Fp7name = a.Fp7name ?? string.Empty,  //
-                            Fp7status = a.Fp7status ?? string.Empty,  //
-                            Fp8name = a.Fp8name ?? string.Empty,  //
-                            Fp8status = a.Fp8status ?? string.Empty,  //   //
-                        })
-                        .ToList();
+        //            // 分页处理
+        //            int skip = (page - 1) * pageSize;
+        //            var pagedData = query
+        //                .Skip(skip)
+        //                .Take(pageSize)
+        //                .Select(a => new
+        //                {
+        //                    // 严格映射实体属性名（完全匹配数据库字段）
+        //                    a.Id,
+        //                    Fcustname = a.Fcustname ?? string.Empty,  //客户
+        //                    Fbillno = a.Fbillno ?? string.Empty, // 工作令号
+        //                    Forderno = a.Forderno ?? string.Empty,  // 订单 号
+        //                    a.Fdate,     //  工作令日期
+        //                    Fqty = a.Fqty,        //  数量
+        //                    a.Fweight,    // 重量
+        //                    a.Fplanstart,    //  开始日期
+        //                    a.Fplanend,    //   交货日期
+        //                    Fordertype = a.Fordertype ?? string.Empty,   // 工作令类型
+        //                    a.Fforgeqty,  // 合锻数量
+        //                    a.Fforgeweight, // 合锻重量
+        //                    Fname = a.Fname ?? string.Empty,   //  产品名称
+        //                    Fslimetal = a.Fslimetal ?? string.Empty, // 材质
+        //                    Fdescription = a.Fdescription ?? string.Empty, // 规格
+        //                    Fslidrawingno = a.Fslidrawingno ?? string.Empty, // 图号
+        //                    Fsliheattreatment = a.Fsliheattreatment ?? string.Empty,//  热处理状态
+        //                    Fsliexplanation = a.Fsliexplanation ?? string.Empty,  //  项目号
+        //                                                                          // P1-P8 参数组（严格匹配字段名）
+        //                    Fp1name = a.Fp1name ?? string.Empty,  //一,名称
+        //                    Fp1status = a.Fp1status ?? string.Empty, //，状态
+        //                    Fp2name = a.Fp2name ?? string.Empty,
+        //                    Fp2status = a.Fp2status ?? string.Empty, //  二名称，状态
+        //                    Fp3name = a.Fp3name ?? string.Empty,
+        //                    Fp3status = a.Fp3status ?? string.Empty,  //
+        //                    Fp4name = a.Fp4name ?? string.Empty,
+        //                    Fp4status = a.Fp4status ?? string.Empty, //
+        //                    Fp5name = a.Fp5name ?? string.Empty,
+        //                    Fp5status = a.Fp5status ?? string.Empty,  //
+        //                    Fp6name = a.Fp6name ?? string.Empty,  //
+        //                    Fp6status = a.Fp6status ?? string.Empty,  //
+        //                    Fp7name = a.Fp7name ?? string.Empty,  //
+        //                    Fp7status = a.Fp7status ?? string.Empty,  //
+        //                    Fp8name = a.Fp8name ?? string.Empty,  //
+        //                    Fp8status = a.Fp8status ?? string.Empty,  //   //
+        //                })
+        //                .ToList();
 
-                    // 构建响应
-                    var response = new
-                    {
-                        code = 200,
-                        msg = "OK",
-                        data = new
-                        {
-                            total = totalCount,
-                            currentPage = page,
-                            pageSize = pageSize,
-                            totalPages = (int)Math.Ceiling(totalCount / (double)pageSize),
-                            items = pagedData
-                        }
-                    };
+        //            // 构建响应
+        //            var response = new
+        //            {
+        //                code = 200,
+        //                msg = "OK",
+        //                data = new
+        //                {
+        //                    total = totalCount,
+        //                    currentPage = page,
+        //                    pageSize = pageSize,
+        //                    totalPages = (int)Math.Ceiling(totalCount / (double)pageSize),
+        //                    items = pagedData
+        //                }
+        //            };
 
-                    return Ok(response);
-                }
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
+        //            return Ok(response);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return BadRequest(ex.Message);
+        //    }
+        //}
     }
 }
 
