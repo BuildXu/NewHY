@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Razor.Tokenizer.Symbols;
 using System.Drawing.Printing;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace WebApi_SY.Controllers
 {
@@ -315,7 +316,34 @@ namespace WebApi_SY.Controllers
         //    //return Json(response);
         //    return Ok(response);
         //}
+        /// <summary>
+        /// 获取仓库ID
+        /// </summary>
+        /// <param name="FSumNumber"></param>
+        /// <returns></returns>
+        [System.Web.Http.HttpGet]
+        public IHttpActionResult GetTableBybd_stock(string FSumNumber = null)
+        {
+            IQueryable<sli_bd_stock_view> query = _context.Sli_bd_stock_view;
 
+            if (!string.IsNullOrEmpty(FSumNumber))
+            {
+                query = query.Where(q => q.FSumNUMBER.Contains(FSumNumber));
+            }
+           
+
+            
+
+            var response = new    // 定义 前端返回数据  总记录，总页，当前页 ，size,返回记录
+            {
+                code = 200,
+                msg = "OK",
+                data = query
+            };
+
+            //return Json(response);
+            return Ok(response);
+        }
 
         [System.Web.Http.HttpGet]
         public IHttpActionResult GetTableBybd_customer(string FSumNumber = null)
@@ -342,6 +370,32 @@ namespace WebApi_SY.Controllers
                 code = 200,
                 msg = "OK",
                 data = similarEntities
+            };
+
+            //return Json(response);
+            return Ok(response);
+        }
+        /// <summary>
+        /// 根据供应商名称模糊查询
+        /// </summary>
+        /// <param name="FSumNumber"></param>
+        /// <returns></returns>
+        [System.Web.Http.HttpGet]
+        public IHttpActionResult GetTableBybd_supplier(string FSumNumber = null)
+        {
+            IQueryable<sli_bd_supplier> query = _context.Sli_bd_supplier;
+
+            if (!string.IsNullOrEmpty(FSumNumber))
+            {
+                query = query.Where(q => q.FSumNumber.Contains(FSumNumber));
+            }
+
+
+            var response = new    // 定义 前端返回数据  总记录，总页，当前页 ，size,返回记录
+            {
+                code = 200,
+                msg = "OK",
+                data = query.ToList()
             };
 
             //return Json(response);

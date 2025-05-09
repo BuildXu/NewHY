@@ -202,8 +202,21 @@ namespace WebApi_SY.Entity
         public DbSet<sli_quality_techmetal_view> Sli_quality_techmetal_view { get; set; }//  销售订单技术方案-化学成分视图
         public DbSet<sli_quality_pur_view> Sli_quality_pur_view { get; set; }//  原材料-化学成分视图
 
+        public DbSet<sli_pur_po> Sli_pur_po { get; set; }//  采购订单表头
+        public DbSet<sli_pur_poentry> Sli_pur_poentry { get; set; }//  采购订单表体
 
-        //public DbSet<sli_pur_instockentry> sli_pur_instockentry { get; set; }//  采购入库单表体
+        public DbSet<sli_pur_po_view> Sli_pur_po_view { get; set; }//  采购订单表头视图
+        public DbSet<sli_pur_poentry_view> Sli_pur_poentry_view { get; set; }//  采购订单表体视图
+
+        public DbSet<sli_bd_supplier> Sli_bd_supplier { get; set; }//  供应商查询视图
+
+        public DbSet<sli_bd_stock_view> Sli_bd_stock_view { get; set; }//  仓库查询视图
+
+        public DbSet<sli_stk_instock> Sli_stk_instock { get; set; }//  采购入库单表头
+        public DbSet<sli_stk_instockentry> Sli_stk_instockentry { get; set; }//  采购入库单表体
+
+        public DbSet<sli_stk_instock_view> Sli_stk_instock_view { get; set; }//  采购入库单表头查询视图
+        public DbSet<sli_stk_instockentry_view> Sli_stk_instockentry_view { get; set; }//  采购入库单表体查询视图
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -413,6 +426,18 @@ namespace WebApi_SY.Entity
             modelBuilder.Entity<sli_sal_deliverynoticentry_view>()
              .HasOne(h => h.sli_sal_deliverynotice_view)
              .WithMany(d => d.sli_sal_deliverynoticentry_view)
+             .HasForeignKey(d => d.Fid);
+
+            //采购订单
+            modelBuilder.Entity<sli_pur_poentry>()
+             .HasOne(h => h.sli_pur_po)
+             .WithMany(d => d.sli_pur_poentry)
+             .HasForeignKey(d => d.Fid);
+
+            //采购订单视图
+            modelBuilder.Entity<sli_pur_poentry_view>()
+             .HasOne(h => h.sli_pur_po_view)
+             .WithMany(d => d.sli_pur_poentry_view)
              .HasForeignKey(d => d.Fid);
         }
 

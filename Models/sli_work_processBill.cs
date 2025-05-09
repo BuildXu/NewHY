@@ -138,16 +138,56 @@ namespace WebApi_SY.Models
         public int Fbillid { get; set; }   // 关联主表视图ID
         // 对应 s1.Fentryid
         [Key]
-        public int Fentryid { get; set; }// 分录ID
-        // 对应 s1.Fseq
-        public int? Fseq { get; set; } //行号
-        // 对应 s1.Fwobillid
-        public int? Fwobillid { get; set; } //
-        // 对应 s1.Fworkorderlistid
-        public int? Fworkorderlistid { get; set; } //工件ID
-        // 对应 s4.Fproductno
-        public string Fproductno { get; set; } //物料代码  Fmaterialname
-        public string Fmaterialnumber { get; set; } //物料代码  Fmaterialname
+        // 非空整数
+        public int Fentryid { get; set; }
+
+        // 可为空的整数
+        public int? Fseq { get; set; }
+
+        // 可为空的整数
+        public int? Fwobillid { get; set; }
+
+        // 可为空的整数
+        public int? Fworkorderlistid { get; set; }
+
+        // 可为空的字符串
+        public string Fproductno { get; set; }
+
+        // 可为空的整数
+        public int? Fmaterialnumber { get; set; }
+
+        // 可为空的字符串
+        public string Fmaterialname { get; set; }
+
+        // 可为空的字符串
+        public string Fdescription { get; set; }
+
+        // 可为空的整数
+        public int? Fprocessobject { get; set; }
+
+        // 可为空的字符串
+        public string Fprocessobjectnumber { get; set; }
+
+        // 可为空的字符串
+        public string Fprocessobjectname { get; set; }
+
+        // 可为空的日期时间
+        public DateTime? Fstartdate { get; set; }
+
+        // 可为空的日期时间
+        public DateTime? Fenddate { get; set; }
+
+        // 可为空的数值类型（18位精度，2位小数）
+        public decimal? Fqty { get; set; }
+
+        // 可为空的数值类型（18位精度，2位小数）
+        public decimal? Fweight { get; set; }
+
+        // 可为空的数值类型（18位精度，2位小数）
+        public decimal? Fcommitqty { get; set; }
+
+        // 可为空的数值类型（18位精度，2位小数）
+        public decimal? Fcommitweight { get; set; }
 
         public string Fmaterialname { get; set; } //物料名称  Fdescription
 
