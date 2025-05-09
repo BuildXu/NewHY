@@ -198,7 +198,7 @@ namespace WebApi_SY.Controllers
             // 返回字段（包含所有必要字段）
             var result = paginatedQuery.Select(a => new
             {
-                Fwobillno = a.Fwobillno,
+                //Fwobillno = a,
                 Fnumber = a.Fnumber,
                 Id = a.Id,
                 Fworkorderlistid = a.Fworkorderlistid,

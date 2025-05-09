@@ -154,7 +154,7 @@ namespace WebApi_SY.Models
         public string Fproductno { get; set; }
 
         // 可为空的整数
-        public int? Fmaterialnumber { get; set; }
+        public string Fmaterialnumber { get; set; }
 
         // 可为空的字符串
         public string Fmaterialname { get; set; }
@@ -189,26 +189,26 @@ namespace WebApi_SY.Models
         // 可为空的数值类型（18位精度，2位小数）
         public decimal? Fcommitweight { get; set; }
 
-        public string Fmaterialname { get; set; } //物料名称  Fdescription
+        //public string Fmaterialname { get; set; } //物料名称  Fdescription
 
-        public string Fdescription { get; set; } //物料名称  Fdescription
-        public int Fprocessobject { get; set; } //工步ID
-        // 对应 s1.Fprocessobject
-        public string Fprocessobjectnumber { get; set; } //工步代码
-        // 对应 s3.fname
-        public string Fprocessobjectname { get; set; }//工步名称
-        // 对应 s1.Fstartdate
-        public DateTime? Fstartdate { get; set; }//开始时间
-        // 对应 s1.Fenddate
-        public DateTime? Fenddate { get; set; }//结束时间
-        // 对应 s1.Fqty
-        public decimal Fqty { get; set; }//数量
-        // 对应 s1.Fweight
-        public decimal Fweight { get; set; }//重量
-        // 对应 s1.Fcommitqty
-        public decimal Fcommitqty { get; set; }
-        // 对应 s1.Fcommitweight
-        public decimal Fcommitweight { get; set; }
+        //public string Fdescription { get; set; } //物料名称  Fdescription
+        //public int Fprocessobject { get; set; } //工步ID
+        //// 对应 s1.Fprocessobject
+        //public string Fprocessobjectnumber { get; set; } //工步代码
+        //// 对应 s3.fname
+        //public string Fprocessobjectname { get; set; }//工步名称
+        //// 对应 s1.Fstartdate
+        //public DateTime? Fstartdate { get; set; }//开始时间
+        //// 对应 s1.Fenddate
+        //public DateTime? Fenddate { get; set; }//结束时间
+        //// 对应 s1.Fqty
+        //public decimal Fqty { get; set; }//数量
+        //// 对应 s1.Fweight
+        //public decimal Fweight { get; set; }//重量
+        //// 对应 s1.Fcommitqty
+        //public decimal Fcommitqty { get; set; }
+        //// 对应 s1.Fcommitweight
+        //public decimal Fcommitweight { get; set; }
         // 对应 s1.Fqualityoption
         public int Fqualityoption { get; set; }
         // 对应 s1.Fstatus

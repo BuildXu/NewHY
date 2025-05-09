@@ -12,6 +12,7 @@ namespace WebApi_SY.Models
         /// <summary>
         /// 主键ID（注意：表中定义为NULL，建议添加标识列）
         /// </summary>
+        [Key]
         public int Fid { get; set; }
 
         /// <summary>
@@ -76,6 +77,7 @@ namespace WebApi_SY.Models
         /// <summary>
         /// 分录ID（建议与Fid组合作为复合主键）
         /// </summary>
+        [Key]
         public int? FEntryId { get; set; }
 
         /// <summary>
@@ -118,6 +120,7 @@ namespace WebApi_SY.Models
         /// <summary>
         /// 主键ID（注意：表中定义为NULL，建议添加标识列）
         /// </summary>
+        [Key]
         public int Fid { get; set; }
 
         /// <summary>
@@ -184,6 +187,7 @@ namespace WebApi_SY.Models
         /// <summary>
         /// 分录ID（建议与Fid组合作为复合主键）
         /// </summary>
+        [Key]
         public int? FEntryId { get; set; }
 
         /// <summary>
