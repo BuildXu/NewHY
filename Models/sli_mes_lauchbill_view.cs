@@ -96,5 +96,9 @@ namespace WebApi_SY.Models
         public string Fpname { get; set; }//产品名称
         public string Fdescription { get; set; }//产品规格
 
+        public string Ftype { get; set; }    // ---------------------  业务类型   自制  、  委外     
+
+        public string Fsupplier { get; set; } //    ----------------- 供应商  
+
     }
 }

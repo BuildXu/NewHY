@@ -42,7 +42,7 @@ namespace WebApi_SY.Models
         /// <summary>
         /// 关联数量，默认 0
         /// </summary>
-        public decimal Fcommitqty { get; set; } = 0;
+        public decimal Fcommitqty { get; set; } = 0;      //  
 
         /// <summary>
         /// 合格数量，默认 0
@@ -68,5 +68,9 @@ namespace WebApi_SY.Models
         /// 派工日期
         /// </summary>
         public DateTime Fdate { get; set; }
+
+        public string Ftype { get; set; }    // ---------------------  业务类型   自制  、  委外     
+
+        public string Fsupplier { get; set; } //    ----------------- 供应商  
     }
 }

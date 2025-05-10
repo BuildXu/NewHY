@@ -117,12 +117,17 @@ namespace WebApi_SY.Models
         public string Femp_name { get; set; }
 
 
-        public string Fslimetal { get; set; }
-        public decimal? Fsliweightmaterial { get; set; }
-        public string Fslipunching { get; set; }
-        public int? Fmaterialid { get; set; }
+        public string Fslimetal { get; set; }    // 材质
+        public decimal? Fsliweightmaterial { get; set; }       // 下料重量
+        public string Fslipunching { get; set; }                //   
+        public int? Fmaterialid { get; set; }             //   物料Id
         public decimal? Fsliallowancehf { get; set; }
-        public string Fproducttype { get; set; }
+        public string Fproducttype { get; set; }   
+
+
+        public string Ftype { get; set; }    // ---------------------  业务类型   自制  、  委外     
+
+        public string Fsupplier { get; set; } //    ----------------- 供应商  
 
 
 

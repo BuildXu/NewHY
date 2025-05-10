@@ -53,5 +53,8 @@ namespace WebApi_SY.Models
         /// 状态，默认值为 1
         /// </summary>
         public int Fstatus { get; set; } = 1;
+        public string Ftype { get; set; }    // ---------------------  业务类型   自制  、  委外     
+
+        public string Fsupplier { get; set; } //    ----------------- 供应商  
     }
 }

@@ -37,6 +37,8 @@ namespace WebApi_SY.Controllers
                         Fenddate = option.Fenddate ?? Convert.ToDateTime("2025-01-01"),
                         Fdeptid = option.Fdeptid,
                         Fstatus = option.Fstatus,
+                        Ftype = option.Ftype,
+                        Fsupplier = option.Fsupplier,
                         Fnumber = option.Fnumber
                     };
                     context.sli_mes_lauchbill.Add(header);
@@ -95,6 +97,8 @@ namespace WebApi_SY.Controllers
                     sli_mes_lauchbills.Fenddate = option.Fenddate;
                     sli_mes_lauchbills.Fdeptid = option.Fdeptid;
                     sli_mes_lauchbills.Fstatus = option.Fstatus;
+                    sli_mes_lauchbills.Ftype = option.Ftype;
+                    sli_mes_lauchbills.Fsupplier = option.Fsupplier;
 
 
                     await context.SaveChangesAsync();
@@ -182,7 +186,9 @@ namespace WebApi_SY.Controllers
         string Foptionname = null,
         string Fcustno = null,
         string Fcustname = null,
-        string Fname = null
+        string Fname = null,
+        string Ftype = null,
+        string Fsupplier =null
     )
         {
             var context = new YourDbContext();
@@ -212,6 +218,8 @@ namespace WebApi_SY.Controllers
             if (!string.IsNullOrEmpty(Fcustno)) query = query.Where(q => q.Fcustno == Fcustno);
             if (!string.IsNullOrEmpty(Fcustname)) query = query.Where(q => q.Fcustname == Fcustname);
             if (!string.IsNullOrEmpty(Fname)) query = query.Where(q => q.Fname == Fname);
+            if (!string.IsNullOrEmpty(Ftype)) query = query.Where(q => q.Ftype == Ftype);
+            if (!string.IsNullOrEmpty(Fsupplier)) query = query.Where(q => q.Fsupplier == Fsupplier);
 
             // 分页逻辑
             var totalCount = query.Count();
@@ -248,6 +256,9 @@ namespace WebApi_SY.Controllers
                 Fproductno = a.Fproductno ?? string.Empty,
                 Fpname = a.Fpname ?? string.Empty,
                 Fdescription = a.Fdescription ?? string.Empty
+                Ftype = a.Ftype ?? string.Empty,
+                Fsupplier = a.Fsupplier ?? string.Empty
+
             }).ToList();  // 执行查询
 
             // 响应数据（修正分页参数）
