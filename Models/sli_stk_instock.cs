@@ -10,7 +10,6 @@ namespace WebApi_SY.Models
 {
     public class sli_stk_instock
     {
-        [Key]
         /// <summary>
         /// 主键ID（注意：表中定义为NULL，建议添加标识列）
         /// </summary>
@@ -119,7 +118,6 @@ namespace WebApi_SY.Models
 
     public class sli_stk_instock_view
     {
-        [Key]
         /// <summary>
         /// 主键ID（注意：表中定义为NULL，建议添加标识列）
         /// </summary>
