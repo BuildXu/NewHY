@@ -459,6 +459,7 @@
     <Compile Include="Controllers\sli_material_planController.cs" />
     <Compile Include="Controllers\sli_mech_maintain_orderController.cs" />
     <Compile Include="Controllers\sli_mech_maintain_reportController.cs" />
+    <Compile Include="Controllers\sli_prd_pickmtrlController.cs" />
     <Compile Include="Controllers\sli_pur_instockImportController.cs" />
     <Compile Include="Controllers\sli_pur_orderController.cs" />
     <Compile Include="Controllers\sli_stk_instockController.cs" />
@@ -511,12 +512,14 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\JsonTemplateUtils.cs" />
+    <Compile Include="Models\sli_bd_department_view.cs" />
     <Compile Include="Models\sli_bd_mech_break.cs" />
     <Compile Include="Models\sli_bd_metel.cs" />
     <Compile Include="Models\sli_bd_mould_break.cs" />
     <Compile Include="Models\sli_bd_stock_view.cs" />
     <Compile Include="Models\sli_bd_supplier.cs" />
     <Compile Include="Models\sli_doc_sales.cs" />
+    <Compile Include="Models\sli_prd_pickmtrl.cs" />
     <Compile Include="Models\sli_pur_instock.cs" />
     <Compile Include="Models\sli_pur_order.cs" />
     <Compile Include="Models\sli_stk_instock.cs" />

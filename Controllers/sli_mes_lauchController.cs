@@ -255,7 +255,7 @@ namespace WebApi_SY.Controllers
                 Forderno = a.Forderno ?? string.Empty,
                 Fproductno = a.Fproductno ?? string.Empty,
                 Fpname = a.Fpname ?? string.Empty,
-                Fdescription = a.Fdescription ?? string.Empty
+                Fdescription = a.Fdescription ?? string.Empty,
                 Ftype = a.Ftype ?? string.Empty,
                 Fsupplier = a.Fsupplier ?? string.Empty
 

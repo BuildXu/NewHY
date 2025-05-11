@@ -218,6 +218,13 @@ namespace WebApi_SY.Entity
         public DbSet<sli_stk_instock_view> Sli_stk_instock_view { get; set; }//  采购入库单表头查询视图
         public DbSet<sli_stk_instockentry_view> Sli_stk_instockentry_view { get; set; }//  采购入库单表体查询视图
 
+        public DbSet<sli_prd_pickmtrl> Sli_prd_pickmtrl { get; set; }//  生产领料单表头
+        public DbSet<sli_prd_pickmtrlentry> Sli_prd_pickmtrlentry { get; set; }//  生产领料单表体
+
+        public DbSet<sli_prd_pickmtrl_view> Sli_prd_pickmtrl_view { get; set; }//  生产领料单表头查询视图
+        public DbSet<sli_prd_pickmtrlentry_view> Sli_prd_pickmtrlentry_view { get; set; }//  生产领料单表体查询视图
+
+        public DbSet<sli_bd_department_view> Sli_bd_department_view { get; set; }//  部门查询视图
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -438,6 +445,30 @@ namespace WebApi_SY.Entity
             modelBuilder.Entity<sli_pur_poentry_view>()
              .HasOne(h => h.sli_pur_po_view)
              .WithMany(d => d.sli_pur_poentry_view)
+             .HasForeignKey(d => d.Fid);
+
+            //采购入库单
+            modelBuilder.Entity<sli_stk_instockentry>()
+             .HasOne(h => h.sli_stk_instock)
+             .WithMany(d => d.sli_stk_instockentry)
+             .HasForeignKey(d => d.Fid);
+
+            //采购入库单视图
+            modelBuilder.Entity<sli_stk_instockentry_view>()
+             .HasOne(h => h.sli_stk_instock_view)
+             .WithMany(d => d.sli_stk_instockentry_view)
+             .HasForeignKey(d => d.Fid);
+
+            //生产领料单
+            modelBuilder.Entity<sli_prd_pickmtrlentry>()
+             .HasOne(h => h.sli_prd_pickmtrl)
+             .WithMany(d => d.sli_prd_pickmtrlentry)
+             .HasForeignKey(d => d.Fid);
+
+            //生产领料单视图
+            modelBuilder.Entity<sli_prd_pickmtrlentry_view>()
+             .HasOne(h => h.sli_prd_pickmtrl_view)
+             .WithMany(d => d.sli_prd_pickmtrlentry_view)
              .HasForeignKey(d => d.Fid);
         }
 

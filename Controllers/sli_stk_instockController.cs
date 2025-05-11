@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Kingdee.BOS.WebApi.Client;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -36,22 +37,24 @@ namespace WebApi_SY.Controllers
 
                 var header = new sli_stk_instock
                 {
-                    FBillNo = model.FBillNo,
-                    FDate = model.FDate,
-                    FSpplierName = model.FSpplierName,
-                    FDocumentStatus = model.FDocumentStatus,
-                    FCloseStatus = model.FCloseStatus,
+                    Fbillno = model.Fbillno,
+                    Fdate = model.Fdate,
+                    Fsppliername = model.Fsppliername,
+                    Fdocumentstatus = model.Fdocumentstatus,
+                    Fclosestatus = model.Fclosestatus,
                     FBiller = model.FBiller,
                     FDepId = model.FDepId,
+                    Flag = 0,
                     sli_stk_instockentry = model.sli_stk_instockentry.Select(d => new sli_stk_instockentry
                     {
                         Fid = model.Fid,
-                        FNumber = d.FNumber,
-                        FName = d.FName,
+                        Fnumber = d.Fnumber,
+                        Fname = d.Fname,
+                        Fbatchno = d.Fbatchno,
                         Unit = d.Unit,
-                        FQty = d.FQty,
+                        Fqty = d.Fqty,
                         FSecQty = d.FSecQty,
-                        FStockId = d.FStockId
+                        FReceiveStockNumber = d.FReceiveStockNumber
                     }).ToList()
                 };
 
@@ -156,13 +159,12 @@ namespace WebApi_SY.Controllers
                     var Sli_stk_instock = context.Sli_stk_instock.FirstOrDefault(p => p.Fid == bill.Fid);
                     var Sli_stk_instockentry = context.Sli_stk_instockentry.Where(p => p.Fid == bill.Fid).ToList();
 
-                    Sli_stk_instock.FBillNo = bill.FBillNo;
-                    Sli_stk_instock.FDate = bill.FDate;
-                    Sli_stk_instock.FSpplierName = bill.FSpplierName;
-                    Sli_stk_instock.FDocumentStatus = bill.FDocumentStatus;
-                    Sli_stk_instock.FCloseStatus = bill.FCloseStatus;
+                    Sli_stk_instock.Fbillno = bill.Fbillno;
+                    Sli_stk_instock.Fdate = bill.Fdate;
+                    Sli_stk_instock.Fsppliername = bill.Fsppliername;
+                    Sli_stk_instock.Fdocumentstatus = bill.Fdocumentstatus;
+                    Sli_stk_instock.Fclosestatus = bill.Fclosestatus;
                     Sli_stk_instock.FBiller = bill.FBiller;
-                    Sli_stk_instock.FDepId = bill.FDepId;
                     Sli_stk_instock.FDepId = bill.FDepId;
 
                     context.Sli_stk_instockentry.RemoveRange(Sli_stk_instockentry);
@@ -172,12 +174,13 @@ namespace WebApi_SY.Controllers
                         var entry = new sli_stk_instockentry
                         {
                             Fid = bill.Fid,
-                            FNumber = d.FNumber,
-                            FName = d.FName,
+                            Fnumber = d.Fnumber,
+                            Fname = d.Fname,
                             Unit = d.Unit,
-                            FQty = d.FQty,
+                            Fbatchno = d.Fbatchno,
+                            Fqty = d.Fqty,
                             FSecQty = d.FSecQty,
-                            FStockId = d.FStockId
+                            FReceiveStockNumber = d.FReceiveStockNumber
                         };
                         context.Sli_stk_instockentry.Add(entry);
                     }
@@ -204,7 +207,7 @@ namespace WebApi_SY.Controllers
         }
 
         /// <summary>
-        /// 采购订单表头分页查询
+        /// 采购入库表头分页查询
         /// </summary>
         /// <param name="page"></param>
         /// <param name="pageSize"></param>
@@ -220,13 +223,15 @@ namespace WebApi_SY.Controllers
             var result = paginatedQuery.Select(a => new
             {
                 id = a.Fid,
-                FBillNo = a.FBillNo,
-                FDate = a.FDate,
-                FSpplierName = a.FSpplierName,
-                FDocumentStatus = a.FDocumentStatus,
-                FCloseStatus = a.FCloseStatus,
+                Fbillno = a.Fbillno,
+                Fdate = a.Fdate,
+                Fsppliername = a.Fsppliername,
+                Fdocumentstatus = a.Fdocumentstatus,
+                Fclosestatus = a.Fclosestatus,
                 FBiller = a.FBiller,
                 empname = a.empname,
+                FDepId = a.FDepId,
+                dept_name = a.dept_name,
                 Flag = a.Flag,
                 FParameter = a.FParameter,
                 FReason = a.FReason
@@ -248,14 +253,14 @@ namespace WebApi_SY.Controllers
             return Ok(response);
         }
         /// <summary>
-        /// 采购订单表体分页查询
+        /// 采购入库表体分页查询
         /// </summary>
         /// <param name="page"></param>
         /// <param name="pageSize"></param>
         /// <param name="FID"></param>
         /// <returns></returns>
         [System.Web.Http.HttpGet]
-        public IHttpActionResult GetEntryPurorder(int? FID = null)
+        public IHttpActionResult GetEntryInstock(int? FID = null)
         {
             var context = new YourDbContext();
             var query = context.Sli_stk_instock_view.Include(a => a.sli_stk_instockentry_view);
@@ -266,26 +271,29 @@ namespace WebApi_SY.Controllers
             var result = query.Select(a => new
             {
                 Fid = a.Fid,
-                FBillNo = a.FBillNo,
-                FDate = a.FDate,
-                FSpplierName = a.FSpplierName,
-                FDocumentStatus = a.FDocumentStatus,
-                FCloseStatus = a.FCloseStatus,
+                Fbillno = a.Fbillno,
+                Fdate = a.Fdate,
+                Fsppliername = a.Fsppliername,
+                Fdocumentstatus = a.Fdocumentstatus,
+                Fclosestatus = a.Fclosestatus,
                 FBiller = a.FBiller,
                 empname = a.empname,
+                FDepId = a.FDepId,
+                dept_name = a.dept_name,
                 Flag = a.Flag,
                 FParameter = a.FParameter,
                 FReason = a.FReason,
                 sli_stk_instockentry_view = a.sli_stk_instockentry_view.Select(b => new
                 {
-                    FEntryId = b.FEntryId,
+                    Fentryid = b.Fentryid,
                     Fid = b.Fid,
-                    FNumber = b.FNumber,
-                    FName = b.FName,
+                    Fnumber = b.Fnumber,
+                    Fname = b.Fname,
+                    Fbatchno = b.Fbatchno,
                     Unit = b.Unit,
-                    FQty = b.FQty,
+                    Fqty = b.Fqty,
                     FSecQty = b.FSecQty,
-                    FStockId = b.FStockId
+                    FReceiveStockNumber = b.FReceiveStockNumber
                 })
 
             }).ToList();
@@ -302,6 +310,211 @@ namespace WebApi_SY.Controllers
 
             };
             return Ok(response);
+        }
+
+        /// <summary>
+        /// 同步采购入库单到金蝶星空采购入库单
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Microsoft.AspNetCore.Mvc.HttpPost]
+        public IHttpActionResult DateSync(int id)
+        {
+            try
+            {
+                var context = new YourDbContext();
+                //Assert.IsTrue((bool)isSuccess, resultJson);
+                var client = new K3CloudApi("http://36.151.103.130:9000/k3cloud/"); //接口地址
+                string dbId = "67b289c33bafdd"; //账套ID
+                bool bLogin = client.Login(dbId, "Administrator", "kingdee123*", 2052);
+                if (bLogin)
+                {
+
+                    var heard = context.Sli_stk_instock.FirstOrDefault(p => p.Fid == id);   //获取表头单行数据
+                    var FcustomerNumer = context.Sli_bd_supplier.FirstOrDefault(p => p.FNAME == heard.Fsppliername); //根据供应商名称查询客户代码
+                    var entity = context.Sli_stk_instockentry.Where(p => p.Fid == id);   //获取表体多行数据
+                    var entityList = entity.ToList();
+                    //var index = 0;
+                    string json = "{\"NeedUpDateFields\":[],\"NeedReturnFields\":[],\"IsDeleteEntry\":\"true\",\"SubSystemId\":\"\",\"IsVerifyBaseDataField\":\"false\",\"IsEntryBatchFill\":\"true\",\"ValidateFlag\":\"true\",\"NumberSearch\":\"true\",\"IsAutoAdjustField\":\"true\",\"InterationFlags\":\"\",\"IgnoreInterationFlag\":\"\",\"IsControlPrecision\":\"false\",\"ValidateRepeatJson\":\"false\",\"Model\":{\"FID\":0,\"FBillTypeID\":{\"FNUMBER\":\"RKD01_SYS\"},\"FBusinessType\":\"CG\",\"FDate\":\"2025-05-10 00:00:00\",\"FStockOrgId\":{\"FNumber\":\"100\"},\"FDemandOrgId\":{\"FNumber\":\"100\"},\"FPurchaseOrgId\":{\"FNumber\":\"100\"},\"FSupplierId\":{\"FNumber\":\"VEN00002\"},\"FSupplyId\":{\"FNumber\":\"VEN00002\"},\"FSettleId\":{\"FNumber\":\"VEN00002\"},\"FChargeId\":{\"FNumber\":\"VEN00002\"},\"FOwnerTypeIdHead\":\"BD_OwnerOrg\",\"FOwnerIdHead\":{\"FNumber\":\"100\"},\"FCDateOffsetValue\":0,\"FSplitBillType\":\"A\",\"FSalOutStockOrgId\":{\"FNumber\":\"100\"},\"FInStockFin\":{\"FSettleOrgId\":{\"FNumber\":\"100\"},\"FSettleCurrId\":{\"FNumber\":\"PRE001\"},\"FIsIncludedTax\":true,\"FPriceTimePoint\":\"1\",\"FLocalCurrId\":{\"FNumber\":\"PRE001\"},\"FExchangeTypeId\":{\"FNumber\":\"HLTX01_SYS\"},\"FExchangeRate\":1.0,\"FISPRICEEXCLUDETAX\":true,\"FAllDisCount\":0.0,\"FHSExchangeRate\":1.0},\"FInStockEntry\":[{\"FRowType\":\"Standard\",\"FMaterialId\":{\"FNumber\":\"1234-60-1\"},\"FUnitID\":{\"FNumber\":\"Pcs\"},\"FMaterialDesc\":\"后端壳程法兰\",\"FWWPickMtlQty\":0.0,\"FRealQty\":100.0,\"FPriceUnitID\":{\"FNumber\":\"Pcs\"},\"FPrice\":0.0,\"FStockId\":{\"FNumber\":\"01\"},\"FDisPriceQty\":0.0,\"FStockStatusId\":{\"FNumber\":\"KCZT01_SYS\"},\"FGiveAway\":false,\"FOWNERTYPEID\":\"BD_OwnerOrg\",\"FExtAuxUnitQty\":0.0,\"FCheckInComing\":false,\"FIsReceiveUpdateStock\":false,\"FInvoicedJoinQty\":0.0,\"FPriceBaseQty\":100.0,\"FRemainInStockUnitId\":{\"FNumber\":\"Pcs\"},\"FBILLINGCLOSE\":false,\"FRemainInStockQty\":100.0,\"FAPNotJoinQty\":100.0,\"FRemainInStockBaseQty\":100.0,\"FTaxPrice\":0.0,\"FEntryTaxRate\":13.00,\"FDiscountRate\":0.0,\"FCostPrice\":0.0,\"FAuxUnitQty\":0.0,\"FOWNERID\":{\"FNumber\":\"100\"},\"FSRCBILLTYPEID\":\"\",\"FSRCBillNo\":\"\",\"FAllAmountExceptDisCount\":0.0,\"FPriceDiscount\":0.0,\"FConsumeSumQty\":0.0,\"FBaseConsumeSumQty\":0.0,\"FRejectsDiscountAmount\":0.0,\"FSalOutStockEntryId\":0,\"FBeforeDisPriceQty\":0.0,\"FPayableEntryID\":0,\"FSUBREQBILLSEQ\":0,\"FSUBREQENTRYID\":0}]}}";
+                    InStockRequest rootObject = JsonConvert.DeserializeObject<InStockRequest>(json);
+                    rootObject.Model.FInStockEntry.Clear();
+                    rootObject.Model.FDate = DateTime.Now.ToString();
+                    rootObject.Model.FBillNo = heard.Fbillno;
+                    rootObject.Model.FSupplierId = new FNumberWrapper { FNumber = FcustomerNumer.FNUMBER };
+                    rootObject.Model.FSupplyId = new FNumberWrapper { FNumber = FcustomerNumer.FNUMBER };
+                    rootObject.Model.FSettleId = new FNumberWrapper { FNumber = FcustomerNumer.FNUMBER };
+                    rootObject.Model.FChargeId = new FNumberWrapper { FNumber = FcustomerNumer.FNUMBER };
+                    //rootObject.Model.FPOOrderFinance.
+                    foreach (var entitydata in entityList)
+                    {
+                        InStockEntry newEntry = new InStockEntry();
+
+
+                        newEntry.FMaterialId = new FNumberWrapper { FNumber = entitydata.Fnumber };
+                        newEntry.FMaterialDesc = entitydata.Fname;//传名称
+                        newEntry.FUnitID = new FNumberWrapper { FNumber = entitydata.Unit };
+                        newEntry.FRealQty = (double)entitydata.Fqty;//传订单数量
+                        newEntry.FPriceUnitID = new FNumberWrapper { FNumber = entitydata.Unit };
+                        //var FstockNumer = context.Sli_bd_stock_view.FirstOrDefault(p => p.Fstockid == entitydata.FStockId); //根据供应商名称查询客户代码
+                        newEntry.FStockId = new FNumberWrapper { FNumber = entitydata.FReceiveStockNumber };
+                        newEntry.FPriceBaseQty = (double)entitydata.Fqty;//传订单数量
+                        newEntry.FRemainInStockQty = (double)entitydata.Fqty;//传订单数量
+                        newEntry.FAPNotJoinQty = (double)entitydata.Fqty;//传订单数量
+                        newEntry.FRemainInStockBaseQty = (double)entitydata.Fqty;//传订单数量
+                        rootObject.Model.FInStockEntry.Add(newEntry);
+                    }
+                    string newJson = JsonConvert.SerializeObject(rootObject);
+                    System.Diagnostics.Debug.WriteLine(newJson);
+                    //sJson = "{\"CreateOrgId\":0,\"Numbers\":[\"" + FPrdModel + "\"]}";
+                    //string jsonData = "{\"NeedUpDateFields\": [],\"NeedReturnFields\": [],\"IsDeleteEntry\": \"true\",\"SubSystemId\": \"\",\"IsVerifyBaseDataField\": \"False\",\"IsEntryBatchFill\": \"true\",\"ValidateFlag\": \"true\",\"NumberSearch\": \"true\",\"IsAutoAdjustField\": \"False\",\"InterationFlags\": \"\",\"IgnoreInterationFlag\": \"\",\"IsControlPrecision\": \"False\",\"Model\": {\"FBillTypeID\": {\"FNUMBER\": \"XSDD01_SYS\"},\"FDate\": \"2022-04-27 00:00:00\",\"FSaleOrgId\": {\"FNumber\": \"100\"},\"FCustId\": {\"FNumber\": \"SCMKH100001\"},\"FReceiveId\": {\"FNumber\": \"SCMKH100001\"},\"FSaleDeptId\": {\"FNumber\": \"SCMBM000001\"},\"FSalerId\": {\"FNumber\": \"SCMYG000001_SCMGW000001_1\"},\"FSettleId\": {\"FNumber\": \"SCMKH100001\"},\"FChargeId\": {\"FNumber\": \"SCMKH100001\"},\"FSaleOrderFinance\": {\"FSettleCurrId\": {\"FNumber\": \"PRE001\"},\"FIsPriceExcludeTax\": 'true',\"FIsIncludedTax\": 'true',\"FExchangeTypeId\": {\"FNumber\": \"HLTX01_SYS\"}},\"FSaleOrderEntry\": [{\"FRowType\": \"Standard\",\"FMaterialId\": {\"FNumber\": \"SCMWL100002\"},\"FUnitID\": {\"FNumber\": \"Pcs\"},\"FQty\": 10,\"FPriceUnitId\": {\"FNumber\": \"Pcs\"},\"FPrice\": 8.849558,\"FTaxPrice\": 10,\"FEntryTaxRate\": 13,\"FDeliveryDate\": \"2022-04-27 15:15:54\",\"FStockOrgId\": {\"FNumber\": \"100\"},\"FSettleOrgIds\": {\"FNumber\": \"100\"},\"FSupplyOrgId\": {\"FNumber\": \"100\"},\"FOwnerTypeId\": \"BD_OwnerOrg\",\"FOwnerId\": {\"FNumber\": \"100\"},\"FReserveType\": \"1\",\"FPriceBaseQty\": 10,\"FStockUnitID\": {\"FNumber\": \"Pcs\"},\"FStockQty\": 10,\"FStockBaseQty\": 10,\"FOUTLMTUNIT\": \"SAL\",\"FOutLmtUnitID\": {\"FNumber\": \"Pcs\"},\"FAllAmountExceptDisCount\": 100,\"FOrderEntryPlan\": [{\"FPlanDate\": \"2022-04-27 15:15:54\",\"FPlanQty\": 10}]}],\"FSaleOrderPlan\": [{\"FRecAdvanceRate\": 100,\"FRecAdvanceAmount\": 100}],\"FBillNo\":" + "\"" + Number + "\"" + ",}}";
+                    var result = client.Execute<string>("Kingdee.BOS.WebApi.ServicesStub.DynamicFormService.Save",
+                    new object[] { "STK_InStock", newJson });
+
+                    ResultData resultdata = JsonConvert.DeserializeObject<ResultData>(result);
+                    if (resultdata.Result.ResponseStatus.IsSuccess)
+                    {
+                        //var FbillNoList = "";
+                        //foreach (var FbillNo in resultdata.Result.NeedReturnData)
+                        //{
+
+                        //    FbillNoList = FbillNoList + FbillNo.FBillNo;
+                        //}
+
+                        var datas = new
+                        {
+                            code = 200,
+                            msg = "ok",
+                            date = "同步成功！采购单号：" + resultdata.Result.Number + ""
+                        };
+                        heard.Flag = 1;
+                        heard.FParameter = newJson;
+                        heard.FReason = resultdata.Result.Number;
+                        context.SaveChanges();
+                        return Ok(datas);
+
+                    }
+                    else
+                    {
+                        var ErrorList = "";
+                        foreach (var Error in resultdata.Result.ResponseStatus.Errors)
+                        {
+
+                            ErrorList = ErrorList + Error.Message;
+                        }
+                        var datas = new
+                        {
+                            code = 400,
+                            msg = "err,同步异常！" + ErrorList + "",
+                            date = ""
+                        };
+                        heard.Flag = 2;
+                        heard.FParameter = newJson;
+                        heard.FReason = ErrorList;
+                        context.SaveChanges();
+                        return Ok(datas);
+                    }
+
+                }
+                else
+                {
+                    return Ok("登录失败！");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                var datas = new
+                {
+                    code = 400,
+                    msg = "失败",
+                    date = ex.ToString()
+                };
+                return Ok(datas);
+            }
+
+        }
+
+
+        /// <summary>
+        /// 采购入库单提交
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [Microsoft.AspNetCore.Mvc.HttpPost]
+        public IHttpActionResult Instcok_Submit_Approve(string FbillNo)
+        {
+            try
+            {
+                var context = new YourDbContext();
+                //Assert.IsTrue((bool)isSuccess, resultJson);
+                var client = new K3CloudApi("http://36.151.103.130:9000/k3cloud/"); //接口地址
+                string dbId = "67b289c33bafdd"; //账套ID
+                bool bLogin = client.Login(dbId, "Administrator", "kingdee123*", 2052);
+                if (bLogin)
+                {
+                    var heard = context.Sli_stk_instock.FirstOrDefault(p => p.Fbillno == FbillNo);   //获取表头单行数据
+                    var SubmitsJson = "{\"CreateOrgId\":0,\"Numbers\":[\"" + FbillNo + "\"]}";
+                    var Submitresult = client.Execute<string>("Kingdee.BOS.WebApi.ServicesStub.DynamicFormService.Submit",
+                    new object[] { "STK_InStock", SubmitsJson });
+
+                    //审核刚创建的销售订单
+                    var sJson = "{\"CreateOrgId\":0,\"Numbers\":[\"" + FbillNo + "\"]}";
+                    var Auditresult = client.Execute<string>("Kingdee.BOS.WebApi.ServicesStub.DynamicFormService.Audit",
+                    new object[] { "STK_InStock", sJson });
+                    ResultData resultdata = JsonConvert.DeserializeObject<ResultData>(Auditresult);
+                    if (resultdata.Result.ResponseStatus.IsSuccess)
+                    {
+                        var datas = new
+                        {
+                            code = 200,
+                            msg = "ok",
+                            date = "同步成功！采购单号：" + resultdata.Result.Number + ""
+                        };
+                        heard.Flag = 3;
+                        heard.Fdocumentstatus = "C";
+                        //heard.FParameter = newJson;
+                        heard.FReason = resultdata.Result.Number;
+                        context.SaveChanges();
+                        return Ok(datas);
+
+                    }
+                    else
+                    {
+                        var ErrorList = "";
+                        foreach (var Error in resultdata.Result.ResponseStatus.Errors)
+                        {
+
+                            ErrorList = ErrorList + Error.Message;
+                        }
+                        var datas = new
+                        {
+                            code = 400,
+                            msg = "err,同步异常！" + ErrorList + "",
+                            date = ""
+                        };
+                        heard.Flag = 4;
+                        //heard.FParameter = newJson;
+                        heard.FReason = ErrorList;
+                        context.SaveChanges();
+                        return Ok(datas);
+                    }
+                }
+                else
+                {
+                    return Ok("登录失败！");
+                }
+            }
+            catch (Exception ex) 
+            {
+                var datas = new
+                {
+                    code = 400,
+                    msg = "失败",
+                    date = ex.ToString()
+                };
+                return Ok(datas);
+            }
+            
         }
     }
 }
