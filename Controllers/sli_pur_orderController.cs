@@ -262,7 +262,7 @@ namespace WebApi_SY.Controllers
         /// <param name="FID"></param>
         /// <returns></returns>
         [System.Web.Http.HttpGet]
-        public IHttpActionResult GetEntryPurorder(int ? FID=null)
+        public IHttpActionResult GetEntryPurorder(int ? FID=null,string Fbillno=null)
         {
             var context = new YourDbContext();
             var query = context.Sli_pur_po_view.Include(a => a.sli_pur_poentry_view);
@@ -270,7 +270,11 @@ namespace WebApi_SY.Controllers
             {
                 query = query.Where(t => t.Fid == FID.Value);
             }
-            
+            if (!string.IsNullOrEmpty(Fbillno))
+            {
+                query = query.Where(t => t.Fbillno.Contains(Fbillno));
+            }
+
             var result = query.Select(a => new
             {
                 Fid = a.Fid,

@@ -217,7 +217,7 @@ namespace WebApi_SY.Models
     }
     public class sli_wo_view
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
         public string Fcustname { get; set; }          // 数据库字段: Fcustname (varchar50)
         public string Fbillno { get; set; }            // 数据库字段: Fbillno (varchar50)
         public string Forderno { get; set; }           // 数据库字段: Forderno (varchar50)
