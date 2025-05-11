@@ -345,6 +345,34 @@ namespace WebApi_SY.Controllers
             return Ok(response);
         }
 
+        /// <summary>
+        /// 获取仓库ID
+        /// </summary>
+        /// <param name="FSumNumber"></param>
+        /// <returns></returns>
+        [System.Web.Http.HttpGet]
+        public IHttpActionResult GetTableBybd_department(string FSumNumber = null)
+        {
+            IQueryable<sli_bd_department_view> query = _context.Sli_bd_department_view;
+
+            if (!string.IsNullOrEmpty(FSumNumber))
+            {
+                query = query.Where(q => q.FSumNUMBER.Contains(FSumNumber));
+            }
+
+
+
+
+            var response = new    // 定义 前端返回数据  总记录，总页，当前页 ，size,返回记录
+            {
+                code = 200,
+                msg = "OK",
+                data = query
+            };
+
+            //return Json(response);
+            return Ok(response);
+        }
         [System.Web.Http.HttpGet]
         public IHttpActionResult GetTableBybd_customer(string FSumNumber = null)
         {
