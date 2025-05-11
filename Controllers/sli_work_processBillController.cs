@@ -1,5 +1,4 @@
-﻿
-using DocumentFormat.OpenXml.Presentation;
+﻿using DocumentFormat.OpenXml.Presentation;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Newtonsoft.Json;
 using System;
