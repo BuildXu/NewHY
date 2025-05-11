@@ -189,7 +189,7 @@ namespace WebApi_SY.Models
         /// <summary>
         /// 分录ID（建议与Fid组合作为复合主键）
         /// </summary>
-        public int? FEntryId { get; set; }
+        public int? Fentryid { get; set; }
 
         /// <summary>
         /// 物料编号

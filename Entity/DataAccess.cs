@@ -189,7 +189,7 @@ namespace WebApi_SY.Entity
         public DbSet<sli_bd_mould_break> Sli_bd_mould_break { get; set; }//  模具维修
         public DbSet<sli_bd_mech_break> Sli_bd_mech_break { get; set; }//  设备维修
 
-
+        public DbSet<sli_wo_view> sli_wo_view { get; set; }
         public DbSet<sli_material_plan> Sli_material_plan { get; set; }//  用料计划
         public DbSet<sli_doc_sales> Sli_doc_sales { get; set; }//  订单技术要求
 
