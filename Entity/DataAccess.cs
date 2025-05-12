@@ -52,6 +52,8 @@ namespace WebApi_SY.Entity
         public DbSet<sli_sale_taxturebillEntry> Sli_sale_taxturebillEntry { get; set; }
         public DbSet<sli_dept_info> Sli_dept_info { get; set; }
         public DbSet<sli_bd_employ> Sli_bd_employ { get; set; }
+        public DbSet<sli_ecn_record> sli_ecn_record { get; set; } //  变更单
+
         public DbSet<sli_bd_planOption> Sli_bd_planOption { get; set; }
         public DbSet<sli_bd_customer_view> Sli_bd_customer_view { get; set; }//客户模糊查询表
         public DbSet<sli_bd_tech_option> Sli_bd_tech_option { get; set; }   //技术档案选项

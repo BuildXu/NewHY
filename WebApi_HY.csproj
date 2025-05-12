@@ -496,6 +496,7 @@
     <Compile Include="Controllers\sli_document_process_modelController.cs" />
     <Compile Include="Controllers\sli_witnessing_orderController.cs" />
     <Compile Include="Controllers\sli_work_processBillController.cs" />
+    <Compile Include="Controllers\sli_ecn_recordController.cs" />
     <Compile Include="Controllers\sli_work_reportController.cs" />
     <Compile Include="Controllers\sli_bd_process_optionController.cs" />
     <Compile Include="Controllers\sli_bd_quality_objectController.cs" />
@@ -525,6 +526,7 @@
     <Compile Include="Models\sli_bd_mould_break.cs" />
     <Compile Include="Models\sli_bd_stock_view.cs" />
     <Compile Include="Models\sli_bd_supplier.cs" />
+    <Compile Include="Models\sli_ecn_record.cs" />
     <Compile Include="Models\sli_doc_sales.cs" />
     <Compile Include="Models\sli_prd_pickmtrl.cs" />
     <Compile Include="Models\sli_pur_instock.cs" />

@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -119,7 +121,38 @@ namespace WebApi_SY.Controllers
             }
         }
 
-        [System.Web.Http.HttpPost]
+        [System.Web.Http.HttpGet]
+        [System.Web.Http.Route("ExecuteSliEcnMaterial")]  // 自定义路由
+        public async Task<object> ExecuteSliEcnMaterial(int id)
+        {
+            var context = new YourDbContext();
+            try
+            {
+                // 执行存储过程
+                var parameter = new SqlParameter("id", id);
+                var rowsAffected = await context.Database.ExecuteSqlCommandAsync("EXEC sli_ecn_material @id", parameter);
+
+                var response = new
+                {
+                    code = 200,
+                    msg = "Success",
+                    data = $"存储过程执行成功，影响行数: {rowsAffected}"
+                };
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.ToString());
+                return Content(HttpStatusCode.InternalServerError, new
+                {
+                    code = 500,
+                    msg = "失败",
+                    data = ex.Message
+                });
+            }
+        }
+
+            [System.Web.Http.HttpPost]
         public async Task<object> sli_bd_task_statuss_Delete(List<int> id)
         {
             try
@@ -206,5 +239,7 @@ namespace WebApi_SY.Controllers
 
             return Json(response);
         }
+
+
     }
 }
