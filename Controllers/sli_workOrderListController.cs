@@ -598,7 +598,7 @@ namespace WebApi_SY.Controllers
                 Fsliweightforging = a.Fsliweightforging,
                 Fsliweightgoods = a.Fsliweightgoods,
                 Fslirawingno = a.Fslidrawingno,
-                Fslimetal = a.Fslimetal,
+                Fslimetel = a.Fslimetel,
                 Fsligoodsstatus = a.Fsligoodsstatus,
                 Fsliprocessing = a.Fsliprocessing,
                 Fsliedelivery = a.Fslidelivery,
