@@ -51,11 +51,11 @@ namespace WebApi_SY.Models
         public string Fslidelivery { get; set; }//FsliDelivery
         public string Fsliblankmodel { get; set; }//FsliBlankModel
         public string Fslipunching { get; set; }//FsliPunching
-        public string FsliTemperatureBegin { get; set; }//FsliTemperatureBegin
+        public int FsliTemperatureBegin { get; set; }//FsliTemperatureBegin
         public int FsliTempratureEnd { get; set; }
         public string Fslimould { get; set; }//FsliMould
         public string Fsliroller { get; set; } //FsliRoller
-        public string Fsliheatingtimes { get; set; }//FsliHeatingTimes
+        public int Fsliheatingtimes { get; set; }//FsliHeatingTimes
         public string Fsligrade { get; set; }//FsliGrade
         public string Fsumnumber { get; set; }//FSumNumber
         public string Fworkorderlistqty { get; set; } //FworkOrderListQty
