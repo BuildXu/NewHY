@@ -11,11 +11,9 @@ namespace WebApi_SY.Models
     {
 
 
-        //public int Fid { get; set; }
-
         public string FBillNo { get; set; }
         public DateTime FDate { get; set; }
-        public int FCustId { get; set; }  //FCUSTID
+        public int FCustId { get; set; }
         public string FCustNo { get; set; }
         public string FCustName { get; set; }
         public string Fcustomer { get; set; }
@@ -23,7 +21,7 @@ namespace WebApi_SY.Models
         public int FID { get; set; }
         [Key]
         public int Forderid { get; set; }
-        public int FEntryId { get; set; }//FENTRYID
+        public int FEntryId { get; set; }
         public int FSeq { get; set; }
         public decimal FQty { get; set; }
         public string FNote { get; set; }
@@ -31,35 +29,35 @@ namespace WebApi_SY.Models
         public decimal Fstockqty { get; set; }
         public string FslisaleTechNo { get; set; }
         public string FslitechNo { get; set; }
-        public string Fmaterialid { get; set; }
-        public int Fnumber { get; set; }
+        public int Fmaterialid { get; set; }  // 修正点：数据库类型 int → 实体类型 int（原错误为 string）
+        public string Fnumber { get; set; }   // 修正点：数据库类型 nvarchar → 实体类型 string（原错误为 int）
         public string Fname { get; set; }
         public string Fdescription { get; set; }
-        public string Fsliouterdiameter { get; set; }
+        public decimal Fsliouterdiameter { get; set; }  // 修正点：数据库类型 decimal → 实体类型 decimal（原错误为 string）
         public decimal Fsliinnerdiameter { get; set; }
         public decimal Fslihight { get; set; }
         public decimal Fsliallowanceod { get; set; }
         public decimal Fsliallowanceid { get; set; }
         public decimal Fsliallowanceh { get; set; }
         public decimal Fsliweightmaterial { get; set; }
-        public decimal Fsliweightforging { get; set; }//Fsliweightforging
-        public decimal Fsliweightgoods { get; set; }//Fsliweightgoods
-        public string Fslidrawingno { get; set; }//Fslidrawingno
-        public string Fslimetal { get; set; }  //FsliMetal
-        public string Fsligoodsstatus { get; set; }//FsliGoodsStatus
-        public string Fsliprocessing { get; set; } //FsliProcessing
-        public string Fslidelivery { get; set; }//FsliDelivery
-        public string Fsliblankmodel { get; set; }//FsliBlankModel
-        public string Fslipunching { get; set; }//FsliPunching
-        public string FsliTemperatureBegin { get; set; }//FsliTemperatureBegin
+        public decimal Fsliweightforging { get; set; }
+        public decimal Fsliweightgoods { get; set; }
+        public string Fslidrawingno { get; set; }
+        public string Fslimetal { get; set; }
+        public string Fsligoodsstatus { get; set; }
+        public string Fsliprocessing { get; set; }
+        public string Fslidelivery { get; set; }
+        public string Fsliblankmodel { get; set; }
+        public string Fslipunching { get; set; }
+        public int FsliTemperatureBegin { get; set; }  // 修正点：数据库类型 int → 实体类型 int（原错误为 string）
         public int FsliTempratureEnd { get; set; }
-        public string Fslimould { get; set; }//FsliMould
-        public string Fsliroller { get; set; } //FsliRoller
-        public string Fsliheatingtimes { get; set; }//FsliHeatingTimes
-        public string Fsligrade { get; set; }//FsliGrade
-        public string Fsumnumber { get; set; }//FSumNumber
-        public string Fworkorderlistqty { get; set; } //FworkOrderListQty
-        public int Fworkorderlistremain { get; set; }//FworkOrderListRemain
+        public string Fslimould { get; set; }
+        public string Fsliroller { get; set; }
+        public int Fsliheatingtimes { get; set; }      // 修正点：数据库类型 int → 实体类型 int（原错误为 string）
+        public string Fsligrade { get; set; }
+        public string Fsumnumber { get; set; }
+        public int Fworkorderlistqty { get; set; }     // 修正点：数据库类型 int → 实体类型 int（原错误为 string）
+        public int Fworkorderlistremain { get; set; }
         public int Fworkorderliststatus { get; set; }
         public string Fslimetel { get; set; }
 

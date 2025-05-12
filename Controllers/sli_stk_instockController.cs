@@ -285,7 +285,7 @@ namespace WebApi_SY.Controllers
                 FReason = a.FReason,
                 sli_stk_instockentry_view = a.sli_stk_instockentry_view.Select(b => new
                 {
-                    Fentryid = b.FEntryId,
+                    Fentryid = b.Fentryid,
                     Fid = b.Fid,
                     Fnumber = b.Fnumber,
                     Fname = b.Fname,
