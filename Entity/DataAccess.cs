@@ -226,6 +226,12 @@ namespace WebApi_SY.Entity
 
         public DbSet<sli_bd_department_view> Sli_bd_department_view { get; set; }//  部门查询视图
 
+        public DbSet<sli_stk_stktransferin> Sli_stk_stktransferin { get; set; }//  直接调拨单表头
+        public DbSet<sli_stk_stktransferinentry> Sli_stk_stktransferinentry { get; set; }//  直接调拨单表体
+
+        public DbSet<sli_stk_stktransferin_view> Sli_stk_stktransferin_view { get; set; }//  直接调拨单表头视图
+        public DbSet<sli_stk_stktransferinentry_view> Sli_stk_stktransferinentry_view { get; set; }//  直接调拨单表体视图
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //ConnectionStrings 19vs7gv47690.vicp.fun,46716
@@ -469,6 +475,18 @@ namespace WebApi_SY.Entity
             modelBuilder.Entity<sli_prd_pickmtrlentry_view>()
              .HasOne(h => h.sli_prd_pickmtrl_view)
              .WithMany(d => d.sli_prd_pickmtrlentry_view)
+             .HasForeignKey(d => d.Fid);
+
+            //直接调拨单
+            modelBuilder.Entity<sli_stk_stktransferinentry>()
+             .HasOne(h => h.sli_stk_stktransferin)
+             .WithMany(d => d.sli_stk_stktransferinentry)
+             .HasForeignKey(d => d.Fid);
+
+            //直接调拨单视图
+            modelBuilder.Entity<sli_stk_stktransferinentry_view>()
+             .HasOne(h => h.sli_stk_stktransferin_view)
+             .WithMany(d => d.sli_stk_stktransferinentry_view)
              .HasForeignKey(d => d.Fid);
         }
 

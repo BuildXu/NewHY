@@ -469,6 +469,7 @@
     <Compile Include="Controllers\sli_pur_instockImportController.cs" />
     <Compile Include="Controllers\sli_pur_orderController.cs" />
     <Compile Include="Controllers\sli_stk_instockController.cs" />
+    <Compile Include="Controllers\sli_stk_stktransferinController.cs" />
     <Compile Include="Controllers\sli_task_reportController.cs" />
     <Compile Include="Controllers\sli_task_orderController.cs" />
     <Compile Include="Controllers\sli_bd_task_stepController.cs" />
@@ -529,6 +530,7 @@
     <Compile Include="Models\sli_pur_instock.cs" />
     <Compile Include="Models\sli_pur_order.cs" />
     <Compile Include="Models\sli_stk_instock.cs" />
+    <Compile Include="Models\sli_stk_stktransferin.cs" />
     <Compile Include="Models\stk_inventory.cs" />
     <Compile Include="Models\T_BAS_PREBDONE.cs" />
     <Compile Include="Models\Utils.cs" />

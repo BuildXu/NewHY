@@ -14,38 +14,38 @@ using WebApi_SY.Models;
 namespace WebApi_SY.Controllers
 {
     /// <summary>
-    /// 采购入库单
+    /// 直接调拨单
     /// </summary>
-    public class sli_stk_instockController : ApiController
+    public class sli_stk_stktransferinController : ApiController
     {
-        public sli_stk_instockController()
+        public sli_stk_stktransferinController()
         {
             // _context = context;
 
         }
         /// <summary>
-        /// 采购入库单新增
+        /// 直接调拨单新增
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
         [System.Web.Http.HttpPost]
-        public async Task<object> Insert([Microsoft.AspNetCore.Mvc.FromBody] sli_stk_instock model)
+        public async Task<object> Insert([Microsoft.AspNetCore.Mvc.FromBody] sli_stk_stktransferin model)
         {
             try
             {
                 var context = new YourDbContext();
 
-                var header = new sli_stk_instock
+                var header = new sli_stk_stktransferin
                 {
                     Fbillno = model.Fbillno,
                     Fdate = model.Fdate,
-                    Fsppliername = model.Fsppliername,
+                    //Fsppliername = model.Fsppliername,
                     Fdocumentstatus = model.Fdocumentstatus,
                     Fclosestatus = model.Fclosestatus,
                     FBiller = model.FBiller,
                     FDepId = model.FDepId,
                     Flag = 0,
-                    sli_stk_instockentry = model.sli_stk_instockentry.Select(d => new sli_stk_instockentry
+                    sli_stk_stktransferinentry = model.sli_stk_stktransferinentry.Select(d => new sli_stk_stktransferinentry
                     {
                         Fid = model.Fid,
                         Fnumber = d.Fnumber,
@@ -54,13 +54,14 @@ namespace WebApi_SY.Controllers
                         Unit = d.Unit,
                         Fqty = d.Fqty,
                         FSecQty = d.FSecQty,
-                        FReceiveStockNumber = d.FReceiveStockNumber
+                        FReceiveStockNumber = d.FReceiveStockNumber,
+                        FStockNumber = d.FStockNumber
                     }).ToList()
                 };
 
 
 
-                context.Sli_stk_instock.Add(header);
+                context.Sli_stk_stktransferin.Add(header);
                 await context.SaveChangesAsync();
                 var dataNull = new
                 {
@@ -79,7 +80,7 @@ namespace WebApi_SY.Controllers
         }
 
         /// <summary>
-        /// 采购入库单删除
+        /// 直接调拨单删除
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -89,7 +90,7 @@ namespace WebApi_SY.Controllers
             try
             {
                 var context = new YourDbContext();
-                var headersToDelete = context.Sli_stk_instock.Where(h => id.Contains(h.Fid)).ToList();
+                var headersToDelete = context.Sli_stk_stktransferin.Where(h => id.Contains(h.Fid)).ToList();
                 if (headersToDelete == null)
                 {
                     var dataNull = new
@@ -102,12 +103,12 @@ namespace WebApi_SY.Controllers
                     //string json = JsonConvert.SerializeObject(data);
                     return dataNull;
                 }
-                context.Sli_stk_instock.RemoveRange(headersToDelete);
+                context.Sli_stk_stktransferin.RemoveRange(headersToDelete);
 
                 foreach (var DeleteID in id)
                 {
-                    var Sli_pur_poentry = context.Sli_stk_instockentry.Where(b => b.Fid == DeleteID);
-                    context.Sli_stk_instockentry.RemoveRange(Sli_pur_poentry);
+                    var Sli_stk_stktransferinentry = context.Sli_stk_stktransferinentry.Where(b => b.Fid == DeleteID);
+                    context.Sli_stk_stktransferinentry.RemoveRange(Sli_stk_stktransferinentry);
                 }
                 await context.SaveChangesAsync();
                 var data = new
@@ -133,17 +134,17 @@ namespace WebApi_SY.Controllers
         }
 
         /// <summary>
-        /// 采购入库单修改
+        /// 直接调拨单修改
         /// </summary>
         /// <param name="bill"></param>
         /// <returns></returns>
         [System.Web.Http.HttpPost]
-        public async Task<object> Update(sli_stk_instock bill)
+        public async Task<object> Update(sli_stk_stktransferin bill)
         {
             try
             {
                 var context = new YourDbContext();
-                var entity = await context.Sli_stk_instock.FindAsync(bill.Fid);
+                var entity = await context.Sli_stk_stktransferin.FindAsync(bill.Fid);
                 if (entity == null)
                 {
                     var dataNull = new
@@ -156,22 +157,23 @@ namespace WebApi_SY.Controllers
                 }
                 else
                 {
-                    var Sli_stk_instock = context.Sli_stk_instock.FirstOrDefault(p => p.Fid == bill.Fid);
-                    var Sli_stk_instockentry = context.Sli_stk_instockentry.Where(p => p.Fid == bill.Fid).ToList();
+                    var Sli_stk_stktransferin = context.Sli_stk_stktransferin.FirstOrDefault(p => p.Fid == bill.Fid);
+                    var Sli_stk_stktransferinentry = context.Sli_stk_stktransferinentry.Where(p => p.Fid == bill.Fid).ToList();
 
-                    Sli_stk_instock.Fbillno = bill.Fbillno;
-                    Sli_stk_instock.Fdate = bill.Fdate;
-                    Sli_stk_instock.Fsppliername = bill.Fsppliername;
-                    Sli_stk_instock.Fdocumentstatus = bill.Fdocumentstatus;
-                    Sli_stk_instock.Fclosestatus = bill.Fclosestatus;
-                    Sli_stk_instock.FBiller = bill.FBiller;
-                    Sli_stk_instock.FDepId = bill.FDepId;
+                    Sli_stk_stktransferin.Fbillno = bill.Fbillno;
+                    Sli_stk_stktransferin.Fdate = bill.Fdate;
+                    //Sli_stk_instock.Fsppliername = bill.Fsppliername;
+                    Sli_stk_stktransferin.Fdocumentstatus = bill.Fdocumentstatus;
+                    Sli_stk_stktransferin.Fclosestatus = bill.Fclosestatus;
+                    Sli_stk_stktransferin.FBiller = bill.FBiller;
+                    Sli_stk_stktransferin.FDepId = bill.FDepId;
 
-                    context.Sli_stk_instockentry.RemoveRange(Sli_stk_instockentry);
 
-                    foreach (var d in bill.sli_stk_instockentry)
+                    context.Sli_stk_stktransferinentry.RemoveRange(Sli_stk_stktransferinentry);
+
+                    foreach (var d in bill.sli_stk_stktransferinentry)
                     {
-                        var entry = new sli_stk_instockentry
+                        var entry = new sli_stk_stktransferinentry
                         {
                             Fid = bill.Fid,
                             Fnumber = d.Fnumber,
@@ -180,9 +182,10 @@ namespace WebApi_SY.Controllers
                             Fbatchno = d.Fbatchno,
                             Fqty = d.Fqty,
                             FSecQty = d.FSecQty,
-                            FReceiveStockNumber = d.FReceiveStockNumber
+                            FReceiveStockNumber = d.FReceiveStockNumber,
+                            FStockNumber = d.FStockNumber
                         };
-                        context.Sli_stk_instockentry.Add(entry);
+                        context.Sli_stk_stktransferinentry.Add(entry);
                     }
                     await context.SaveChangesAsync();
                     var datas = new
@@ -191,7 +194,22 @@ namespace WebApi_SY.Controllers
                         msg = "ok",
                         date = bill.Fid + "更新成功！"
                     };
+                    ApiClient client = new ApiClient("http://36.151.103.130:9000/k3cloud/"); //接口地址
+
+                    string dbId = "67b289c33bafdd"; //账套ID
+                    bool bLogin = client.Login(dbId, "Administrator", "kingdee123*", 2052);
+                    if (bLogin)
+                    {
+                        var UnAuditsJson = "{\"CreateOrgId\":0,\"Numbers\":[\"" + bill.Fbillno + "\"]}";
+                        var UnAuditresult = client.Execute<string>("Kingdee.BOS.WebApi.ServicesStub.DynamicFormService.UnAudit",
+                        new object[] { "STK_TransferDirect", UnAuditsJson });
+
+                        var Deleteresult = client.Execute<string>("Kingdee.BOS.WebApi.ServicesStub.DynamicFormService.Delete",
+                        new object[] { "STK_TransferDirect", UnAuditsJson });
+
+                    }
                     return Ok(datas);
+
                 }
             }
             catch (Exception ex)
@@ -205,7 +223,6 @@ namespace WebApi_SY.Controllers
                 return Ok(datas);
             }
         }
-
         /// <summary>
         /// 采购入库表头分页查询
         /// </summary>
@@ -213,10 +230,10 @@ namespace WebApi_SY.Controllers
         /// <param name="pageSize"></param>
         /// <returns></returns>
         [System.Web.Http.HttpGet]
-        public IHttpActionResult GetHeaderInstock(int page = 1, int pageSize = 10)
+        public IHttpActionResult GetHeaderStktransferin(int page = 1, int pageSize = 10)
         {
             var context = new YourDbContext();
-            var query = context.Sli_stk_instock_view;
+            var query = context.Sli_stk_stktransferin_view;
             var totalCount = query.Count();
             var totalPages = (int)Math.Ceiling((double)totalCount / pageSize);
             var paginatedQuery = query.OrderByDescending(b => b.Fid).Skip((page - 1) * pageSize).Take(pageSize);
@@ -225,7 +242,7 @@ namespace WebApi_SY.Controllers
                 id = a.Fid,
                 Fbillno = a.Fbillno,
                 Fdate = a.Fdate,
-                Fsppliername = a.Fsppliername,
+                //Fsppliername = a.Fsppliername,
                 Fdocumentstatus = a.Fdocumentstatus,
                 Fclosestatus = a.Fclosestatus,
                 FBiller = a.FBiller,
@@ -233,8 +250,8 @@ namespace WebApi_SY.Controllers
                 FDepId = a.FDepId,
                 dept_name = a.dept_name,
                 Flag = a.Flag,
-                FParameter = a.FParameter,
-                FReason = a.FReason
+                FParameter = a.FParameter ?? string.Empty,
+                FReason = a.FReason ?? string.Empty
             });
             var response = new    // 定义 前端返回数据  总记录，总页，当前页 ，size,返回记录
             {
@@ -260,10 +277,10 @@ namespace WebApi_SY.Controllers
         /// <param name="FID"></param>
         /// <returns></returns>
         [System.Web.Http.HttpGet]
-        public IHttpActionResult GetEntryInstock(int? FID = null)
+        public IHttpActionResult GetEntryStktransferin(int? FID = null)
         {
             var context = new YourDbContext();
-            var query = context.Sli_stk_instock_view.Include(a => a.sli_stk_instockentry_view);
+            var query = context.Sli_stk_stktransferin_view.Include(a => a.sli_stk_stktransferinentry_view);
             if (FID.HasValue)
             {
                 query = query.Where(t => t.Fid == FID.Value);
@@ -273,19 +290,19 @@ namespace WebApi_SY.Controllers
                 Fid = a.Fid,
                 Fbillno = a.Fbillno,
                 Fdate = a.Fdate,
-                Fsppliername = a.Fsppliername,
+                //Fsppliername = a.Fsppliername,
                 Fdocumentstatus = a.Fdocumentstatus,
                 Fclosestatus = a.Fclosestatus,
                 FBiller = a.FBiller,
-                empname = a.empname,
+                empname = a.empname ?? string.Empty,
                 FDepId = a.FDepId,
-                dept_name = a.dept_name,
+                dept_name = a.dept_name ?? string.Empty,
                 Flag = a.Flag,
                 FParameter = a.FParameter,
                 FReason = a.FReason,
-                sli_stk_instockentry_view = a.sli_stk_instockentry_view.Select(b => new
+                sli_stk_stktransferinentry_view = a.sli_stk_stktransferinentry_view.Select(b => new
                 {
-                    Fentryid = b.FEntryId,
+                    Fentryid = b.FentryId,
                     Fid = b.Fid,
                     Fnumber = b.Fnumber,
                     Fname = b.Fname,
@@ -293,7 +310,7 @@ namespace WebApi_SY.Controllers
                     Unit = b.Unit,
                     Fqty = b.Fqty,
                     FSecQty = b.FSecQty,
-                    FReceiveStockNumber = b.FReceiveStockNumber
+                    FStockNumber = b.FStockNumber
                 })
 
             }).ToList();
@@ -313,7 +330,7 @@ namespace WebApi_SY.Controllers
         }
 
         /// <summary>
-        /// 同步采购入库单到金蝶星空采购入库单
+        /// 同步采购入库单到金蝶星空简单生产领料单
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -330,45 +347,47 @@ namespace WebApi_SY.Controllers
                 if (bLogin)
                 {
 
-                    var heard = context.Sli_stk_instock.FirstOrDefault(p => p.Fid == id);   //获取表头单行数据
-                    var FcustomerNumer = context.Sli_bd_supplier.FirstOrDefault(p => p.FNAME == heard.Fsppliername); //根据供应商名称查询客户代码
-                    var entity = context.Sli_stk_instockentry.Where(p => p.Fid == id);   //获取表体多行数据
+                    var heard = context.Sli_stk_stktransferin.FirstOrDefault(p => p.Fid == id);   //获取表头单行数据
+                    //var FdeptNumber = context.Sli_bd_department_view.FirstOrDefault(p => p.Fdeptid == heard.FDepId); //根据供应商名称查询客户代码
+                    var entity = context.Sli_stk_stktransferinentry.Where(p => p.Fid == id);   //获取表体多行数据
                     var entityList = entity.ToList();
                     //var index = 0;
-                    string json = "{\"NeedUpDateFields\":[],\"NeedReturnFields\":[],\"IsDeleteEntry\":\"true\",\"SubSystemId\":\"\",\"IsVerifyBaseDataField\":\"false\",\"IsEntryBatchFill\":\"true\",\"ValidateFlag\":\"true\",\"NumberSearch\":\"true\",\"IsAutoAdjustField\":\"true\",\"InterationFlags\":\"\",\"IgnoreInterationFlag\":\"\",\"IsControlPrecision\":\"false\",\"ValidateRepeatJson\":\"false\",\"Model\":{\"FID\":0,\"FBillTypeID\":{\"FNUMBER\":\"RKD01_SYS\"},\"FBusinessType\":\"CG\",\"FDate\":\"2025-05-10 00:00:00\",\"FStockOrgId\":{\"FNumber\":\"100\"},\"FDemandOrgId\":{\"FNumber\":\"100\"},\"FPurchaseOrgId\":{\"FNumber\":\"100\"},\"FSupplierId\":{\"FNumber\":\"VEN00002\"},\"FSupplyId\":{\"FNumber\":\"VEN00002\"},\"FSettleId\":{\"FNumber\":\"VEN00002\"},\"FChargeId\":{\"FNumber\":\"VEN00002\"},\"FOwnerTypeIdHead\":\"BD_OwnerOrg\",\"FOwnerIdHead\":{\"FNumber\":\"100\"},\"FCDateOffsetValue\":0,\"FSplitBillType\":\"A\",\"FSalOutStockOrgId\":{\"FNumber\":\"100\"},\"FInStockFin\":{\"FSettleOrgId\":{\"FNumber\":\"100\"},\"FSettleCurrId\":{\"FNumber\":\"PRE001\"},\"FIsIncludedTax\":true,\"FPriceTimePoint\":\"1\",\"FLocalCurrId\":{\"FNumber\":\"PRE001\"},\"FExchangeTypeId\":{\"FNumber\":\"HLTX01_SYS\"},\"FExchangeRate\":1.0,\"FISPRICEEXCLUDETAX\":true,\"FAllDisCount\":0.0,\"FHSExchangeRate\":1.0},\"FInStockEntry\":[{\"FRowType\":\"Standard\",\"FMaterialId\":{\"FNumber\":\"1234-60-1\"},\"FUnitID\":{\"FNumber\":\"Pcs\"},\"FMaterialDesc\":\"后端壳程法兰\",\"FWWPickMtlQty\":0.0,\"FRealQty\":100.0,\"FPriceUnitID\":{\"FNumber\":\"Pcs\"},\"FPrice\":0.0,\"FStockId\":{\"FNumber\":\"01\"},\"FDisPriceQty\":0.0,\"FStockStatusId\":{\"FNumber\":\"KCZT01_SYS\"},\"FGiveAway\":false,\"FOWNERTYPEID\":\"BD_OwnerOrg\",\"FExtAuxUnitQty\":0.0,\"FCheckInComing\":false,\"FIsReceiveUpdateStock\":false,\"FInvoicedJoinQty\":0.0,\"FPriceBaseQty\":100.0,\"FRemainInStockUnitId\":{\"FNumber\":\"Pcs\"},\"FBILLINGCLOSE\":false,\"FRemainInStockQty\":100.0,\"FAPNotJoinQty\":100.0,\"FRemainInStockBaseQty\":100.0,\"FTaxPrice\":0.0,\"FEntryTaxRate\":13.00,\"FDiscountRate\":0.0,\"FCostPrice\":0.0,\"FAuxUnitQty\":0.0,\"FOWNERID\":{\"FNumber\":\"100\"},\"FSRCBILLTYPEID\":\"\",\"FSRCBillNo\":\"\",\"FAllAmountExceptDisCount\":0.0,\"FPriceDiscount\":0.0,\"FConsumeSumQty\":0.0,\"FBaseConsumeSumQty\":0.0,\"FRejectsDiscountAmount\":0.0,\"FSalOutStockEntryId\":0,\"FBeforeDisPriceQty\":0.0,\"FPayableEntryID\":0,\"FSUBREQBILLSEQ\":0,\"FSUBREQENTRYID\":0}]}}";
-                    InStockRequest rootObject = JsonConvert.DeserializeObject<InStockRequest>(json);
-                    rootObject.Model.FInStockEntry.Clear();
-                    rootObject.Model.FDate = DateTime.Now.ToString();
+                    string json = "{\"NeedUpDateFields\":[],\"NeedReturnFields\":[],\"IsDeleteEntry\":\"true\",\"SubSystemId\":\"\",\"IsVerifyBaseDataField\":\"false\",\"IsEntryBatchFill\":\"true\",\"ValidateFlag\":\"true\",\"NumberSearch\":\"true\",\"IsAutoAdjustField\":\"true\",\"InterationFlags\":\"\",\"IgnoreInterationFlag\":\"\",\"IsControlPrecision\":\"false\",\"ValidateRepeatJson\":\"false\",\"Model\":{\"FID\":0,\"FBillNo\":\"123\",\"FBillTypeID\":{\"FNUMBER\":\"ZJDB01_SYS\"},\"FBizType\":\"NORMAL\",\"FTransferDirect\":\"GENERAL\",\"FTransferBizType\":\"InnerOrgTransfer\",\"FSaleOrgId\":{\"FNumber\":\"100\"},\"FSettleOrgId\":{\"FNumber\":\"100\"},\"FStockOutOrgId\":{\"FNumber\":\"100\"},\"FOwnerTypeOutIdHead\":\"BD_OwnerOrg\",\"FOwnerOutIdHead\":{\"FNumber\":\"100\"},\"FStockOrgId\":{\"FNumber\":\"100\"},\"FIsPriceExcludeTax\":true,\"FExchangeTypeId\":{\"FNUMBER\":\"HLTX01_SYS\"},\"FIsIncludedTax\":true,\"FSETTLECURRID\":{\"FNUMBER\":\"PRE001\"},\"FExchangeRate\":1.0,\"FOwnerTypeIdHead\":\"BD_OwnerOrg\",\"FOwnerIdHead\":{\"FNumber\":\"100\"},\"FDate\":\"2025-05-11 00:00:00\",\"FBaseCurrId\":{\"FNumber\":\"PRE001\"},\"FWriteOffConsign\":false,\"FBillEntry\":[{\"FRowType\":\"Standard\",\"FMaterialId\":{\"FNumber\":\"1234-60-1\"},\"FUnitID\":{\"FNumber\":\"Pcs\"},\"FQty\":1.0,\"FSrcStockId\":{\"FNumber\":\"01\"},\"FDestStockId\":{\"FNumber\":\"02\"},\"FSrcStockStatusId\":{\"FNumber\":\"KCZT01_SYS\"},\"FDestStockStatusId\":{\"FNumber\":\"KCZT01_SYS\"},\"FBusinessDate\":\"2025-05-11 00:00:00\",\"FSrcBillTypeId\":\"\",\"FOwnerTypeOutId\":\"BD_OwnerOrg\",\"FOwnerOutId\":{\"FNumber\":\"100\"},\"FOwnerTypeId\":\"BD_OwnerOrg\",\"FOwnerId\":{\"FNumber\":\"100\"},\"FSrcBillNo\":\"\",\"FSecQty\":0.0,\"FExtAuxUnitQty\":0.0,\"FBaseUnitId\":{\"FNumber\":\"Pcs\"},\"FBaseQty\":1.0,\"FISFREE\":false,\"FKeeperTypeId\":\"BD_KeeperOrg\",\"FActQty\":0.0,\"FKeeperId\":{\"FNumber\":\"100\"},\"FKeeperTypeOutId\":\"BD_KeeperOrg\",\"FKeeperOutId\":{\"FNumber\":\"100\"},\"FDiscountRate\":0.0,\"FRepairQty\":0.0,\"FDestMaterialId\":{\"FNUMBER\":\"1234-60-1\"},\"FSaleUnitId\":{\"FNumber\":\"Pcs\"},\"FSaleQty\":1.0,\"FSalBaseQty\":1.0,\"FPriceUnitID\":{\"FNumber\":\"Pcs\"},\"FPriceQty\":1.0,\"FPriceBaseQty\":1.0,\"FOutJoinQty\":0.0,\"FBASEOUTJOINQTY\":0.0,\"FSOEntryId\":0,\"FTransReserveLink\":false,\"FQmEntryId\":0,\"FConvertEntryId\":0,\"FCheckDelivery\":false,\"FBomEntryId\":0}]}}";
+                    transferinRequest rootObject = JsonConvert.DeserializeObject<transferinRequest>(json);
+                    rootObject.Model.FBillEntry.Clear();
+                    rootObject.Model.FDate = Convert.ToString( heard.Fdate);
                     rootObject.Model.FBillNo = heard.Fbillno;
-                    rootObject.Model.FSupplierId = new FNumberWrapper { FNumber = FcustomerNumer.FNUMBER };
-                    rootObject.Model.FSupplyId = new FNumberWrapper { FNumber = FcustomerNumer.FNUMBER };
-                    rootObject.Model.FSettleId = new FNumberWrapper { FNumber = FcustomerNumer.FNUMBER };
-                    rootObject.Model.FChargeId = new FNumberWrapper { FNumber = FcustomerNumer.FNUMBER };
+              
+
                     //rootObject.Model.FPOOrderFinance.
                     foreach (var entitydata in entityList)
                     {
-                        InStockEntry newEntry = new InStockEntry();
+                        BillEntry newEntry = new BillEntry();
 
 
-                        newEntry.FMaterialId = new FNumberWrapper { FNumber = entitydata.Fnumber };
-                        newEntry.FMaterialDesc = entitydata.Fname;//传名称
-                        newEntry.FUnitID = new FNumberWrapper { FNumber = entitydata.Unit };
-                        newEntry.FRealQty = (double)entitydata.Fqty;//传订单数量
-                        newEntry.FPriceUnitID = new FNumberWrapper { FNumber = entitydata.Unit };
+                        newEntry.FMaterialId = new FNumberObject { FNumber = entitydata.Fnumber };
+                        newEntry.FUnitID = new FNumberObject { FNumber = entitydata.Unit };
+                        newEntry.FQty = (double)entitydata.Fqty;//传订单数量
+                        newEntry.FSrcStockId = new FNumberObject { FNumber = entitydata.FStockNumber };;//传订单数量
                         //var FstockNumer = context.Sli_bd_stock_view.FirstOrDefault(p => p.Fstockid == entitydata.FStockId); //根据供应商名称查询客户代码
-                        newEntry.FStockId = new FNumberWrapper { FNumber = entitydata.FReceiveStockNumber };
+                        newEntry.FDestStockId = new FNumberObject { FNumber = entitydata.FReceiveStockNumber };
+                        newEntry.FBusinessDate = Convert.ToString(heard.Fdate);
+                        newEntry.FBaseQty = (double)entitydata.Fqty;//传订单数量
+                        newEntry.FDestMaterialId = new FNumberObject { FNumber = entitydata.Fnumber };
+                        newEntry.FSaleUnitId = new FNumberObject { FNumber = entitydata.Unit };
+                        newEntry.FSaleQty = (double)entitydata.Fqty;//传订单数量FSalBaseQty
+                        newEntry.FSalBaseQty = (double)entitydata.Fqty;//传订单数量
+                        newEntry.FPriceUnitID = new FNumberObject { FNumber = entitydata.Unit };
+                        newEntry.FPriceQty = (double)entitydata.Fqty;//传订单数量FSalBaseQty
                         newEntry.FPriceBaseQty = (double)entitydata.Fqty;//传订单数量
-                        newEntry.FRemainInStockQty = (double)entitydata.Fqty;//传订单数量
-                        newEntry.FAPNotJoinQty = (double)entitydata.Fqty;//传订单数量
-                        newEntry.FRemainInStockBaseQty = (double)entitydata.Fqty;//传订单数量
-                        rootObject.Model.FInStockEntry.Add(newEntry);
+                        rootObject.Model.FBillEntry.Add(newEntry);
                     }
                     string newJson = JsonConvert.SerializeObject(rootObject);
                     System.Diagnostics.Debug.WriteLine(newJson);
                     //sJson = "{\"CreateOrgId\":0,\"Numbers\":[\"" + FPrdModel + "\"]}";
                     //string jsonData = "{\"NeedUpDateFields\": [],\"NeedReturnFields\": [],\"IsDeleteEntry\": \"true\",\"SubSystemId\": \"\",\"IsVerifyBaseDataField\": \"False\",\"IsEntryBatchFill\": \"true\",\"ValidateFlag\": \"true\",\"NumberSearch\": \"true\",\"IsAutoAdjustField\": \"False\",\"InterationFlags\": \"\",\"IgnoreInterationFlag\": \"\",\"IsControlPrecision\": \"False\",\"Model\": {\"FBillTypeID\": {\"FNUMBER\": \"XSDD01_SYS\"},\"FDate\": \"2022-04-27 00:00:00\",\"FSaleOrgId\": {\"FNumber\": \"100\"},\"FCustId\": {\"FNumber\": \"SCMKH100001\"},\"FReceiveId\": {\"FNumber\": \"SCMKH100001\"},\"FSaleDeptId\": {\"FNumber\": \"SCMBM000001\"},\"FSalerId\": {\"FNumber\": \"SCMYG000001_SCMGW000001_1\"},\"FSettleId\": {\"FNumber\": \"SCMKH100001\"},\"FChargeId\": {\"FNumber\": \"SCMKH100001\"},\"FSaleOrderFinance\": {\"FSettleCurrId\": {\"FNumber\": \"PRE001\"},\"FIsPriceExcludeTax\": 'true',\"FIsIncludedTax\": 'true',\"FExchangeTypeId\": {\"FNumber\": \"HLTX01_SYS\"}},\"FSaleOrderEntry\": [{\"FRowType\": \"Standard\",\"FMaterialId\": {\"FNumber\": \"SCMWL100002\"},\"FUnitID\": {\"FNumber\": \"Pcs\"},\"FQty\": 10,\"FPriceUnitId\": {\"FNumber\": \"Pcs\"},\"FPrice\": 8.849558,\"FTaxPrice\": 10,\"FEntryTaxRate\": 13,\"FDeliveryDate\": \"2022-04-27 15:15:54\",\"FStockOrgId\": {\"FNumber\": \"100\"},\"FSettleOrgIds\": {\"FNumber\": \"100\"},\"FSupplyOrgId\": {\"FNumber\": \"100\"},\"FOwnerTypeId\": \"BD_OwnerOrg\",\"FOwnerId\": {\"FNumber\": \"100\"},\"FReserveType\": \"1\",\"FPriceBaseQty\": 10,\"FStockUnitID\": {\"FNumber\": \"Pcs\"},\"FStockQty\": 10,\"FStockBaseQty\": 10,\"FOUTLMTUNIT\": \"SAL\",\"FOutLmtUnitID\": {\"FNumber\": \"Pcs\"},\"FAllAmountExceptDisCount\": 100,\"FOrderEntryPlan\": [{\"FPlanDate\": \"2022-04-27 15:15:54\",\"FPlanQty\": 10}]}],\"FSaleOrderPlan\": [{\"FRecAdvanceRate\": 100,\"FRecAdvanceAmount\": 100}],\"FBillNo\":" + "\"" + Number + "\"" + ",}}";
                     var result = client.Execute<string>("Kingdee.BOS.WebApi.ServicesStub.DynamicFormService.Save",
-                    new object[] { "STK_InStock", newJson });
+                    new object[] { "STK_TransferDirect", newJson });
 
                     ResultData resultdata = JsonConvert.DeserializeObject<ResultData>(result);
                     if (resultdata.Result.ResponseStatus.IsSuccess)
@@ -384,7 +403,7 @@ namespace WebApi_SY.Controllers
                         {
                             code = 200,
                             msg = "ok",
-                            date = "同步成功！采购单号：" + resultdata.Result.Number + ""
+                            date = "同步成功！直接调拨单：" + resultdata.Result.Number + ""
                         };
                         heard.Flag = 1;
                         heard.FParameter = newJson;
@@ -434,14 +453,13 @@ namespace WebApi_SY.Controllers
 
         }
 
-
         /// <summary>
-        /// 采购入库单提交
+        /// 直接调拨单提交
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         [Microsoft.AspNetCore.Mvc.HttpPost]
-        public IHttpActionResult Instcok_Submit_Approve(string FbillNo)
+        public IHttpActionResult Stktransferin_Submit_Approve(string FbillNo)
         {
             try
             {
@@ -452,15 +470,15 @@ namespace WebApi_SY.Controllers
                 bool bLogin = client.Login(dbId, "Administrator", "kingdee123*", 2052);
                 if (bLogin)
                 {
-                    var heard = context.Sli_stk_instock.FirstOrDefault(p => p.Fbillno == FbillNo);   //获取表头单行数据
+                    var heard = context.Sli_stk_stktransferin.FirstOrDefault(p => p.Fbillno == FbillNo);   //获取表头单行数据
                     var SubmitsJson = "{\"CreateOrgId\":0,\"Numbers\":[\"" + FbillNo + "\"]}";
                     var Submitresult = client.Execute<string>("Kingdee.BOS.WebApi.ServicesStub.DynamicFormService.Submit",
-                    new object[] { "STK_InStock", SubmitsJson });
+                    new object[] { "STK_TransferDirect", SubmitsJson });
 
                     //审核刚创建的销售订单
                     var sJson = "{\"CreateOrgId\":0,\"Numbers\":[\"" + FbillNo + "\"]}";
                     var Auditresult = client.Execute<string>("Kingdee.BOS.WebApi.ServicesStub.DynamicFormService.Audit",
-                    new object[] { "STK_InStock", sJson });
+                    new object[] { "STK_TransferDirect", sJson });
                     ResultData resultdata = JsonConvert.DeserializeObject<ResultData>(Auditresult);
                     if (resultdata.Result.ResponseStatus.IsSuccess)
                     {
@@ -468,7 +486,7 @@ namespace WebApi_SY.Controllers
                         {
                             code = 200,
                             msg = "ok",
-                            date = "同步成功！采购单号：" + resultdata.Result.Number + ""
+                            date = "同步成功！直接调拨单：" + resultdata.Result.Number + ""
                         };
                         heard.Flag = 3;
                         heard.Fdocumentstatus = "C";
@@ -489,7 +507,7 @@ namespace WebApi_SY.Controllers
                         var datas = new
                         {
                             code = 400,
-                            msg = "err,同步异常！" + ErrorList + "",
+                            msg = "err,审核不成功！" + ErrorList + "",
                             date = ""
                         };
                         heard.Flag = 4;
@@ -504,7 +522,7 @@ namespace WebApi_SY.Controllers
                     return Ok("登录失败！");
                 }
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 var datas = new
                 {
@@ -514,7 +532,7 @@ namespace WebApi_SY.Controllers
                 };
                 return Ok(datas);
             }
-            
+
         }
     }
 }
