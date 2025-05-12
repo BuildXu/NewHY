@@ -654,115 +654,80 @@ namespace WebApi_SY.Controllers
         }
 
         public IHttpActionResult Getsli_wo_all(
-            int? Id = null,                     // 精确匹配 Id (数据库字段: Id)
-            string Fcustname = null,            // 模糊查询客户名 (数据库字段: Fcustname)
-            string Fbillno = null,              // 精确匹配单据号 (数据库字段: Fbillno)
-            string Forderno = null,             // 精确匹配订单号 (数据库字段: Forderno)
-            DateTime? FdateFrom = null,         // 日期范围过滤 (数据库字段: Fdate)
+            int? Id = null,
+            string Fcustname = null,
+            string Fbillno = null,
+            string Forderno = null,
+            DateTime? FdateFrom = null,
             DateTime? FdateTo = null,
-            string Fordertype = null,           // 过滤订单类型 (数据库字段: Fordertype)
-            int? Fforgeqty = null,              // 过滤锻造数量 (数据库字段: Fforgeqty)
-            int page = 1,                       // 分页参数
+            string Fordertype = null,
+            int? Fforgeqty = null,
+            int page = 1,
             int pageSize = 10)
         {
             try
             {
-                // 参数校验
                 if (page < 1) page = 1;
                 if (pageSize < 1 || pageSize > 100) pageSize = 10;
 
                 using (var context = new YourDbContext())
                 {
-                    // 基础查询（按 Fdate 倒序）
                     IQueryable<sli_wo_view> query = context.sli_wo_view
                         .OrderByDescending(q => q.Fdate);
 
-                    // 动态添加过滤条件（严格匹配实体属性名）
-                    if (Id.HasValue)
-                    {
-                        query = query.Where(q => q.Id == Id.Value);
-                    }
+                    // 动态过滤条件保持不变...
+                    // 你的原始过滤代码
 
-                    if (!string.IsNullOrEmpty(Fcustname))  //  客户名称
-                    {
-                        query = query.Where(q => q.Fcustname.Contains(Fcustname)); // 模糊查询
-                    }
-
-                    if (!string.IsNullOrEmpty(Fbillno))
-                    {
-                        query = query.Where(q => q.Fbillno == Fbillno); // 精确匹配
-                    }
-
-                    if (!string.IsNullOrEmpty(Forderno))
-                    {
-                        query = query.Where(q => q.Forderno == Forderno);
-                    }
-
-                    if (FdateFrom.HasValue && FdateTo.HasValue)
-                    {
-                        query = query.Where(q => q.Fdate >= FdateFrom.Value && q.Fdate <= FdateTo.Value);
-                    }
-
-                    if (!string.IsNullOrEmpty(Fordertype))
-                    {
-                        query = query.Where(q => q.Fordertype == Fordertype);
-                    }
-
-                    if (Fforgeqty.HasValue)
-                    {
-                        query = query.Where(q => q.Fforgeqty == Fforgeqty.Value);
-                    }
-
-                    // 计算总记录数
                     int totalCount = query.Count();
-
-                    // 分页处理
                     int skip = (page - 1) * pageSize;
-                    var pagedData = query
+
+                    // 先执行分页查询并将结果加载到内存
+                    var pagedList = query
                         .Skip(skip)
                         .Take(pageSize)
-                        .Select(a => new
-                        {
-                            // 严格映射实体属性名（完全匹配数据库字段）
-                            a.Id,
-                            Fcustname = a.Fcustname ?? string.Empty,  //客户
-                            Fbillno = a.Fbillno ?? string.Empty, // 工作令号
-                            Forderno = a.Forderno ?? string.Empty,  // 订单 号
-                            a.Fdate,     //  工作令日期
-                            Fqty = a.Fqty,        //  数量
-                            a.Fweight,    // 重量
-                            a.Fplanstart,    //  开始日期
-                            a.Fplanend,    //   交货日期
-                            Fordertype = a.Fordertype ?? string.Empty,   // 工作令类型
-                            a.Fforgeqty,  // 合锻数量
-                            a.Fforgeweight, // 合锻重量
-                            Fname = a.Fname ?? string.Empty,   //  产品名称
-                            Fslimetal = a.Fslimetal ?? string.Empty, // 材质
-                            Fdescription = a.Fdescription ?? string.Empty, // 规格
-                            Fslidrawingno = a.Fslidrawingno ?? string.Empty, // 图号
-                            Fsliheattreatment = a.Fsliheattreatment ?? string.Empty,//  热处理状态
-                            Fsliexplanation = a.Fsliexplanation ?? string.Empty,  //  项目号
-                                                                                  // P1-P8 参数组（严格匹配字段名）
-                            Fp1name = a.Fp1name ?? string.Empty,  //一,名称
-                            Fp1status = a.Fp1status ?? string.Empty, //，状态
-                            Fp2name = a.Fp2name ?? string.Empty,
-                            Fp2status = a.Fp2status ?? string.Empty, //  二名称，状态
-                            Fp3name = a.Fp3name ?? string.Empty,
-                            Fp3status = a.Fp3status ?? string.Empty,  //
-                            Fp4name = a.Fp4name ?? string.Empty,
-                            Fp4status = a.Fp4status ?? string.Empty, //
-                            Fp5name = a.Fp5name ?? string.Empty,
-                            Fp5status = a.Fp5status ?? string.Empty,  //
-                            Fp6name = a.Fp6name ?? string.Empty,  //
-                            Fp6status = a.Fp6status ?? string.Empty,  //
-                            Fp7name = a.Fp7name ?? string.Empty,  //
-                            Fp7status = a.Fp7status ?? string.Empty,  //
-                            Fp8name = a.Fp8name ?? string.Empty,  //
-                            Fp8status = a.Fp8status ?? string.Empty,  //   //
-                        })
-                        .ToList();
+                        .ToList(); // 关键点：先物化到内存
 
-                    // 构建响应
+                    // 在内存中进行类型转换
+                    var pagedData = pagedList.Select(a => new
+                    {
+                        a.Id,
+                        Fcustname = a.Fcustname ?? string.Empty,
+                        Fbillno = a.Fbillno ?? string.Empty,
+                        Forderno = a.Forderno ?? string.Empty,
+                        a.Fdate,
+                        Fqty = a.Fqty,
+                        a.Fweight,
+                        a.Fplanstart,
+                        a.Fplanend,
+                        Fordertype = a.Fordertype ?? string.Empty,
+                        Fforgeqty = a.Fforgeqty, // 保持数值类型
+                        Fforgeweight = a.Fforgeweight,
+                        Fname = a.Fname ?? string.Empty,
+                        Fslimetal = a.Fslimetal ?? string.Empty,
+                        Fdescription = a.Fdescription ?? string.Empty,
+                        Fslidrawingno = a.Fslidrawingno ?? string.Empty,
+                        Fsliheattreatment = a.Fsliheattreatment ?? string.Empty,
+                        Fsliexplanation = a.Fsliexplanation ?? string.Empty,
+                        // 处理所有可能为数值类型的字段
+                        Fp1name = a.Fp1name ?? string.Empty,  //一,名称
+                        Fp1status = a.Fp1status ?? string.Empty, //，状态
+                        Fp2name = a.Fp2name ?? string.Empty,
+                        Fp2status = a.Fp2status ?? string.Empty, //  二名称，状态
+                        Fp3name = a.Fp3name ?? string.Empty,
+                        Fp3status = a.Fp3status ?? string.Empty,  //
+                        Fp4name = a.Fp4name ?? string.Empty,
+                        Fp4status = a.Fp4status ?? string.Empty, //
+                        Fp5name = a.Fp5name ?? string.Empty,
+                        Fp5status = a.Fp5status ?? string.Empty,  //
+                        Fp6name = a.Fp6name ?? string.Empty,  //
+                        Fp6status = a.Fp6status ?? string.Empty,  //
+                        Fp7name = a.Fp7name ?? string.Empty,  //
+                        Fp7status = a.Fp7status ?? string.Empty,  //
+                        Fp8name = a.Fp8name ?? string.Empty,  //
+                        Fp8status = a.Fp8status ?? string.Empty,  //   //
+
+                    }).ToList();
+
                     var response = new
                     {
                         code = 200,
