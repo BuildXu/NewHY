@@ -12,7 +12,8 @@ namespace WebApi_SY.Models
         //public int Id { get; set; }  // 物料Id
         public int Fmaterialid { get; set; }  // 物料Id
         public string Fmaterialnum { get; set; }  // 物料代码
-        //public string Fname { get; set; }  // 物料名称
+        public string Fmaterialname { get; set; }  // 物料名称
+        public string Funitnumber { get; set; }  // 物料单位
         public string FstockNum { get; set; }  // 仓库代码
         public string FstockName { get; set; }  // 仓库名称
         public int Fstocklocid { get; set; }  // 仓位ID
