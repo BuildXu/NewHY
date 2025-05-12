@@ -44,7 +44,7 @@ namespace WebApi_SY.Models
         public decimal Fsliweightmaterial { get; set; }
         public decimal Fsliweightforging { get; set; }//Fsliweightforging
         public decimal Fsliweightgoods { get; set; }//Fsliweightgoods
-        public decimal Fslidrawingno { get; set; }//Fslidrawingno
+        public string Fslidrawingno { get; set; }//Fslidrawingno
         public string Fslimetal { get; set; }  //FsliMetal
         public string Fsligoodsstatus { get; set; }//FsliGoodsStatus
         public string Fsliprocessing { get; set; } //FsliProcessing
@@ -53,15 +53,15 @@ namespace WebApi_SY.Models
         public string Fslipunching { get; set; }//FsliPunching
         public string FsliTemperatureBegin { get; set; }//FsliTemperatureBegin
         public int FsliTempratureEnd { get; set; }
-        public int Fslimould { get; set; }//FsliMould
+        public string Fslimould { get; set; }//FsliMould
         public string Fsliroller { get; set; } //FsliRoller
         public string Fsliheatingtimes { get; set; }//FsliHeatingTimes
-        public int Fsligrade { get; set; }//FsliGrade
+        public string Fsligrade { get; set; }//FsliGrade
         public string Fsumnumber { get; set; }//FSumNumber
         public string Fworkorderlistqty { get; set; } //FworkOrderListQty
         public int Fworkorderlistremain { get; set; }//FworkOrderListRemain
         public int Fworkorderliststatus { get; set; }
-        public int Fslimetel { get; set; }
+        public string Fslimetel { get; set; }
 
 
     }
