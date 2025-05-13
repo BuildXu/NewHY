@@ -107,6 +107,7 @@ namespace WebApi_SY.Controllers
                 //id = a.Id,
                 Fmaterialid = a.Fmaterialid,
                 Fmaterialnum = a.Fmaterialnum,
+                Fmaterialname = a.Fmaterialname,
                 FstockNum = a.FstockNum,
                 FstockName = a.FstockName,
                 Fstocklocid = a.Fstocklocid,

@@ -22,6 +22,7 @@ namespace WebApi_SY.Models
     public class sli_sal_orderEntry_view
     {
         public int Fid { get; set; } //主表ID
+        public string Forderno { get; set; }
         [Key]
         public int FentryId { get; set; } //分录表ID
         public int Fseq { get; set; } //行号
