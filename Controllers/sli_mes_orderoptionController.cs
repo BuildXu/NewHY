@@ -247,8 +247,8 @@ namespace WebApi_SY.Controllers
                 Fslimetal = a.Fslimetal ?? string.Empty,
                 Fsliweightmaterial = a.Fsliweightmaterial ?? 0,
                 Fslipunching = a.Fslipunching ?? string.Empty,
-                Fmaterialid = a.Fmaterialid ?? 0,
-                Fsliallowancehf = a.Fsliallowancehf ?? 0,
+                Fmaterialid = a.Fmaterialid,
+                Fsliallowancehf = a.Fsliallowancehf,
                 Fproducttype = a.Fproducttype ?? string.Empty
             });
 
