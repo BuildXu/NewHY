@@ -93,126 +93,56 @@ namespace WebApi_SY.Models
     //}
     public class sli_work_processBill_view
     {
-        // 对应s1.id
-        public int id { get; set; }
-        // 对应s1.Fseq
-        public int Fseq { get; set; }
-        // 对应s1.Fworkorderlistid
-        public string Fslimetal { get; set; }
-
-        public int Fworkorderlistid { get; set; }
+        // 所有值类型改为可空
+        [Key]
+        public int? id { get; set; }
+        public int? Fseq { get; set; }
+        public string Fslimetal { get; set; } // string 默认可空
+        public int? Fworkorderlistid { get; set; }
         public string Fname { get; set; }
         public string Fwobillno { get; set; }
-        // 对应s1.Fprocessoption
-        public int Fprocessoption { get; set; }
-        // 对应s3.fname，即foptionname
+        public int? Fprocessoption { get; set; }
         public string foptionname { get; set; }
-        // 对应s1.Fstartdate
         public DateTime? Fstartdate { get; set; }
-        // 对应s1.Fenddate
         public DateTime? Fenddate { get; set; }
-        // 对应s1.Fqty
-        public decimal Fqty { get; set; }
-        // 对应s1.Fweight
-        public decimal Fweight { get; set; }
-        // 对应s1.Fcommitqty
-
-        public decimal Fweights { get; set; }
-        public decimal Fcommitqty { get; set; }
-        // 对应s1.Fcommitweight
-        public decimal Fcommitweight { get; set; }
-        // 对应s1.Fstatus
-        public int Fstatus { get; set; }
-        public int Fsourceid { get; set; }
-        public string Forderno { get; set; }//销售单号
-        public string Fproductno { get; set; }//工件号
-        public string Fpname { get; set; }//产品名称
-        public string Fdescription { get; set; }//产品规格
+        public decimal? Fqty { get; set; }
+        public decimal? Fweight { get; set; }
+        public decimal? Fweights { get; set; }
+        public decimal? Fcommitqty { get; set; }
+        public decimal? Fcommitweight { get; set; }
+        public int? Fstatus { get; set; }
+        public int? Fsourceid { get; set; }
+        public string Forderno { get; set; }
+        public string Fproductno { get; set; }
+        public string Fpname { get; set; }
+        public string Fdescription { get; set; }
         public string Fothers { get; set; }
         public virtual ICollection<sli_work_processBillEntry_view> sli_work_processBillEntry_view { get; set; }
     }
 
     public class sli_work_processBillEntry_view
     {
-        // 对应 s1.Fbillid
-        public int Fbillid { get; set; }   // 关联主表视图ID
-        // 对应 s1.Fentryid
+        public int? Fbillid { get; set; }
         [Key]
-        // 非空整数
-        public int Fentryid { get; set; }
-
-        // 可为空的整数
+        public int? Fentryid { get; set; }
         public int? Fseq { get; set; }
-
-        // 可为空的整数
         public int? Fwobillid { get; set; }
-
-        // 可为空的整数
         public int? Fworkorderlistid { get; set; }
-
-        // 可为空的字符串
         public string Fproductno { get; set; }
-
-        // 可为空的整数
-        public string Fmaterialnumber { get; set; }
-
-        // 可为空的字符串
+        public string  Fmaterialnumber { get; set; } // 修正为可空 int
         public string Fmaterialname { get; set; }
-
-        // 可为空的字符串
         public string Fdescription { get; set; }
-
-        // 可为空的整数
         public int? Fprocessobject { get; set; }
-
-        // 可为空的字符串
         public string Fprocessobjectnumber { get; set; }
-
-        // 可为空的字符串
         public string Fprocessobjectname { get; set; }
-
-        // 可为空的日期时间
         public DateTime? Fstartdate { get; set; }
-
-        // 可为空的日期时间
         public DateTime? Fenddate { get; set; }
-
-        // 可为空的数值类型（18位精度，2位小数）
         public decimal? Fqty { get; set; }
-
-        // 可为空的数值类型（18位精度，2位小数）
         public decimal? Fweight { get; set; }
-
-        // 可为空的数值类型（18位精度，2位小数）
         public decimal? Fcommitqty { get; set; }
-
-        // 可为空的数值类型（18位精度，2位小数）
         public decimal? Fcommitweight { get; set; }
-
-        //public string Fmaterialname { get; set; } //物料名称  Fdescription
-
-        //public string Fdescription { get; set; } //物料名称  Fdescription
-        //public int Fprocessobject { get; set; } //工步ID
-        //// 对应 s1.Fprocessobject
-        //public string Fprocessobjectnumber { get; set; } //工步代码
-        //// 对应 s3.fname
-        //public string Fprocessobjectname { get; set; }//工步名称
-        //// 对应 s1.Fstartdate
-        //public DateTime? Fstartdate { get; set; }//开始时间
-        //// 对应 s1.Fenddate
-        //public DateTime? Fenddate { get; set; }//结束时间
-        //// 对应 s1.Fqty
-        //public decimal Fqty { get; set; }//数量
-        //// 对应 s1.Fweight
-        //public decimal Fweight { get; set; }//重量
-        //// 对应 s1.Fcommitqty
-        //public decimal Fcommitqty { get; set; }
-        //// 对应 s1.Fcommitweight
-        //public decimal Fcommitweight { get; set; }
-        // 对应 s1.Fqualityoption
-        public int Fqualityoption { get; set; }
-        // 对应 s1.Fstatus
-        public int Fstatus { get; set; }//状态
+        public int? Fqualityoption { get; set; }
+        public int? Fstatus { get; set; }
         public virtual sli_work_processBill_view sli_work_processBill_view { get; set; }
     }
     public class sli_wo_view
